@@ -33,12 +33,12 @@ namespace zetjsoncpp {
 	}
 
 
-	bool isEmpty(const string & str);
+	ZETJSONCPP_MODULE_EXPORT bool isEmpty(const string & str);
 
-	string intToString(int number);
-	string floatToString(float number);
-	string toLower(const string & str);
-	bool endsWith(const string & fullString, const string & ending);
-	int isNumber(const string & test_str_number);
+	ZETJSONCPP_MODULE_EXPORT string intToString(int number);
+	ZETJSONCPP_MODULE_EXPORT string floatToString(float number);
+	ZETJSONCPP_MODULE_EXPORT string toLower(const string & str);
+	ZETJSONCPP_MODULE_EXPORT bool endsWith(const string & fullString, const string & ending);
+	ZETJSONCPP_MODULE_EXPORT int isNumber(const string & test_str_number);
 
 };

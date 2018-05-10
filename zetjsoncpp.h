@@ -25,6 +25,14 @@ using std::vector;
 #define ZETJSONCPP_MINOR_VERSION 0
 #define ZETJSONCPP_PATCH_VERSION 3
 
+#ifdef _WIN32
+	#ifdef  ZETJSONCPP_EXPORTS
+		#define ZETJSONCPP_MODULE_EXPORT __declspec(dllexport)
+	#else
+		#define ZETJSONCPP_MODULE_EXPORT __declspec(dllimport)
+	#endif
+#endif
+
 
 #if  !defined(MIN)
 #define  MIN(a,  b)              ((a)  <  (b)  ?  (a)  :  (b))

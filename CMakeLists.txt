@@ -11,6 +11,9 @@ project(zetjsoncpp)
 IF (NOT  (("${LINK}" STREQUAL "SHARED") OR ("${LINK}" STREQUAL "STATIC")))
    SET ( LINK "SHARED" )
 ENDIF()
+
+
+
  
 message("link:" ${LINK})
 
@@ -39,8 +42,8 @@ message("dest dir:" ${CMAKE_INSTALL_PREFIX})
 if(MSVC)
 	MESSAGE ("********* MSVC ************" )
 	
-	add_definitions(-D_CRT_SECURE_NO_WARNINGS -DZETJSONCPP_EXPORTS)
-
+	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+	
 	#disable C4103 warning because is perfectly valid. Only MSVC complains about it
 	add_definitions(/wd4103)
 	add_definitions(/wd4800)
@@ -90,20 +93,20 @@ IF ( "${TARGET}" STREQUAL "")
    SET ( TARGET "release" )
 ENDIF ()
  
+ 
+set( POST_NAME "")
+IF ( "${TARGET}" STREQUAL "debug")
+	set( POST_NAME "_d")
+ENDIF()
+ 
 
 if(MSVC)
 
 
 else()
 
-
 	set(TARGET_FLAGS " -O2 ")
-	set( POST_NAME "")
-
-	# -D_GLIBCXX_DEBUG
-
 	IF ( "${TARGET}" STREQUAL "debug")
-		set( POST_NAME "_d")
 		set(TARGET_FLAGS " -O0 ")
 		set(TARGET_FLAGS " ${TARGET_FLAGS} -g -fomit-frame-pointer ")
 	ENDIF ()
@@ -156,6 +159,13 @@ set( ZETJSONCPP_LIB_SRCS
 add_library( zetjsoncpp${POST_NAME} ${LINK} ${ZETJSONCPP_LIB_SRCS} )
 target_link_libraries(zetjsoncpp${POST_NAME} )
 
+
+if(MSVC)
+	#only for msvc...
+	set_target_properties(zetjsoncpp PROPERTIES COMPILE_DEFINITIONS ZETJSONCPP_EXPORTS)
+endif()
+	
+
 SET(
 	HS
 	zetjsoncpp.h
@@ -174,6 +184,10 @@ INSTALL_HEADERS_WITH_DIRECTORY(HS)
 add_executable(json_test${POST_NAME}
 	${PROJECT_SOURCE_DIR}/test/json_test.cpp
 )	
+
+
+
+
 
 target_link_libraries(json_test${POST_NAME} zetjsoncpp${POST_NAME})	
 

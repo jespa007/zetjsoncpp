@@ -36,17 +36,17 @@
 
 #define PREVIEW_SSTRING(start, current,n) (((current)-(n))<((start))?(start):((current)-(n)))
 
-extern char json_message_error[16836];
+ZETJSONCPP_MODULE_EXPORT extern char json_message_error[16836];
 
-bool IS_SINGLE_COMMENT(char *str);
-bool IS_START_COMMENT(char *str);
-bool IS_END_COMMENT(char *str);
-char *ADVANCE_TO_CHAR(char *str,char c);
-char *ADVANCE_TO_END_COMMENT(char *aux_p, int &m_line);
-char *IGNORE_BLANKS(char *str, int &m_line);
-char *ADVANCE_TO_ONE_OF_COLLECTION_CHAR(char *str,char *end_char_standard_value, int &m_line);
-void print_json_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...);
-void print_json_warning(const char *file, int line, bool ignore_warnings, const char *string_text, ...);
+ZETJSONCPP_MODULE_EXPORT bool IS_SINGLE_COMMENT(char *str);
+ZETJSONCPP_MODULE_EXPORT bool IS_START_COMMENT(char *str);
+ZETJSONCPP_MODULE_EXPORT bool IS_END_COMMENT(char *str);
+ZETJSONCPP_MODULE_EXPORT char *ADVANCE_TO_CHAR(char *str,char c);
+ZETJSONCPP_MODULE_EXPORT char *ADVANCE_TO_END_COMMENT(char *aux_p, int &m_line);
+ZETJSONCPP_MODULE_EXPORT char *IGNORE_BLANKS(char *str, int &m_line);
+ZETJSONCPP_MODULE_EXPORT char *ADVANCE_TO_ONE_OF_COLLECTION_CHAR(char *str,char *end_char_standard_value, int &m_line);
+ZETJSONCPP_MODULE_EXPORT void print_json_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...);
+ZETJSONCPP_MODULE_EXPORT void print_json_warning(const char *file, int line, bool ignore_warnings, const char *string_text, ...);
 
 
 const char end_char_standard_value[] = {
