@@ -1,13 +1,15 @@
 
-#include "CParserJson.h"
+#include "../json2cpp.h"
 
-#include <iostream>
+using namespace json2cpp;
+
+
 
 // json data to c-structure
 
 typedef struct{
 	CParserVarNumber<_CONST_CHAR("length")>  m_length;
-	CParserVarBool<_CONST_CHAR("use_space")> m_use_space;
+	CParserVarBoolean<_CONST_CHAR("use_space")> m_use_space;
 }tIdent;
 
 typedef struct
@@ -28,26 +30,27 @@ typedef struct
 
 int main(int argc, char *argv[]){
 
-	std::cout << "FastJsonC++ ver. "<< FASTJSON_MAJOR_VERSION << "." << FASTJSON_MINOR_VERSION << "."<<FASTJSON_PATCH_VERSION << std::endl;
+	std::cout << "json2cpp ver. "<< JSON2CPP_MAJOR_VERSION << "." << JSON2CPP_MINOR_VERSION << "."<< JSON2CPP_PATCH_VERSION << std::endl;
 	if(argc <=1){
 		std::cerr << "put file to parse"<< std::endl;
 		return 0;
 	}
     // declare our data var interface.
-    CParserVarPropertyGroup<tSampleJson> * data_json;
+    //CParserVarPropertyGroup<tSampleJson> * data_json_array;
+	CParserVarPropertyGroup<tSampleJson> * data_json=NULL;
 
     // create json-parser
     CParserJson<tSampleJson> * parser = new CParserJson<tSampleJson>();
 
     // parse our file
-    if(parser->parseFile(argv[1])){
+    if(parser->evalFile(argv[1])){
         // get data from parser.
 		std::cout << "elements:" << parser->getData()->size()<< std::endl;
 		// the values before modifications.
 		std::cout << " Before modifications:"<< std::endl;
-		std::cout << parser->getData()->cpp2json();    	
+		std::cout << parser->getData()->cpp2json();
 		for(unsigned g = 0; g < parser->getData()->size(); g++){
-			data_json = parser->getData()->at(g); // gets first element group...
+			data_json = parser->getData()->at(0); // gets first element group...
 
    			// From here we can operate with loaded data in our program using c++ operators
 			// put m_use_space to false...
