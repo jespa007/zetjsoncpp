@@ -30,7 +30,7 @@ typedef struct
 
 int main(int argc, char *argv[]){
 
-	std::cout << "zetjsoncpp ver. "<< JSON2CPP_MAJOR_VERSION << "." << JSON2CPP_MINOR_VERSION << "."<< JSON2CPP_PATCH_VERSION << std::endl;
+	std::cout << "zetjsoncpp ver. "<< ZETJSONCPP_MAJOR_VERSION << "." << ZETJSONCPP_MINOR_VERSION << "."<< ZETJSONCPP_PATCH_VERSION << std::endl;
 	if(argc <=1){
 		std::cerr << "put file to parse"<< std::endl;
 		return 0;
@@ -70,7 +70,7 @@ int main(int argc, char *argv[]){
 		std::cout << parser->getData()->cpp2json();
 
     }else{
-    	fprintf(stderr,JSON2CPP_getError());
+    	fprintf(stderr,parser->getError());
     }
     
     // deallocates parser

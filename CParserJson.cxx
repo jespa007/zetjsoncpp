@@ -33,6 +33,8 @@
 
 #define PREVIEW_SSTRING(start, current,n) (((current)-(n))<((start))?(start):((current)-(n)))
 
+extern char json_message_error[16836];
+
 bool IS_SINGLE_COMMENT(char *str);
 bool IS_START_COMMENT(char *str);
 bool IS_END_COMMENT(char *str);
@@ -79,6 +81,10 @@ CParserVar *CParserJson<_T>::findProperty(CParserVar * c_data, char *property_na
 	return NULL;
 }
 
+template <typename _T>
+const char * CParserJson<_T>::getError() {
+	return (const char *)json_message_error;
+}
 
 template <typename _T>
 void CParserJson<_T>::setPropertiesParsedToFalse(CParserVar * c_data) {

@@ -31,9 +31,9 @@
 using std::string;
 using std::vector;
 
-#define JSON2CPP_MAJOR_VERSION 0
-#define JSON2CPP_MINOR_VERSION 0
-#define JSON2CPP_PATCH_VERSION 3
+#define ZETJSONCPP_MAJOR_VERSION 0
+#define ZETJSONCPP_MINOR_VERSION 0
+#define ZETJSONCPP_PATCH_VERSION 3
 
 
 #if  !defined(MIN)
@@ -97,18 +97,7 @@ using std::vector;
 
 #define getChr(name, ii) ((MIN(ii,JSON_MAX_CONST_CHAR))<sizeof(name)/sizeof(*name)?name[ii]:0)
 
-namespace zetjsoncpp{
 
-	bool IS_SINGLE_COMMENT(char *str);
-	bool IS_START_COMMENT(char *str);
-	bool IS_END_COMMENT(char *str);
-	char *ADVANCE_TO_CHAR(char *str,char c);
-	char *ADVANCE_TO_END_COMMENT(char *aux_p, int &m_line);
-	char *IGNORE_BLANKS(char *str, int &m_line);
-	char *ADVANCE_TO_ONE_OF_COLLECTION_CHAR(char *str,char *end_char_standard_value, int &m_line);
-
-
-};
 
 #include "CBuffer.h"
 #include "CStringUtils.h"

@@ -119,6 +119,10 @@ namespace zetjsoncpp{
 		return aux_p;
 	}
 
+	void clear_message_error(){
+		memset(json_message_error,0,sizeof(json_message_error));
+	}
+
 	void print_json_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...) {
 
 		char  out[MAX_C_STRING];
@@ -132,7 +136,7 @@ namespace zetjsoncpp{
 		sprintf(out,"%s\n               ^   ",out);
 		sprintf(out,"%s\n  -------------+ \n",out);
 
-		strcat(json_message_error,out);
+		sprintf(json_message_error,out);
 	}
 
 	void print_json_warning(const char *file, int line,bool ignore_warnings, const char *string_text, ...) {
@@ -143,11 +147,9 @@ namespace zetjsoncpp{
 			CAPTURE_VARIABLE_ARGS(text, string_text);
 
 			sprintf(out,"[%s:%i] %s",extractFile(file).c_str(),line,text);
-			strcat(json_message_error,out);
+			sprintf(json_message_error,out);
 		}
 	}
 };
 
-const char * JSON2CPP_getError(){
-	return (const char *)zetjsoncpp::json_message_error;
-}
+

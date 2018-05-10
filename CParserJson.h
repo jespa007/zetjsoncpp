@@ -27,6 +27,8 @@ namespace zetjsoncpp {
 			return (json2cpp((const char *)m_expression.c_str(), CParser<_T>::root_struct_field, 0, ignore_warnings) > 0);
 		}
 
+		const char *getError();
+
 
 		virtual ~CParserJson() {}
 	};
@@ -36,4 +38,4 @@ namespace zetjsoncpp {
 	#include "CParserJson.cxx"
 };
 
-const char * JSON2CPP_getError();
+
