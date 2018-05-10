@@ -1,6 +1,11 @@
+/*
+ *  This file is distributed under the MIT License.
+ *  See LICENSE file for details.
+ */
+
 #pragma once
 
-namespace json2cpp {
+namespace zetjsoncpp {
 
 #define NEW_FLOAT(length)	(new CInfoArray(CDinamicArray::TYPE_FLOAT, length))
 #define NEW_INT(length)	(new CInfoArray(CDinamicArray::TYPE_FLOAT, length))

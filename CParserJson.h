@@ -1,9 +1,15 @@
+/*
+ *  This file is distributed under the MIT License.
+ *  See LICENSE file for details.
+ */
+
+
 #pragma once
 
 
-// static json2cpp
+// static zetjsoncpp
 
-namespace json2cpp {
+namespace zetjsoncpp {
 
 
 	template <typename _T>
@@ -27,6 +33,8 @@ namespace json2cpp {
 			return (json2cpp((const char *)m_expression.c_str(), CParser<_T>::root_struct_field, 0, ignore_warnings) > 0);
 		}
 
+		const char *getError();
+
 
 		virtual ~CParserJson() {}
 	};
@@ -36,4 +44,4 @@ namespace json2cpp {
 	#include "CParserJson.cxx"
 };
 
-const char * JSON2CPP_getError();
+

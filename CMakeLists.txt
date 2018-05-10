@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
  
-project(json2cpp)
+project(zetjsoncpp)
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #
@@ -8,11 +8,18 @@ project(json2cpp)
 #
 
 
+IF (NOT  (("${LINK}" STREQUAL "SHARED") OR ("${LINK}" STREQUAL "STATIC")))
+   SET ( LINK "SHARED" )
+ENDIF()
+ 
+message("link:" ${LINK})
+
+
 MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
 
     FOREACH(HEADER ${${HEADER_LIST}})
         get_filename_component(DIR ${HEADER} DIRECTORY)
-        INSTALL(FILES ${HEADER} DESTINATION include/json2cpp/${DIR})
+        INSTALL(FILES ${HEADER} DESTINATION include/zetjsoncpp/${DIR})
     ENDFOREACH(HEADER)
 
 ENDMACRO(INSTALL_HEADERS_WITH_DIRECTORY)
@@ -32,7 +39,7 @@ message("dest dir:" ${CMAKE_INSTALL_PREFIX})
 if(MSVC)
 	MESSAGE ("********* MSVC ************" )
 	
-	add_definitions(-D_CRT_SECURE_NO_WARNINGS -DJSON2CPP_EXPORTS)
+	add_definitions(-D_CRT_SECURE_NO_WARNINGS -DZETJSONCPP_EXPORTS)
 
 	#disable C4103 warning because is perfectly valid. Only MSVC complains about it
 	add_definitions(/wd4103)
@@ -133,25 +140,25 @@ endif()
 
 # Library
 
-set( JSON2CPP_LIB_SRCS
+set( ZETJSONCPP_LIB_SRCS
 
 	CFile.cpp
 	CStringUtils.cpp
 	
 	CParserVar.cpp
-	CBaseParser.cpp
+	CParserBase.cpp
 	CParserJson.cpp
 	
 
 )
 
 # json2cpplib
-add_library( json2cpp${POST_NAME} STATIC ${JSON2CPP_LIB_SRCS} )
-target_link_libraries(json2cpp${POST_NAME} )
+add_library( zetjsoncpp${POST_NAME} ${LINK} ${ZETJSONCPP_LIB_SRCS} )
+target_link_libraries(zetjsoncpp${POST_NAME} )
 
 SET(
 	HS
-	json2cpp.h
+	zetjsoncpp.h
 	CFile.h
 	CParserBase.h
 	CParserJson.h
@@ -168,12 +175,12 @@ add_executable(json_test${POST_NAME}
 	${PROJECT_SOURCE_DIR}/test/json_test.cpp
 )	
 
-target_link_libraries(json_test${POST_NAME} json2cpp${POST_NAME})	
+target_link_libraries(json_test${POST_NAME} zetjsoncpp${POST_NAME})	
 
 
 
 
-INSTALL(TARGETS json2cpp${POST_NAME}
+INSTALL(TARGETS zetjsoncpp${POST_NAME}
 		ARCHIVE DESTINATION  	${CMAKE_INSTALL_PREFIX}/lib
 		RUNTIME DESTINATION  	${CMAKE_INSTALL_PREFIX}/bin
     	LIBRARY DESTINATION 	${CMAKE_INSTALL_PREFIX}/lib

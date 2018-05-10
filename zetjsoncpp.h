@@ -1,17 +1,7 @@
-//    This file is part of json2cpp.
-//
-//    json2cpp is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-
-//    json2cpp is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-
-//    You should have received a copy of the GNU General Public License
-//    along with json2cpp.  If not, see <http://www.gnu.org/licenses/>.
+/*
+ *  This file is distributed under the MIT License.
+ *  See LICENSE file for details.
+ */
 
 
 
@@ -31,9 +21,9 @@
 using std::string;
 using std::vector;
 
-#define JSON2CPP_MAJOR_VERSION 0
-#define JSON2CPP_MINOR_VERSION 0
-#define JSON2CPP_PATCH_VERSION 3
+#define ZETJSONCPP_MAJOR_VERSION 0
+#define ZETJSONCPP_MINOR_VERSION 0
+#define ZETJSONCPP_PATCH_VERSION 3
 
 
 #if  !defined(MIN)
@@ -97,24 +87,13 @@ using std::vector;
 
 #define getChr(name, ii) ((MIN(ii,JSON_MAX_CONST_CHAR))<sizeof(name)/sizeof(*name)?name[ii]:0)
 
-namespace json2cpp{
 
-	bool IS_SINGLE_COMMENT(char *str);
-	bool IS_START_COMMENT(char *str);
-	bool IS_END_COMMENT(char *str);
-	char *ADVANCE_TO_CHAR(char *str,char c);
-	char *ADVANCE_TO_END_COMMENT(char *aux_p, int &m_line);
-	char *IGNORE_BLANKS(char *str, int &m_line);
-	char *ADVANCE_TO_ONE_OF_COLLECTION_CHAR(char *str,char *end_char_standard_value, int &m_line);
-
-
-};
 
 #include "CBuffer.h"
 #include "CStringUtils.h"
 #include "CFile.h"
 #include "CParserVar.h"
-#include "CBaseParser.h"
+#include "CParserBase.h"
 #include "CParser.h"
 #include "CParserJson.h"
 

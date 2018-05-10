@@ -1,14 +1,16 @@
+/*
+ *  This file is distributed under the MIT License.
+ *  See LICENSE file for details.
+ */
+
+
 #pragma once
 
 
-namespace json2cpp {
-
-
+namespace zetjsoncpp {
 
 
 #define N_ELEMENTS_JSON_ARRAY_PRINT	10
-
-
 
 #define JS_STRING_CAST 		(CParserVarString<> *)
 #define JS_ARRAY_STRING_CAST 	(CParserVarArrayString<> *)
@@ -393,7 +395,7 @@ namespace json2cpp {
 		CParserVar 	js_end;
 
 		//----------------------------------------------------------------
-		CParserVarPropertyGroup(uint32_t numParam = 0, ...) {
+		void setup(uint32_t numParam = 0, ...) {
 			// PRE: All args must be string. The program can parse the apropiate type var
 			// with its emmbedded type.
 
@@ -429,6 +431,14 @@ namespace json2cpp {
 			va_end(arg_list);
 			//---------
 
+		}
+
+		CParserVarPropertyGroup(...) {
+			setup();
+		}
+
+		CParserVarPropertyGroup(uint32_t numParam,...) {
+			setup(numParam);
 		}
 
 		virtual string & getStrValue(int ident, uint32_t flags = 0) {
@@ -640,7 +650,7 @@ namespace json2cpp {
 				for (int k = 0; k <= (ident + 1); k++)
 					this->str_value = this->str_value + "\t";
 
-			for (int j = 0; j < v->size(); j++) {
+			for (unsigned j = 0; j < v->size(); j++) {
 
 				if (j > 0)
 					this->str_value = this->str_value + ",";
