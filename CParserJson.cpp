@@ -1,6 +1,6 @@
-#include "json2cpp.h"
+#include "zetjsoncpp.h"
 
-namespace json2cpp{
+namespace zetjsoncpp{
 
 
 	char json_message_error[16836]={0};
@@ -149,5 +149,5 @@ namespace json2cpp{
 };
 
 const char * JSON2CPP_getError(){
-	return (const char *)json2cpp::json_message_error;
+	return (const char *)zetjsoncpp::json_message_error;
 }

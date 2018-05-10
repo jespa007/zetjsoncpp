@@ -1,9 +1,9 @@
 #pragma once
 
-namespace json2cpp {
+namespace zetjsoncpp {
 
 	template<typename _T>
-	class CParser : public CBaseParser {
+	class CParser : public CParserBase {
 
 	protected:
 
@@ -35,7 +35,7 @@ namespace json2cpp {
 
 			ByteBuffer *buf = readFile(m_filename);
 			if (buf != NULL) {
-				ok = (evalString((char *)buf->data_buffer, 0, ignore_warnings) > 0);
+				ok = evalString((char *)buf->data_buffer, 0, ignore_warnings);
 				delete buf;
 			}
 

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace json2cpp {
+namespace zetjsoncpp {
 
 #define NEW_FLOAT(length)	(new CInfoArray(CDinamicArray::TYPE_FLOAT, length))
 #define NEW_INT(length)	(new CInfoArray(CDinamicArray::TYPE_FLOAT, length))

@@ -1,9 +1,9 @@
 #pragma once
 
 
-// static json2cpp
+// static zetjsoncpp
 
-namespace json2cpp {
+namespace zetjsoncpp {
 
 
 	template <typename _T>

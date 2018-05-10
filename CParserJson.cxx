@@ -1,4 +1,4 @@
-//#include "CParserJson.h"
+
 
 
 #define MAX_NAME_PROPERTY 512
@@ -57,7 +57,6 @@ const char end_char_standard_value[] = {
 
 
 
-
 template <typename _T>
 CParserVar *CParserJson<_T>::findProperty(CParserVar * c_data, char *property_name) {
 
@@ -102,9 +101,6 @@ void CParserJson<_T>::setPropertiesParsedToFalse(CParserVar * c_data) {
 	}
 
 }
-
-
-//int m_json_line=0;
 
 
 template <typename _T>
@@ -174,8 +170,6 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 				// capture property inside...
 				current_ptr = IGNORE_BLANKS(current_ptr, this->m_line);
 
-
-
 				if (*current_ptr != END_GROUP) // void property return...
 				{
 
@@ -223,8 +217,6 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 							type_value = -1;
 
 							another_element = false;
-
-
 
 							if (isArray /*&& (c_property != NULL)*/) {
 
@@ -274,8 +266,9 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 													str_end = ADVANCE_TO_CHAR(current_ptr + 1, '\"');
 
 											if (*current_ptr == *str_end) {
-												if (!isArray)
+												if (!isArray) {
 													print_info_json("property \"%s\" detected as string", property_name);
+												}
 												bytes_readed = str_end - current_ptr + 1;
 												memset(val, 0, sizeof(val));
 												type_value = CParserVar::TYPE_STRING;
@@ -295,8 +288,9 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 
 										}
 										else if (!strncmp(current_ptr, "true", 4)) { // true detected ...
-											if (!isArray)
+											if (!isArray) {
 												print_info_json("property \"%s\" detected as boolean", property_name);
+											}
 
 											type_value = CParserVar::TYPE_BOOL;
 											strcpy(val, "true");
@@ -304,8 +298,9 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 											boolValue = true;
 										}
 										else if (!strncmp(current_ptr, "false", 5)) {// boolean detected
-											if (!isArray)
+											if (!isArray) {
 												print_info_json("property \"%s\"detected as boolean", property_name);
+											}
 
 											type_value = CParserVar::TYPE_BOOL;
 											strcpy(val, "false");
@@ -331,16 +326,18 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 
 												//if(type_number != 0){
 												if (type_number == STRING_IS_INT) { //RE2::FullMatch(val,"[-]?[0-9]*")) {// check for normal int...
-													if (!isArray)
+													if (!isArray) {
 														print_info_json("property \"%s\" detected as int32", property_name);
+													}
 
 													numberValue = (float)strtol(val, NULL, 10);
 													type_value = CParserVar::TYPE_NUMBER;
 													ok = true;
 												}
 												else  if (type_number == STRING_IS_HEXA) {//RE2::FullMatch(val,"0[xX][0-9a-fA-F]+")) {// check for hexadecimal...
-													if (!isArray)
+													if (!isArray) {
 														print_info_json("property \"%s\" detected as hex", property_name);
+													}
 
 													numberValue = (float)strtol(val, NULL, 16);
 													type_value = CParserVar::TYPE_NUMBER;
@@ -353,19 +350,14 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 
 													if (*p == '\0') {
 
-														if (!isArray)
+														if (!isArray) {
 															print_info_json("property \"%s\" detected as float/double", property_name);
+														}
 
 														ok = true;
 														type_value = CParserVar::TYPE_NUMBER;
 													}
 												}
-
-
-
-
-												//}
-
 											}
 										}
 									}
@@ -375,26 +367,11 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 										return 0;
 									}
 									else { // value ok
-										/*if(first_type_value == -1)
-											first_type_value = type_value;*/
-											/*else if(first_type_value != type_value && !(bothAreTypeNumbers(first_type_value, type_value))){
-												print_json_error(start_str,current_ptr,"array values in property \"%s\" have different values.",property_name);
-												return 0;
-											}*/
-
-
 										if (isArray)
 											type_value += CParserVar::TYPE_ARRAY;
 
 										// ok, check if the value parsed is the same as c_property (only saves particular elements (string/boolean/etc) but not property groups (it was saved already in recursion before)
 										if (c_property != NULL && !c_property->isParsed()) {
-
-											//bool is_a_number = bothAreTypeNumbers(type_value,c_property->_m_iType);
-											//float numberValue;
-
-											//if(is_a_number){
-											//	numberValue=((type_value&0xff) == FLOAT_TYPE)?floatValue:intValue;
-											//}
 
 											if (type_value == c_property->_m_iType /*||
 													is_a_number*/
@@ -444,7 +421,6 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 												case 	CParserVar::TYPE_PROPERTY_GROUP:
 													// Nothing ... is well done!
 													break;
-
 												}
 
 												// set parsed element...
@@ -458,14 +434,9 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 										}
 										else {
 
-											/*if(!strcmp(property_name,"stage")){
-												int kk=0;
-												kk++;
-											}*/
 											if (c_data != NULL && strcmp(old_property_name, property_name))
 												print_json_warning(this->m_filesrc, this->m_line,"Variable name \"%s\" NOT registered in c-struct", property_name);
 										}
-
 									}
 
 									strcpy(old_property_name, property_name);
@@ -486,7 +457,6 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 											return 0;
 										}
 									}
-
 
 								} while ((isArray && *current_ptr != ']') || another_element);
 							}
@@ -524,10 +494,7 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 					current_ptr++;
 					return current_ptr - start_str; // return..
 				}
-
-
 			}
-
 		}
 		else {
 			print_json_error(this->m_filesrc, this->m_line,start_str, current_ptr, "It doesn't possible check begin/end group {");
@@ -550,7 +517,6 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 		else // breaks the main root.
 			more_group_properties = false;
 	}
-
 	return current_ptr - start_str;
 }
 

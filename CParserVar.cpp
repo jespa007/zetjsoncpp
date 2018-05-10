@@ -1,7 +1,7 @@
 
-#include "json2cpp.h"
+#include "zetjsoncpp.h"
 
-namespace json2cpp {
+namespace zetjsoncpp {
 
 	char const
 		CParserVar::STR_EMPTY[] = "empty";

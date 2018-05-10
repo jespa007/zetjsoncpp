@@ -1,7 +1,7 @@
 
-#include "../json2cpp.h"
+#include "../zetjsoncpp.h"
 
-using namespace json2cpp;
+using namespace zetjsoncpp;
 
 
 
@@ -30,7 +30,7 @@ typedef struct
 
 int main(int argc, char *argv[]){
 
-	std::cout << "json2cpp ver. "<< JSON2CPP_MAJOR_VERSION << "." << JSON2CPP_MINOR_VERSION << "."<< JSON2CPP_PATCH_VERSION << std::endl;
+	std::cout << "zetjsoncpp ver. "<< JSON2CPP_MAJOR_VERSION << "." << JSON2CPP_MINOR_VERSION << "."<< JSON2CPP_PATCH_VERSION << std::endl;
 	if(argc <=1){
 		std::cerr << "put file to parse"<< std::endl;
 		return 0;

@@ -7,9 +7,9 @@
 
 #pragma once
 
-namespace json2cpp{
+namespace zetjsoncpp{
 
-	class CBaseParser{
+	class CParserBase{
 	protected:
 
 		string filename;
@@ -18,9 +18,9 @@ namespace json2cpp{
 
 
 	public:
-	  CBaseParser(){}
+	  CParserBase(){}
 
-	 virtual ~CBaseParser(){}
+	 virtual ~CParserBase(){}
 	};
 
 };
