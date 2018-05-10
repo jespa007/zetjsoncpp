@@ -1,9 +1,5 @@
-/json2cpp.vcxproj.filters
-/test.vcxproj
-/test.vcxproj.filters
-/ZERO_CHECK.vcxproj
-/ZERO_CHECK.vcxproj.filters
-/CMakeFiles
+/bin/
+/CMakeFiles/
 /ALL_BUILD.vcxproj
 /ALL_BUILD.vcxproj.filters
 /cmake_install.cmake
@@ -12,5 +8,9 @@
 /INSTALL.vcxproj.filters
 /json_test.vcxproj
 /json_test.vcxproj.filters
-/json2cpp.sln
-/json2cpp.vcxproj
+/Makefile
+/ZERO_CHECK.vcxproj
+/ZERO_CHECK.vcxproj.filters
+/zetjsoncpp.sln
+/zetjsoncpp.vcxproj
+/zetjsoncpp.vcxproj.filters
