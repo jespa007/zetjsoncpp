@@ -69,6 +69,8 @@ int main(int argc, char *argv[]){
 		// show the modifications at screen (it can be saved in file too)
 		std::cout << parser->getData()->cpp2json();
 
+    }else{
+    	fprintf(stderr,JSON2CPP_getError());
     }
     
     // deallocates parser

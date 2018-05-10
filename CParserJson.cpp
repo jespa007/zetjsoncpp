@@ -60,7 +60,6 @@ namespace json2cpp{
 
 	}
 
-
 	char *IGNORE_BLANKS(char *str, int &m_line) {
 		char *aux_p = str;
 		bool end = false;
@@ -93,7 +92,6 @@ namespace json2cpp{
 		return aux_p;
 	}
 
-
 	char *ADVANCE_TO_ONE_OF_COLLECTION_CHAR(char *str,char *end_char_standard_value, int &m_line) {
 		char *aux_p = str;
 		char *chk_char;
@@ -121,45 +119,35 @@ namespace json2cpp{
 		return aux_p;
 	}
 
-
-
-
-
-	void print_json_error(const char *start_str, char *current_ptr, const char *string_text, ...) {
-
+	void print_json_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...) {
 
 		char  out[MAX_C_STRING];
 		char  text[MAX_C_STRING];
 		CAPTURE_VARIABLE_ARGS(text, string_text);
 
-		sprintf(out,"[%s:%i] %s",text);
+		sprintf(out,"[%s:%i] %s",extractFile(file).c_str(), line,text);
 
 		//CLog::print(this->m_filesrc, this->m_line, CLog::LOG_ERROR, true, text);
-		sprintf(out,"\n...%.15s...", PREVIEW_SSTRING(start_str, current_ptr, 15));
-		sprintf(out,"\n               ^   ");
-		sprintf(out,"\n  -------------+ \n");
+		sprintf(out,"%s\n...%.15s...", out,PREVIEW_SSTRING(start_str, current_ptr, 15));
+		sprintf(out,"%s\n               ^   ",out);
+		sprintf(out,"%s\n  -------------+ \n",out);
 
 		strcat(json_message_error,out);
-
-
 	}
 
-
-	void print_json_warning(bool ignore_warnings, const char *string_text, ...) {
+	void print_json_warning(const char *file, int line,bool ignore_warnings, const char *string_text, ...) {
 
 		if (!ignore_warnings) {
 			char  out[MAX_C_STRING];
 			char  text[MAX_C_STRING];
 			CAPTURE_VARIABLE_ARGS(text, string_text);
 
-			sprintf(out,"[%s:%i] %s",text);
+			sprintf(out,"[%s:%i] %s",extractFile(file).c_str(),line,text);
 			strcat(json_message_error,out);
 		}
 	}
-
-
-	const char * json_get_error(){
-		return (const char *)json_message_error;
-	}
-
 };
+
+const char * JSON2CPP_getError(){
+	return (const char *)json2cpp::json_message_error;
+}

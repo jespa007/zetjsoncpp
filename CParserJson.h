@@ -32,5 +32,8 @@ namespace json2cpp {
 	};
 
 
+
 	#include "CParserJson.cxx"
 };
+
+const char * JSON2CPP_getError();
