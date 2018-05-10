@@ -1,14 +1,16 @@
+/*
+ *  This file is distributed under the MIT License.
+ *  See LICENSE file for details.
+ */
+
+
 #pragma once
 
 
 namespace zetjsoncpp {
 
 
-
-
 #define N_ELEMENTS_JSON_ARRAY_PRINT	10
-
-
 
 #define JS_STRING_CAST 		(CParserVarString<> *)
 #define JS_ARRAY_STRING_CAST 	(CParserVarArrayString<> *)

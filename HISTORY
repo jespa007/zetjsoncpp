@@ -1,4 +1,5 @@
 //----------------------------
+Date: 10/05/2018
 Version: 0.03
 
 MSVC Support (v141 Tools or MSVC++ 2015)
@@ -6,8 +7,10 @@ restruct files/dirs new set.
 Added zetjsoncpp namespace
 Renamed fastjsoncpp to zetjsoncpp
 Added feature detect array types
+Changed GPL3 license to MIT
 
 //----------------------------
+Date: 29/08/2015
 Version: 0.02
 
 Added feature support numbor as cientific notation (i.e 2.1E-10).
@@ -15,5 +18,6 @@ Added feature on detecting property group or property group arrays.
 Fixed carry return line feeds compatible for Windows
 
 //----------------------------
+Date: 08/08/2014
 Version: 0.01
 Exit version
