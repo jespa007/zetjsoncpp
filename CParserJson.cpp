@@ -8,7 +8,9 @@
 namespace zetjsoncpp{
 
 
-	char json_message_error[16836]={0};
+
+	tJsonWarningCallback json_warning_callback=NULL;
+	tJsonErrorCallback json_error_callback=NULL;
 
 	bool IS_SINGLE_COMMENT(char *str){
 
@@ -124,35 +126,45 @@ namespace zetjsoncpp{
 		return aux_p;
 	}
 
-	void clear_message_error(){
-		memset(json_message_error,0,sizeof(json_message_error));
+	void set_json_error_callback(tJsonErrorCallback _error_callback){
+		json_error_callback=_error_callback;
+	}
+
+	void set_json_warning_callback(tJsonWarningCallback _warning_callback){
+		json_warning_callback=_warning_callback;
 	}
 
 	void print_json_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...) {
 
-		char  out[MAX_C_STRING];
+		
+		char  where[1024];
 		char  text[MAX_C_STRING];
 		CAPTURE_VARIABLE_ARGS(text, string_text);
 
-		sprintf(out,"[%s:%i] %s",extractFile(file).c_str(), line,text);
+		sprintf(where,"...%.15s..."
+					  "\n               ^   "
+					  "\n  -------------+ \n", PREVIEW_SSTRING(start_str, current_ptr, 15));
 
-		//CLog::print(this->m_filesrc, this->m_line, CLog::LOG_ERROR, true, text);
-		sprintf(out,"%s\n...%.15s...", out,PREVIEW_SSTRING(start_str, current_ptr, 15));
-		sprintf(out,"%s\n               ^   ",out);
-		sprintf(out,"%s\n  -------------+ \n",out);
-
-		sprintf(json_message_error,out);
+		if(json_error_callback!=NULL){
+			json_error_callback(file,line,text,where);
+		}
+		else{
+			fprintf(stderr,"[%s:%i] %s\n%s",extractFile(file).c_str(), line,text,where);
+		}
 	}
 
 	void print_json_warning(const char *file, int line,bool ignore_warnings, const char *string_text, ...) {
 
 		if (!ignore_warnings) {
-			char  out[MAX_C_STRING];
 			char  text[MAX_C_STRING];
 			CAPTURE_VARIABLE_ARGS(text, string_text);
 
-			sprintf(out,"[%s:%i] %s",extractFile(file).c_str(),line,text);
-			sprintf(json_message_error,out);
+			if(json_warning_callback!=NULL){
+				json_warning_callback(file,line,text);
+			}
+			else{
+				fprintf(stderr,"[%s:%i] %s",extractFile(file).c_str(),line,text);
+			}
 		}
 	}
 };

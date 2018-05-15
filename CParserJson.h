@@ -11,6 +11,8 @@
 
 namespace zetjsoncpp {
 
+	typedef void (* tJsonErrorCallback)(const char *file, int line, const char *str,const char *where);
+	typedef void (* tJsonWarningCallback)(const char *file, int line, const char *str);
 
 	template <typename _T>
 	class CParserJson : public CParser<_T> {
@@ -33,13 +35,11 @@ namespace zetjsoncpp {
 			return (json2cpp((const char *)m_expression.c_str(), CParser<_T>::root_struct_field, 0, ignore_warnings) > 0);
 		}
 
-		const char *getError();
-
-
 		virtual ~CParserJson() {}
 	};
 
-
+	void set_json_error_callback(tJsonErrorCallback _error_callback);
+	void set_json_warning_callback(tJsonWarningCallback _warning_callback);
 
 	#include "CParserJson.cxx"
 };

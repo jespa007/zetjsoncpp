@@ -85,11 +85,6 @@ CParserVar *CParserJson<_T>::findProperty(CParserVar * c_data, char *property_na
 }
 
 template <typename _T>
-const char * CParserJson<_T>::getError() {
-	return (const char *)json_message_error;
-}
-
-template <typename _T>
 void CParserJson<_T>::setPropertiesParsedToFalse(CParserVar * c_data) {
 
 	// no data no search...

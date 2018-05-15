@@ -1,6 +1,7 @@
 
 #include "../zetjsoncpp.h"
 
+
 using namespace zetjsoncpp;
 
 
@@ -69,12 +70,14 @@ int main(int argc, char *argv[]){
 		// show the modifications at screen (it can be saved in file too)
 		std::cout << parser->getData()->cpp2json();
 
-    }else{
-    	fprintf(stderr,parser->getError());
     }
     
     // deallocates parser
-    delete parser;
+   delete parser;
+
+#ifdef __MEMMANAGER__
+  MEM_ViewStatus();
+#endif
 
     // that's all :)
     return 0;
