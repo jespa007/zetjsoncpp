@@ -18,6 +18,67 @@ namespace zetjsoncpp {
 #define JS_FLOAT_CAST 		(CParserVarNumber<> *)
 
 
+#if  !defined(MIN)
+#define  MIN(a,  b)              ((a)  <  (b)  ?  (a)  :  (b))
+#endif
+
+#define JSON_MAX_CONST_CHAR 50
+
+#define _CONST_CHAR(s)\
+	getChr(s,0),\
+	getChr(s,1),\
+	getChr(s,2),\
+	getChr(s,3),\
+	getChr(s,4),\
+	getChr(s,5),\
+	getChr(s,6),\
+	getChr(s,7),\
+	getChr(s,8),\
+	getChr(s,9),\
+	getChr(s,10),\
+	getChr(s,11),\
+	getChr(s,12),\
+	getChr(s,13),\
+	getChr(s,14),\
+	getChr(s,15),\
+	getChr(s,16),\
+	getChr(s,17),\
+	getChr(s,18),\
+	getChr(s,19),\
+	getChr(s,20),\
+	getChr(s,21),\
+	getChr(s,22),\
+	getChr(s,23),\
+	getChr(s,24),\
+	getChr(s,25),\
+	getChr(s,26),\
+	getChr(s,27),\
+	getChr(s,28),\
+	getChr(s,29),\
+	getChr(s,30),\
+	getChr(s,31),\
+	getChr(s,32),\
+	getChr(s,33),\
+	getChr(s,34),\
+	getChr(s,35),\
+	getChr(s,36),\
+	getChr(s,37),\
+	getChr(s,38),\
+	getChr(s,39),\
+	getChr(s,40),\
+	getChr(s,41),\
+	getChr(s,42),\
+	getChr(s,43),\
+	getChr(s,44),\
+	getChr(s,45),\
+	getChr(s,46),\
+	getChr(s,47),\
+	getChr(s,48),\
+	getChr(s,49),\
+	getChr(s,50)
+
+#define getChr(name, ii) ((MIN(ii,JSON_MAX_CONST_CHAR))<sizeof(name)/sizeof(*name)?name[ii]:0)
+
 
 	class CParserVar {//: public CVariable {
 	protected:
@@ -632,7 +693,7 @@ namespace zetjsoncpp {
 		CParserVarArrayBool() {
 			this->_m_iType = CParserVar::TYPE_ARRAY_BOOL;
 			this->size = sizeof(CParserVarArrayBool<chr1, chr2, _T_NAME...>);
-			this->p_data = &this->vec_data;////new vector<string>;
+			this->p_data = &this->vec_data;
 		}
 
 		void add(bool s) {
@@ -694,7 +755,7 @@ namespace zetjsoncpp {
 			shortBuf = NULL;
 			this->_m_iType = CParserVar::TYPE_ARRAY_NUMBER;
 			this->size_data = sizeof(CParserVarArrayNumber<chr1, chr2, _T_NAME...>);
-			this->p_data = &this->vec_data;////new vector<string>;
+			this->p_data = &this->vec_data;
 		}
 
 		void add(float s) {
@@ -769,7 +830,7 @@ namespace zetjsoncpp {
 		CParserVarArrayString() {
 			this->_m_iType = CParserVar::TYPE_ARRAY_STRING;
 			this->size_data = sizeof(CParserVarArrayString<chr1, chr2, _T_NAME...>);
-			this->p_data = &this->vec_data;////new vector<string>;
+			this->p_data = &this->vec_data;
 		}
 
 		void add(string const & s) {
@@ -865,6 +926,7 @@ namespace zetjsoncpp {
 		}
 
 		void destroy() {
+
 			for (unsigned i = 0; i < this->vec_data.size(); i++) {
 				delete this->vec_data[i];
 				this->vec_data[i] = NULL;

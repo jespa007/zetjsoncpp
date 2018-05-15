@@ -10,7 +10,7 @@
 namespace zetjsoncpp{
 
 	bool fileExists(const string & m_file) ;
-	ByteBuffer * readFile(const string & filename, bool end_string_char=true);
+	ZETJSONCPP_MODULE_EXPORT ByteBuffer * readFile(const string & filename, bool end_string_char=true);
 	int  getLengthFile(const  string  & file);
 	string extractFile(const string & _filename);
 
