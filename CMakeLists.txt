@@ -170,8 +170,11 @@ SET(
 	HS
 	zetjsoncpp.h
 	CFile.h
+	CBuffer.h
+	CParser.h
 	CParserBase.h
 	CParserJson.h
+	CParserJson.cxx
 	CParserVar.h
 	CStringUtils.h
 )
