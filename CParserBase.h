@@ -5,6 +5,8 @@
 
 #pragma once
 
+
+
 namespace zetjsoncpp{
 
 	class CParserBase{

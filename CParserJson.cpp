@@ -9,8 +9,8 @@ namespace zetjsoncpp{
 
 
 
-	tJsonWarningCallback json_warning_callback=NULL;
-	tJsonErrorCallback json_error_callback=NULL;
+//	tJsonWarningCallback json_warning_callback=NULL;
+	//tJsonErrorCallback json_error_callback=NULL;
 
 	bool IS_SINGLE_COMMENT(char *str){
 
@@ -126,13 +126,13 @@ namespace zetjsoncpp{
 		return aux_p;
 	}
 
-	void set_json_error_callback(tJsonErrorCallback _error_callback){
+	/*void set_json_error_callback(tJsonErrorCallback _error_callback){
 		json_error_callback=_error_callback;
 	}
 
 	void set_json_warning_callback(tJsonWarningCallback _warning_callback){
 		json_warning_callback=_warning_callback;
-	}
+	}*/
 
 	void print_json_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...) {
 
@@ -145,12 +145,12 @@ namespace zetjsoncpp{
 					  "\n               ^   "
 					  "\n  -------------+ \n", PREVIEW_SSTRING(start_str, current_ptr, 15));
 
-		if(json_error_callback!=NULL){
+		/*if(json_error_callback!=NULL){
 			json_error_callback(file,line,text,where);
 		}
-		else{
+		else{*/
 			fprintf(stderr,"[%s:%i] %s\n%s",extractFile(file).c_str(), line,text,where);
-		}
+		//}
 	}
 
 	void print_json_warning(const char *file, int line,bool ignore_warnings, const char *string_text, ...) {
@@ -159,12 +159,12 @@ namespace zetjsoncpp{
 			char  text[MAX_C_STRING];
 			CAPTURE_VARIABLE_ARGS(text, string_text);
 
-			if(json_warning_callback!=NULL){
+			/*if(json_warning_callback!=NULL){
 				json_warning_callback(file,line,text);
 			}
-			else{
+			else{*/
 				fprintf(stderr,"[%s:%i] %s",extractFile(file).c_str(),line,text);
-			}
+			//}
 		}
 	}
 };

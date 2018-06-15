@@ -17,6 +17,7 @@
 #include <cstring>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <exception>
 
 using std::string;
 using std::vector;
@@ -40,10 +41,14 @@ using std::vector;
 #include "CBuffer.h"
 #include "CStringUtils.h"
 #include "CFile.h"
+
+#include "CBoolean.h"
+#include "CNumber.h"
+#include "CString.h"
+#include "CFunctor.h"
 #include "CParserVar.h"
 #include "CParserBase.h"
 #include "CParser.h"
 #include "CParserJson.h"
-
 
 

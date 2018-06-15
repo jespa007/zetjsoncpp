@@ -146,6 +146,9 @@ set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
 	CFile.cpp
 	CStringUtils.cpp
+	CNumber.cpp
+	CString.cpp
+	CBoolean.cpp
 	CParserVar.cpp
 	CParserBase.cpp
 	CParserJson.cpp
@@ -170,6 +173,10 @@ SET(
 	HS
 	zetjsoncpp.h
 	CFile.h
+	CFunctor.h
+	CBoolean.h
+	CNumber.h
+	CString.h
 	CBuffer.h
 	CParser.h
 	CParserBase.h

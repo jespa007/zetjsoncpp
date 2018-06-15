@@ -217,15 +217,15 @@ namespace zetjsoncpp {
 
 
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarNumber : public CParserVarNamed<chr1, chr2, _T_NAME ...> {
+	class CParserVarNumber : public CParserVarNamed<chr1, chr2, _T_NAME ...>,public CNumber {
 
-		float number;
+
 		bool m_forceInteger;
 		void init() {
-			number = 0;
+			//number = 0;
 			this->_m_iType = CParserVar::TYPE_NUMBER;
 			this->size_data = sizeof(CParserVarNumber<chr1, chr2, _T_NAME...>);
-			this->p_data = &number;
+			this->p_data = &this->m_numVar;
 			m_forceInteger = false;
 			if (this->_m_pvariableName == "") {
 
@@ -241,14 +241,14 @@ namespace zetjsoncpp {
 
 		explicit CParserVarNumber(float i) {
 			init();
-			number = i;
+			this->m_numVar = i;
 
 
 		}
 
 		CParserVarNumber & operator =(float b) {
 
-			number = b;
+			this->m_numVar = b;
 			return *this;
 		}
 
@@ -258,7 +258,7 @@ namespace zetjsoncpp {
 
 		CParserVarNumber & operator =(int i) {
 
-			number = (float)i;
+			this->m_numVar = (float)i;
 			return *this;
 		}
 
@@ -269,21 +269,21 @@ namespace zetjsoncpp {
 
 		CParserVarNumber & operator =(const string & intStr) {
 
-			number = fromString<float>(intStr);
+			this->m_numVar = fromString<float>(intStr);
 			return *this;
 		}
 
 		operator float() {
 
-			return number;
+			return this->m_numVar;
 		}
 
 		virtual string & getStrValue(int ident, uint32_t flags = 0) {
 
 			if (m_forceInteger)
-				this->str_value = "" + intToString(number);
+				this->str_value = "" + intToString(this->m_numVar);
 			else
-				this->str_value = "" + floatToString(number);
+				this->str_value = "" + floatToString(this->m_numVar);
 			return this->str_value;
 		}
 
@@ -291,14 +291,14 @@ namespace zetjsoncpp {
 	};
 
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarBoolean : public CParserVarNamed<chr1, chr2, _T_NAME ...> {
-		bool b_value;
+	class CParserVarBoolean : public CParserVarNamed<chr1, chr2, _T_NAME ...>, public CBoolean {
+
 
 		void init() {
-			b_value=false;
+			//b_value=false;
 			this->_m_iType = CParserVar::TYPE_BOOL;
 			this->size_data = sizeof(CParserVarBoolean<chr1, chr2, _T_NAME...>);
-			this->p_data = &this->b_value;
+			this->p_data = &this->m_boolVar;
 
 			if (this->_m_pvariableName == "")
 			{
@@ -348,14 +348,14 @@ namespace zetjsoncpp {
 	};
 
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarString : public CParserVarNamed<chr1, chr2, _T_NAME... > {
+	class CParserVarString : public CParserVarNamed<chr1, chr2, _T_NAME... > , public CString{
 	protected:
 		virtual void init() {
 
 			this->m_force_string = false;
 			this->_m_iType = CParserVar::TYPE_STRING;
 			this->size_data = sizeof(CParserVarString<chr1, chr2, _T_NAME...>);
-			this->p_data = &this->s_value;
+			this->p_data = &this->m_str;
 
 			if (this->_m_pvariableName == "")
 			{
