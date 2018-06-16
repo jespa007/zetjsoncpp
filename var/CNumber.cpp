@@ -3,7 +3,7 @@
 namespace zetjsoncpp {
 
 double CNumber::parse(const string & str ){
-	return fromString<double>(str);
+	return CZetJsonCppUtils::fromString<double>(str);
 }
 
 CNumber::CNumber(){

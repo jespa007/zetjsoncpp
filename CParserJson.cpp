@@ -149,7 +149,7 @@ namespace zetjsoncpp{
 			json_error_callback(file,line,text,where);
 		}
 		else{*/
-			fprintf(stderr,"[%s:%i] %s\n%s",extractFile(file).c_str(), line,text,where);
+			fprintf(stderr,"[%s:%i] %s\n%s",CZetJsonCppUtils::extractFile(file).c_str(), line,text,where);
 		//}
 	}
 
@@ -163,7 +163,7 @@ namespace zetjsoncpp{
 				json_warning_callback(file,line,text);
 			}
 			else{*/
-				fprintf(stderr,"[%s:%i] %s",extractFile(file).c_str(),line,text);
+				fprintf(stderr,"[%s:%i] %s",CZetJsonCppUtils::extractFile(file).c_str(),line,text);
 			//}
 		}
 	}

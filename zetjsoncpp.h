@@ -39,13 +39,14 @@ using std::vector;
 #endif
 
 #include "CBuffer.h"
-#include "CStringUtils.h"
-#include "CFile.h"
+#include "CZetJsonCppUtils.h"
 
-#include "CBoolean.h"
-#include "CNumber.h"
-#include "CString.h"
-#include "CFunctor.h"
+
+#include "var/CBoolean.h"
+#include "var/CNumber.h"
+#include "var/CString.h"
+#include "var/CFunctor.h"
+
 #include "CParserVar.h"
 #include "CParserBase.h"
 #include "CParser.h"

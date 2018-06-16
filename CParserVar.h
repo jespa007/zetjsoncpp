@@ -269,7 +269,7 @@ namespace zetjsoncpp {
 
 		CParserVarNumber & operator =(const string & intStr) {
 
-			this->m_numVar = fromString<float>(intStr);
+			this->m_numVar = CZetJsonCppUtils::fromString<float>(intStr);
 			return *this;
 		}
 
@@ -281,9 +281,9 @@ namespace zetjsoncpp {
 		virtual string & getStrValue(int ident, uint32_t flags = 0) {
 
 			if (m_forceInteger)
-				this->str_value = "" + intToString(this->m_numVar);
+				this->str_value = "" + CZetJsonCppUtils::intToString(this->m_numVar);
 			else
-				this->str_value = "" + floatToString(this->m_numVar);
+				this->str_value = "" + CZetJsonCppUtils::floatToString(this->m_numVar);
 			return this->str_value;
 		}
 
@@ -330,8 +330,8 @@ namespace zetjsoncpp {
 
 		CParserVarBoolean & operator =(const string & str) {
 
-			if (toLower(str) == "true") *((bool *)this->p_data) = true;
-			else if (toLower(str) == "false") *((bool *)this->p_data) = false;
+			if (CZetJsonCppUtils::toLower(str) == "true") *((bool *)this->p_data) = true;
+			else if (CZetJsonCppUtils::toLower(str) == "false") *((bool *)this->p_data) = false;
 			else fprintf(stderr,"undefined value to assign bool value\n");
 			return *this;
 		}
@@ -775,7 +775,7 @@ namespace zetjsoncpp {
 
 				if (j > 0)
 					this->str_value = this->str_value + ",";
-				m_sfValue = floatToString(v->at(j));
+				m_sfValue = CZetJsonCppUtils::floatToString(v->at(j));
 
 				this->str_value = this->str_value + "" + m_sfValue + " ";
 

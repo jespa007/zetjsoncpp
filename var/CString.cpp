@@ -18,11 +18,11 @@ CString::CString(const char * str){
 }
 
 CString::CString(int i){
-	m_str = intToString(i);
+	m_str = CZetJsonCppUtils::intToString(i);
 }
 
 CString::CString(float f){
-	m_str = floatToString(f);
+	m_str = CZetJsonCppUtils::floatToString(f);
 }
 
 CString CString::operator +(const CString & param)  const {

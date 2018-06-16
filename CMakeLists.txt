@@ -144,11 +144,11 @@ endif()
 # Library
 set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
-	CFile.cpp
-	CStringUtils.cpp
-	CNumber.cpp
-	CString.cpp
-	CBoolean.cpp
+	
+	CZetJsonCppUtils.cpp
+	var/CNumber.cpp
+	var/CString.cpp
+	var/CBoolean.cpp
 	CParserVar.cpp
 	CParserBase.cpp
 	CParserJson.cpp
@@ -172,18 +172,17 @@ endif()
 SET(
 	HS
 	zetjsoncpp.h
-	CFile.h
-	CFunctor.h
-	CBoolean.h
-	CNumber.h
-	CString.h
+	var/CFunctor.h
+	var/CBoolean.h
+	var/CNumber.h
+	var/CString.h
 	CBuffer.h
 	CParser.h
 	CParserBase.h
 	CParserJson.h
 	CParserJson.cxx
 	CParserVar.h
-	CStringUtils.h
+	CZetJsonCppUtils.h
 )
 
 

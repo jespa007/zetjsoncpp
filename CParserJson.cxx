@@ -134,7 +134,7 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 	bool boolValue = false;
 	float numberValue = 0;
 
-	if (isEmpty(start_str))
+	if (CZetJsonCppUtils::isEmpty(start_str))
 		return 0;
 
 
@@ -326,10 +326,10 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 												strncpy(val, current_ptr, bytes_readed);
 
 												// and try to convert in to standard number ...
-												int type_number = isNumber(val);
+												int type_number = CZetJsonCppUtils::isNumber(val);
 
 												//if(type_number != 0){
-												if (type_number == STRING_IS_INT) { //RE2::FullMatch(val,"[-]?[0-9]*")) {// check for normal int...
+												if (type_number == CZetJsonCppUtils::STRING_IS_INT) { //RE2::FullMatch(val,"[-]?[0-9]*")) {// check for normal int...
 													if (!isArray) {
 														print_info_json("property \"%s\" detected as int32", property_name);
 													}
@@ -338,7 +338,7 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 													type_value = CParserVar::TYPE_NUMBER;
 													ok = true;
 												}
-												else  if (type_number == STRING_IS_HEXA) {//RE2::FullMatch(val,"0[xX][0-9a-fA-F]+")) {// check for hexadecimal...
+												else  if (type_number == CZetJsonCppUtils::STRING_IS_HEXA) {//RE2::FullMatch(val,"0[xX][0-9a-fA-F]+")) {// check for hexadecimal...
 													if (!isArray) {
 														print_info_json("property \"%s\" detected as hex", property_name);
 													}

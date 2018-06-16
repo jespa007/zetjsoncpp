@@ -38,7 +38,7 @@ namespace zetjsoncpp {
 			bool ok = false;
 			m_filesrc = m_filename.c_str();
 
-			ByteBuffer *buf = readFile(m_filename);
+			ByteBuffer *buf = CZetJsonCppUtils::readFile(m_filename);
 			if (buf != NULL) {
 				ok = evalString((char *)buf->data_buffer, 0, ignore_warnings);
 				delete buf;

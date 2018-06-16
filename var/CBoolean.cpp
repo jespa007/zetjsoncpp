@@ -16,8 +16,8 @@ CBoolean::CBoolean(bool b ){
 }
 
 bool CBoolean::parse(const std::string & s){
-	if(toLower(s) == "true") return true;
-	if(toLower(s) == "false") return false;
+	if(CZetJsonCppUtils::toLower(s) == "true") return true;
+	if(CZetJsonCppUtils::toLower(s) == "false") return false;
 
 	throw ("Cannot parse string to boolean.");
 }
