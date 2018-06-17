@@ -149,9 +149,11 @@ namespace zetjsoncpp{
 					readed_elements = fread(buffer, 1, file_length, fp);
 
 					if(readed_elements != file_length) {
-						fprintf(stderr,"number elements doesn't match with length file (%s)\n",filename.c_str());
+						//fprintf(stderr,"number elements doesn't match with length file (%s)\n",filename.c_str());
 						delete  buffer;
-						return NULL;
+
+						throw std::runtime_error("number elements doesn't match with length file ("+filename+")");
+
 					}
 
 					ByteBuffer *ch = new ByteBuffer(buffer, file_length+with_end_char);
@@ -162,9 +164,10 @@ namespace zetjsoncpp{
 
 					return ch;
 				}
-				else  fprintf(stderr,"I can't read file \"%s\"\n",filename.c_str());
+				else  throw std::runtime_error("I can't read file \""+filename+"\"");
 			}
-			else  fprintf(stderr,"I can't open file \"%s\"\n",filename.c_str());
+			else  throw std::runtime_error("I can't open file \""+filename+"\"");
+
 
 
 			return NULL;

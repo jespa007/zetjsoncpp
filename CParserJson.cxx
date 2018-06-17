@@ -4,7 +4,7 @@
  */
 
 
-#define MAX_NAME_PROPERTY 512
+#define MAX_NAME_PROPERTY 128
 #define MAX_C_STRING 4096
 
 
@@ -45,8 +45,8 @@ ZETJSONCPP_MODULE_EXPORT char *ADVANCE_TO_CHAR(char *str,char c);
 ZETJSONCPP_MODULE_EXPORT char *ADVANCE_TO_END_COMMENT(char *aux_p, int &m_line);
 ZETJSONCPP_MODULE_EXPORT char *IGNORE_BLANKS(char *str, int &m_line);
 ZETJSONCPP_MODULE_EXPORT char *ADVANCE_TO_ONE_OF_COLLECTION_CHAR(char *str,char *end_char_standard_value, int &m_line);
-ZETJSONCPP_MODULE_EXPORT void print_json_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...);
-ZETJSONCPP_MODULE_EXPORT void print_json_warning(const char *file, int line, bool ignore_warnings, const char *string_text, ...);
+ZETJSONCPP_MODULE_EXPORT void throw_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...);
+ZETJSONCPP_MODULE_EXPORT void throw_warning(const char *file, int line, bool ignore_warnings, const char *string_text, ...);
 
 
 const char end_char_standard_value[] = {
@@ -134,8 +134,9 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 	bool boolValue = false;
 	float numberValue = 0;
 
-	if (CZetJsonCppUtils::isEmpty(start_str))
-		return 0;
+	if (CZetJsonCppUtils::isEmpty(start_str)){
+		throw_error(this->m_filesrc, -1,NULL, NULL, "Empty string");
+	}
 
 
 	current_ptr = IGNORE_BLANKS(current_ptr, this->m_line);
@@ -187,8 +188,7 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 
 
 					if (*current_ptr != *str_end) {
-						print_json_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Was expect a double/single quote. format example --> \"property\":\"value\"");
-						return 0;
+						throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Was expect a double/single quote. format example --> \"property\":\"value\"");
 					}
 
 					size = str_end - current_ptr - 1;
@@ -206,7 +206,7 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 						if (c_property != NULL)
 							if (c_property->isParsed()) {
 
-								print_json_warning(this->m_filesrc, this->m_line,"%s was already parsed (duplicate?)", property_name);
+								throw_warning(this->m_filesrc, this->m_line,"%s was already parsed (duplicate?)", property_name);
 							}
 
 						// next.. get value...
@@ -279,15 +279,19 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 												if (bytes_readed > 2) {
 													unsigned copy_bytes = bytes_readed - 2;
 													if ((unsigned)bytes_readed >= sizeof(val)) {
-														fprintf(stderr,"Reached max size value \"%s\" (max:%i)\n", property_name, sizeof(val));
+														fprintf(stderr,"Reached max size value \"%s\" (max:%i)\n", property_name, (int)(sizeof(val)));
 														copy_bytes = sizeof(val) - 1;
 													}
 													strncpy(val, current_ptr + 1, copy_bytes);
 												}
 											}
 											else {
-												print_info_json("Error reading property \"%s\" as string", property_name);
-												return 0;
+												throw_error(
+														this->m_filesrc
+														, this->m_line
+														,NULL
+														,NULL
+														,"Error reading property \"%s\" as string", property_name);
 											}
 
 										}
@@ -367,7 +371,7 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 									}
 
 									if (!bytes_readed || !ok) {
-										print_json_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Impossible to parse value of property \"%s\"", property_name);
+										throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Impossible to parse value of property \"%s\"", property_name);
 										return 0;
 									}
 									else { // value ok
@@ -433,13 +437,13 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 
 											}
 											else {
-												print_json_warning(this->m_filesrc, this->m_line,"variable \"%s\"not matches. JSon is %s and C struct is %s", property_name, CParserVar::idTypeToString(type_value), CParserVar::idTypeToString(c_property->_m_iType));
+												throw_warning(this->m_filesrc, this->m_line,"variable \"%s\"not matches. JSon is %s and C struct is %s", property_name, CParserVar::idTypeToString(type_value), CParserVar::idTypeToString(c_property->_m_iType));
 											}
 										}
 										else {
 
 											if (c_data != NULL && strcmp(old_property_name, property_name))
-												print_json_warning(this->m_filesrc, this->m_line,"Variable name \"%s\" NOT registered in c-struct", property_name);
+												throw_warning(this->m_filesrc, this->m_line,"Variable name \"%s\" NOT registered in c-struct", property_name);
 										}
 									}
 
@@ -457,8 +461,8 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 
 										}
 										else if (*current_ptr != ']') {
-											print_json_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Was expect a ',' , ']' or '{' ");
-											return 0;
+											throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Was expect a ',' , ']' or '{' ");
+
 										}
 									}
 
@@ -473,20 +477,20 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 							}
 						}
 						else {
-							print_json_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Error ':' expected");
-							return 0;
+							throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Error ':' expected");
+
 						}
 					}
 					else {
-						print_json_error(this->m_filesrc, this->m_line,start_str, current_ptr, "invalid size property (%i)", size);
-						return 0;
+						throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "invalid size property (%i)", size);
+
 					}
 
 					end = (*current_ptr == '}');
 					if (!end)
 						if (*current_ptr != ',') {
-							print_json_error(this->m_filesrc, this->m_line,start_str, current_ptr, "an \',\' was expected!");
-							return 0;
+							throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "an \',\' was expected!");
+
 						}
 
 					// forward to next property
@@ -494,15 +498,15 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 					//an_element_need = (*current_ptr == ',');
 				}
 				else { // void property group
-					//print_json_warning(start_str,current_ptr,"void property group!");
+					//throw_warning(start_str,current_ptr,"void property group!");
 					current_ptr++;
 					return current_ptr - start_str; // return..
 				}
 			}
 		}
 		else {
-			print_json_error(this->m_filesrc, this->m_line,start_str, current_ptr, "It doesn't possible check begin/end group {");
-			return 0;
+			throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "It doesn't possible check begin/end group {");
+
 		}
 		if (anonymous_array) {
 			current_ptr = IGNORE_BLANKS(current_ptr, this->m_line);
@@ -514,7 +518,7 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 			}
 			else {
 				more_group_properties = false;
-				print_json_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Impossible to find ']' current caracter is %c", *current_ptr);
+				throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Impossible to find ']' current caracter is %c", *current_ptr);
 			}
 
 		}

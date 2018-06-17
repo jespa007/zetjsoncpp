@@ -43,9 +43,11 @@ int main(int argc, char *argv[]){
     // create json-parser
     CParserJson<tSampleJson> * parser = new CParserJson<tSampleJson>();
 
-    // parse our file
-    if(parser->evalFile(argv[1])){
-        // get data from parser.
+    try{
+		parser->evalFile(argv[1]);
+
+
+			// get data from parser.
 		std::cout << "elements:" << parser->getData()->size()<< std::endl;
 		// the values before modifications.
 		std::cout << " Before modifications:"<< std::endl;
@@ -53,7 +55,7 @@ int main(int argc, char *argv[]){
 		for(unsigned g = 0; g < parser->getData()->size(); g++){
 			data_json = parser->getData()->at(0); // gets first element group...
 
-   			// From here we can operate with loaded data in our program using c++ operators
+			// From here we can operate with loaded data in our program using c++ operators
 			// put m_use_space to false...
 			data_json->m_indent.m_use_space = false;
 
@@ -66,12 +68,15 @@ int main(int argc, char *argv[]){
 
 		std::cout << "------------------------------------------------------------------------------" << std::endl;
 		std::cout << " After modifications:"<< std::endl;
-			   
+
 		// show the modifications at screen (it can be saved in file too)
 		std::cout << parser->getData()->cpp2json();
-
+    }catch(std::exception & ex){
+    	fprintf(stderr, "%s\n",ex.what());
     }
+
     
+
     // deallocates parser
    delete parser;
 

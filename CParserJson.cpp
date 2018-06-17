@@ -134,38 +134,48 @@ namespace zetjsoncpp{
 		json_warning_callback=_warning_callback;
 	}*/
 
-	void print_json_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...) {
+	void throw_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...) {
 
 		
-		char  where[1024];
-		char  text[MAX_C_STRING];
+		char  where[1024]={0};
+		char  text[MAX_C_STRING]={0};
+		char temp_buff[4096]={0};
 		CAPTURE_VARIABLE_ARGS(text, string_text);
+
+		if(start_str != NULL){
 
 		sprintf(where,"...%.15s..."
 					  "\n               ^   "
 					  "\n  -------------+ \n", PREVIEW_SSTRING(start_str, current_ptr, 15));
+		}
 
 		/*if(json_error_callback!=NULL){
 			json_error_callback(file,line,text,where);
 		}
 		else{*/
-			fprintf(stderr,"[%s:%i] %s\n%s",CZetJsonCppUtils::extractFile(file).c_str(), line,text,where);
+			sprintf(temp_buff,"[%s:%i] %s\n%s",CZetJsonCppUtils::extractFile(file).c_str(), line,text,where);
 		//}
+
+		throw parse_error_exception(file,line,temp_buff);
 	}
 
-	void print_json_warning(const char *file, int line,bool ignore_warnings, const char *string_text, ...) {
+	void throw_warning(const char *file, int line,bool ignore_warnings, const char *string_text, ...) {
 
-		if (!ignore_warnings) {
-			char  text[MAX_C_STRING];
+		//if (!ignore_warnings) {
+		char temp_buff[4096]={0};
+			char  text[MAX_C_STRING]={0};
 			CAPTURE_VARIABLE_ARGS(text, string_text);
 
 			/*if(json_warning_callback!=NULL){
 				json_warning_callback(file,line,text);
 			}
 			else{*/
-				fprintf(stderr,"[%s:%i] %s",CZetJsonCppUtils::extractFile(file).c_str(),line,text);
+
+				sprintf(temp_buff,"[%s:%i] %s",CZetJsonCppUtils::extractFile(file).c_str(),line,text);
 			//}
-		}
+
+				throw parse_warning_exception(file,line,temp_buff);
+		//}
 	}
 };
 

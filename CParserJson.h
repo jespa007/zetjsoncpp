@@ -15,22 +15,7 @@ namespace zetjsoncpp {
 	//typedef void (* tJsonWarningCallback)(const char *file, int line, const char *str);
 
 	// define my exceptions
-	/*class CZetJsonCppException: public std::exception
-	{
-		string file;
-		int	   line;
-		string	error;
-		CZetJsonCppException(const string & _file, int _line, const string & _error){
-			file=_file;
-			line=_line;
-			error=_error;
-		}
 
-	    virtual const char* what() const throw()
-		{
-			return "["+file+":"+CStringUtils::intToString(line)+"]"+error;
-		}
-	};*/
 
 	template <typename _T>
 	class CParserJson : public CParser<_T> {
@@ -45,12 +30,12 @@ namespace zetjsoncpp {
 
 		CParserJson() {}
 
-		virtual bool evalString(const string & m_expression, int level = 0, bool ignore_warnings = false) {
+		virtual void evalString(const string & m_expression, int level = 0, bool ignore_warnings = false) {
 
 			this->m_line = 1;
 			this->root_struct_field->destroy(); // destroy previous elements!
 
-			return (json2cpp((const char *)m_expression.c_str(), CParser<_T>::root_struct_field, 0, ignore_warnings) > 0);
+			json2cpp((const char *)m_expression.c_str(), CParser<_T>::root_struct_field, 0, ignore_warnings);
 		}
 
 		virtual ~CParserJson() {}

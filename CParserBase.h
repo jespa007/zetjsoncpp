@@ -9,6 +9,9 @@
 
 namespace zetjsoncpp{
 
+
+
+
 	class CParserBase{
 	protected:
 
