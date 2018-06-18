@@ -47,7 +47,7 @@ using std::vector;
 #include "var/CString.h"
 #include "var/CFunctor.h"
 
-#include "parse_exception.h"
+#include "zetjsoncpp_exception.h"
 #include "CParserVar.h"
 #include "CParserBase.h"
 #include "CParser.h"
