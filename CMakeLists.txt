@@ -145,7 +145,7 @@ endif()
 set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
 	
-	CZetJsonCppUtils.cpp
+	zetjsoncpp_utils.cpp
 	var/CNumber.cpp
 	var/CString.cpp
 	var/CBoolean.cpp
@@ -182,7 +182,7 @@ SET(
 	CParserJson.h
 	CParserJson.cxx
 	CParserVar.h
-	CZetJsonCppUtils.h
+	zetjsoncpp_utils.h
 )
 
 

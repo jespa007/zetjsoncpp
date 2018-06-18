@@ -39,7 +39,7 @@ using std::vector;
 #endif
 
 #include "CBuffer.h"
-#include "CZetJsonCppUtils.h"
+#include "zetjsoncpp_utils.h"
 
 
 #include "var/CBoolean.h"
