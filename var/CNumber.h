@@ -61,10 +61,6 @@ public:
 	CNumber   operator -  ();
 
 
-	friend CNumber   operator *  (CNumber  n1, const CNumber & n2){
-		return mul(n1,n2);
-	}
-
 	CNumber   operator /  (const CNumber & n) const;
 
 
