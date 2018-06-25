@@ -183,6 +183,7 @@ SET(
 	CParserJson.cxx
 	CParserVar.h
 	zetjsoncpp_utils.h
+	zetjsoncpp_exception.h
 )
 
 
