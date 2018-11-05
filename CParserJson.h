@@ -44,7 +44,7 @@ namespace zetjsoncpp {
 	//void set_json_error_callback(tJsonErrorCallback _error_callback);
 	//void set_json_warning_callback(tJsonWarningCallback _warning_callback);
 
-	#include "CParserJson.cxx"
+	#include "CParserJson.inc"
 };
 
 
