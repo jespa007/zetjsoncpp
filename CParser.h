@@ -39,10 +39,10 @@ namespace zetjsoncpp {
 
 			m_filesrc = m_filename.c_str();
 
-			ByteBuffer *buf = CZetJsonCppUtils::readFile(m_filename);
+			char *buf = CZetJsonCppUtils::readFile(m_filename);
 			if (buf != NULL) {
 				try{
-					evalString((char *)buf->data_buffer, 0, ignore_warnings);
+					evalString(buf, 0, ignore_warnings);
 				}
 				catch(zetjsoncpp::parse_error_exception & err){
 					delete buf;
@@ -53,7 +53,7 @@ namespace zetjsoncpp {
 					throw wrn;
 
 				}
-				delete buf;
+				free(buf);
 			}
 		}
 

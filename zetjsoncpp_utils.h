@@ -47,7 +47,7 @@ public:
 	static ZETJSONCPP_MODULE_EXPORT int isNumber(const string & test_str_number);
 
 	static bool fileExists(const string & m_file) ;
-	static ZETJSONCPP_MODULE_EXPORT ByteBuffer * readFile(const string & filename, bool end_string_char=true);
+	static ZETJSONCPP_MODULE_EXPORT char * readFile(const string & filename, bool end_string_char=true);
 	static int  getLengthFile(const  string  & file);
 	static string extractFile(const string & _filename);
 

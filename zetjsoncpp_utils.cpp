@@ -129,7 +129,7 @@ namespace zetjsoncpp{
 
 	}
 
-	ByteBuffer * CZetJsonCppUtils::readFile(const string & filename, bool end_string_char){
+	char * CZetJsonCppUtils::readFile(const string & filename, bool end_string_char){
 
 		int  file_length, readed_elements;
 			FILE  *fp;
@@ -144,25 +144,25 @@ namespace zetjsoncpp{
 				if((file_length = getLengthFile(filename)) != -1) {
 
 
-					unsigned char *buffer = new unsigned char [file_length+with_end_char];
+					char *buffer = (char *)malloc (file_length+with_end_char);
 					memset(buffer,0,file_length+with_end_char );
 					readed_elements = fread(buffer, 1, file_length, fp);
 
 					if(readed_elements != file_length) {
 						//fprintf(stderr,"number elements doesn't match with length file (%s)\n",filename.c_str());
-						delete  buffer;
+						free(buffer);
 
 						throw std::runtime_error("number elements doesn't match with length file ("+filename+")");
 
 					}
 
-					ByteBuffer *ch = new ByteBuffer(buffer, file_length+with_end_char);
+					//ByteBuffer *ch = new ByteBuffer(buffer, file_length+with_end_char);
 
-					delete [] buffer;
+					//delete [] buffer;
 
 					fclose(fp);
 
-					return ch;
+					return buffer;
 				}
 				else  throw std::runtime_error("I can't read file \""+filename+"\"");
 			}

@@ -745,14 +745,10 @@ namespace zetjsoncpp {
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
 	class CParserVarArrayNumber : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<float> {
 
-		FloatBuffer *floatBuf;
-		ShortBuffer *shortBuf;
 
 	public:
 		//_T_NAME name;
 		CParserVarArrayNumber() {
-			floatBuf = NULL;
-			shortBuf = NULL;
 			this->_m_iType = CParserVar::TYPE_ARRAY_NUMBER;
 			this->size_data = sizeof(CParserVarArrayNumber<chr1, chr2, _T_NAME...>);
 			this->p_data = &this->vec_data;
@@ -791,19 +787,24 @@ namespace zetjsoncpp {
 			return this->str_value;
 		}
 
-		FloatBuffer *getFloatBuffer() {
-			if (floatBuf == NULL) {
-				floatBuf = new FloatBuffer(vec_data);
+		float *makeFloatBuffer(size_t & length) {
+
+			short * floatBuf = new float[vec_data.size()];
+			length=vec_data.size();
+			for (unsigned i = 0; i < vec_data.size(); i++){
+				floatBuf[i]=vec_data[i];
 			}
 
 			return floatBuf;
 		}
 
-		ShortBuffer *getShortBuffer() {
-			if (shortBuf == NULL) {
-				vector<short> s;
-				for (unsigned i = 0; i < vec_data.size(); i++) s.push_back(vec_data[i]);
-				shortBuf = new ShortBuffer(s);
+
+		short *makeShortBuffer(size_t & length) {
+			short * shortBuf = new short[vec_data.size()];
+			length = vec_data.size();
+
+			for (unsigned i = 0; i < vec_data.size(); i++){
+				shortBuf[i]=vec_data[i];
 			}
 
 			return shortBuf;
@@ -812,12 +813,6 @@ namespace zetjsoncpp {
 
 		//virtual ~CParserVarArrayNumber(){}
 		virtual ~CParserVarArrayNumber() {
-			if (floatBuf)
-				delete floatBuf;
-
-			if (shortBuf)
-				delete shortBuf;
-
 
 		}
 	};
