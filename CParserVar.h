@@ -217,7 +217,7 @@ namespace zetjsoncpp {
 
 
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarNumber : public CParserVarNamed<chr1, chr2, _T_NAME ...>,public CNumber {
+	class CParserVarNumber : public CParserVarNamed<chr1, chr2, _T_NAME ...>,public ZJ_Number {
 
 
 		bool m_forceInteger;
@@ -291,7 +291,7 @@ namespace zetjsoncpp {
 	};
 
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarBoolean : public CParserVarNamed<chr1, chr2, _T_NAME ...>, public CBoolean {
+	class CParserVarBoolean : public CParserVarNamed<chr1, chr2, _T_NAME ...>, public ZJ_Boolean {
 
 
 		void init() {
@@ -348,7 +348,7 @@ namespace zetjsoncpp {
 	};
 
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarString : public CParserVarNamed<chr1, chr2, _T_NAME... > , public CString{
+	class CParserVarString : public CParserVarNamed<chr1, chr2, _T_NAME... > , public ZJ_String{
 	protected:
 		virtual void init() {
 

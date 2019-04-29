@@ -41,10 +41,10 @@ using std::vector;
 #include "zetjsoncpp_utils.h"
 
 
-#include "var/CBoolean.h"
-#include "var/CNumber.h"
-#include "var/CString.h"
-#include "var/CFunctor.h"
+#include "var/ZJ_Boolean.h"
+#include "var/ZJ_Number.h"
+#include "var/ZJ_String.h"
+
 
 #include "zetjsoncpp_exception.h"
 #include "CParserVar.h"

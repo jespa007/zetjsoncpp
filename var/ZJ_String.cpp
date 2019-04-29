@@ -5,52 +5,52 @@ namespace zetjsoncpp {
 
 
 //-----------------------------------------------------------------------------------------------------------------------
-CString::CString(){
+ZJ_String::ZJ_String(){
 	m_str = "";
 }
 
-CString::CString(const string &  str){
+ZJ_String::ZJ_String(const string &  str){
 	m_str = str;
 }
 
-CString::CString(const char * str){
+ZJ_String::ZJ_String(const char * str){
 	m_str = str;
 }
 
-CString::CString(int i){
+ZJ_String::ZJ_String(int i){
 	m_str = CZetJsonCppUtils::intToString(i);
 }
 
-CString::CString(float f){
+ZJ_String::ZJ_String(float f){
 	m_str = CZetJsonCppUtils::floatToString(f);
 }
 
-CString CString::operator +(const CString & param)  const {
-	CString ss;
+ZJ_String ZJ_String::operator +(const ZJ_String & param)  const {
+	ZJ_String ss;
 	ss.m_str = this->m_str + param.m_str;
 
 	return ss;
 }
 
 
-CString & CString::operator =(const CString & str){
+ZJ_String & ZJ_String::operator =(const ZJ_String & str){
 	this->m_str = str.m_str;
 
 	return (*this);
 }
 
-CString & CString::operator =(const string & str){
+ZJ_String & ZJ_String::operator =(const string & str){
 	this->m_str = str;
 
 	return (*this);
 }
 
-bool CString::operator ==(const CString & pp_str) const{
+bool ZJ_String::operator ==(const ZJ_String & pp_str) const{
 	return this->m_str == pp_str.m_str;
 
 }
 
-CString::~CString(){
+ZJ_String::~ZJ_String(){
 
 }
 };

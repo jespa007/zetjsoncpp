@@ -146,9 +146,9 @@ set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
 	
 	zetjsoncpp_utils.cpp
-	var/CNumber.cpp
-	var/CString.cpp
-	var/CBoolean.cpp
+	var/ZJ_Number.cpp
+	var/ZJ_String.cpp
+	var/ZJ_Boolean.cpp
 	CParserVar.cpp
 	CParserBase.cpp
 	CParserJson.cpp
@@ -172,11 +172,9 @@ endif()
 SET(
 	HS
 	zetjsoncpp.h
-	var/CFunctor.h
-	var/CBoolean.h
-	var/CNumber.h
-	var/CString.h
-	CBuffer.h
+	var/ZJ_Boolean.h
+	var/ZJ_Number.h
+	var/ZJ_String.h
 	CParser.h
 	CParserBase.h
 	CParserJson.h
