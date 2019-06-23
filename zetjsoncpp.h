@@ -3,8 +3,6 @@
  *  See LICENSE file for details.
  */
 
-
-
 #pragma once
 #include <stdint.h>
 #include <stdlib.h>
@@ -18,6 +16,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <exception>
+#include <stdexcept>
 
 using std::string;
 using std::vector;
