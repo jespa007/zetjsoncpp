@@ -38,16 +38,16 @@ public:
 	}
 
 
-	static ZETJSONCPP_MODULE_EXPORT bool isEmpty(const string & str);
+	static bool isEmpty(const string & str);
 
-	static ZETJSONCPP_MODULE_EXPORT string intToString(int number);
-	static ZETJSONCPP_MODULE_EXPORT string floatToString(float number);
-	static ZETJSONCPP_MODULE_EXPORT string toLower(const string & str);
-	static ZETJSONCPP_MODULE_EXPORT bool endsWith(const string & fullString, const string & ending);
-	static ZETJSONCPP_MODULE_EXPORT int isNumber(const string & test_str_number);
+	static string intToString(int number);
+	static string floatToString(float number);
+	static string toLower(const string & str);
+	static bool endsWith(const string & fullString, const string & ending);
+	static int isNumber(const string & test_str_number);
 
 	static bool fileExists(const string & m_file) ;
-	static ZETJSONCPP_MODULE_EXPORT char * readFile(const string & filename, bool end_string_char=true);
+	static char * readFile(const string & filename, bool end_string_char=true);
 	static int  getLengthFile(const  string  & file);
 	static string extractFile(const string & _filename);
 

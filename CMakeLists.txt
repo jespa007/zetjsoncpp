@@ -7,14 +7,6 @@ project(zetjsoncpp)
 # MACRO UTILS
 #
 
-
-IF (NOT  (("${LINK}" STREQUAL "SHARED") OR ("${LINK}" STREQUAL "STATIC")))
-   SET ( LINK "SHARED" )
-ENDIF()
-
-message("-- Link: " ${LINK})
-
-
 MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
 
     FOREACH(HEADER ${${HEADER_LIST}})
@@ -160,7 +152,7 @@ set(JSON_TEST_SRCS ${PROJECT_SOURCE_DIR}/test/json_test.cpp)
 
 
 # json2cpplib
-add_library( zetjsoncpp${POST_NAME} ${LINK} ${ZETJSONCPP_LIB_SRCS} )
+add_library( zetjsoncpp${POST_NAME} STATIC ${ZETJSONCPP_LIB_SRCS} )
 
 
 if(MSVC)

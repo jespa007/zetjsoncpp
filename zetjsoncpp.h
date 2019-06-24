@@ -25,14 +25,6 @@ using std::vector;
 #define ZETJSONCPP_MINOR_VERSION 3
 #define ZETJSONCPP_PATCH_VERSION 0
 
-
-#ifdef  ZETJSONCPP_EXPORTS
-	#define ZETJSONCPP_MODULE_EXPORT __declspec(dllexport)
-#else
-	#define ZETJSONCPP_MODULE_EXPORT
-#endif
-
-
 #ifdef __MEMMANAGER__
 #include "MEM_ram.h"
 #endif
