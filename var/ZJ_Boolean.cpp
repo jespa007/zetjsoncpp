@@ -16,8 +16,8 @@ ZJ_Boolean::ZJ_Boolean(bool b ){
 }
 
 bool ZJ_Boolean::parse(const std::string & s){
-	if(CZetJsonCppUtils::toLower(s) == "true") return true;
-	if(CZetJsonCppUtils::toLower(s) == "false") return false;
+	if(to_lower(s) == "true") return true;
+	if(to_lower(s) == "false") return false;
 
 	throw ("Cannot parse string to boolean.");
 }

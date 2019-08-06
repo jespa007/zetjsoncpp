@@ -61,7 +61,7 @@ int main(int argc, char *argv[]){
 
 			// iterate of all m_plugins var and replace with random strings...
 			for(unsigned i = 0; i < data_json->m_plugins.size(); i++) {
-				data_json->m_plugins[i] = "my_randomstring"+CZetJsonCppUtils::intToString(i+g+1);
+				data_json->m_plugins[i] = "my_randomstring"+to_string(i+g+1);
 			}
 
 		}

@@ -5,6 +5,7 @@ Version: 1.4.0
 Implemented try/catch.
 Removed CBuffer
 Changed var/C* to var/JZ_*
+organize zetjsoncpp_utils to string and io files 
 
 
 //----------------------------

@@ -82,8 +82,8 @@ namespace zetjsoncpp {
 
 	class CParserVar {//: public CVariable {
 	protected:
-		string result_json;
-		string str_value;
+		std::string result_json;
+		std::string str_value;
 		bool m_isParsed;
 
 	public:
@@ -106,7 +106,7 @@ namespace zetjsoncpp {
 		};
 
 
-		static const char *idTypeToString(int index) {
+		static const char *CParserVar::idTypeToString(int index) {
 			switch (index) {
 			default:
 			case TYPE_UNKNOWN:
@@ -127,16 +127,16 @@ namespace zetjsoncpp {
 			return "UNKNOWN";
 		}
 
-		static char const STR_EMPTY[];
+		static char const CParserVar::STR_EMPTY[];
 		int _m_iType;
 		int size_data;
-		string  _m_pvariableName;
+		std::string  _m_pvariableName;
 		CParserVar *p_ini_data;
 		void 	     *p_data; // can be int, bool, vector, prop_grp, etc ...
 		CParserVar *p_end_data;
 		//_T_NAME name;
 
-		CParserVar() {
+		CParserVar::CParserVar() {
 			this->_m_pvariableName = "pvar_noname";
 			this->p_end_data = NULL;
 			this->p_data = NULL;
@@ -146,32 +146,34 @@ namespace zetjsoncpp {
 			this->m_isParsed = false;
 		}
 
-		virtual string & cpp2json() {
+		virtual std::string & CParserVar::cpp2json() {
 			result_json = "//no data:\n{}\n";
 			return result_json;
 		}
 
-		virtual CParserVar * newData() {
+		virtual CParserVar * CParserVar::newData() {
 			return NULL;
 		}
 
-		virtual string & getStrValue(int ident, uint32_t flags) {
+		virtual std::string & CParserVar::getStrValue(int ident, uint32_t flags) {
 			this->str_value = "??";
 			return str_value;
 		}
 
-		virtual void add(CParserVar * s) {}
+		virtual void CParserVar::add(CParserVar * s) {}
 
-		virtual ~CParserVar() {
 
-		}
 
-		void setParsed(bool parsed) {
+		void CParserVar::setParsed(bool parsed) {
 			m_isParsed = parsed;
 		}
 
-		bool isParsed() const {
+		bool CParserVar::isParsed() const {
 			return m_isParsed;
+		}
+
+		virtual CParserVar::~CParserVar() {
+
 		}
 	};
 
@@ -188,7 +190,7 @@ namespace zetjsoncpp {
 		CParserVarNamed() {
 
 			std::vector<char> vec = { chr1, chr2,_T_NAME... };
-			string s_aux(vec.begin(), vec.end());
+			std::string s_aux(vec.begin(), vec.end());
 
 			char buffer[512] = { 0 };
 
@@ -204,7 +206,7 @@ namespace zetjsoncpp {
 			this->size_data = sizeof(CParserVarNamed);
 		}
 
-		virtual string & getStrValue(int ident, uint32_t flags = 0)
+		virtual std::string & getStrValue(int ident, uint32_t flags = 0)
 		{
 			this->str_value = "??";
 			return this->str_value;
@@ -267,7 +269,7 @@ namespace zetjsoncpp {
 			return (int32_t)(*((float *)this->p_data));
 		}
 
-		CParserVarNumber & operator =(const string & intStr) {
+		CParserVarNumber & operator =(const std::string & intStr) {
 
 			this->m_numVar = CZetJsonCppUtils::fromString<float>(intStr);
 			return *this;
@@ -278,12 +280,12 @@ namespace zetjsoncpp {
 			return this->m_numVar;
 		}
 
-		virtual string & getStrValue(int ident, uint32_t flags = 0) {
+		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 
 			if (m_forceInteger)
-				this->str_value = "" + CZetJsonCppUtils::intToString(this->m_numVar);
+				this->str_value = "" + to_string(this->m_numVar);
 			else
-				this->str_value = "" + CZetJsonCppUtils::floatToString(this->m_numVar);
+				this->str_value = "" + to_string(this->m_numVar);
 			return this->str_value;
 		}
 
@@ -328,17 +330,17 @@ namespace zetjsoncpp {
 			return *this;
 		}
 
-		CParserVarBoolean & operator =(const string & str) {
+		CParserVarBoolean & operator =(const std::string & str) {
 
-			if (CZetJsonCppUtils::toLower(str) == "true") *((bool *)this->p_data) = true;
-			else if (CZetJsonCppUtils::toLower(str) == "false") *((bool *)this->p_data) = false;
+			if (to_lower(str) == "true") *((bool *)this->p_data) = true;
+			else if (to_lower(str) == "false") *((bool *)this->p_data) = false;
 			else fprintf(stderr,"undefined value to assign bool value\n");
 			return *this;
 		}
 
-		virtual string & getStrValue(int ident, uint32_t flags = 0) {
+		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 
-			string result_bool = (*((bool *)this->p_data) == false ? "false" : "true");
+			std::string result_bool = (*((bool *)this->p_data) == false ? "false" : "true");
 			this->str_value = "" + result_bool;
 			return this->str_value;
 		}
@@ -365,7 +367,7 @@ namespace zetjsoncpp {
 		}
 
 	public:
-		string s_value;
+		std::string s_value;
 
 		bool	m_force_string;
 
@@ -374,23 +376,23 @@ namespace zetjsoncpp {
 			init();
 		}
 
-		explicit CParserVarString(string & s) {
+		explicit CParserVarString(std::string & s) {
 			init();
-			*((string *)this->p_data) = s;
+			*((std::string *)this->p_data) = s;
 		}
 
-		virtual string & getStrValue(int ident, uint32_t flags = 0) {
-			this->str_value = "\"" + *((string *)this->p_data) + "\"";
+		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
+			this->str_value = "\"" + *((std::string *)this->p_data) + "\"";
 			return this->str_value;
 		}
 
-		CParserVarString & operator = (const string & s) {
+		CParserVarString & operator = (const std::string & s) {
 
 			this->s_value = s;
 			return *this;
 		}
 
-		bool operator == (const string & s) const {
+		bool operator == (const std::string & s) const {
 			return this->s_value == s;
 
 		}
@@ -405,13 +407,13 @@ namespace zetjsoncpp {
 
 		}
 
-		bool operator != (const string  s) const {
+		bool operator != (const std::string  s) const {
 			return this->s_value != s;
 
 		}
 
 
-		operator const string() const {
+		operator const std::string() const {
 			return this->s_value;
 		}
 
@@ -425,7 +427,7 @@ namespace zetjsoncpp {
 			return *this;
 		}
 
-		operator string() {
+		operator std::string() {
 			return this->s_value;
 
 		}
@@ -457,7 +459,7 @@ namespace zetjsoncpp {
 
 		//----------------------------------------------------------------
 		void setup(uint32_t numParam = 0, ...) {
-			// PRE: All args must be string. The program can parse the apropiate type var
+			// PRE: All args must be std::string. The program can parse the apropiate type var
 			// with its emmbedded type.
 
 			this->_m_iType = CParserVar::TYPE_PROPERTY_GROUP;
@@ -482,7 +484,7 @@ namespace zetjsoncpp {
 				switch (p_sv->_m_iType)
 				{
 				case CParserVar::TYPE_STRING:
-					//print_info_cr("string ...!\n\n");
+					//print_info_cr("std::string ...!\n\n");
 					*(JS_STRING_CAST p_sv) = variable;//->assign();
 					break;
 				}
@@ -502,13 +504,13 @@ namespace zetjsoncpp {
 			setup(numParam);
 		}
 
-		virtual string & getStrValue(int ident, uint32_t flags = 0) {
+		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 			this->str_value = "??";
 			return this->str_value;
 		}
 
 		//std::string result_json;
-		virtual string & cpp2json(uint32_t flags = 0) {
+		virtual std::string & cpp2json(uint32_t flags = 0) {
 			bool not_minimized = ((flags & CParserVar::PROPERTY_STR_MINIMIZED) == 0);
 			this->result_json = "";
 			cpp2jsonRecursive(this, this->result_json, 0, flags);
@@ -700,12 +702,12 @@ namespace zetjsoncpp {
 			((vector<bool> *)this->p_data)->push_back(s);
 		}
 
-		virtual string & getStrValue(int ident, uint32_t flags = 0) {
+		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 			bool not_minimized = ((CParserVar::PROPERTY_STR_MINIMIZED & flags) == 0);
 			//this->str_value ="";
 			vector<bool> * v = (vector<bool> *)this->p_data;
 			this->str_value = "";
-			string m_sfValue;
+			std::string m_sfValue;
 
 			if (not_minimized)
 				for (int k = 0; k <= (ident + 1); k++)
@@ -761,12 +763,12 @@ namespace zetjsoncpp {
 			((vector<float> *)this->p_data)->push_back(s);
 		}
 
-		virtual string & getStrValue(int ident, uint32_t flags = 0) {
+		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 			//this->str_value ="";
 			bool not_minimized = ((flags & CParserVar::PROPERTY_STR_MINIMIZED) == 0);
 			vector<float> * v = (vector<float> *)this->p_data;
 			this->str_value = "";
-			string m_sfValue;
+			std::string m_sfValue;
 			for (int k = 0; k <= (ident + 1); k++)
 				this->str_value = this->str_value + "\t";
 
@@ -774,7 +776,7 @@ namespace zetjsoncpp {
 
 				if (j > 0)
 					this->str_value = this->str_value + ",";
-				m_sfValue = CZetJsonCppUtils::floatToString(v->at(j));
+				m_sfValue = to_string(v->at(j));
 
 				this->str_value = this->str_value + "" + m_sfValue + " ";
 
@@ -843,14 +845,14 @@ namespace zetjsoncpp {
 			this->p_data = &this->vec_data;
 		}
 
-		void add(string const & s) {
-			((vector<string> *)this->p_data)->push_back(s);
+		void add(std::string const & s) {
+			((vector<std::string> *)this->p_data)->push_back(s);
 		}
 
-		virtual string & getStrValue(int ident, uint32_t flags = 0) {
+		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 			bool not_minimized = ((flags & CParserVar::PROPERTY_STR_MINIMIZED) == 0);
 			this->str_value = "";
-			vector<string> * v = (vector<string> *)this->p_data;
+			vector<std::string> * v = (vector<std::string> *)this->p_data;
 
 			if (not_minimized)
 				for (int k = 0; k <= (ident + 1); k++)
@@ -906,7 +908,7 @@ namespace zetjsoncpp {
 			return new CParserVarPropertyGroup<_T_DATA>;
 		}
 
-		virtual string & getStrValue(int ident, uint32_t flags = 0) {
+		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 			this->str_value = "??";
 			return this->str_value;
 		}
@@ -917,7 +919,7 @@ namespace zetjsoncpp {
 		}
 
 		//std::string result_json;
-		virtual string & cpp2json(uint32_t flags = 0) {
+		virtual std::string & cpp2json(uint32_t flags = 0) {
 			bool not_minimized = ((flags & CParserVar::PROPERTY_STR_MINIMIZED) == 0);
 			this->result_json = "[";
 			for (unsigned i = 0; i < this->size(); i++) {

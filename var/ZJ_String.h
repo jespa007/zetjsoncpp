@@ -9,7 +9,7 @@ class ZJ_String{
 
 	//---------------------------------------------------------------------------------------------
 protected:
-	string m_str;
+	std::string m_str;
 
 public:
 
@@ -20,13 +20,13 @@ public:
 	explicit ZJ_String(const char *);
 	explicit ZJ_String(const string & );
 
-	operator string(){return m_str;};
+	operator std::string(){return m_str;};
 
 	ZJ_String operator +(const ZJ_String &) const;
 
 
 	virtual ZJ_String & operator =(const ZJ_String &);
-	virtual ZJ_String & operator =(const string &);
+	virtual ZJ_String & operator =(const std::string &);
 
 
 	bool operator ==(const ZJ_String &) const;

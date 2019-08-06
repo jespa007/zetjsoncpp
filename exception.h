@@ -6,13 +6,13 @@
 
 namespace zetjsoncpp {
 
-class parse_exception: public std::exception
+	class parse_exception: public std::exception
 	{
 		const char *error_type;
 
-		string file;
+		std::string file;
 		int	   line;
-		string	error_description;
+		std::string	error_description;
 
 		char what_msg[4096];
 	public:
@@ -31,7 +31,7 @@ class parse_exception: public std::exception
 		{
 
 	    	return (const char *)what_msg;
-	    	//return "["+file+":"+CZetJsonCppUtils::intToString(line)+"]"+error;
+	    	//return "["+file+":"+to_string(line)+"]"+error;
 		}
 	};
 

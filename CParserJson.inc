@@ -134,7 +134,7 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 	bool boolValue = false;
 	float numberValue = 0;
 
-	if (CZetJsonCppUtils::isEmpty(start_str)){
+	if (is_empty(start_str)){
 		throw_error(this->m_filesrc, -1,NULL, NULL, "Empty string");
 	}
 
@@ -330,7 +330,7 @@ int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int lev
 												strncpy(val, current_ptr, bytes_readed);
 
 												// and try to convert in to standard number ...
-												int type_number = CZetJsonCppUtils::isNumber(val);
+												int type_number = is_number(val);
 
 												//if(type_number != 0){
 												if (type_number == CZetJsonCppUtils::STRING_IS_INT) { //RE2::FullMatch(val,"[-]?[0-9]*")) {// check for normal int...

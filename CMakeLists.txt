@@ -137,11 +137,14 @@ endif()
 set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
 	
-	zetjsoncpp_utils.cpp
+	string.cpp
+	io.cpp
+	path.cpp
 	var/ZJ_Number.cpp
 	var/ZJ_String.cpp
 	var/ZJ_Boolean.cpp
-	CParserVar.cpp
+	parser_var/CParserVar.cpp
+
 	CParserBase.cpp
 	CParserJson.cpp
 )
@@ -167,11 +170,23 @@ SET(
 	var/ZJ_Boolean.h
 	var/ZJ_Number.h
 	var/ZJ_String.h
+	parser_var/CDinamicVector.h
+	parser_var/CParserVar.h
+	parser_var/CParserVar.inc
+	parser_var/CParserVarArrayBool.h
+	parser_var/CParserVarArrayNumber.h
+	parser_var/CParserVarArrayPropertyGroup.h
+	parser_var/CParserVarArrayString.h
+	parser_var/CParserVarBoolean.h
+	parser_var/CParserVarNamed.h
+	parser_var/CParserVarNumber.h
+	parser_var/CParserVarPropertyGroup.h
+	parser_var/CParserVarString.h
+		
 	CParser.h
 	CParserBase.h
 	CParserJson.h
 	CParserJson.cxx
-	CParserVar.h
 	zetjsoncpp_utils.h
 	zetjsoncpp_exception.h
 )

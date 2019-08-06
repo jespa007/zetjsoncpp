@@ -18,9 +18,6 @@
 #include <exception>
 #include <stdexcept>
 
-using std::string;
-using std::vector;
-
 #define ZETJSONCPP_MAJOR_VERSION 1
 #define ZETJSONCPP_MINOR_VERSION 3
 #define ZETJSONCPP_PATCH_VERSION 0
@@ -29,7 +26,9 @@ using std::vector;
 #include "MEM_ram.h"
 #endif
 
-#include "zetjsoncpp_utils.h"
+#include "string.h"
+#include "io.h"
+#include "path.h"
 
 
 #include "var/ZJ_Boolean.h"
@@ -37,8 +36,8 @@ using std::vector;
 #include "var/ZJ_String.h"
 
 
-#include "zetjsoncpp_exception.h"
-#include "CParserVar.h"
+#include "exception.h"
+#include "parser_var/CParserVar.h"
 #include "CParserBase.h"
 #include "CParser.h"
 #include "CParserJson.h"

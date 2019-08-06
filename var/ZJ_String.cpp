@@ -9,7 +9,7 @@ ZJ_String::ZJ_String(){
 	m_str = "";
 }
 
-ZJ_String::ZJ_String(const string &  str){
+ZJ_String::ZJ_String(const std::string &  str){
 	m_str = str;
 }
 
@@ -18,11 +18,11 @@ ZJ_String::ZJ_String(const char * str){
 }
 
 ZJ_String::ZJ_String(int i){
-	m_str = CZetJsonCppUtils::intToString(i);
+	m_str = string::to_string(i);
 }
 
 ZJ_String::ZJ_String(float f){
-	m_str = CZetJsonCppUtils::floatToString(f);
+	m_str = string::to_string(f);
 }
 
 ZJ_String ZJ_String::operator +(const ZJ_String & param)  const {
@@ -39,7 +39,7 @@ ZJ_String & ZJ_String::operator =(const ZJ_String & str){
 	return (*this);
 }
 
-ZJ_String & ZJ_String::operator =(const string & str){
+ZJ_String & ZJ_String::operator =(const std::string & str){
 	this->m_str = str;
 
 	return (*this);

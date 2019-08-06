@@ -1,0 +1,34 @@
+/*
+ *  This file is distributed under the MIT License.
+ *  See LICENSE file for details.
+ */
+#pragma once
+
+namespace zetjsoncpp {
+
+	namespace string{
+
+		template<typename T>
+		T to_number(const std::string& str) {
+
+			std::istringstream ss(str);
+			T ret;
+			ss >> ret;
+			return ret;
+		}
+
+
+		bool isEmpty(const string & str);
+
+		std::string to_string(int number);
+		std::string to_string(float number);
+		std::string to_lower(const string & str);
+		bool ends_with(const std::string & fullString, const std::string & ending);
+		int is_number(const std::string & test_str_number);
+
+
+
+
+	}
+
+};

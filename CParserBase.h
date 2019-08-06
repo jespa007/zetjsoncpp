@@ -15,8 +15,8 @@ namespace zetjsoncpp{
 	class CParserBase{
 	protected:
 
-		string filename;
-		string m_error;
+		std::string filename;
+		std::string m_error;
 
 
 
