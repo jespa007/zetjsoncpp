@@ -20,12 +20,7 @@ namespace zetjsoncpp{
 
 	namespace string{
 
-		typedef enum {
-			STRING_IS_INVALID_NUMBER = 0,
-			STRING_IS_HEXA,
-			STRING_IS_INT,
-			STRING_IS_DOUBLE
-		}NUMBER_STRING_TYPE;
+
 
 		std::string to_string(int number){
 
@@ -38,19 +33,19 @@ namespace zetjsoncpp{
 
 			char buff[100];
 			sprintf(buff, "%f",number);
-			string ss = buff;
+			std::string ss = buff;
 		   return ss;//return a string with the contents of the stream
 		}
 
-		std::string to_lower(const string & str){
+		std::string to_lower(const std::string & str){
 
-			string ret = str;
+			std::string ret = str;
 			for(unsigned short l = 0; l < ret.size();l++)
-				ret[l] = tolower(ret[l]);
+				ret[l] = toLower(ret[l]);
 			return ret;
 		}
 
-		bool ends_with(const string & fullString, const string & ending){
+		bool ends_with(const std::string & fullString, const std::string & ending){
 			if (fullString.length() >= ending.length()) {
 				return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
 			}
@@ -82,11 +77,11 @@ namespace zetjsoncpp{
 
 
 
-		bool is_empty(const string & str){
+		bool is_empty(const std::string & str){
 			return str.empty();
 		}
 
-		int is_number(const string & test_str_number){
+		int is_number(const std::string & test_str_number){
 			bool isHexa=false;
 			char *str = (char *)test_str_number.c_str();
 
@@ -94,7 +89,7 @@ namespace zetjsoncpp{
 			case '-': str++; // negative numbers ...
 					   break;
 			case '0':
-					  if(tolower(*str+1)=='x')  {
+					  if(to_lower(*str+1)=='x')  {
 						  isHexa = true;
 						  str+=2;
 					  }
@@ -107,13 +102,13 @@ namespace zetjsoncpp{
 			if(isHexa) {
 				str = ADVANCE_HEXADIGITS(str);
 				if(str == start_str)
-					return STRING_IS_INVALID_NUMBER;
+					return string::STRING_IS_INVALID_NUMBER;
 
 				if(*str == ' ' || *str == 0) return STRING_IS_HEXA;
 			}else{
 				str = ADVANCE_DIGITS(str);
 				if(str == start_str)
-					return STRING_IS_INVALID_NUMBER;
+					return string::STRING_IS_INVALID_NUMBER;
 
 				if(*str=='.') { // is candidate to double
 					str++;

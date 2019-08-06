@@ -30,16 +30,16 @@ namespace zetjsoncpp {
 
 
 
-		virtual void evalString(const string & m_expression, int level = 0, bool ignore_warnings =
+		virtual void evalString(const std::string & m_expression, int level = 0, bool ignore_warnings =
 			false) = 0;
 
-		virtual void evalFile(const string & m_filename, bool ignore_warnings =
+		virtual void evalFile(const std::string & m_filename, bool ignore_warnings =
 			false) {
 
 
 			m_filesrc = m_filename.c_str();
 
-			char *buf = read_file(m_filename);
+			char *buf = io::read_file(m_filename);
 			if (buf != NULL) {
 				try{
 					evalString(buf, 0, ignore_warnings);

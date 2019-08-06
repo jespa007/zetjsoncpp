@@ -11,12 +11,14 @@
 #include <memory.h>
 #include <iostream>
 #include <sstream>
+#include <string>
+#include <string.h>
 #include <vector>
-#include <cstring>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <exception>
 #include <stdexcept>
+
 
 #define ZETJSONCPP_MAJOR_VERSION 1
 #define ZETJSONCPP_MINOR_VERSION 3

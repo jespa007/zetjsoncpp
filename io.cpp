@@ -4,7 +4,7 @@ namespace zetjsoncpp
 {
 	namespace io{
 
-		bool file_exists(const string & m_file) {
+		bool file_exists(const std::string & m_file) {
 
 			if (string::ends_with(m_file, "/"))
 				return false;
@@ -17,7 +17,7 @@ namespace zetjsoncpp
 
 		}
 
-		char * read_file(const string & filename, bool end_string_char){
+		char * read_file(const std::string & filename, bool end_string_char){
 
 			int  file_length, readed_elements;
 				FILE  *fp;
@@ -29,7 +29,7 @@ namespace zetjsoncpp
 
 				if((fp  =  fopen(filename.c_str(),"rb"))  !=  NULL)
 				{
-					if((file_length = getLengthFile(filename)) != -1) {
+					if((file_length = get_file_length(filename)) != -1) {
 
 
 						char *buffer = (char *)malloc (file_length+with_end_char);

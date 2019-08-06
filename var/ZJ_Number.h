@@ -7,7 +7,7 @@ protected:
 public:
 	double m_numVar;
 
-	static double parse(const string & str );
+	static double parse(const std::string & str );
 	ZJ_Number();
 	ZJ_Number(const ZJ_Number&);
 	ZJ_Number(int );
@@ -81,7 +81,7 @@ public:
 
 	virtual ZJ_Number & operator  = (const ZJ_Number & n);
 	ZJ_Number & operator  = (int n);
-	ZJ_Number & operator  = (const string & n);
+	ZJ_Number & operator  = (const std::string & n);
 	ZJ_Number & operator  = (double n);
 	ZJ_Number & operator  = (float n);
 	ZJ_Number & operator += (const ZJ_Number & n);

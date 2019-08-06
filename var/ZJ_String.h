@@ -18,7 +18,7 @@ public:
 	explicit ZJ_String(float );
 	explicit ZJ_String(double );
 	explicit ZJ_String(const char *);
-	explicit ZJ_String(const string & );
+	explicit ZJ_String(const std::string & );
 
 	operator std::string(){return m_str;};
 

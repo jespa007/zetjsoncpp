@@ -30,7 +30,7 @@ namespace zetjsoncpp {
 
 		CParserJson() {}
 
-		virtual void evalString(const string & m_expression, int level = 0, bool ignore_warnings = false) {
+		virtual void evalString(const std::string & m_expression, int level = 0, bool ignore_warnings = false) {
 
 			this->m_line = 1;
 			this->root_struct_field->destroy(); // destroy previous elements!

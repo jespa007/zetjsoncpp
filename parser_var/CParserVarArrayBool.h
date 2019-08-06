@@ -12,13 +12,13 @@ namespace zetjsoncpp{
 		}
 
 		void add(bool s) {
-			((vector<bool> *)this->p_data)->push_back(s);
+			((std::vector<bool> *)this->p_data)->push_back(s);
 		}
 
 		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 			bool not_minimized = ((CParserVar::PROPERTY_STR_MINIMIZED & flags) == 0);
 			//this->str_value ="";
-			vector<bool> * v = (vector<bool> *)this->p_data;
+			std::vector<bool> * v = (std::vector<bool> *)this->p_data;
 			this->str_value = "";
 			std::string m_sfValue;
 
