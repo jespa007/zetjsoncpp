@@ -28,9 +28,9 @@
 #include "MEM_ram.h"
 #endif
 
-#include "string.h"
-#include "io.h"
-#include "path.h"
+#include "utils/string.h"
+#include "utils/io.h"
+#include "utils/path.h"
 
 
 #include "var/ZJ_Boolean.h"

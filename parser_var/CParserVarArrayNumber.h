@@ -33,7 +33,7 @@ namespace zetjsoncpp{
 
 				if (j > 0)
 					this->str_value = this->str_value + ",";
-				m_sfValue = string::to_string(v->at(j));
+				m_sfValue = string::float_to_string(v->at(j));
 
 				this->str_value = this->str_value + "" + m_sfValue + " ";
 

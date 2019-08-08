@@ -41,21 +41,21 @@ namespace zetjsoncpp {
 		this->m_isParsed = false;
 	}
 
-	virtual std::string & CParserVar::cpp2json() {
+	std::string & CParserVar::cpp2json() {
 		result_json = "//no data:\n{}\n";
 		return result_json;
 	}
 
-	virtual CParserVar * CParserVar::newData() {
+	CParserVar * CParserVar::newData() {
 		return NULL;
 	}
 
-	virtual std::string & CParserVar::getStrValue(int ident, uint32_t flags) {
+	std::string & CParserVar::getStrValue(int ident, uint32_t flags) {
 		this->str_value = "??";
 		return str_value;
 	}
 
-	virtual void CParserVar::add(CParserVar * s) {}
+	void CParserVar::add(CParserVar * s) {}
 
 
 
@@ -67,7 +67,7 @@ namespace zetjsoncpp {
 		return m_isParsed;
 	}
 
-	virtual CParserVar::~CParserVar() {
+	CParserVar::~CParserVar() {
 
 	}
 };

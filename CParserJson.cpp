@@ -5,7 +5,21 @@
 
 #include "zetjsoncpp.h"
 
+#ifdef CAPTURE_VARIABLE_ARGS
+#undef CAPTURE_VARIABLE_ARGS
+#endif
+
+
+// Util to capture args by ...
+#define CAPTURE_VARIABLE_ARGS(text_out, text_in)\
+	{va_list  ap;\
+	va_start(ap,  text_in);\
+	vsprintf(text_out,  text_in,  ap);\
+	va_end(ap);}
+
+
 namespace zetjsoncpp{
+
 
 
 

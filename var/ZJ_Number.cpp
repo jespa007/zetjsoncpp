@@ -2,8 +2,8 @@
 
 namespace zetjsoncpp {
 
-double ZJ_Number::parse(const string & str ){
-	return CZetJsonCppUtils::fromString<double>(str);
+double ZJ_Number::parse(const std::string & str ){
+	return string::to_number<double>(str);
 }
 
 ZJ_Number::ZJ_Number(){
@@ -98,7 +98,7 @@ ZJ_Number & ZJ_Number::operator  = (float n){
 	return (*this);
 }
 
-ZJ_Number & ZJ_Number::operator  = (const string & n){
+ZJ_Number & ZJ_Number::operator  = (const std::string & n){
 	m_numVar = ZJ_Number::parse(n);
 	return (*this);
 }

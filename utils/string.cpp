@@ -5,15 +5,7 @@
 
 #include "zetjsoncpp.h"
 
-#if  !defined(CAPTURE_VARIABLE_ARGS)
-	// Util to capture args by ...
-	#define CAPTURE_VARIABLE_ARGS(text_out, text_in)\
-	{va_list  ap;\
-	va_start(ap,  text_in);\
-	vsprintf(text_out,  text_in,  ap);\
-	va_end(ap);}
 
-#endif
 
 
 namespace zetjsoncpp{
@@ -22,14 +14,14 @@ namespace zetjsoncpp{
 
 
 
-		std::string to_string(int number){
+		std::string int_to_string(int number){
 
 		   std::stringstream ss;//create a stringstream
 		   ss << number;//add number to the stream
 		   return ss.str();//return a string with the contents of the stream
 		}
 
-		std::string to_string(float number){
+		std::string float_to_string(float number){
 
 			char buff[100];
 			sprintf(buff, "%f",number);
@@ -41,7 +33,7 @@ namespace zetjsoncpp{
 
 			std::string ret = str;
 			for(unsigned short l = 0; l < ret.size();l++)
-				ret[l] = toLower(ret[l]);
+				ret[l] = tolower(ret[l]);
 			return ret;
 		}
 
@@ -89,7 +81,7 @@ namespace zetjsoncpp{
 			case '-': str++; // negative numbers ...
 					   break;
 			case '0':
-					  if(to_lower(*str+1)=='x')  {
+					  if(tolower(*str+1)=='x')  {
 						  isHexa = true;
 						  str+=2;
 					  }

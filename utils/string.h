@@ -27,13 +27,11 @@ namespace zetjsoncpp {
 
 		bool is_empty(const std::string & str);
 
-		std::string to_string(int number);
-		std::string to_string(float number);
+		std::string int_to_string(int number);
+		std::string float_to_string(float number);
 		std::string to_lower(const std::string & str);
 		bool ends_with(const std::string & fullString, const std::string & ending);
 		int is_number(const std::string & test_str_number);
-
-
 
 
 	}

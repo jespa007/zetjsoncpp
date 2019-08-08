@@ -18,11 +18,11 @@ ZJ_String::ZJ_String(const char * str){
 }
 
 ZJ_String::ZJ_String(int i){
-	m_str = string::to_string(i);
+	m_str = string::int_to_string(i);
 }
 
 ZJ_String::ZJ_String(float f){
-	m_str = string::to_string(f);
+	m_str = string::float_to_string(f);
 }
 
 ZJ_String ZJ_String::operator +(const ZJ_String & param)  const {

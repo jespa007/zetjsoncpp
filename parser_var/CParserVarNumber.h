@@ -65,9 +65,9 @@ namespace zetjsoncpp{
 		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 
 			if (m_forceInteger)
-				this->str_value = "" + string::to_string(this->m_numVar);
+				this->str_value = "" + string::int_to_string(this->m_numVar);
 			else
-				this->str_value = "" + string::to_string(this->m_numVar);
+				this->str_value = "" + string::float_to_string(this->m_numVar);
 			return this->str_value;
 		}
 
