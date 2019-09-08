@@ -166,9 +166,9 @@ endif()
 
 SET(
 	HS
-	utils/string.h
-	utils/io.h
-	utils/path.h
+	util/string.h
+	util/io.h
+	util/path.h
 	zetjsoncpp.h
 	var/ZJ_Boolean.h
 	var/ZJ_Number.h
