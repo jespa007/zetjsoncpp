@@ -1,13 +1,13 @@
 namespace zetjsoncpp{
 
 	template<typename _T_DATA, char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarPropertyArrayGroup : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<CParserVarPropertyGroup<_T_DATA> * > {
+	class CParserVarPropertyGroupArray : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<CParserVarPropertyGroup<_T_DATA> * > {
 
 	public:
 
-		CParserVarPropertyArrayGroup() {
+		CParserVarPropertyGroupArray() {
 			this->_m_iType = CParserVar::TYPE_ARRAY_PROPERTY_GROUP;
-			this->size_data = sizeof(CParserVarPropertyArrayGroup<_T_DATA, chr1, chr2, _T_NAME...>);
+			this->size_data = sizeof(CParserVarPropertyGroupArray<_T_DATA, chr1, chr2, _T_NAME...>);
 			this->p_data = &this->vec_data;
 
 			if (this->_m_pvariableName == "")
@@ -59,7 +59,7 @@ namespace zetjsoncpp{
 			this->vec_data.clear();
 		}
 
-		virtual ~CParserVarPropertyArrayGroup() {
+		virtual ~CParserVarPropertyGroupArray() {
 			destroy();
 
 		}

@@ -13,7 +13,7 @@ namespace zetjsoncpp {
 	protected:
 
 
-		CParserVarPropertyArrayGroup<_T> * root_struct_field;
+		CParserVarPropertyGroupArray<_T> * root_struct_field;
 		const char *m_filesrc;
 		int m_line;
 
@@ -25,7 +25,7 @@ namespace zetjsoncpp {
 		CParser() {
 			m_filesrc = NULL;
 			m_line = 0;
-			root_struct_field = new CParserVarPropertyArrayGroup<_T>;
+			root_struct_field = new CParserVarPropertyGroupArray<_T>;
 		}
 
 
@@ -57,7 +57,7 @@ namespace zetjsoncpp {
 			}
 		}
 
-		CParserVarPropertyArrayGroup<_T> *getData() {
+		CParserVarPropertyGroupArray<_T> *getData() {
 			return root_struct_field;
 		}
 
