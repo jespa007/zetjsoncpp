@@ -13,7 +13,7 @@ namespace zetjsoncpp {
 #define N_ELEMENTS_JSON_ARRAY_PRINT	10
 
 #define JS_STRING_CAST 		(CParserVarString<> *)
-#define JS_ARRAY_STRING_CAST 	(CParserVarArrayString<> *)
+#define JS_ARRAY_STRING_CAST 	(CParserVarStringArray<> *)
 #define JS_BOOL_CAST 		(CParserVarBoolean<> *)
 #define JS_FLOAT_CAST 		(CParserVarNumber<> *)
 
@@ -745,15 +745,15 @@ namespace zetjsoncpp {
 
 	// ARRAY FLOAT
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarArrayNumber : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<float> {
+	class CParserVarNumberArray : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<float> {
 		short * shortBuf;
 		float * floatBuf;
 
 	public:
 		//_T_NAME name;
-		CParserVarArrayNumber() {
+		CParserVarNumberArray() {
 			this->_m_iType = CParserVar::TYPE_ARRAY_NUMBER;
-			this->size_data = sizeof(CParserVarArrayNumber<chr1, chr2, _T_NAME...>);
+			this->size_data = sizeof(CParserVarNumberArray<chr1, chr2, _T_NAME...>);
 			this->p_data = &this->vec_data;
 			shortBuf=NULL;
 			floatBuf=NULL;
@@ -822,8 +822,8 @@ namespace zetjsoncpp {
 		}
 
 
-		//virtual ~CParserVarArrayNumber(){}
-		virtual ~CParserVarArrayNumber() {
+		//virtual ~CParserVarNumberArray(){}
+		virtual ~CParserVarNumberArray() {
 			if (floatBuf!=NULL)
 				free(floatBuf);
 
@@ -836,12 +836,12 @@ namespace zetjsoncpp {
 
 	// ARRAY STRING
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarArrayString : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<std::string> {
+	class CParserVarStringArray : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<std::string> {
 	public:
 		//_T_NAME name;
-		CParserVarArrayString() {
+		CParserVarStringArray() {
 			this->_m_iType = CParserVar::TYPE_ARRAY_STRING;
-			this->size_data = sizeof(CParserVarArrayString<chr1, chr2, _T_NAME...>);
+			this->size_data = sizeof(CParserVarStringArray<chr1, chr2, _T_NAME...>);
 			this->p_data = &this->vec_data;
 		}
 
@@ -877,7 +877,7 @@ namespace zetjsoncpp {
 			return this->str_value;
 		}
 
-		virtual ~CParserVarArrayString(){}
+		virtual ~CParserVarStringArray(){}
 
 	};
 
@@ -889,13 +889,13 @@ namespace zetjsoncpp {
 
 
 	template<typename _T_DATA, char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarArrayPropertyGroup : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<CParserVarPropertyGroup<_T_DATA> * > {
+	class CParserVarPropertyArrayGroup : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<CParserVarPropertyGroup<_T_DATA> * > {
 
 	public:
 
-		CParserVarArrayPropertyGroup() {
+		CParserVarPropertyArrayGroup() {
 			this->_m_iType = CParserVar::TYPE_ARRAY_PROPERTY_GROUP;
-			this->size_data = sizeof(CParserVarArrayPropertyGroup<_T_DATA, chr1, chr2, _T_NAME...>);
+			this->size_data = sizeof(CParserVarPropertyArrayGroup<_T_DATA, chr1, chr2, _T_NAME...>);
 			this->p_data = &this->vec_data;
 
 			if (this->_m_pvariableName == "")
@@ -947,7 +947,7 @@ namespace zetjsoncpp {
 			this->vec_data.clear();
 		}
 
-		virtual ~CParserVarArrayPropertyGroup() {
+		virtual ~CParserVarPropertyArrayGroup() {
 			destroy();
 
 		}

@@ -26,13 +26,13 @@
 
 
 #define JS_STRING_CAST 			(CParserVarString<> *)
-#define JS_ARRAY_STRING_CAST 		(CParserVarArrayString<> *)
+#define JS_ARRAY_STRING_CAST 		(CParserVarStringArray<> *)
 #define JS_BOOL_CAST 				(CParserVarBoolean<> *)
 #define JS_ARRAY_BOOL_CAST 		(CParserVarArrayBool<> *)
 //#define JS_INT32_CAST 				(CParserVarInt32<> *)
 //#define JS_ARRAY_INT32_CAST 		(CParserVarArrayInt32<> *)
 #define JS_NUMBER_CAST 				(CParserVarNumber<> *)
-#define JS_ARRAY_NUMBER_CAST 		(CParserVarArrayNumber<> *)
+#define JS_ARRAY_NUMBER_CAST 		(CParserVarNumberArray<> *)
 
 #define PREVIEW_SSTRING(start, current,n) (((current)-(n))<((start))?(start):((current)-(n)))
 

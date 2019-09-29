@@ -22,7 +22,7 @@ typedef struct
     CParserVarNumber<_CONST_CHAR("number")> 		m_number;
 	
     // Plug-ins loaded at start-up
-    CParserVarArrayString<_CONST_CHAR("plug-ins")> 	 m_plugins;
+    CParserVarStringArray<_CONST_CHAR("plug-ins")> 	 m_plugins;
         
     // Tab indent size
     CParserVarPropertyGroup<tIdent,_CONST_CHAR("indent")> m_indent;

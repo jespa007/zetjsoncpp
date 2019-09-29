@@ -13,7 +13,7 @@ namespace zetjsoncpp {
 #define N_ELEMENTS_JSON_ARRAY_PRINT	10
 
 #define JS_STRING_CAST 		(CParserVarString<> *)
-#define JS_ARRAY_STRING_CAST 	(CParserVarArrayString<> *)
+#define JS_ARRAY_STRING_CAST 	(CParserVarStringArray<> *)
 #define JS_BOOL_CAST 		(CParserVarBoolean<> *)
 #define JS_FLOAT_CAST 		(CParserVarNumber<> *)
 
@@ -145,6 +145,6 @@ namespace zetjsoncpp {
 #include "CParserVarPropertyGroup.h"
 #include "CDinamicVector.h"
 #include "CParserVarArrayBool.h"
-#include "CParserVarArrayNumber.h"
-#include "CParserVarArrayString.h"
-#include "CParserVarArrayPropertyGroup.h"
+#include "CParserVarNumberArray.h"
+#include "CParserVarStringArray.h"
+#include "CParserVarPropertyArrayGroup.h"

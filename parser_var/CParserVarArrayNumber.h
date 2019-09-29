@@ -2,15 +2,15 @@ namespace zetjsoncpp{
 
 	// ARRAY FLOAT
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarArrayNumber : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<float> {
+	class CParserVarNumberArray : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<float> {
 		short * shortBuf;
 		float * floatBuf;
 
 	public:
 		//_T_NAME name;
-		CParserVarArrayNumber() {
+		CParserVarNumberArray() {
 			this->_m_iType = CParserVar::TYPE_ARRAY_NUMBER;
-			this->size_data = sizeof(CParserVarArrayNumber<chr1, chr2, _T_NAME...>);
+			this->size_data = sizeof(CParserVarNumberArray<chr1, chr2, _T_NAME...>);
 			this->p_data = &this->vec_data;
 			shortBuf=NULL;
 			floatBuf=NULL;
@@ -79,8 +79,8 @@ namespace zetjsoncpp{
 		}
 
 
-		//virtual ~CParserVarArrayNumber(){}
-		virtual ~CParserVarArrayNumber() {
+		//virtual ~CParserVarNumberArray(){}
+		virtual ~CParserVarNumberArray() {
 			if (floatBuf!=NULL)
 				free(floatBuf);
 
