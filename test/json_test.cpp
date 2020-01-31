@@ -81,7 +81,7 @@ int main(int argc, char *argv[]){
    delete parser;
 
 #ifdef __MEMMANAGER__
-  MEM_ViewStatus();
+   MEMMGR_print_status();
 #endif
 
     // that's all :)

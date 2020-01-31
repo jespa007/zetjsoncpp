@@ -25,7 +25,7 @@
 #define ZETJSONCPP_PATCH_VERSION 0
 
 #ifdef __MEMMANAGER__
-#include "MEM_ram.h"
+#include "memmgr.h"
 #endif
 
 #include "util/string.h"
