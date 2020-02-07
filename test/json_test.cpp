@@ -9,23 +9,23 @@ using namespace zetjsoncpp;
 // json data to c-structure
 
 typedef struct{
-	CParserVarNumber<_CONST_CHAR("length")>  m_length;
-	CParserVarBoolean<_CONST_CHAR("use_space")> m_use_space;
+	CParserVarNumber<ZJ_CONST_CHAR("length")>  m_length;
+	CParserVarBoolean<ZJ_CONST_CHAR("use_space")> m_use_space;
 }tIdent;
 
 typedef struct
 {
     // Default encoding for text
-    CParserVarString<_CONST_CHAR("encoding")> 		m_encoding;
+    CParserVarString<ZJ_CONST_CHAR("encoding")> 		m_encoding;
 	
     // Example number
-    CParserVarNumber<_CONST_CHAR("number")> 		m_number;
+    CParserVarNumber<ZJ_CONST_CHAR("number")> 		m_number;
 	
     // Plug-ins loaded at start-up
-    CParserVarStringArray<_CONST_CHAR("plug-ins")> 	 m_plugins;
+    CParserVarStringArray<ZJ_CONST_CHAR("plug-ins")> 	 m_plugins;
         
     // Tab indent size
-    CParserVarPropertyGroup<tIdent,_CONST_CHAR("indent")> m_indent;
+    CParserVarPropertyGroup<tIdent,ZJ_CONST_CHAR("indent")> m_indent;
 }tSampleJson;
 
 

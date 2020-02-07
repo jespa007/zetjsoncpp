@@ -6,10 +6,6 @@
 
 #pragma once
 
-
-namespace zetjsoncpp {
-
-
 #define N_ELEMENTS_JSON_ARRAY_PRINT	10
 
 #define JS_STRING_CAST 		(CParserVarString<> *)
@@ -22,9 +18,9 @@ namespace zetjsoncpp {
 #define  MIN(a,  b)              ((a)  <  (b)  ?  (a)  :  (b))
 #endif
 
-#define JSON_MAX_CONST_CHAR 50
+#define JS_MAX_CONST_CHAR 50
 
-#define _CONST_CHAR(s)\
+#define ZJ_CONST_CHAR(s)\
 	getChr(s,0),\
 	getChr(s,1),\
 	getChr(s,2),\
@@ -77,8 +73,10 @@ namespace zetjsoncpp {
 	getChr(s,49),\
 	getChr(s,50)
 
-#define getChr(name, ii) ((MIN(ii,JSON_MAX_CONST_CHAR))<sizeof(name)/sizeof(*name)?name[ii]:0)
+#define getChr(name, ii) ((MIN(ii,JS_MAX_CONST_CHAR))<sizeof(name)/sizeof(*name)?name[ii]:0)
 
+
+namespace zetjsoncpp {
 
 	class CParserVar {//: public CVariable {
 	protected:
