@@ -9,21 +9,20 @@
 
 namespace zetjsoncpp{
 
-
-
-
 	class CParserBase{
-	protected:
-
-		std::string filename;
-		std::string m_error;
-
-
-
 	public:
 	  CParserBase(){}
 
 	 virtual ~CParserBase(){}
+
+	protected:
+
+		std::string filename;
+		std::string error;
+
+		void writeError(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...);
+		void writeWarning(const char *file, int line,bool ignore_warnings, const char *string_text, ...);
+
 	};
 
 };

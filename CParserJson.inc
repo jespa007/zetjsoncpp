@@ -34,7 +34,7 @@
 #define JS_NUMBER_CAST 				(CParserVarNumber<> *)
 #define JS_ARRAY_NUMBER_CAST 		(CParserVarNumberArray<> *)
 
-#define PREVIEW_SSTRING(start, current,n) (((current)-(n))<((start))?(start):((current)-(n)))
+
 
 namespace zetjsoncpp{
 
@@ -47,8 +47,8 @@ namespace zetjsoncpp{
 	char *ADVANCE_TO_END_COMMENT(char *aux_p, int &m_line);
 	char *IGNORE_BLANKS(char *str, int &m_line);
 	char *ADVANCE_TO_ONE_OF_COLLECTION_CHAR(char *str,char *end_char_standard_value, int &m_line);
-	void throw_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...);
-	void throw_warning(const char *file, int line, bool ignore_warnings, const char *string_text, ...);
+	void write_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...);
+	void write_warning(const char *file, int line, bool ignore_warnings, const char *string_text, ...);
 
 
 	const char end_char_standard_value[] = {
@@ -137,7 +137,8 @@ namespace zetjsoncpp{
 		float numberValue = 0;
 
 		if (string::is_empty(start_str)){
-			throw_error(this->m_filesrc, -1,NULL, NULL, "Empty string");
+			write_error(this->m_filesrc, -1,NULL, NULL, "Empty string");
+			return ZJ_ERROR;
 		}
 
 
@@ -190,7 +191,8 @@ namespace zetjsoncpp{
 
 
 						if (*current_ptr != *str_end) {
-							throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Was expect a double/single quote. format example --> \"property\":\"value\"");
+							write_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Was expect a double/single quote. format example --> \"property\":\"value\"");
+							return ZJ_ERROR;
 						}
 
 						size = str_end - current_ptr - 1;
@@ -208,7 +210,8 @@ namespace zetjsoncpp{
 							if (c_property != NULL)
 								if (c_property->isParsed()) {
 
-									throw_warning(this->m_filesrc, this->m_line,"%s was already parsed (duplicate?)", property_name);
+									write_error(this->m_filesrc, this->m_line,"%s was already parsed (duplicate?)", property_name);
+									return ZJ_ERROR;
 								}
 
 							// next.. get value...
@@ -254,8 +257,10 @@ namespace zetjsoncpp{
 											}
 
 											// passing NULL if the record has been initialized (it doens't matter any c property in advence...
-											if ((bytes_readed = json2cpp(current_ptr, process_group, level + 1, ignore_warnings)) == 0) {
-												return 0;
+											bytes_readed = json2cpp(current_ptr, process_group, level + 1, ignore_warnings);
+
+											if(bytes_readed <= 0){
+												return bytes_readed;
 											}
 
 											type_value = CParserVar::TYPE_PROPERTY_GROUP;
@@ -288,12 +293,13 @@ namespace zetjsoncpp{
 													}
 												}
 												else {
-													throw_error(
+													write_error(
 															this->m_filesrc
 															, this->m_line
 															,NULL
 															,NULL
 															,"Error reading property \"%s\" as string", property_name);
+													return ZJ_ERROR;
 												}
 
 											}
@@ -373,8 +379,8 @@ namespace zetjsoncpp{
 										}
 
 										if (!bytes_readed || !ok) {
-											throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Impossible to parse value of property \"%s\"", property_name);
-											return 0;
+											write_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Impossible to parse value of property \"%s\"", property_name);
+											return ZJ_ERROR;
 										}
 										else { // value ok
 											if (isArray)
@@ -392,7 +398,7 @@ namespace zetjsoncpp{
 													default:
 													case 	CParserVar::TYPE_UNKNOWN:
 														fprintf(stderr,"unknown type %i", type_value);
-														return 0;
+														return ZJ_ERROR;
 														break;
 													case 	CParserVar::TYPE_ARRAY_BOOL:
 													case 	CParserVar::TYPE_BOOL:
@@ -434,18 +440,22 @@ namespace zetjsoncpp{
 													}
 
 													// set parsed element...
-													if (!isArray)
+													if (!isArray){
 														c_property->setParsed(true);
+													}
 
 												}
 												else {
-													throw_warning(this->m_filesrc, this->m_line,"variable \"%s\"not matches. JSon is %s and C struct is %s", property_name, CParserVar::idTypeToString(type_value), CParserVar::idTypeToString(c_property->_m_iType));
+													write_warning(this->m_filesrc, this->m_line,"variable \"%s\"not matches. JSon is %s and C struct is %s", property_name, CParserVar::idTypeToString(type_value), CParserVar::idTypeToString(c_property->_m_iType));
+													return ZJ_ERROR;
 												}
 											}
 											else {
 
-												if (c_data != NULL && strcmp(old_property_name, property_name))
-													throw_warning(this->m_filesrc, this->m_line,"Variable name \"%s\" NOT registered in c-struct", property_name);
+												if (c_data != NULL && strcmp(old_property_name, property_name)){
+													write_warning(this->m_filesrc, this->m_line,"Variable name \"%s\" NOT registered in c-struct", property_name);
+													return ZJ_ERROR;
+												}
 											}
 										}
 
@@ -463,7 +473,8 @@ namespace zetjsoncpp{
 
 											}
 											else if (*current_ptr != ']') {
-												throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Was expect a ',' , ']' or '{' ");
+												write_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Was expect a ',' , ']' or '{' ");
+												return ZJ_ERROR;
 
 											}
 										}
@@ -479,20 +490,22 @@ namespace zetjsoncpp{
 								}
 							}
 							else {
-								throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Error ':' expected");
+								write_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Error ':' expected");
+								return ZJ_ERROR;
 
 							}
 						}
 						else {
-							throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "invalid size property (%i)", size);
+							write_error(this->m_filesrc, this->m_line,start_str, current_ptr, "invalid size property (%i)", size);
+							return ZJ_ERROR;
 
 						}
 
 						end = (*current_ptr == '}');
 						if (!end)
 							if (*current_ptr != ',') {
-								throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "an \',\' was expected!");
-
+								write_error(this->m_filesrc, this->m_line,start_str, current_ptr, "an \',\' was expected!");
+								return ZJ_ERROR;
 							}
 
 						// forward to next property
@@ -500,14 +513,14 @@ namespace zetjsoncpp{
 						//an_element_need = (*current_ptr == ',');
 					}
 					else { // void property group
-						//throw_warning(start_str,current_ptr,"void property group!");
 						current_ptr++;
 						return current_ptr - start_str; // return..
 					}
 				}
 			}
 			else {
-				throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "It doesn't possible check begin/end group {");
+				write_error(this->m_filesrc, this->m_line,start_str, current_ptr, "It doesn't possible check begin/end group {");
+				return ZJ_ERROR;
 
 			}
 			if (anonymous_array) {
@@ -520,7 +533,8 @@ namespace zetjsoncpp{
 				}
 				else {
 					more_group_properties = false;
-					throw_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Impossible to find ']' current caracter is %c", *current_ptr);
+					write_error(this->m_filesrc, this->m_line,start_str, current_ptr, "Impossible to find ']' current caracter is %c", *current_ptr);
+					return ZJ_ERROR;
 				}
 
 			}

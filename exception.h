@@ -2,7 +2,8 @@
  *  This file is distributed under the MIT License.
  *  See LICENSE file for details.
  */
-#pragma once
+#ifndef __ZJ_EXCEPTION_H__
+#define __ZJ_EXCEPTION_H__
 
 namespace zetjsoncpp {
 
@@ -51,3 +52,5 @@ namespace zetjsoncpp {
 
 	};
 };
+
+#endif
