@@ -27,6 +27,18 @@ namespace zetjsoncpp{
 			init();
 		}
 
+		operator const char * () const{
+			return (char *)s_value.c_str();
+		}
+
+		operator char * () const{
+			return s_value.c_str();
+		}
+
+		operator std::string () const{
+			return s_value;
+		}
+
 		explicit CParserVarString(std::string & s) {
 			init();
 			*((std::string *)this->p_data) = s;

@@ -5,24 +5,59 @@ class ZJ_Number{//:public CVariable{
 protected:
 
 public:
-	double m_numVar;
+	float m_numVar;
 
-	static double parse(const std::string & str );
-	ZJ_Number();
-	ZJ_Number(const ZJ_Number&);
-	ZJ_Number(int );
-	ZJ_Number(unsigned );
-	ZJ_Number(float );
-	ZJ_Number(double );
+	static float parse(const std::string & str ){
+		return string::to_number<float>(str);
+	}
 
-	//operator int();
-	//operator float();
-	//operator double();
+
+	ZJ_Number(){
+		m_numVar = 0;
+	}
+
+	ZJ_Number(const ZJ_Number& n){
+		m_numVar = n.m_numVar;
+	}
+
+	ZJ_Number(int i){
+		m_numVar = i;
+	}
+
+	ZJ_Number(unsigned i){
+		m_numVar = i;
+	}
+
+
+	ZJ_Number(float f){
+		m_numVar = f;
+	}
+
 	operator int() const {
 		return m_numVar;
 	}
-	operator double() const {
+	operator float() const {
 		return m_numVar;
+	}
+	//--- =
+	virtual ZJ_Number & operator  = (const ZJ_Number & n){
+		m_numVar = n.m_numVar;
+		return (*this);
+	}
+
+	ZJ_Number & operator  = (int n){
+		m_numVar = n;
+		return (*this);
+	}
+
+	ZJ_Number & operator  = (float n){
+		m_numVar = n;
+		return (*this);
+	}
+
+	ZJ_Number & operator  = (const std::string & n){
+		m_numVar = parse(n);
+		return (*this);
 	}
 
 	void set(const ZJ_Number & n){
@@ -37,71 +72,196 @@ public:
 		this->m_numVar = n;
 	}
 
-	void set(double n){
+	void set(float n){
 		this->m_numVar = n;
 	}
+	//--- +
+	ZJ_Number   operator +  (const ZJ_Number & n) const{
+		ZJ_Number n1;
+		n1.m_numVar = m_numVar + n.m_numVar;
+		return n1;
+	}
 
-	ZJ_Number   operator +  (const ZJ_Number & n) const;
-	ZJ_Number   operator +  (double n) const;
-	ZJ_Number   operator +  (int n) const;
+	ZJ_Number   operator +  (float n) const {
+		ZJ_Number n1;
+		n1.m_numVar = m_numVar + n;
+		return n1;
 
-	//----
-	// friend functions ...
-	//---
+	}
 
-	// prefix operator
-	ZJ_Number & operator ++ ();
+	ZJ_Number   operator +  (int n) const{
+		ZJ_Number n1;
+		n1.m_numVar = m_numVar + n;
+		return n1;
 
-	// postfix operator
-	const ZJ_Number operator ++ (int);
+	}
+	//--- -
+	ZJ_Number   operator -  (const ZJ_Number & n) const{
+		ZJ_Number n1;
+		n1.m_numVar = m_numVar - n.m_numVar;
+		return n1;
+	}
 
+	ZJ_Number   operator -  (){
+		ZJ_Number n1;
+		n1.m_numVar = -m_numVar;
+		return n1;
+	}
+	//--- /
+	ZJ_Number   operator /  (const ZJ_Number & n) const{
+		ZJ_Number n1;
 
+		if(n.m_numVar ==0)
+			throw ("Error divide by 0");
 
-	ZJ_Number   operator -  (const ZJ_Number & n) const;
-	ZJ_Number   operator -  ();
+		n1.m_numVar = m_numVar / n.m_numVar;
+		return n1;
+	}
+	//--- ==
+	bool 	  operator == (const ZJ_Number & n){
+		return m_numVar == n.m_numVar;
+	}
+	bool 	  operator == (float n){
+		return m_numVar == n;
+	}
+	bool 	  operator == (int n){
+		return m_numVar == n;
+	}
+	//--- !=
+	bool 	  operator != (const ZJ_Number & n){
+		return m_numVar != n.m_numVar;
+	}
+	bool 	  operator != (float n){
+		return m_numVar != n;
+	}
+	bool 	  operator != (int n){
+		return m_numVar != n;
+	}
+	//--- <
+	bool 	  operator <  (const ZJ_Number & n){
+		return m_numVar < n.m_numVar;
+	}
+	bool 	  operator <  (float n){
+		return m_numVar < n;
+	}
+	bool 	  operator <  (int n){
+		return m_numVar < n;
+	}
+	//--- <=
+	bool 	  operator <= (const ZJ_Number & n){
+		return m_numVar <= n.m_numVar;
+	}
+	bool 	  operator <= (float n){
+		return m_numVar <= n;
+	}
+	bool 	  operator <= (int n){
+		return m_numVar <= n;
+	}
+	//--- >
+	bool 	  operator >  (const ZJ_Number & n){
+		return m_numVar > n.m_numVar;
+	}
+	bool 	  operator >  (float n){
+		return m_numVar > n;
+	}
+	bool 	  operator >  (int n){
+		return m_numVar > n;
+	}
+	//--- >=
+	bool	operator >= (const ZJ_Number & n){
+		return m_numVar >= n.m_numVar;
+	}
+	bool 	  operator >= (float n){
+		return m_numVar >= n;
+	}
+	bool 	  operator >= (int n){
+		return m_numVar >= n;
+	}
+	//--- +=
+	ZJ_Number & operator += (const ZJ_Number & n){
+		m_numVar += n.m_numVar;
+		return (*this);
+	}
 
+	ZJ_Number & operator += (int n1){
+		m_numVar += n1;
+		return (*this);
+	}
 
-	ZJ_Number   operator /  (const ZJ_Number & n) const;
+	ZJ_Number & operator += (float n1){
+		m_numVar += n1;
+		return (*this);
+	}
+	//--- *=
+	ZJ_Number & operator *= (const ZJ_Number & n){
+		m_numVar *= n.m_numVar;
+		return (*this);
+	}
 
+	ZJ_Number & operator *= (int n1){
+		m_numVar *= n1;
+		return (*this);
+	}
 
-	bool 	  operator <  (const ZJ_Number & n);
-	bool 	  operator <= (const ZJ_Number & n);
-	bool 	  operator >  (const ZJ_Number & n);
-	bool 	  operator >= (const ZJ_Number & n);
-	bool 	  operator == (const ZJ_Number & n);
-	bool 	  operator != (const ZJ_Number & n);
+	ZJ_Number & operator *= (float n1){
+		m_numVar *= n1;
+		return (*this);
+	}
+	//--- /=
+	ZJ_Number & operator /= (const ZJ_Number & n){
+		if(n.m_numVar == 0)
+			throw("Divide by 0!");
 
-	bool 	  operator <  (double n);
-	bool 	  operator <= (double n);
-	bool 	  operator >  (double n);
-	bool 	  operator >= (double n);
-	bool 	  operator == (double n);
-	bool 	  operator != (double n);
+		m_numVar /= n.m_numVar;
+		return (*this);
+	}
 
+	ZJ_Number & operator /= (int n1){
 
-	virtual ZJ_Number & operator  = (const ZJ_Number & n);
-	ZJ_Number & operator  = (int n);
-	ZJ_Number & operator  = (const std::string & n);
-	ZJ_Number & operator  = (double n);
-	ZJ_Number & operator  = (float n);
-	ZJ_Number & operator += (const ZJ_Number & n);
-	ZJ_Number & operator += (int n);
-	ZJ_Number & operator += (double n);
+		if(n1 == 0)
+			throw("Divide by 0!");
+		m_numVar /= n1;
+		return (*this);
+	}
 
-	ZJ_Number & operator -= (const ZJ_Number & n);
-	ZJ_Number & operator -= (double n);
-	ZJ_Number & operator -= (int n);
+	ZJ_Number & operator /= (float n1){
 
-	ZJ_Number & operator *= (const ZJ_Number & n);
-	ZJ_Number & operator *= (int n);
-	ZJ_Number & operator *= (double n);
+		if(n1 == 0)
+			throw("Divide by 0!");
 
-	ZJ_Number & operator /= (const ZJ_Number & n);
-	ZJ_Number & operator /= (int n);
-	ZJ_Number & operator /= (double n);
+		m_numVar /= n1;
+		return (*this);
+	}
+	//--- -=
+	ZJ_Number & operator -= (const ZJ_Number & n){
+		m_numVar -= n.m_numVar;
+		return (*this);
+	}
 
-	virtual ~ZJ_Number();
+	ZJ_Number & operator -= (int n1){
+		m_numVar -= n1;
+		return (*this);
+	}
+
+	ZJ_Number & operator -= (float n1){
+		m_numVar -= n1;
+		return (*this);
+	}
+	//--- ++
+	ZJ_Number & operator ++(){
+		m_numVar++;
+		return (*this);
+	}
+	ZJ_Number  operator ++(int){
+		ZJ_Number n(m_numVar);
+		operator++();
+		return n;
+	}
+
+	~ZJ_Number(){
+
+	}
+
 };
-
-};
+}
 
