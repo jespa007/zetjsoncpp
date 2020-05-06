@@ -13,7 +13,7 @@ namespace zetjsoncpp{
 			m_forceInteger = false;
 			if (this->_m_pvariableName == "") {
 
-				fprintf(stderr,"parse variable is empty, it's impossible to load any empty variable!\n");
+				throw std::runtime_error("parse variable is empty, it's impossible to load any empty variable!");
 			}
 		}
 
@@ -53,7 +53,12 @@ namespace zetjsoncpp{
 
 		CParserVarNumber & operator =(const std::string & intStr) {
 
-			this->m_numVar = string::to_number<float>(intStr);
+			float f=0;
+			if(zj_string::str2float(&f,intStr) != zj_string::STR_2_NUMBER_SUCCESS){
+				throw std::runtime_error("Cannot parse "+ intStr + " as number");
+			}
+
+			this->m_numVar=f;
 			return *this;
 		}
 
@@ -65,9 +70,9 @@ namespace zetjsoncpp{
 		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 
 			if (m_forceInteger)
-				this->str_value = "" + string::int_to_string(this->m_numVar);
+				this->str_value = "" + zj_string::int2str(this->m_numVar);
 			else
-				this->str_value = "" + string::float_to_string(this->m_numVar);
+				this->str_value = "" + zj_string::float2str(this->m_numVar);
 			return this->str_value;
 		}
 

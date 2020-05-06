@@ -2,11 +2,11 @@
 
 namespace zetjsoncpp
 {
-	namespace io{
+	namespace zj_io{
 
 		bool file_exists(const std::string & m_file) {
 
-			if (string::ends_with(m_file, "/"))
+			if (zj_string::ends_with(m_file, "/"))
 				return false;
 
 			if (m_file == "")

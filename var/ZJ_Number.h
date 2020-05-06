@@ -8,7 +8,12 @@ public:
 	float m_numVar;
 
 	static float parse(const std::string & str ){
-		return string::to_number<float>(str);
+		float f=0;
+		if(zj_string::str2float(&f,str)!=zj_string::STR_2_NUMBER_SUCCESS){
+			throw std::runtime_error(std::string("cannot convert ") + str + std::string(" as float"));
+		}
+
+		return f;
 	}
 
 

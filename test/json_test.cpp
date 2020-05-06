@@ -11,7 +11,7 @@ using namespace zetjsoncpp;
 typedef struct{
 	CParserVarNumber<ZJ_CONST_CHAR("length")>  m_length;
 	CParserVarBoolean<ZJ_CONST_CHAR("use_space")> m_use_space;
-}tIdent;
+}Ident;
 
 typedef struct
 {
@@ -25,8 +25,8 @@ typedef struct
     CParserVarStringArray<ZJ_CONST_CHAR("plug-ins")> 	 m_plugins;
         
     // Tab indent size
-    CParserVarPropertyGroup<tIdent,ZJ_CONST_CHAR("indent")> m_indent;
-}tSampleJson;
+    CParserVarPropertyGroup<Ident,ZJ_CONST_CHAR("indent")> m_indent;
+}SampleJson;
 
 
 int main(int argc, char *argv[]){
@@ -38,10 +38,10 @@ int main(int argc, char *argv[]){
 	}
     // declare our data var interface.
     //CParserVarPropertyGroup<tSampleJson> * data_json_array;
-	CParserVarPropertyGroup<tSampleJson> * data_json=NULL;
+	CParserVarPropertyGroup<SampleJson> * data_json=NULL;
 
     // create json-parser
-    CParserJson<tSampleJson> * parser = new CParserJson<tSampleJson>();
+    CParserJson<SampleJson> * parser = new CParserJson<SampleJson>();
 
     try{
 		parser->evalFile(argv[1]);
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]){
 
 			// iterate of all m_plugins var and replace with random strings...
 			for(unsigned i = 0; i < data_json->m_plugins.size(); i++) {
-				data_json->m_plugins[i] = "my_randomstring"+string::int_to_string(i+g+1);
+				data_json->m_plugins[i] = "my_randomstring"+zj_string::int2str(i+g+1);
 			}
 
 		}

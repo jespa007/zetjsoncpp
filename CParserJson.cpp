@@ -167,7 +167,7 @@ namespace zetjsoncpp{
 			json_error_callback(file,line,text,where);
 		}
 		else{*/
-			sprintf(temp_buff,"[%s:%i] %s\n%s",path::get_filename(file).c_str(), line,text,where);
+			sprintf(temp_buff,"[%s:%i] %s\n%s",zj_path::get_filename(file).c_str(), line,text,where);
 		//}
 
 		throw parse_error_exception(file,line,temp_buff);
@@ -185,7 +185,7 @@ namespace zetjsoncpp{
 			}
 			else{*/
 
-				sprintf(temp_buff,"[%s:%i] %s",path::get_filename(file).c_str(),line,text);
+				sprintf(temp_buff,"[%s:%i] %s",zj_path::get_filename(file).c_str(),line,text);
 			//}
 
 				throw parse_warning_exception(file,line,temp_buff);

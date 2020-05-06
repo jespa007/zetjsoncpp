@@ -45,10 +45,7 @@ namespace zetjsoncpp {
 	class parse_error_exception: public parse_exception{
 	public:
 
-
-
 		parse_error_exception(const char *  _file, int _line, const char * _error):parse_exception(_file,  _line, _error,"ERR"){}
-
 
 	};
 };

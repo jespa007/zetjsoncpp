@@ -39,7 +39,7 @@ namespace zetjsoncpp {
 
 			m_filesrc = m_filename.c_str();
 
-			char *buf = io::read_file(m_filename);
+			char *buf = zj_io::read_file(m_filename);
 			if (buf != NULL) {
 				try{
 					evalString(buf, 0, ignore_warnings);

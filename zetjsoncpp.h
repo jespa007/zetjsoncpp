@@ -18,6 +18,7 @@
 #include <sys/types.h>
 #include <exception>
 #include <stdexcept>
+#include <float.h>
 
 
 #define ZETJSONCPP_MAJOR_VERSION 1
@@ -28,9 +29,9 @@
 #include "memmgr.h"
 #endif
 
-#include "util/string.h"
-#include "util/io.h"
-#include "util/path.h"
+#include "util/zj_string.h"
+#include "util/zj_io.h"
+#include "util/zj_path.h"
 
 
 #include "var/ZJ_Boolean.h"
