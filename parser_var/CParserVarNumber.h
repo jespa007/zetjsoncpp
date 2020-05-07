@@ -54,7 +54,7 @@ namespace zetjsoncpp{
 		CParserVarNumber & operator =(const std::string & intStr) {
 
 			float f=0;
-			if(zj_string::str2float(&f,intStr) != zj_string::STR_2_NUMBER_SUCCESS){
+			if(zj_string_utils::str2float(&f,intStr) != zj_string_utils::STR_2_NUMBER_SUCCESS){
 				throw std::runtime_error("Cannot parse "+ intStr + " as number");
 			}
 
@@ -70,9 +70,9 @@ namespace zetjsoncpp{
 		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 
 			if (m_forceInteger)
-				this->str_value = "" + zj_string::int2str(this->m_numVar);
+				this->str_value = "" + zj_string_utils::int2str(this->m_numVar);
 			else
-				this->str_value = "" + zj_string::float2str(this->m_numVar);
+				this->str_value = "" + zj_string_utils::float2str(this->m_numVar);
 			return this->str_value;
 		}
 

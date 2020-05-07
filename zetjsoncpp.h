@@ -19,6 +19,7 @@
 #include <exception>
 #include <stdexcept>
 #include <float.h>
+#include <limits.h>
 
 
 #define ZETJSONCPP_MAJOR_VERSION 1
@@ -29,7 +30,7 @@
 #include "memmgr.h"
 #endif
 
-#include "util/zj_string.h"
+#include "util/zj_string_utils.h"
 #include "util/zj_io.h"
 #include "util/zj_path.h"
 
