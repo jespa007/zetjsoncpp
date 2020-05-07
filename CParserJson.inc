@@ -136,7 +136,7 @@ namespace zetjsoncpp{
 		bool boolValue = false;
 		float numberValue = 0;
 
-		if (zj_string::is_empty(start_str)){
+		if (zj_string_utils::is_empty(start_str)){
 			throw_error(this->m_filesrc, -1,NULL, NULL, "Empty string");
 		}
 
@@ -332,10 +332,10 @@ namespace zetjsoncpp{
 													strncpy(val, current_ptr, bytes_readed);
 
 													// and try to convert in to standard number ...
-													zj_string::STR_NUMBER_TYPE type_number = zj_string::is_number(val);
+													zj_string_utils::STR_NUMBER_TYPE type_number = zj_string_utils::is_number(val);
 
 													//if(type_number != 0){
-													if (type_number == zj_string::STR_NUMBER_TYPE_INT) { //RE2::FullMatch(val,"[-]?[0-9]*")) {// check for normal int...
+													if (type_number == zj_string_utils::STR_NUMBER_TYPE_INT) { //RE2::FullMatch(val,"[-]?[0-9]*")) {// check for normal int...
 														if (!isArray) {
 															print_info_json("property \"%s\" detected as int32", property_name);
 														}
@@ -344,7 +344,7 @@ namespace zetjsoncpp{
 														type_value = CParserVar::TYPE_NUMBER;
 														ok = true;
 													}
-													else  if (type_number == zj_string::STR_NUMBER_TYPE_HEXA) {//RE2::FullMatch(val,"0[xX][0-9a-fA-F]+")) {// check for hexadecimal...
+													else  if (type_number == zj_string_utils::STR_NUMBER_TYPE_HEXA) {//RE2::FullMatch(val,"0[xX][0-9a-fA-F]+")) {// check for hexadecimal...
 														if (!isArray) {
 															print_info_json("property \"%s\" detected as hex", property_name);
 														}

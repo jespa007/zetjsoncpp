@@ -137,7 +137,7 @@ endif()
 set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
 	
-	util/zj_string.cpp
+	util/zj_string_utils.cpp
 	util/zj_io.cpp
 	util/zj_path.cpp
 	var/ZJ_Number.cpp
@@ -166,9 +166,9 @@ endif()
 
 SET(
 	HS
-	util/string.h
-	util/io.h
-	util/path.h
+	util/zj_string_utils.h
+	util/zj_io.h
+	util/zj_path.h
 	zetjsoncpp.h
 	var/ZJ_Boolean.h
 	var/ZJ_Number.h
