@@ -117,9 +117,9 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 	
 
 	#Redefine output dir ...
-	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${TARGET})
-	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${TARGET})
-	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${TARGET})
+	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/${TARGET})
+	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/${TARGET})
+	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/${TARGET})
 	LINK_DIRECTORIES(${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
 	
 endif()
@@ -137,7 +137,7 @@ endif()
 set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
 	
-	util/zj_string_utils.cpp
+	util/zj_string.cpp
 	util/zj_io.cpp
 	util/zj_path.cpp
 	var/ZJ_Number.cpp
@@ -166,7 +166,7 @@ endif()
 
 SET(
 	HS
-	util/zj_string_utils.h
+	util/zj_string.h
 	util/zj_io.h
 	util/zj_path.h
 	zetjsoncpp.h

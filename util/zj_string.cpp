@@ -10,7 +10,7 @@
 
 namespace zetjsoncpp{
 
-	namespace zj_string_utils{
+	namespace zj_string{
 
 
 		STR_2_NUMBER str2int(int * i, const std::string & s, int base){

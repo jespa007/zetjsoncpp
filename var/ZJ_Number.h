@@ -9,7 +9,7 @@ public:
 
 	static float parse(const std::string & str ){
 		float f=0;
-		if(zj_string_utils::str2float(&f,str)!=zj_string_utils::STR_2_NUMBER_SUCCESS){
+		if(zj_string::str2float(&f,str)!=zj_string::STR_2_NUMBER_SUCCESS){
 			throw std::runtime_error(std::string("cannot convert ") + str + std::string(" as float"));
 		}
 

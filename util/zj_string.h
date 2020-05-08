@@ -6,7 +6,7 @@
 
 namespace zetjsoncpp {
 
-	namespace zj_string_utils{
+	namespace zj_string{
 
 		typedef enum {
 			STR_2_NUMBER_SUCCESS,

@@ -30,7 +30,7 @@
 #include "memmgr.h"
 #endif
 
-#include "util/zj_string_utils.h"
+#include "util/zj_string.h"
 #include "util/zj_io.h"
 #include "util/zj_path.h"
 
