@@ -65,7 +65,7 @@ namespace zetjsoncpp{
 		   return ss;//return a string with the contents of the stream
 		}
 
-		std::string to_lower(const std::string & str){
+		std::string toLower(const std::string & str){
 
 			std::string ret = str;
 			for(unsigned short l = 0; l < ret.size();l++)
@@ -73,7 +73,7 @@ namespace zetjsoncpp{
 			return ret;
 		}
 
-		bool ends_with(const std::string & fullString, const std::string & ending){
+		bool endsWith(const std::string & fullString, const std::string & ending){
 			if (fullString.length() >= ending.length()) {
 				return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
 			}
@@ -105,7 +105,7 @@ namespace zetjsoncpp{
 
 
 
-		bool is_empty(const std::string & str){
+		bool isEmpty(const std::string & str){
 			return str.empty();
 		}
 

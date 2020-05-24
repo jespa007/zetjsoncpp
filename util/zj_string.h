@@ -23,15 +23,15 @@ namespace zetjsoncpp {
 		}STR_NUMBER_TYPE;
 
 
-		bool is_empty(const std::string & str);
+		bool isEmpty(const std::string & str);
 
 		STR_2_NUMBER str2int(int * i, const std::string & s, int base = 0);
 		STR_2_NUMBER str2float(float * f, const std::string & s);
 		std::string int2str(int number);
 		std::string float2str(float number);
 
-		std::string to_lower(const std::string & str);
-		bool ends_with(const std::string & fullString, const std::string & ending);
+		std::string toLower(const std::string & str);
+		bool endsWith(const std::string & fullString, const std::string & ending);
 		STR_NUMBER_TYPE is_number(const std::string & test_str_number);
 
 

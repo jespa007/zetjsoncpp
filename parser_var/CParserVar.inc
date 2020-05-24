@@ -332,8 +332,8 @@ namespace zetjsoncpp {
 
 		CParserVarBoolean & operator =(const std::string & str) {
 
-			if (to_lower(str) == "true") *((bool *)this->p_data) = true;
-			else if (to_lower(str) == "false") *((bool *)this->p_data) = false;
+			if (toLower(str) == "true") *((bool *)this->p_data) = true;
+			else if (toLower(str) == "false") *((bool *)this->p_data) = false;
 			else fprintf(stderr,"undefined value to assign bool value\n");
 			return *this;
 		}

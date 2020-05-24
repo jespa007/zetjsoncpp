@@ -6,7 +6,7 @@ namespace zetjsoncpp
 
 		bool file_exists(const std::string & m_file) {
 
-			if (zj_string::ends_with(m_file, "/"))
+			if (zj_string::endsWith(m_file, "/"))
 				return false;
 
 			if (m_file == "")

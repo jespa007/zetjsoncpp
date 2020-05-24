@@ -136,7 +136,7 @@ namespace zetjsoncpp{
 		bool boolValue = false;
 		float numberValue = 0;
 
-		if (zj_string::is_empty(start_str)){
+		if (zj_string::isEmpty(start_str)){
 			throw_error(this->m_filesrc, -1,NULL, NULL, "Empty string");
 		}
 

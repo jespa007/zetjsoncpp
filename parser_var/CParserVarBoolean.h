@@ -40,8 +40,8 @@ namespace zetjsoncpp{
 
 		CParserVarBoolean & operator =(const std::string & str) {
 
-			if (zj_string::to_lower(str) == "true") *((bool *)this->p_data) = true;
-			else if (zj_string::to_lower(str) == "false") *((bool *)this->p_data) = false;
+			if (zj_string::toLower(str) == "true") *((bool *)this->p_data) = true;
+			else if (zj_string::toLower(str) == "false") *((bool *)this->p_data) = false;
 			else fprintf(stderr,"undefined value to assign bool value\n");
 			return *this;
 		}
