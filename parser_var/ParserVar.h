@@ -8,10 +8,10 @@
 
 #define N_ELEMENTS_JSON_ARRAY_PRINT	10
 
-#define JS_STRING_CAST 		(CParserVarString<> *)
+#define JS_STRING_CAST 		(ParserVarString<> *)
 #define JS_ARRAY_STRING_CAST 	(CParserVarStringArray<> *)
 #define JS_BOOL_CAST 		(CParserVarBoolean<> *)
-#define JS_FLOAT_CAST 		(CParserVarNumber<> *)
+#define JS_FLOAT_CAST 		(ParserVarNumber<> *)
 
 
 #if  !defined(MIN)
@@ -76,7 +76,7 @@
 #define getChr(name, ii) ((MIN(ii,JS_MAX_CONST_CHAR))<sizeof(name)/sizeof(*name)?name[ii]:0)
 
 
-namespace zetjsoncpp {
+namespace ZetJsonCpp {
 
 	class CParserVar {//: public CVariable {
 	protected:
@@ -138,11 +138,11 @@ namespace zetjsoncpp {
 
 #include "CParserVarNamed.h"
 #include "CParserVarBoolean.h"
-#include "CParserVarNumber.h"
-#include "CParserVarString.h"
-#include "CParserVarPropertyGroup.h"
+#include "ParserVarNumber.h"
+#include "ParserVarString.h"
+#include "ParserVarPropertyGroup.h"
 #include "CDinamicVector.h"
 #include "CParserVarBoolArray.h"
 #include "CParserVarNumberArray.h"
 #include "CParserVarStringArray.h"
-#include "CParserVarPropertyGroupArray.h"
+#include "ParserVarPropertyGroupArray.h"

@@ -7,7 +7,7 @@
 #pragma once
 
 
-namespace zetjsoncpp {
+namespace ZetJsonCpp {
 
 
 #define N_ELEMENTS_JSON_ARRAY_PRINT	10

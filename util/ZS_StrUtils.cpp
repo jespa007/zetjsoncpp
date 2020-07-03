@@ -3,12 +3,12 @@
  *  See LICENSE file for details.
  */
 
-#include "zetjsoncpp.h"
+#include "ZetJsonCpp.h"
 
 
 
 
-namespace zetjsoncpp{
+namespace ZetJsonCpp{
 
 	namespace zj_string{
 
@@ -65,7 +65,7 @@ namespace zetjsoncpp{
 		   return ss;//return a string with the contents of the stream
 		}
 
-		std::string toLower(const std::string & str){
+		std::string ToLower(const std::string & str){
 
 			std::string ret = str;
 			for(unsigned short l = 0; l < ret.size();l++)
@@ -73,7 +73,7 @@ namespace zetjsoncpp{
 			return ret;
 		}
 
-		bool endsWith(const std::string & fullString, const std::string & ending){
+		bool EndsWith(const std::string & fullString, const std::string & ending){
 			if (fullString.length() >= ending.length()) {
 				return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
 			}
@@ -82,7 +82,7 @@ namespace zetjsoncpp{
 		}
 
 
-		bool is_digit(char c){
+		bool IsDigit(char c){
 			return (('0' <= c) && (c<='9'));
 		}
 
@@ -93,7 +93,7 @@ namespace zetjsoncpp{
 
 		char *ADVANCE_DIGITS(char *aux_p){
 
-			while(is_digit(*aux_p))	aux_p++;
+			while(IsDigit(*aux_p))	aux_p++;
 			return aux_p;
 		}
 
@@ -105,7 +105,7 @@ namespace zetjsoncpp{
 
 
 
-		bool isEmpty(const std::string & str){
+		bool IsEmpty(const std::string & str){
 			return str.empty();
 		}
 

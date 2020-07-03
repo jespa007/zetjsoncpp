@@ -3,7 +3,7 @@
 
 #define STR_EXPAND(tok) #tok
 #define STR(tok) STR_EXPAND(tok)
-namespace zetjsoncpp {
+namespace ZetJsonCpp {
 
 class ZJ_String{
 

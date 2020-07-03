@@ -3,7 +3,7 @@
  *  See LICENSE file for details.
  */
 
-#include "zetjsoncpp.h"
+#include "ZetJsonCpp.h"
 
 #ifdef CAPTURE_VARIABLE_ARGS
 #undef CAPTURE_VARIABLE_ARGS
@@ -18,7 +18,7 @@
 	va_end(ap);}
 
 
-namespace zetjsoncpp{
+namespace ZetJsonCpp{
 
 
 

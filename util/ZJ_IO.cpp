@@ -1,12 +1,12 @@
-#include "zetjsoncpp.h"
+#include "ZetJsonCpp.h"
 
-namespace zetjsoncpp
+namespace ZetJsonCpp
 {
 	namespace zj_io{
 
 		bool file_exists(const std::string & m_file) {
 
-			if (zj_string::endsWith(m_file, "/"))
+			if (zj_string::EndsWith(m_file, "/"))
 				return false;
 
 			if (m_file == "")

@@ -1,6 +1,6 @@
-#include "zetjsoncpp.h"
+#include "ZetJsonCpp.h"
 
-namespace zetjsoncpp
+namespace ZetJsonCpp
 {
 	namespace zj_path{
 		

@@ -1,4 +1,4 @@
-namespace zetjsoncpp{
+namespace ZetJsonCpp{
 
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
 	class CParserVarBoolean : public CParserVarNamed<chr1, chr2, _T_NAME ...>, public ZJ_Boolean {
@@ -40,8 +40,8 @@ namespace zetjsoncpp{
 
 		CParserVarBoolean & operator =(const std::string & str) {
 
-			if (zj_string::toLower(str) == "true") *((bool *)this->p_data) = true;
-			else if (zj_string::toLower(str) == "false") *((bool *)this->p_data) = false;
+			if (zj_string::ToLower(str) == "true") *((bool *)this->p_data) = true;
+			else if (zj_string::ToLower(str) == "false") *((bool *)this->p_data) = false;
 			else fprintf(stderr,"undefined value to assign bool value\n");
 			return *this;
 		}

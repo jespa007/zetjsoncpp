@@ -5,7 +5,7 @@
 
 #pragma once
 
-namespace zetjsoncpp {
+namespace ZetJsonCpp {
 
 	template<typename _T>
 	class CParser : public CParserBase {
@@ -13,7 +13,7 @@ namespace zetjsoncpp {
 	protected:
 
 
-		CParserVarPropertyGroupArray<_T> * root_struct_field;
+		ParserVarPropertyGroupArray<_T> * root_struct_field;
 		const char *m_filesrc;
 		int m_line;
 
@@ -25,7 +25,7 @@ namespace zetjsoncpp {
 		CParser() {
 			m_filesrc = NULL;
 			m_line = 0;
-			root_struct_field = new CParserVarPropertyGroupArray<_T>;
+			root_struct_field = new ParserVarPropertyGroupArray<_T>;
 		}
 
 
@@ -44,11 +44,11 @@ namespace zetjsoncpp {
 				try{
 					evalString(buf, 0, ignore_warnings);
 				}
-				catch(zetjsoncpp::parse_error_exception & err){
+				catch(ZetJsonCppparse_error_exception & err){
 					delete buf;
 					throw err;
 				}
-				catch(zetjsoncpp::parse_warning_exception & wrn){
+				catch(ZetJsonCppparse_warning_exception & wrn){
 					delete buf;
 					throw wrn;
 
@@ -57,7 +57,7 @@ namespace zetjsoncpp {
 			}
 		}
 
-		CParserVarPropertyGroupArray<_T> *getData() {
+		ParserVarPropertyGroupArray<_T> *getData() {
 			return root_struct_field;
 		}
 

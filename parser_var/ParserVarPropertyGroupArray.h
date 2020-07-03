@@ -1,13 +1,13 @@
-namespace zetjsoncpp{
+namespace ZetJsonCpp{
 
 	template<typename _T_DATA, char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarPropertyGroupArray : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<CParserVarPropertyGroup<_T_DATA> * > {
+	class ParserVarPropertyGroupArray : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<ParserVarPropertyGroup<_T_DATA> * > {
 
 	public:
 
-		CParserVarPropertyGroupArray() {
+		ParserVarPropertyGroupArray() {
 			this->_m_iType = CParserVar::TYPE_ARRAY_PROPERTY_GROUP;
-			this->size_data = sizeof(CParserVarPropertyGroupArray<_T_DATA, chr1, chr2, _T_NAME...>);
+			this->size_data = sizeof(ParserVarPropertyGroupArray<_T_DATA, chr1, chr2, _T_NAME...>);
 			this->p_data = &this->vec_data;
 
 			if (this->_m_pvariableName == "")
@@ -17,7 +17,7 @@ namespace zetjsoncpp{
 		}
 
 		virtual CParserVar *newData() {
-			return new CParserVarPropertyGroup<_T_DATA>;
+			return new ParserVarPropertyGroup<_T_DATA>;
 		}
 
 		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
@@ -26,7 +26,7 @@ namespace zetjsoncpp{
 		}
 
 		virtual void add(CParserVar * s) {
-			CParserVarPropertyGroup< _T_DATA> *tt = (CParserVarPropertyGroup< _T_DATA> *)s;
+			ParserVarPropertyGroup< _T_DATA> *tt = (ParserVarPropertyGroup< _T_DATA> *)s;
 			this->push_back(tt);
 		}
 
@@ -59,7 +59,7 @@ namespace zetjsoncpp{
 			this->vec_data.clear();
 		}
 
-		virtual ~CParserVarPropertyGroupArray() {
+		virtual ~ParserVarPropertyGroupArray() {
 			destroy();
 
 		}

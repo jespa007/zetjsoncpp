@@ -8,6 +8,7 @@ Changed var/C* to var/JZ_*
 organize zetjsoncpp_utils to string and io files 
 #4 changed CParserVarXXXXArray by CParserVarArrayXXXX 
 #5 ZJ_Number: Only works with floats 
+> #6 Migrate new c++ style
 
 
 //----------------------------

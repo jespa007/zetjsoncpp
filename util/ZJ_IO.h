@@ -1,6 +1,6 @@
 #pragma once
 
-namespace zetjsoncpp
+namespace ZetJsonCpp
 {
 	namespace zj_io{
 		bool file_exists(const std::string & m_file) ;

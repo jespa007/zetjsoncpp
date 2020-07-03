@@ -5,7 +5,7 @@
 #ifndef __ZJ_EXCEPTION_H__
 #define __ZJ_EXCEPTION_H__
 
-namespace zetjsoncpp {
+namespace ZetJsonCpp {
 
 	class parse_exception: public std::exception
 	{

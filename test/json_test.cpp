@@ -1,44 +1,44 @@
 
-#include "../zetjsoncpp.h"
+#include "../ZetJsonCpp.h"
 
 
-using namespace zetjsoncpp;
+using namespace ZetJsonCpp;
 
 
 
 // json data to c-structure
 
 typedef struct{
-	CParserVarNumber<ZJ_CONST_CHAR("length")>  m_length;
+	ParserVarNumber<ZJ_CONST_CHAR("length")>  m_length;
 	CParserVarBoolean<ZJ_CONST_CHAR("use_space")> m_use_space;
 }Ident;
 
 typedef struct
 {
     // Default encoding for text
-    CParserVarString<ZJ_CONST_CHAR("encoding")> 		m_encoding;
+    ParserVarString<ZJ_CONST_CHAR("encoding")> 		m_encoding;
 	
     // Example number
-    CParserVarNumber<ZJ_CONST_CHAR("number")> 		m_number;
+    ParserVarNumber<ZJ_CONST_CHAR("number")> 		m_number;
 	
     // Plug-ins loaded at start-up
     CParserVarStringArray<ZJ_CONST_CHAR("plug-ins")> 	 m_plugins;
         
     // Tab indent size
-    CParserVarPropertyGroup<Ident,ZJ_CONST_CHAR("indent")> m_indent;
+    ParserVarPropertyGroup<Ident,ZJ_CONST_CHAR("indent")> m_indent;
 }SampleJson;
 
 
 int main(int argc, char *argv[]){
 
-	std::cout << "zetjsoncpp ver. "<< ZETJSONCPP_MAJOR_VERSION << "." << ZETJSONCPP_MINOR_VERSION << "."<< ZETJSONCPP_PATCH_VERSION << std::endl;
+	std::cout << "ZetJsonCpp ver. "<< ZETJSONCPP_MAJOR_VERSION << "." << ZETJSONCPP_MINOR_VERSION << "."<< ZETJSONCPP_PATCH_VERSION << std::endl;
 	if(argc <=1){
 		std::cerr << "put file to parse"<< std::endl;
 		return 0;
 	}
     // declare our data var interface.
-    //CParserVarPropertyGroup<tSampleJson> * data_json_array;
-	CParserVarPropertyGroup<SampleJson> * data_json=NULL;
+    //ParserVarPropertyGroup<tSampleJson> * data_json_array;
+	ParserVarPropertyGroup<SampleJson> * data_json=NULL;
 
     // create json-parser
     CParserJson<SampleJson> * parser = new CParserJson<SampleJson>();
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
 			// put m_use_space to false...
 			data_json->m_indent.m_use_space = false;
 
-			// iterate of all m_plugins var and replace with random strings...
+			// iterate of all m_plugins var and Replace with random strings...
 			for(unsigned i = 0; i < data_json->m_plugins.size(); i++) {
 				data_json->m_plugins[i] = "my_randomstring"+zj_string::int2str(i+g+1);
 			}

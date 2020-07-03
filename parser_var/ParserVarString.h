@@ -1,13 +1,13 @@
-namespace zetjsoncpp{
+namespace ZetJsonCpp{
 
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarString : public CParserVarNamed<chr1, chr2, _T_NAME... > , public ZJ_String{
+	class ParserVarString : public CParserVarNamed<chr1, chr2, _T_NAME... > , public ZJ_String{
 	protected:
 		virtual void init() {
 
 			this->m_force_string = false;
 			this->_m_iType = CParserVar::TYPE_STRING;
-			this->size_data = sizeof(CParserVarString<chr1, chr2, _T_NAME...>);
+			this->size_data = sizeof(ParserVarString<chr1, chr2, _T_NAME...>);
 			this->p_data = &this->m_str;
 
 			if (this->_m_pvariableName == "")
@@ -23,7 +23,7 @@ namespace zetjsoncpp{
 		bool	m_force_string;
 
 		//_T_NAME name;
-		CParserVarString() {
+		ParserVarString() {
 			init();
 		}
 
@@ -39,7 +39,7 @@ namespace zetjsoncpp{
 			return s_value;
 		}
 
-		explicit CParserVarString(std::string & s) {
+		explicit ParserVarString(std::string & s) {
 			init();
 			*((std::string *)this->p_data) = s;
 		}
@@ -49,7 +49,7 @@ namespace zetjsoncpp{
 			return this->str_value;
 		}
 
-		CParserVarString & operator = (const std::string & s) {
+		ParserVarString & operator = (const std::string & s) {
 
 			this->s_value = s;
 			return *this;
@@ -84,7 +84,7 @@ namespace zetjsoncpp{
 			return (const char *)this->s_value.c_str();
 		}
 
-		CParserVarString & operator = (const char * s) {
+		ParserVarString & operator = (const char * s) {
 
 			this->s_value = s;
 			return *this;
@@ -103,6 +103,6 @@ namespace zetjsoncpp{
 			return m_force_string;
 		}
 
-		virtual ~CParserVarString(){}
+		virtual ~ParserVarString(){}
 	};
 }

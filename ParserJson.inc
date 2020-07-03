@@ -36,7 +36,7 @@
 
 #define PREVIEW_SSTRING(start, current,n) (((current)-(n))<((start))?(start):((current)-(n)))
 
-namespace zetjsoncpp{
+namespace ZetJsonCpp{
 
 	extern char json_message_error[16836];
 

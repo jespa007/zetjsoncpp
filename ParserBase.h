@@ -7,7 +7,7 @@
 
 
 
-namespace zetjsoncpp{
+namespace ZetJsonCpp{
 
 
 

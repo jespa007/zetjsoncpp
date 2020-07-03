@@ -3,9 +3,9 @@
  *  See LICENSE file for details.
  */
 
-#include "zetjsoncpp.h"
+#include "ZetJsonCpp.h"
 
-namespace zetjsoncpp {
+namespace ZetJsonCpp {
 
 	char const
 		CParserVar::STR_EMPTY[] = "empty";

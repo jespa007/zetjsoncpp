@@ -1,6 +1,6 @@
 #pragma once
 
-namespace zetjsoncpp {
+namespace ZetJsonCpp {
 
 class ZJ_Boolean{//:public CVariable{
 protected:

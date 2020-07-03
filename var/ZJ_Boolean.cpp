@@ -1,7 +1,7 @@
 
-#include "zetjsoncpp.h"
+#include "ZetJsonCpp.h"
 
-namespace zetjsoncpp {
+namespace ZetJsonCpp {
 
 ZJ_Boolean::ZJ_Boolean(){
 	m_boolVar = false;
@@ -16,8 +16,8 @@ ZJ_Boolean::ZJ_Boolean(bool b ){
 }
 
 bool ZJ_Boolean::parse(const std::string & s){
-	if(zj_string::toLower(s) == "true") return true;
-	if(zj_string::toLower(s) == "false") return false;
+	if(zj_string::ToLower(s) == "true") return true;
+	if(zj_string::ToLower(s) == "false") return false;
 
 	throw ("Cannot parse string to boolean.");
 }

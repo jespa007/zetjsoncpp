@@ -1,4 +1,4 @@
-namespace zetjsoncpp{
+namespace ZetJsonCpp{
 
 	template<typename _T_DATA, char a = 'a', char b = 'b'>
 	class CDinamicVector {

@@ -1,5 +1,5 @@
 #pragma once
-namespace zetjsoncpp {
+namespace ZetJsonCpp {
 
 class ZJ_Number{//:public CVariable{
 protected:

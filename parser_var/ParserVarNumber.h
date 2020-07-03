@@ -1,14 +1,14 @@
-namespace zetjsoncpp{
+namespace ZetJsonCpp{
 
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarNumber : public CParserVarNamed<chr1, chr2, _T_NAME ...>,public ZJ_Number {
+	class ParserVarNumber : public CParserVarNamed<chr1, chr2, _T_NAME ...>,public ZJ_Number {
 
 
 		bool m_forceInteger;
 		void init() {
 			//number = 0;
 			this->_m_iType = CParserVar::TYPE_NUMBER;
-			this->size_data = sizeof(CParserVarNumber<chr1, chr2, _T_NAME...>);
+			this->size_data = sizeof(ParserVarNumber<chr1, chr2, _T_NAME...>);
 			this->p_data = &this->m_numVar;
 			m_forceInteger = false;
 			if (this->_m_pvariableName == "") {
@@ -19,18 +19,18 @@ namespace zetjsoncpp{
 
 	public:
 
-		CParserVarNumber() {
+		ParserVarNumber() {
 			init();
 		}
 
-		explicit CParserVarNumber(float i) {
+		explicit ParserVarNumber(float i) {
 			init();
 			this->m_numVar = i;
 
 
 		}
 
-		CParserVarNumber & operator =(float b) {
+		ParserVarNumber & operator =(float b) {
 
 			this->m_numVar = b;
 			return *this;
@@ -40,7 +40,7 @@ namespace zetjsoncpp{
 			m_forceInteger = force;
 		}
 
-		CParserVarNumber & operator =(int i) {
+		ParserVarNumber & operator =(int i) {
 
 			this->m_numVar = (float)i;
 			return *this;
@@ -51,7 +51,7 @@ namespace zetjsoncpp{
 			return (int32_t)(*((float *)this->p_data));
 		}
 
-		CParserVarNumber & operator =(const std::string & intStr) {
+		ParserVarNumber & operator =(const std::string & intStr) {
 
 			float f=0;
 			if(zj_string::str2float(&f,intStr) != zj_string::STR_2_NUMBER_SUCCESS){
@@ -76,6 +76,6 @@ namespace zetjsoncpp{
 			return this->str_value;
 		}
 
-		virtual ~CParserVarNumber(){}
+		virtual ~ParserVarNumber(){}
 	};
 }

@@ -1,4 +1,4 @@
-namespace zetjsoncpp{
+namespace ZetJsonCpp{
 
 	// ARRAY BOOL
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>

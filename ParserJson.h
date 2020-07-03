@@ -7,9 +7,9 @@
 #pragma once
 
 
-// static zetjsoncpp
+// static ZetJsonCpp
 
-namespace zetjsoncpp {
+namespace ZetJsonCpp {
 
 	//typedef void (* tJsonErrorCallback)(const char *file, int line, const char *str,const char *where);
 	//typedef void (* tJsonWarningCallback)(const char *file, int line, const char *str);
