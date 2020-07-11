@@ -42,7 +42,7 @@ if(MSVC)
 
 else()
 
-	SET( COMMON_PARAMS " ${COMMON_PARAMS} -D__STDC_CONSTANT_MACROS -std=c++1y -I -Wall")
+	SET( COMMON_PARAMS " ${COMMON_PARAMS} -D__STDC_CONSTANT_MACROS -std=gnu++0x -I -Wall")
    
 	if (MINGW)
 		MESSAGE ("-- Plataform: MINGW" )
