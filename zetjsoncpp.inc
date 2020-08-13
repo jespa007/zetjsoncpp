@@ -26,17 +26,17 @@
 
 
 #define JS_STRING_CAST 			(CParserVarString<> *)
-#define JS_ARRAY_STRING_CAST 		(CParserVarStringArray<> *)
-#define JS_BOOL_CAST 				(CParserVarBoolean<> *)
-#define JS_ARRAY_BOOL_CAST 		(CParserVarArrayBool<> *)
+#define JS_ARRAY_STRING_CAST 		(StringArray<> *)
+#define JS_BOOL_CAST 				(Boolean<> *)
+#define JS_ARRAY_BOOL_CAST 		(BooleanArray<> *)
 //#define JS_INT32_CAST 				(CParserVarInt32<> *)
 //#define JS_ARRAY_INT32_CAST 		(CParserVarArrayInt32<> *)
 #define JS_NUMBER_CAST 				(CParserVarNumber<> *)
-#define JS_ARRAY_NUMBER_CAST 		(CParserVarNumberArray<> *)
+#define JS_ARRAY_NUMBER_CAST 		(NumberArray<> *)
 
 #define PREVIEW_SSTRING(start, current,n) (((current)-(n))<((start))?(start):((current)-(n)))
 
-namespace ZetJsonCpp{
+namespace zetjsoncpp{
 
 	extern char json_message_error[16836];
 
@@ -65,7 +65,7 @@ namespace ZetJsonCpp{
 
 
 	template <typename _T>
-	CParserVar *CParserJson<_T>::findProperty(CParserVar * c_data, char *property_name) {
+	CParserVar *ZetJsonCpp<_T>::findProperty(CParserVar * c_data, char *property_name) {
 
 		// no data no search...
 		if (c_data == NULL) return NULL;
@@ -87,7 +87,7 @@ namespace ZetJsonCpp{
 	}
 
 	template <typename _T>
-	void CParserJson<_T>::setPropertiesParsedToFalse(CParserVar * c_data) {
+	void ZetJsonCpp<_T>::setPropertiesParsedToFalse(CParserVar * c_data) {
 
 		// no data no search...
 
@@ -110,7 +110,7 @@ namespace ZetJsonCpp{
 
 
 	template <typename _T>
-	int CParserJson<_T>::json2cpp(const char * start_str, CParserVar *_root, int level, bool ignore_warnings) {
+	int ZetJsonCpp<_T>::json2cpp(const char * start_str, CParserVar *_root, int level, bool ignore_warnings) {
 
 		char property_name[MAX_NAME_PROPERTY];
 		char old_property_name[MAX_NAME_PROPERTY] = { 0 };
@@ -136,7 +136,7 @@ namespace ZetJsonCpp{
 		bool boolValue = false;
 		float numberValue = 0;
 
-		if (zj_string::isEmpty(start_str)){
+		if (StrUtils::isEmpty(start_str)){
 			throw_error(this->m_filesrc, -1,NULL, NULL, "Empty string");
 		}
 
@@ -332,10 +332,10 @@ namespace ZetJsonCpp{
 													strncpy(val, current_ptr, bytes_readed);
 
 													// and try to convert in to standard number ...
-													zj_string::STR_NUMBER_TYPE type_number = zj_string::is_number(val);
+													StrUtils::STR_NUMBER_TYPE type_number = StrUtils::is_number(val);
 
 													//if(type_number != 0){
-													if (type_number == zj_string::STR_NUMBER_TYPE_INT) { //RE2::FullMatch(val,"[-]?[0-9]*")) {// check for normal int...
+													if (type_number == StrUtils::STR_NUMBER_TYPE_INT) { //RE2::FullMatch(val,"[-]?[0-9]*")) {// check for normal int...
 														if (!isArray) {
 															print_info_json("property \"%s\" detected as int32", property_name);
 														}
@@ -344,7 +344,7 @@ namespace ZetJsonCpp{
 														type_value = CParserVar::TYPE_NUMBER;
 														ok = true;
 													}
-													else  if (type_number == zj_string::STR_NUMBER_TYPE_HEXA) {//RE2::FullMatch(val,"0[xX][0-9a-fA-F]+")) {// check for hexadecimal...
+													else  if (type_number == StrUtils::STR_NUMBER_TYPE_HEXA) {//RE2::FullMatch(val,"0[xX][0-9a-fA-F]+")) {// check for hexadecimal...
 														if (!isArray) {
 															print_info_json("property \"%s\" detected as hex", property_name);
 														}

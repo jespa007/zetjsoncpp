@@ -7,12 +7,12 @@
 
 
 
-namespace ZetJsonCpp{
+namespace zetjsoncpp{
 
 
 
 
-	class CParserBase{
+	class ParserBase{
 	protected:
 
 		std::string filename;
@@ -21,9 +21,9 @@ namespace ZetJsonCpp{
 
 
 	public:
-	  CParserBase(){}
+	  ParserBase(){}
 
-	 virtual ~CParserBase(){}
+	 virtual ~ParserBase(){}
 	};
 
 };

@@ -5,10 +5,10 @@
 
 #pragma once
 
-namespace ZetJsonCpp {
+namespace zetjsoncpp {
 
 	template<typename _T>
-	class CParser : public CParserBase {
+	class Parser : public ParserBase {
 
 	protected:
 
@@ -22,7 +22,7 @@ namespace ZetJsonCpp {
 
 
 
-		CParser() {
+		Parser() {
 			m_filesrc = NULL;
 			m_line = 0;
 			root_struct_field = new ParserVarPropertyGroupArray<_T>;
@@ -39,7 +39,7 @@ namespace ZetJsonCpp {
 
 			m_filesrc = m_filename.c_str();
 
-			char *buf = zj_io::read_file(m_filename);
+			char *buf = File::read(m_filename);
 			if (buf != NULL) {
 				try{
 					evalString(buf, 0, ignore_warnings);
@@ -61,7 +61,7 @@ namespace ZetJsonCpp {
 			return root_struct_field;
 		}
 
-		virtual ~CParser() {
+		virtual ~Parser() {
 			if (root_struct_field != NULL) {
 				delete root_struct_field;
 			}

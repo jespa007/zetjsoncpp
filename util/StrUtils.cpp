@@ -3,14 +3,14 @@
  *  See LICENSE file for details.
  */
 
-#include "ZetJsonCpp.h"
+#include "zetjsoncpp.h"
 
 
 
 
-namespace ZetJsonCpp{
+namespace zetjsoncpp{
 
-	namespace zj_string{
+	namespace StrUtils{
 
 
 		STR_2_NUMBER str2int(int * i, const std::string & s, int base){

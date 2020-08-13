@@ -1,10 +1,10 @@
-#include "ZetJsonCpp.h"
+#include "zetjsoncpp.h"
 
-namespace ZetJsonCpp
+namespace zetjsoncpp
 {
-	namespace zj_path{
+	namespace Path{
 		
-			std::string  get_filename(const std::string & _filename) {
+			std::string  getFilename(const std::string & _filename) {
 				size_t found;
 				std::string ss = _filename;
 				found = _filename.find_last_of("/\\");

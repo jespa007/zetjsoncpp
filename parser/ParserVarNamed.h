@@ -1,7 +1,7 @@
-namespace ZetJsonCpp{
+namespace zetjsoncpp{
 
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarNamed : public CParserVar {
+	class ParserVarNamed : public CParserVar {
 	public:
 		//----------------------------------------------------------------
 		// DON'T js_ini AND NOT DECLARE ANY CParserVar UNDER IT !!!!
@@ -10,7 +10,7 @@ namespace ZetJsonCpp{
 
 		//----------------------------------------------------------------
 
-		CParserVarNamed() {
+		ParserVarNamed() {
 
 			std::vector<char> vec = { chr1, chr2,_T_NAME... };
 			std::string s_aux(vec.begin(), vec.end());
@@ -26,7 +26,7 @@ namespace ZetJsonCpp{
 
 			//strcpy(this->_m_pvariableName,  _T_NAME);
 			this->_m_pvariableName = buffer;
-			this->size_data = sizeof(CParserVarNamed);
+			this->size_data = sizeof(ParserVarNamed);
 		}
 
 		virtual std::string & getStrValue(int ident, uint32_t flags = 0)
@@ -35,6 +35,6 @@ namespace ZetJsonCpp{
 			return this->str_value;
 		}
 
-		virtual ~CParserVarNamed() {}
+		virtual ~ParserVarNamed() {}
 	};
 }

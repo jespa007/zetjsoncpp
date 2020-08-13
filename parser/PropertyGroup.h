@@ -1,7 +1,7 @@
-namespace ZetJsonCpp{
+namespace zetjsoncpp{
 
 	template<typename _T_DATA, char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class ParserVarPropertyGroup : public CParserVarNamed<chr1, chr2, _T_NAME...>, public _T_DATA {
+	class PropertyGroup : public ParserVarNamed<chr1, chr2, _T_NAME...>, public _T_DATA {
 
 
 	public:
@@ -18,7 +18,7 @@ namespace ZetJsonCpp{
 			// with its emmbedded type.
 
 			this->_m_iType = CParserVar::TYPE_PROPERTY_GROUP;
-			this->size_data = sizeof(ParserVarPropertyGroup<_T_DATA, chr1, chr2, _T_NAME...>);
+			this->size_data = sizeof(PropertyGroup<_T_DATA, chr1, chr2, _T_NAME...>);
 
 			CParserVar *ptr = ((CParserVar *)&this->js_ini + 1);
 			this->p_data = ptr;
@@ -51,11 +51,11 @@ namespace ZetJsonCpp{
 
 		}
 
-		ParserVarPropertyGroup(...) {
+		PropertyGroup(...) {
 			setup();
 		}
 
-		ParserVarPropertyGroup(uint32_t numParam,...) {
+		PropertyGroup(uint32_t numParam,...) {
 			setup(numParam);
 		}
 
@@ -189,6 +189,6 @@ namespace ZetJsonCpp{
 			result_s = result_s + "}";
 		}
 
-		virtual ~ParserVarPropertyGroup(){};
+		virtual ~PropertyGroup(){};
 	};
 }

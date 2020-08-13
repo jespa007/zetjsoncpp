@@ -1,16 +1,16 @@
 
-#include "../ZetJsonCpp.h"
+#include "../zetjsoncpp.h"
 
 
-using namespace ZetJsonCpp;
+using namespace zetjsoncpp;
 
 
 
 // json data to c-structure
 
 typedef struct{
-	ParserVarNumber<ZJ_CONST_CHAR("length")>  m_length;
-	CParserVarBoolean<ZJ_CONST_CHAR("use_space")> m_use_space;
+	Number<ZJ_CONST_CHAR("length")>  m_length;
+	Boolean<ZJ_CONST_CHAR("use_space")> m_use_space;
 }Ident;
 
 typedef struct
@@ -19,7 +19,7 @@ typedef struct
     ParserVarString<ZJ_CONST_CHAR("encoding")> 		m_encoding;
 	
     // Example number
-    ParserVarNumber<ZJ_CONST_CHAR("number")> 		m_number;
+    Number<ZJ_CONST_CHAR("number")> 		m_number;
 	
     // Plug-ins loaded at start-up
     CParserVarStringArray<ZJ_CONST_CHAR("plug-ins")> 	 m_plugins;
@@ -31,7 +31,7 @@ typedef struct
 
 int main(int argc, char *argv[]){
 
-	std::cout << "ZetJsonCpp ver. "<< ZETJSONCPP_MAJOR_VERSION << "." << ZETJSONCPP_MINOR_VERSION << "."<< ZETJSONCPP_PATCH_VERSION << std::endl;
+	std::cout << "zetjsoncpp ver. "<< ZETJSONCPP_MAJOR_VERSION << "." << ZETJSONCPP_MINOR_VERSION << "."<< ZETJSONCPP_PATCH_VERSION << std::endl;
 	if(argc <=1){
 		std::cerr << "put file to parse"<< std::endl;
 		return 0;
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
 	ParserVarPropertyGroup<SampleJson> * data_json=NULL;
 
     // create json-parser
-    CParserJson<SampleJson> * parser = new CParserJson<SampleJson>();
+    ParserJson<SampleJson> * parser = new ParserJson<SampleJson>();
 
     try{
 		parser->evalFile(argv[1]);
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]){
 
 			// iterate of all m_plugins var and Replace with random strings...
 			for(unsigned i = 0; i < data_json->m_plugins.size(); i++) {
-				data_json->m_plugins[i] = "my_randomstring"+zj_string::int2str(i+g+1);
+				data_json->m_plugins[i] = "my_randomstring"+StrUtils::int2str(i+g+1);
 			}
 
 		}

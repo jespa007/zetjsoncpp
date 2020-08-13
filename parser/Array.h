@@ -1,12 +1,12 @@
-namespace ZetJsonCpp{
+namespace zetjsoncpp{
 
 	template<typename _T_DATA, char a = 'a', char b = 'b'>
-	class CDinamicVector {
+	class Array {
 	protected:
 		std::vector<_T_DATA> vec_data;
 	public:
 
-		CDinamicVector() {}
+		Array() {}
 
 		_T_DATA & 	operator[](int i) {
 			return vec_data.at(i);

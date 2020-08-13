@@ -4,9 +4,9 @@
  */
 #pragma once
 
-namespace ZetJsonCpp {
+namespace zetjsoncpp {
 
-	namespace zj_string{
+	namespace StrUtils{
 
 		typedef enum {
 			STR_2_NUMBER_SUCCESS,

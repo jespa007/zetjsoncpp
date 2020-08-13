@@ -1,13 +1,13 @@
-namespace ZetJsonCpp{
+namespace zetjsoncpp{
 
 	// ARRAY BOOL
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarArrayBool : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<bool> {
+	class BooleanArray : public ParserVarNamed<chr1, chr2, _T_NAME...>, public Array<bool> {
 	public:
 		//_T_NAME name;
-		CParserVarArrayBool() {
+		BooleanArray() {
 			this->_m_iType = CParserVar::TYPE_ARRAY_BOOL;
-			this->size = sizeof(CParserVarArrayBool<chr1, chr2, _T_NAME...>);
+			this->size = sizeof(BooleanArray<chr1, chr2, _T_NAME...>);
 			this->p_data = &this->vec_data;
 		}
 
@@ -51,7 +51,7 @@ namespace ZetJsonCpp{
 			return this->str_value;
 		}
 
-		virtual ~CParserVarArrayBool(){}
+		virtual ~BooleanArray(){}
 
 	};
 }

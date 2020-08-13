@@ -1,16 +1,16 @@
-namespace ZetJsonCpp{
+namespace zetjsoncpp{
 
 	// ARRAY FLOAT
 	template<char chr1 = 'a', char chr2 = 'b', char... _T_NAME>
-	class CParserVarNumberArray : public CParserVarNamed<chr1, chr2, _T_NAME...>, public CDinamicVector<float> {
+	class NumberArray : public ParserVarNamed<chr1, chr2, _T_NAME...>, public Array<float> {
 		short * shortBuf;
 		float * floatBuf;
 
 	public:
 		//_T_NAME name;
-		CParserVarNumberArray() {
+		NumberArray() {
 			this->_m_iType = CParserVar::TYPE_ARRAY_NUMBER;
-			this->size_data = sizeof(CParserVarNumberArray<chr1, chr2, _T_NAME...>);
+			this->size_data = sizeof(NumberArray<chr1, chr2, _T_NAME...>);
 			this->p_data = &this->vec_data;
 			shortBuf=NULL;
 			floatBuf=NULL;
@@ -35,7 +35,7 @@ namespace ZetJsonCpp{
 					this->str_value = this->str_value + ",";
 				}
 
-				m_sfValue = zj_string::float2str(v->at(j));
+				m_sfValue = StrUtils::float2str(v->at(j));
 
 				this->str_value = this->str_value + "" + m_sfValue + " ";
 
@@ -81,8 +81,8 @@ namespace ZetJsonCpp{
 		}
 
 
-		//virtual ~CParserVarNumberArray(){}
-		virtual ~CParserVarNumberArray() {
+		//virtual ~NumberArray(){}
+		virtual ~NumberArray() {
 			if (floatBuf!=NULL)
 				free(floatBuf);
 

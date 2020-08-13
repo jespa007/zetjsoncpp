@@ -1,12 +1,12 @@
-#include "ZetJsonCpp.h"
+#include "zetjsoncpp.h"
 
-namespace ZetJsonCpp
+namespace zetjsoncpp
 {
-	namespace zj_io{
+	namespace File{
 
-		bool file_exists(const std::string & m_file) {
+		bool exists(const std::string & m_file) {
 
-			if (zj_string::EndsWith(m_file, "/"))
+			if (StrUtils::EndsWith(m_file, "/"))
 				return false;
 
 			if (m_file == "")
@@ -17,7 +17,7 @@ namespace ZetJsonCpp
 
 		}
 
-		char * read_file(const std::string & filename, bool end_string_char){
+		char * read(const std::string & filename, bool end_string_char){
 
 			int  file_length, readed_elements;
 				FILE  *fp;
@@ -29,7 +29,7 @@ namespace ZetJsonCpp
 
 				if((fp  =  fopen(filename.c_str(),"rb"))  !=  NULL)
 				{
-					if((file_length = get_file_length(filename)) != -1) {
+					if((file_length = length(filename)) != -1) {
 
 
 						char *buffer = (char *)malloc (file_length+with_end_char);
@@ -62,7 +62,7 @@ namespace ZetJsonCpp
 		}
 
 
-		int  get_file_length(const  std::string  & file)
+		int  length(const  std::string  & file)
 		{
 			int  ini, end;
 			FILE  *fp;

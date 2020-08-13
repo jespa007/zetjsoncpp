@@ -8,10 +8,10 @@
 
 #define N_ELEMENTS_JSON_ARRAY_PRINT	10
 
-#define JS_STRING_CAST 		(ParserVarString<> *)
-#define JS_ARRAY_STRING_CAST 	(CParserVarStringArray<> *)
-#define JS_BOOL_CAST 		(CParserVarBoolean<> *)
-#define JS_FLOAT_CAST 		(ParserVarNumber<> *)
+#define JS_STRING_CAST 		(String<> *)
+#define JS_ARRAY_STRING_CAST 	(StringArray<> *)
+#define JS_BOOL_CAST 		(Boolean<> *)
+#define JS_FLOAT_CAST 		(Number<> *)
 
 
 #if  !defined(MIN)
@@ -76,7 +76,7 @@
 #define getChr(name, ii) ((MIN(ii,JS_MAX_CONST_CHAR))<sizeof(name)/sizeof(*name)?name[ii]:0)
 
 
-namespace ZetJsonCpp {
+namespace zetjsoncpp {
 
 	class CParserVar {//: public CVariable {
 	protected:
@@ -136,13 +136,13 @@ namespace ZetJsonCpp {
 
 };
 
-#include "CParserVarNamed.h"
-#include "CParserVarBoolean.h"
-#include "ParserVarNumber.h"
-#include "ParserVarString.h"
-#include "ParserVarPropertyGroup.h"
-#include "CDinamicVector.h"
+#include "ParserVarNamed.h"
+#include "Boolean.h"
+#include "Number.h"
+#include "String.h"
+#include "PropertyGroup.h"
+#include "Array.h"
 #include "CParserVarBoolArray.h"
-#include "CParserVarNumberArray.h"
-#include "CParserVarStringArray.h"
+#include "NumberArray.h"
+#include "StringArray.h"
 #include "ParserVarPropertyGroupArray.h"
