@@ -2,30 +2,27 @@
 #include "../zetjsoncpp.h"
 
 
-using namespace zetjsoncpp;
-
-
 
 // json data to c-structure
 
 typedef struct{
-	Number<ZJ_CONST_CHAR("length")>  m_length;
-	Boolean<ZJ_CONST_CHAR("use_space")> m_use_space;
+	zetjsoncpp::Number<ZJ_CONST_CHAR("length")>  m_length;
+	zetjsoncpp::Boolean<ZJ_CONST_CHAR("use_space")> m_use_space;
 }Ident;
 
 typedef struct
 {
     // Default encoding for text
-    ParserVarString<ZJ_CONST_CHAR("encoding")> 		m_encoding;
+	zetjsoncpp::String<ZJ_CONST_CHAR("encoding")> 		m_encoding;
 	
     // Example number
-    Number<ZJ_CONST_CHAR("number")> 		m_number;
+	zetjsoncpp::Number<ZJ_CONST_CHAR("number")> 		m_number;
 	
     // Plug-ins loaded at start-up
-    CParserVarStringArray<ZJ_CONST_CHAR("plug-ins")> 	 m_plugins;
+    StringArray<ZJ_CONST_CHAR("plug-ins")> 	 m_plugins;
         
     // Tab indent size
-    ParserVarPropertyGroup<Ident,ZJ_CONST_CHAR("indent")> m_indent;
+    zetjsoncpp::PropertyGroup<Ident,ZJ_CONST_CHAR("indent")> m_indent;
 }SampleJson;
 
 
@@ -37,11 +34,11 @@ int main(int argc, char *argv[]){
 		return 0;
 	}
     // declare our data var interface.
-    //ParserVarPropertyGroup<tSampleJson> * data_json_array;
-	ParserVarPropertyGroup<SampleJson> * data_json=NULL;
+    //PropertyGroup<tSampleJson> * data_json_array;
+	zetjsoncpp::PropertyGroup<SampleJson> * data_json=NULL;
 
     // create json-parser
-    ParserJson<SampleJson> * parser = new ParserJson<SampleJson>();
+	zetjsoncpp::ZetJsonCpp<SampleJson> * parser = new zetjsoncpp::ZetJsonCpp<SampleJson>();
 
     try{
 		parser->evalFile(argv[1]);
@@ -61,7 +58,7 @@ int main(int argc, char *argv[]){
 
 			// iterate of all m_plugins var and Replace with random strings...
 			for(unsigned i = 0; i < data_json->m_plugins.size(); i++) {
-				data_json->m_plugins[i] = "my_randomstring"+StrUtils::int2str(i+g+1);
+				data_json->m_plugins[i] = "my_randomstring"+zetjsoncpp::StrUtils::int2str(i+g+1);
 			}
 
 		}
