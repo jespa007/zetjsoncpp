@@ -1,0 +1,13 @@
+// languages
+[{
+    
+    "code" : "en",
+    "text": "Hello world!"
+},{
+    
+    "code" : "es",
+    "text": "Hola mundo!"
+},{
+    "code" : "zh_CN",
+    "text": "你好，世界"
+}]

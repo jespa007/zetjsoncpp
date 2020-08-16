@@ -14,6 +14,8 @@
 #include <string>
 #include <string.h>
 #include <vector>
+#include <locale>
+#include <codecvt>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <exception>
@@ -22,26 +24,23 @@
 #include <limits.h>
 
 
-#define ZETJSONCPP_MAJOR_VERSION 1
-#define ZETJSONCPP_MINOR_VERSION 3
+#define ZETJSONCPP_MAJOR_VERSION 2
+#define ZETJSONCPP_MINOR_VERSION 0
 #define ZETJSONCPP_PATCH_VERSION 0
 
 #ifdef __MEMMANAGER__
 #include "memmgr.h"
 #endif
 
-#include "util/StrUtils.h"
-#include "util/File.h"
-#include "util/Path.h"
+#include "util/zj_strutils.h"
+#include "util/zj_file.h"
+#include "util/zj_path.h"
 
 
-#include "var/ZJ_Boolean.h"
-#include "var/ZJ_Number.h"
-#include "var/ZJ_String.h"
 
 
 #include "exception.h"
-#include "parser_var/CParserVar.h"
+#include "var/ParserVar.h"
 #include "ParserBase.h"
 #include "Parser.h"
 
@@ -50,38 +49,43 @@
 
 namespace zetjsoncpp {
 
-	//typedef void (* tJsonErrorCallback)(const char *file, int line, const char *str,const char *where);
-	//typedef void (* tJsonWarningCallback)(const char *file, int line, const char *str);
-
-	// define my exceptions
-
-
 	template <typename _T>
 	class ZetJsonCpp : public Parser<_T> {
-
-		CParserVar *findProperty(CParserVar * c_data, char *property_name);
-		void setPropertiesParsedToFalse(CParserVar * c_data);
-		//void printJsonError(char *m_start_ptr, char *m_current_ptr, int column, const char *error_message);
-		bool bothAreTypeNumbers(int type1, int type2);
-		int json2cpp(const char * start_str, CParserVar *c_data, int level = 0, bool ignore_warnings = false);
 
 	public:
 
 		ZetJsonCpp() {}
 
-		virtual void evalString(const std::string & m_expression, int level = 0, bool ignore_warnings = false) {
+		virtual void eval(const std::string & expression) {
 
-			this->m_line = 1;
+			this->line = 1;
 			this->root_struct_field->destroy(); // destroy previous elements!
 
-			json2cpp((const char *)m_expression.c_str(), Parser<_T>::root_struct_field, 0, ignore_warnings);
+			eval((const char *)expression.c_str(), Parser<_T>::root_struct_field, 0);
 		}
 
 		virtual ~ZetJsonCpp() {}
+	private:
+
+		static bool isSingleComment(char *str);
+		static bool isStartComment(char *str);
+		static bool isEndComment(char *str);
+		static char *advanceToChar(char *str,char c);
+		static char *advanceToEndComment(char *aux_p, int &line);
+		static char *ignoreBlanks(char *str, int &line);
+		static char *advanceToOneOfCollectionOfChar(char *str,char *end_char_standard_value, int &line);
+
+		ParserVar *findProperty(ParserVar * c_data, char *variable_name);
+		void setPropertiesParsedToFalse(ParserVar * c_data);
+		//void printJsonError(char *m_start_ptr, char *m_current_ptr, int column, const char *error_message);
+		bool bothAreTypeNumbers(int type1, int type2);
+
+
+		int eval(const char * start_str, ParserVar *c_data, int level = 0);
+
+
 	};
 
-	//void set_json_error_callback(tJsonErrorCallback _error_callback);
-	//void set_json_warning_callback(tJsonWarningCallback _warning_callback);
 };
 
 #include "zetjsoncpp.inc"

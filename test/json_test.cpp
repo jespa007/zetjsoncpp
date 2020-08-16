@@ -6,36 +6,45 @@
 // json data to c-structure
 
 typedef struct{
-	zetjsoncpp::Number<ZJ_CONST_CHAR("length")>  m_length;
+	zetjsoncpp::Number<ZJ_CONST_CHAR("length")>  	m_length;
 	zetjsoncpp::Boolean<ZJ_CONST_CHAR("use_space")> m_use_space;
 }Ident;
+
+typedef struct{
+	zetjsoncpp::String<ZJ_CONST_CHAR("code")>  	m_code;
+	zetjsoncpp::String<ZJ_CONST_CHAR("text")> m_text;
+}Language;
 
 typedef struct
 {
     // Default encoding for text
 	zetjsoncpp::String<ZJ_CONST_CHAR("encoding")> 		m_encoding;
-	
+
     // Example number
 	zetjsoncpp::Number<ZJ_CONST_CHAR("number")> 		m_number;
 	
     // Plug-ins loaded at start-up
-    StringArray<ZJ_CONST_CHAR("plug-ins")> 	 m_plugins;
+	zetjsoncpp::ArrayString<ZJ_CONST_CHAR("plug-ins")> 	m_plugins;
         
     // Tab indent size
-    zetjsoncpp::PropertyGroup<Ident,ZJ_CONST_CHAR("indent")> m_indent;
+    zetjsoncpp::Object<Ident,ZJ_CONST_CHAR("indent")> 	m_indent;
+
+    // Tab indent size
+    zetjsoncpp::ArrayObject<Language,ZJ_CONST_CHAR("languages")> 	m_languages;
 }SampleJson;
 
 
 int main(int argc, char *argv[]){
 
+	bool print_utf8 = false;
 	std::cout << "zetjsoncpp ver. "<< ZETJSONCPP_MAJOR_VERSION << "." << ZETJSONCPP_MINOR_VERSION << "."<< ZETJSONCPP_PATCH_VERSION << std::endl;
 	if(argc <=1){
 		std::cerr << "put file to parse"<< std::endl;
 		return 0;
 	}
+
     // declare our data var interface.
-    //PropertyGroup<tSampleJson> * data_json_array;
-	zetjsoncpp::PropertyGroup<SampleJson> * data_json=NULL;
+	zetjsoncpp::Object<SampleJson> * data_json=NULL;
 
     // create json-parser
 	zetjsoncpp::ZetJsonCpp<SampleJson> * parser = new zetjsoncpp::ZetJsonCpp<SampleJson>();
@@ -43,12 +52,12 @@ int main(int argc, char *argv[]){
     try{
 		parser->evalFile(argv[1]);
 
-
-			// get data from parser.
+		// get data from parser.
 		std::cout << "elements:" << parser->getData()->size()<< std::endl;
 		// the values before modifications.
 		std::cout << " Before modifications:"<< std::endl;
-		std::cout << parser->getData()->cpp2json();
+		std::cout << parser->getData()->toString();
+
 		for(unsigned g = 0; g < parser->getData()->size(); g++){
 			data_json = parser->getData()->at(0); // gets first element group...
 
@@ -58,7 +67,7 @@ int main(int argc, char *argv[]){
 
 			// iterate of all m_plugins var and Replace with random strings...
 			for(unsigned i = 0; i < data_json->m_plugins.size(); i++) {
-				data_json->m_plugins[i] = "my_randomstring"+zetjsoncpp::StrUtils::int2str(i+g+1);
+				data_json->m_plugins[i] = "my_randomstring"+zetjsoncpp::zj_strutils::int_to_str(i+g+1);
 			}
 
 		}
@@ -67,7 +76,10 @@ int main(int argc, char *argv[]){
 		std::cout << " After modifications:"<< std::endl;
 
 		// show the modifications at screen (it can be saved in file too)
-		std::cout << parser->getData()->cpp2json();
+		std::string json_out = parser->getData()->toString();
+
+		std::cout << json_out;
+
     }catch(std::exception & ex){
     	fprintf(stderr, "%s\n",ex.what());
     }

@@ -137,16 +137,13 @@ endif()
 set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
 	
-	util/zj_string.cpp
-	util/zj_io.cpp
+	util/zj_strutils.cpp
+	util/zj_file.cpp
 	util/zj_path.cpp
-	var/ZJ_Number.cpp
-	var/ZJ_String.cpp
-	var/ZJ_Boolean.cpp
-	parser_var/CParserVar.cpp
-
-	CParserBase.cpp
-	CParserJson.cpp
+	var/ParserVar.cpp
+	var/Object.cpp	
+	ParserBase.cpp
+	zetjsoncpp.cpp
 )
 
 #JSON TEST executable
@@ -167,29 +164,25 @@ endif()
 SET(
 	HS
 	util/zj_string.h
-	util/zj_io.h
+	util/zj_file.h
 	util/zj_path.h
-	zetjsoncpp.h
-	var/ZJ_Boolean.h
-	var/ZJ_Number.h
-	var/ZJ_String.h
-	parser_var/CDinamicVector.h
-	parser_var/CParserVar.h
-	parser_var/CParserVar.inc
-	parser_var/CParserVarArrayBool.h
-	parser_var/CParserVarArrayNumber.h
-	parser_var/CParserVarArrayPropertyGroup.h
-	parser_var/CParserVarArrayString.h
-	parser_var/CParserVarBoolean.h
-	parser_var/CParserVarNamed.h
-	parser_var/CParserVarNumber.h
-	parser_var/CParserVarPropertyGroup.h
-	parser_var/CParserVarString.h
+	var/Array.h
+	var/ParserVar.h
+	var/ParserVar.inc
+	var/ArrayBoolean.h
+	var/ArrayNumber.h
+	var/ArrayObject.h
+	var/ArrayString.h
+	var/Boolean.h
+	var/ParserNamed.h
+	var/Number.h
+	var/Object.h
+	var/String.h
 		
-	CParser.h
-	CParserBase.h
-	CParserJson.h
-	CParserJson.cxx
+	Parser.h
+	ParserBase.h
+	zetjsoncpp.h
+	zetjsoncpp.cxx
 	exception.h
 )
 

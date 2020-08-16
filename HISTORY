@@ -1,7 +1,8 @@
 //----------------------------
 Date: XX/XX/2018
-Version: 1.4.0
+Version: 2.0.0
 
+Support unicode files/strings
 Implemented try/catch.
 Removed CBuffer
 Changed var/C* to var/JZ_*
