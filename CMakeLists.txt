@@ -146,9 +146,11 @@ set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 	zetjsoncpp.cpp
 )
 
-#JSON TEST executable
-set(JSON_TEST_SRCS ${PROJECT_SOURCE_DIR}/test/json_test.cpp)
+#JSON TEST OPERATORS executable
+set(JSON_TEST_OPERATORS_SRCS ${PROJECT_SOURCE_DIR}/test/json_test_operators.cpp)
 
+#JSON TEST PARSE executable
+set(JSON_TEST_PARSE_SRCS ${PROJECT_SOURCE_DIR}/test/json_test_parse.cpp)
 
 
 # json2cpplib
@@ -190,17 +192,20 @@ INSTALL_HEADERS_WITH_DIRECTORY(HS)
 
 #-----------------------------------------
 # EXECUTABLES
-add_executable(json_test${POST_NAME}
-	${JSON_TEST_SRCS}
+
+# Test operators
+add_executable(json_test_operators${POST_NAME}
+	${JSON_TEST_OPERATORS_SRCS}
 )
 
-target_link_libraries(json_test${POST_NAME} zetjsoncpp${POST_NAME})
+target_link_libraries(json_test_operators${POST_NAME} zetjsoncpp${POST_NAME})
 
-add_executable(json_parse${POST_NAME}
-	${JSON_TEST_SRCS}
+# Test parse
+add_executable(json_test_parse${POST_NAME}
+	${JSON_TEST_PARSE_SRCS}
 )
 
-target_link_libraries(json_parse${POST_NAME} zetjsoncpp${POST_NAME})
+target_link_libraries(json_test_parse${POST_NAME} zetjsoncpp${POST_NAME})
 
 
 
