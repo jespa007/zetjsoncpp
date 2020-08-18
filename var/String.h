@@ -25,7 +25,35 @@ namespace zetjsoncpp{
 
 		bool operator ==(const std::string & _value) const{
 			return this->value == _value;
+		}
 
+		bool operator ==(const String & s) const{
+			return this->value == s.value;
+
+		}
+
+		bool operator != (const std::string _value) const {
+			return this->value != _value;
+
+		}
+
+		bool operator !=(const String & s) const{
+			return this->value != s.value;
+
+		}
+
+		String operator +(const std::string & s)  const {
+			String ss;
+			ss.value = this->value + s;
+
+			return ss;
+		}
+
+		String operator +(const String & s)  const {
+			String ss;
+			ss.value = this->value + s.value;
+
+			return ss;
 		}
 
 		operator const char * () const{
@@ -41,10 +69,7 @@ namespace zetjsoncpp{
 			return this->str_value;
 		}
 
-		bool operator != (const std::string _value) const {
-			return this->value != _value;
 
-		}
 
 		void setForceAsString(bool m_force) {
 			m_force_string = m_force;

@@ -25,9 +25,152 @@ namespace zetjsoncpp{
 			}
 
 			// operators
-			Number & operator=(float _value){ value=_value; return *this;}
-			Number & operator=(const Number & _n){ value=_n.value; return *this;}
+			Number & operator=(float _value){
+				value=_value;
+				return *this;
+			}
 
+			Number & operator=(const Number & _n){
+				value=_n.value;
+				return *this;
+			}
+
+			Number   operator +  (const Number & n) const{
+				Number n1;
+				n1.value = value + n.value;
+				return n1;
+			}
+
+			Number   operator +  (float n) const {
+				Number n1;
+				n1.value = value + n;
+				return n1;
+
+			}
+
+			Number   operator -  (const Number & n) const{
+				Number n1;
+				n1.value = value - n.value;
+				return n1;
+			}
+
+			Number   operator -  (){
+				Number n1;
+				n1.value = -value;
+				return n1;
+			}
+			//--- /
+			Number   operator /  (const Number & n) const{
+				Number n1;
+
+				if(n.m_numVar ==0)
+					throw ("Error divide by 0");
+
+				n1.value = value / n.value;
+				return n1;
+			}
+			//--- ==
+			bool 	  operator == (const Number & n){
+				return value == n.value;
+			}
+			bool 	  operator == (float n){
+				return value == n;
+			}
+
+			bool 	  operator != (const Number & n){
+				return value != n.value;
+			}
+			bool 	  operator != (float n){
+				return value != n;
+			}
+
+			bool 	  operator <  (const Number & n){
+				return value < n.value;
+			}
+			bool 	  operator <  (float n){
+				return value < n;
+			}
+
+			bool 	  operator <= (const Number & n){
+				return value <= n.value;
+			}
+
+			bool 	  operator <= (float n){
+				return value <= n;
+			}
+
+			bool 	  operator >  (const Number & n){
+				return value > n.value;
+			}
+			bool 	  operator >  (float n){
+				return value > n;
+			}
+
+			bool	operator >= (const Number & n){
+				return value >= n.value;
+			}
+
+			bool 	  operator >= (float n){
+				return value >= n;
+			}
+
+			Number & operator += (const Number & n){
+				value += n.value;
+				return (*this);
+			}
+
+			Number & operator += (float n1){
+				value += n1;
+				return (*this);
+			}
+
+			Number & operator *= (const Number & n){
+				value *= n.value;
+				return (*this);
+			}
+
+			Number & operator *= (float n1){
+				value *= n1;
+				return (*this);
+			}
+
+			Number & operator /= (const Number & n){
+				if(n.value == 0)
+					throw("Divide by 0!");
+
+				value /= n.value;
+				return (*this);
+			}
+
+			Number & operator /= (float n1){
+
+				if(n1 == 0){
+					throw("Divide by 0!");
+				}
+
+				value /= n1;
+				return (*this);
+			}
+			//--- -=
+			Number & operator -= (const Number & n){
+				value -= n.m_numVar;
+				return (*this);
+			}
+
+			Number & operator -= (float n1){
+				value -= n1;
+				return (*this);
+			}
+
+			Number & operator ++(){
+				value++;
+				return (*this);
+			}
+			Number  operator ++(int){
+				Number n(value);
+				operator++();
+				return n;
+			}
 
 			void setForceInteger(bool force) {
 				m_forceInteger = force;
@@ -35,10 +178,12 @@ namespace zetjsoncpp{
 
 			virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 
-				if (m_forceInteger)
+				if (m_forceInteger){
 					this->str_value = "" + zj_strutils::int_to_str(this->value);
-				else
+				}
+				else{
 					this->str_value = "" + zj_strutils::float_to_str(this->value);
+				}
 				return this->str_value;
 			}
 

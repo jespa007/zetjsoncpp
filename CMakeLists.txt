@@ -163,18 +163,17 @@ endif()
 
 SET(
 	HS
-	util/zj_string.h
+	util/zj_strutils.h
 	util/zj_file.h
 	util/zj_path.h
 	var/Array.h
 	var/ParserVar.h
-	var/ParserVar.inc
 	var/ArrayBoolean.h
 	var/ArrayNumber.h
 	var/ArrayObject.h
 	var/ArrayString.h
 	var/Boolean.h
-	var/ParserNamed.h
+	var/ParserVarNamed.h
 	var/Number.h
 	var/Object.h
 	var/String.h
@@ -182,7 +181,7 @@ SET(
 	Parser.h
 	ParserBase.h
 	zetjsoncpp.h
-	zetjsoncpp.cxx
+	zetjsoncpp.tcc
 	exception.h
 )
 
@@ -195,8 +194,17 @@ add_executable(json_test${POST_NAME}
 	${JSON_TEST_SRCS}
 )
 
+target_link_libraries(json_test${POST_NAME} zetjsoncpp${POST_NAME})
 
-target_link_libraries(json_test${POST_NAME} zetjsoncpp${POST_NAME})	
+add_executable(json_parse${POST_NAME}
+	${JSON_TEST_SRCS}
+)
+
+target_link_libraries(json_parse${POST_NAME} zetjsoncpp${POST_NAME})
+
+
+
+	
 
 INSTALL(TARGETS zetjsoncpp${POST_NAME}
 		ARCHIVE DESTINATION  		${CMAKE_INSTALL_PREFIX}/lib

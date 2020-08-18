@@ -88,6 +88,6 @@ namespace zetjsoncpp {
 
 };
 
-#include "zetjsoncpp.inc"
+#include "zetjsoncpp.tcc"
 
 
