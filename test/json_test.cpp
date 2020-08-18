@@ -36,6 +36,13 @@ typedef struct
 
 int main(int argc, char *argv[]){
 
+	const char *ww="你好，世界";
+	std::wstring ws=zetjsoncpp::zj_strutils::to_wstring_utf8(ww);
+
+	wprintf(ws.c_str());
+
+	return 0;
+
 	bool print_utf8 = false;
 	std::cout << "zetjsoncpp ver. "<< ZETJSONCPP_MAJOR_VERSION << "." << ZETJSONCPP_MINOR_VERSION << "."<< ZETJSONCPP_PATCH_VERSION << std::endl;
 	if(argc <=1){

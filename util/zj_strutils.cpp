@@ -150,17 +150,9 @@ namespace zetjsoncpp{
 
 		}
 
-		std::wstring to_wstring_utf8(const std::string & s){
-			std::string curLocale = setlocale(LC_ALL, "");
-			    const char* _Source = s.c_str();
-			    size_t _Dsize = mbstowcs(NULL, _Source, 0) + 1;
-			    wchar_t *_Dest = new wchar_t[_Dsize];
-			    wmemset(_Dest, 0, _Dsize);
-			    mbstowcs(_Dest,_Source,_Dsize);
-			    std::wstring result = _Dest;
-			    delete []_Dest;
-			    setlocale(LC_ALL, curLocale.c_str());
-			    return result;
+		std::wstring to_wstring_utf8(const std::string & str){
+			std::wstring_convert<std::codecvt_utf8<wchar_t>> str_utf8_to_wstring_conv;
+			return str_utf8_to_wstring_conv.from_bytes(str);
 		}
 	}
 
