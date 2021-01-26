@@ -40,7 +40,7 @@
 
 
 #include "exception.h"
-#include "var/ParserVar.h"
+#include "jsonvar/JsonVar.h"
 #include "ParserBase.h"
 #include "Parser.h"
 
@@ -56,12 +56,20 @@ namespace zetjsoncpp {
 
 		ZetJsonCpp() {}
 
-		virtual void eval(const std::string & expression) {
+		virtual _T * eval(const std::string & expression) {
 
 			this->line = 1;
-			this->root_struct_field->destroy(); // destroy previous elements!
 
-			eval((const char *)expression.c_str(), Parser<_T>::root_struct_field, 0);
+			if(this->root_struct_field != NULL){
+				delete this->root_struct_field; // destroy previous elements!
+				this->root_struct_field=NULL;
+			}
+
+			this->root_struct_field=new _T;
+
+			evalInternal((const char *)expression.c_str(), this->root_struct_field, 0);
+
+			return this->root_struct_field;
 		}
 
 		virtual ~ZetJsonCpp() {}
@@ -75,14 +83,12 @@ namespace zetjsoncpp {
 		static char *ignoreBlanks(char *str, int &line);
 		static char *advanceToOneOfCollectionOfChar(char *str,char *end_char_standard_value, int &line);
 
-		ParserVar *findProperty(ParserVar * c_data, char *variable_name);
-		void setPropertiesParsedToFalse(ParserVar * c_data);
+		JsonVar *findProperty(JsonVar * c_data, char *variable_name);
+		void setPropertiesParsedToFalse(JsonVar * c_data);
 		//void printJsonError(char *m_start_ptr, char *m_current_ptr, int column, const char *error_message);
 		bool bothAreTypeNumbers(int type1, int type2);
 
-
-		int eval(const char * start_str, ParserVar *c_data, int level = 0);
-
+		int evalInternal(const char * start_str, JsonVar *c_data, int level = 0);
 
 	};
 

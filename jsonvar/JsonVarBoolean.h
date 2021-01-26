@@ -1,7 +1,7 @@
 namespace zetjsoncpp{
 
 	template<char... _T_NAME>
-	class Boolean : public ParserVarNamed<_T_NAME ...>{
+	class JsonVarBoolean : public JsonVarNamed<_T_NAME ...>{
 
 	public:
 		bool value;
@@ -13,19 +13,19 @@ namespace zetjsoncpp{
 			throw ("Cannot parse string to boolean.");
 		}
 
-		Boolean() {
+		JsonVarBoolean() {
 			init();
 		}
 
 		//_T_NAME name;
-		Boolean(bool b) {
+		JsonVarBoolean(bool b) {
 			init();
 			*((bool *)this->p_data) = b;
 		}
 
 		// operators
-		Boolean & operator=(bool _value){ value=_value; return *this;}
-		Boolean & operator=(const Boolean & _b){ value=_b.value; return *this;}
+		JsonVarBoolean & operator=(bool _value){ value=_value; return *this;}
+		JsonVarBoolean & operator=(const JsonVarBoolean & _b){ value=_b.value; return *this;}
 
 		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 
@@ -34,13 +34,13 @@ namespace zetjsoncpp{
 			return this->str_value;
 		}
 
-		virtual ~Boolean(){}
+		virtual ~JsonVarBoolean(){}
 
 	private:
 		void init() {
 			value=false;
-			this->type = ParserVar::TYPE_BOOLEAN;
-			this->size_data = sizeof(Boolean<_T_NAME...>);
+			this->type = JsonVar::JSON_VAR_TYPE_BOOLEAN;
+			this->size_data = sizeof(JsonVarBoolean<_T_NAME...>);
 			this->p_data = &this->value;
 		}
 

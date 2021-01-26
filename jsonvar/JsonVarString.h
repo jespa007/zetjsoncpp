@@ -1,24 +1,24 @@
 namespace zetjsoncpp{
 
 	template<char... _T_NAME>
-	class String : public ParserVarNamed<_T_NAME... >{
+	class JsonVarString : public JsonVarNamed<_T_NAME... >{
 	public:
 		std::string value;
 
 		bool	m_force_string;
 
-		String() {
+		JsonVarString() {
 			init();
 		}
 
-		String(std::string & s) {
+		JsonVarString(std::string & s) {
 			init();
 			*((std::string *)this->p_data) = s;
 		}
 
 		operator std::string(){return value;}
 
-		String & operator =(const std::string & _value){
+		JsonVarString & operator =(const std::string & _value){
 			this->value = _value;
 			return (*this);
 		}
@@ -27,7 +27,7 @@ namespace zetjsoncpp{
 			return this->value == _value;
 		}
 
-		bool operator ==(const String & s) const{
+		bool operator ==(const JsonVarString & s) const{
 			return this->value == s.value;
 
 		}
@@ -37,20 +37,20 @@ namespace zetjsoncpp{
 
 		}
 
-		bool operator !=(const String & s) const{
+		bool operator !=(const JsonVarString & s) const{
 			return this->value != s.value;
 
 		}
 
-		String operator +(const std::string & s)  const {
-			String ss;
+		JsonVarString operator +(const std::string & s)  const {
+			JsonVarString ss;
 			ss.value = this->value + s;
 
 			return ss;
 		}
 
-		String operator +(const String & s)  const {
-			String ss;
+		JsonVarString operator +(const JsonVarString & s)  const {
+			JsonVarString ss;
 			ss.value = this->value + s.value;
 
 			return ss;
@@ -79,13 +79,13 @@ namespace zetjsoncpp{
 			return m_force_string;
 		}
 
-		virtual ~String(){}
+		virtual ~JsonVarString(){}
 	protected:
 		virtual void init() {
 
 			this->m_force_string = false;
-			this->type = ParserVar::TYPE_STRING;
-			this->size_data = sizeof(String<_T_NAME...>);
+			this->type = JsonVar::JSON_VAR_TYPE_STRING;
+			this->size_data = sizeof(JsonVarString<_T_NAME...>);
 			this->p_data = &this->value;
 
 

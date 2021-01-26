@@ -140,17 +140,23 @@ set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 	util/zj_strutils.cpp
 	util/zj_file.cpp
 	util/zj_path.cpp
-	var/ParserVar.cpp
-	var/Object.cpp	
+	jsonvar/JsonVar.cpp
+	jsonvar/JsonVarObject.cpp	
 	ParserBase.cpp
 	zetjsoncpp.cpp
 )
 
 #JSON TEST OPERATORS executable
-set(JSON_TEST_OPERATORS_SRCS ${PROJECT_SOURCE_DIR}/test/json_test_operators.cpp)
+set(JSON_TEST_OPERATORS_SRCS ${PROJECT_SOURCE_DIR}/test/test_operators.cpp)
 
-#JSON TEST PARSE executable
-set(JSON_TEST_PARSE_SRCS ${PROJECT_SOURCE_DIR}/test/json_test_parse.cpp)
+#JSON TEST OBJECT executable
+set(JSON_TEST_OBJECT_SRCS ${PROJECT_SOURCE_DIR}/test/test_object.cpp)
+
+#JSON TEST ARRAY OBJECT executable
+set(JSON_TEST_VECTOR_OBJECT_SRCS ${PROJECT_SOURCE_DIR}/test/test_array_object.cpp)
+
+#JSON TEST MAP executable
+set(JSON_TEST_MAP_SRCS ${PROJECT_SOURCE_DIR}/test/test_map.cpp)
 
 
 # json2cpplib
@@ -168,17 +174,17 @@ SET(
 	util/zj_strutils.h
 	util/zj_file.h
 	util/zj_path.h
-	var/Array.h
-	var/ParserVar.h
-	var/ArrayBoolean.h
-	var/ArrayNumber.h
-	var/ArrayObject.h
-	var/ArrayString.h
-	var/Boolean.h
-	var/ParserVarNamed.h
-	var/Number.h
-	var/Object.h
-	var/String.h
+	jsonvar/JsonVarVector.h
+	jsonvar/JsonVar.h
+	jsonvar/JsonVarVectorBoolean.h
+	jsonvar/ArrayNumber.h
+	jsonvar/JsonVarVectorObject.h
+	jsonvar/JsonVarVectorString.h
+	jsonvar/JsonVarBoolean.h
+	jsonvar/JsonVarNamed.h
+	jsonvar/JsonVarNumber.h
+	jsonvar/JsonVarObject.h
+	jsonvar/JsonVarString.h
 		
 	Parser.h
 	ParserBase.h
@@ -194,22 +200,35 @@ INSTALL_HEADERS_WITH_DIRECTORY(HS)
 # EXECUTABLES
 
 # Test operators
-add_executable(json_test_operators${POST_NAME}
-	${JSON_TEST_OPERATORS_SRCS}
+#add_executable(json_test_operators${POST_NAME}
+#	${JSON_TEST_OPERATORS_SRCS}
+#)
+
+#target_link_libraries(test_operators${POST_NAME} zetjsoncpp${POST_NAME})
+
+# Test object
+add_executable(test_object${POST_NAME}
+	${JSON_TEST_OBJECT_SRCS}
 )
 
-target_link_libraries(json_test_operators${POST_NAME} zetjsoncpp${POST_NAME})
+target_link_libraries(test_object${POST_NAME} zetjsoncpp${POST_NAME})
 
-# Test parse
-add_executable(json_test_parse${POST_NAME}
-	${JSON_TEST_PARSE_SRCS}
+# Test array object
+add_executable(test_array_object${POST_NAME}
+	${JSON_TEST_VECTOR_OBJECT_SRCS}
 )
 
-target_link_libraries(json_test_parse${POST_NAME} zetjsoncpp${POST_NAME})
+target_link_libraries(test_array_object${POST_NAME} zetjsoncpp${POST_NAME})
 
 
+# Test map
+add_executable(test_map${POST_NAME}
+	${JSON_TEST_MAP_SRCS}
+)
 
-	
+target_link_libraries(test_map${POST_NAME} zetjsoncpp${POST_NAME})
+
+
 
 INSTALL(TARGETS zetjsoncpp${POST_NAME}
 		ARCHIVE DESTINATION  		${CMAKE_INSTALL_PREFIX}/lib

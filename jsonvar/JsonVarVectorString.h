@@ -2,12 +2,12 @@ namespace zetjsoncpp{
 
 	// ARRAY STRING
 	template<char... _T_NAME>
-	class ArrayString : public ParserVarNamed<_T_NAME...>, public Array<std::string> {
+	class JsonVarVectorString : public JsonVarNamed<_T_NAME...>, public JsonVarVector<std::string> {
 	public:
 		//_T_NAME name;
-		ArrayString() {
-			this->type = ParserVar::TYPE_ARRAY_STRING;
-			this->size_data = sizeof(ArrayString< _T_NAME...>);
+		JsonVarVectorString() {
+			this->type = JsonVar::JSON_VAR_TYPE_VECTOR_STRING;
+			this->size_data = sizeof(JsonVarVectorString< _T_NAME...>);
 			this->p_data = &this->vec_data;
 		}
 
@@ -16,7 +16,7 @@ namespace zetjsoncpp{
 		}
 
 		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
-			bool not_minimized = ((flags & ParserVar::PROPERTY_STR_MINIMIZED) == 0);
+			bool not_minimized = ((flags & JsonVar::PROPERTY_STR_MINIMIZED) == 0);
 			this->str_value = "";
 			std::vector<std::string> * v = (std::vector<std::string> *)this->p_data;
 
@@ -30,10 +30,10 @@ namespace zetjsoncpp{
 					this->str_value = this->str_value + ",";
 				}
 
-				this->str_value = this->str_value + "\"" + v->at(j) + "\" ";
+				this->str_value = this->str_value + "\"" + v->at(j) + "\"";
 
 				if (not_minimized)
-					if (j != 0 && ((j%N_ELEMENTS_JSON_ARRAY_PRINT) == 0))
+					if (j != 0 && ((j%N_ELEMENTS_JSON_VECTOR_PRINT) == 0))
 					{
 						for (int k = 0; k <= (ident + 1); k++){
 							this->str_value = this->str_value + "\t";
@@ -45,7 +45,7 @@ namespace zetjsoncpp{
 			return this->str_value;
 		}
 
-		virtual ~ArrayString(){}
+		virtual ~JsonVarVectorString(){}
 
 	};
 }

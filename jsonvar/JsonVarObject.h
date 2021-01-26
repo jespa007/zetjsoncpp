@@ -1,13 +1,13 @@
 namespace zetjsoncpp{
 
 	template<typename _T_DATA, char... _T_NAME>
-	class Object : public ParserVarNamed< _T_NAME...>, public _T_DATA {
+	class JsonVarObject : public JsonVarNamed< _T_NAME...>, public _T_DATA {
 
 	public:
 		//----------------------------------------------------------------
 		// DON'T MOVE zj_var_end ON THIS CLASS !!!!
 
-		ParserVar 	zj_var_end;
+		JsonVar 	zj_var_end;
 
 		//----------------------------------------------------------------
 
@@ -15,12 +15,12 @@ namespace zetjsoncpp{
 			// PRE: All args must be std::string. The program can parse the apropiate type var
 			// with its emmbedded type.
 
-			this->type = ParserVar::TYPE_OBJECT;
-			this->size_data = sizeof(Object<_T_DATA,_T_NAME...>);
+			this->type = JsonVar::JSON_VAR_TYPE_OBJECT;
+			this->size_data = sizeof(JsonVarObject<_T_DATA,_T_NAME...>);
 
-			ParserVar *ptr = ((ParserVar *)&this->zj_var_ini + 1);
+			JsonVar *ptr = ((JsonVar *)&this->zj_var_ini + 1);
 			this->p_data = ptr;
-			this->p_end_data = ((ParserVar *)&zj_var_end - 1);
+			this->p_end_data = ((JsonVar *)&zj_var_end - 1);
 
 			//-------
 			// Iterate on all its elements ...
@@ -32,13 +32,13 @@ namespace zetjsoncpp{
 			va_start(arg_list, numParam);
 			for (unsigned i = 0; i < numParam && (aux_p < end_p); i++) {
 				const char * variable = va_arg(arg_list, const char *);
-				ParserVar * p_sv = (ParserVar *)aux_p;
+				JsonVar * p_sv = (JsonVar *)aux_p;
 
 				switch (p_sv->type)
 				{
-				case ParserVar::TYPE_STRING:
+				case JsonVar::JSON_VAR_TYPE_STRING:
 					//print_info_cr("std::string ...!\n\n");
-					*(ZJ_STRING_CAST p_sv) = variable;//->assign();
+					*(JSON_VAR_STRING_CAST p_sv) = variable;//->assign();
 					break;
 				}
 
@@ -49,19 +49,19 @@ namespace zetjsoncpp{
 
 		}
 
-		Object(...) {
+		JsonVarObject(...) {
 			setup();
 		}
 
-		Object(uint32_t numParam,...) {
+		JsonVarObject(uint32_t numParam,...) {
 			setup(numParam);
 		}
 
 		//std::string result_json;
 		virtual std::string & toString(uint32_t flags = 0) {
-			bool not_minimized = ((flags & ParserVar::PROPERTY_STR_MINIMIZED) == 0);
+			bool not_minimized = ((flags & JsonVar::PROPERTY_STR_MINIMIZED) == 0);
 			this->result_json = "";
-			ObjectToString(this, this->result_json, 0, flags);
+			objectToString(this, this->result_json, 0, flags);
 
 			if (not_minimized){
 				this->result_json += "\n";
@@ -70,9 +70,9 @@ namespace zetjsoncpp{
 			return this->result_json;
 
 		}
-		virtual ~Object(){};
+		virtual ~JsonVarObject(){};
 
 	};
 
-	void ObjectToString(ParserVar * c_data, std::string & result_s, int level, uint32_t flags);
+	void objectToString(JsonVar * c_data, std::string & result_s, int level, uint32_t flags);
 }

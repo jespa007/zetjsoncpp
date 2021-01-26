@@ -1,18 +1,18 @@
 namespace zetjsoncpp{
 
 	template<typename _T_DATA, char... _T_NAME>
-	class ArrayObject : public ParserVarNamed<_T_NAME...>, public Array<Object<_T_DATA> * > {
+	class JsonVarVectorObject : public JsonVarNamed<_T_NAME...>, public JsonVarVector<JsonVarObject<_T_DATA> * > {
 
 	public:
 
-		ArrayObject() {
-			this->type = ParserVar::TYPE_OBJECT_ARRAY;
-			this->size_data = sizeof(ArrayObject<_T_DATA, _T_NAME...>);
+		JsonVarVectorObject() {
+			this->type = JsonVar::JSON_VAR_TYPE_VECTOR_OBJECT;
+			this->size_data = sizeof(JsonVarVectorObject<_T_DATA, _T_NAME...>);
 			this->p_data = &this->vec_data;
 		}
 
-		virtual ParserVar *newData() {
-			return new Object<_T_DATA>;
+		virtual JsonVar *newData() {
+			return new JsonVarObject<_T_DATA>;
 		}
 
 		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
@@ -20,20 +20,20 @@ namespace zetjsoncpp{
 			return this->str_value;
 		}
 
-		virtual void add(ParserVar * s) {
-			Object< _T_DATA> *tt = (Object< _T_DATA> *)s;
+		virtual void add(JsonVar * s) {
+			JsonVarObject< _T_DATA> *tt = (JsonVarObject< _T_DATA> *)s;
 			this->push_back(tt);
 		}
 
 		//std::string result_json;
 		virtual std::string & toString(uint32_t flags = 0) {
-			bool not_minimized = ((flags & ParserVar::PROPERTY_STR_MINIMIZED) == 0);
+			bool not_minimized = ((flags & JsonVar::PROPERTY_STR_MINIMIZED) == 0);
 			this->result_json = "[";
 			for (unsigned i = 0; i < this->size(); i++) {
 				if (i > 0) {
 					this->result_json += ",";
 				}
-				ObjectToString(this->at(i), this->result_json, 0, flags);
+				objectToString(this->at(i), this->result_json, 0, flags);
 			}
 
 			this->result_json += "]";
@@ -54,7 +54,7 @@ namespace zetjsoncpp{
 			this->vec_data.clear();
 		}
 
-		virtual ~ArrayObject() {
+		virtual ~JsonVarVectorObject() {
 			destroy();
 		}
 	};

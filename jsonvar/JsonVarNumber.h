@@ -1,7 +1,7 @@
 namespace zetjsoncpp{
 
 	template<char... _T_NAME>
-	class Number : public ParserVarNamed<_T_NAME ...>{
+	class JsonVarNumber : public JsonVarNamed<_T_NAME ...>{
 	public:
 
 			float value;
@@ -15,53 +15,53 @@ namespace zetjsoncpp{
 				return f;
 			}
 
-			Number() {
+			JsonVarNumber() {
 				init();
 			}
 
-			 Number(float f) {
+			 JsonVarNumber(float f) {
 				init();
 				this->value = f;
 			}
 
 			// operators
-			Number & operator=(float _value){
+			JsonVarNumber & operator=(float _value){
 				value=_value;
 				return *this;
 			}
 
-			Number & operator=(const Number & _n){
+			JsonVarNumber & operator=(const JsonVarNumber & _n){
 				value=_n.value;
 				return *this;
 			}
 
-			Number   operator +  (const Number & n) const{
-				Number n1;
+			JsonVarNumber   operator +  (const JsonVarNumber & n) const{
+				JsonVarNumber n1;
 				n1.value = value + n.value;
 				return n1;
 			}
 
-			Number   operator +  (float n) const {
-				Number n1;
+			JsonVarNumber   operator +  (float n) const {
+				JsonVarNumber n1;
 				n1.value = value + n;
 				return n1;
 
 			}
 
-			Number   operator -  (const Number & n) const{
-				Number n1;
+			JsonVarNumber   operator -  (const JsonVarNumber & n) const{
+				JsonVarNumber n1;
 				n1.value = value - n.value;
 				return n1;
 			}
 
-			Number   operator -  (){
-				Number n1;
+			JsonVarNumber   operator -  (){
+				JsonVarNumber n1;
 				n1.value = -value;
 				return n1;
 			}
 			//--- /
-			Number   operator /  (const Number & n) const{
-				Number n1;
+			JsonVarNumber   operator /  (const JsonVarNumber & n) const{
+				JsonVarNumber n1;
 
 				if(n.m_numVar ==0)
 					throw ("Error divide by 0");
@@ -70,28 +70,28 @@ namespace zetjsoncpp{
 				return n1;
 			}
 			//--- ==
-			bool 	  operator == (const Number & n){
+			bool 	  operator == (const JsonVarNumber & n){
 				return value == n.value;
 			}
 			bool 	  operator == (float n){
 				return value == n;
 			}
 
-			bool 	  operator != (const Number & n){
+			bool 	  operator != (const JsonVarNumber & n){
 				return value != n.value;
 			}
 			bool 	  operator != (float n){
 				return value != n;
 			}
 
-			bool 	  operator <  (const Number & n){
+			bool 	  operator <  (const JsonVarNumber & n){
 				return value < n.value;
 			}
 			bool 	  operator <  (float n){
 				return value < n;
 			}
 
-			bool 	  operator <= (const Number & n){
+			bool 	  operator <= (const JsonVarNumber & n){
 				return value <= n.value;
 			}
 
@@ -99,14 +99,14 @@ namespace zetjsoncpp{
 				return value <= n;
 			}
 
-			bool 	  operator >  (const Number & n){
+			bool 	  operator >  (const JsonVarNumber & n){
 				return value > n.value;
 			}
 			bool 	  operator >  (float n){
 				return value > n;
 			}
 
-			bool	operator >= (const Number & n){
+			bool	operator >= (const JsonVarNumber & n){
 				return value >= n.value;
 			}
 
@@ -114,27 +114,27 @@ namespace zetjsoncpp{
 				return value >= n;
 			}
 
-			Number & operator += (const Number & n){
+			JsonVarNumber & operator += (const JsonVarNumber & n){
 				value += n.value;
 				return (*this);
 			}
 
-			Number & operator += (float n1){
+			JsonVarNumber & operator += (float n1){
 				value += n1;
 				return (*this);
 			}
 
-			Number & operator *= (const Number & n){
+			JsonVarNumber & operator *= (const JsonVarNumber & n){
 				value *= n.value;
 				return (*this);
 			}
 
-			Number & operator *= (float n1){
+			JsonVarNumber & operator *= (float n1){
 				value *= n1;
 				return (*this);
 			}
 
-			Number & operator /= (const Number & n){
+			JsonVarNumber & operator /= (const JsonVarNumber & n){
 				if(n.value == 0)
 					throw("Divide by 0!");
 
@@ -142,7 +142,7 @@ namespace zetjsoncpp{
 				return (*this);
 			}
 
-			Number & operator /= (float n1){
+			JsonVarNumber & operator /= (float n1){
 
 				if(n1 == 0){
 					throw("Divide by 0!");
@@ -152,22 +152,22 @@ namespace zetjsoncpp{
 				return (*this);
 			}
 			//--- -=
-			Number & operator -= (const Number & n){
+			JsonVarNumber & operator -= (const JsonVarNumber & n){
 				value -= n.m_numVar;
 				return (*this);
 			}
 
-			Number & operator -= (float n1){
+			JsonVarNumber & operator -= (float n1){
 				value -= n1;
 				return (*this);
 			}
 
-			Number & operator ++(){
+			JsonVarNumber & operator ++(){
 				value++;
 				return (*this);
 			}
-			Number  operator ++(int){
-				Number n(value);
+			JsonVarNumber  operator ++(int){
+				JsonVarNumber n(value);
 				operator++();
 				return n;
 			}
@@ -187,13 +187,13 @@ namespace zetjsoncpp{
 				return this->str_value;
 			}
 
-			virtual ~Number(){}
+			virtual ~JsonVarNumber(){}
 	private:
 		bool m_forceInteger;
 		void init() {
 			value = 0;
-			this->type = ParserVar::TYPE_NUMBER;
-			this->size_data = sizeof(Number<_T_NAME...>);
+			this->type = JsonVar::JSON_VAR_TYPE_NUMBER;
+			this->size_data = sizeof(JsonVarNumber<_T_NAME...>);
 			this->p_data = &this->value;
 			m_forceInteger = false;
 

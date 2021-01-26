@@ -1,16 +1,16 @@
 namespace zetjsoncpp{
 
 	template<char... _T_NAME>
-	class ParserVarNamed : public ParserVar {
+	class JsonVarNamed : public JsonVar {
 	public:
 		//----------------------------------------------------------------
-		// DON'T zj_var_ini AND NOT DECLARE ANY ParserVar UNDER IT !!!!
+		// DON'T zj_var_ini AND NOT DECLARE ANY JsonVar UNDER IT !!!!
 
-		ParserVar 	zj_var_ini;
+		JsonVar 	zj_var_ini;
 
 		//----------------------------------------------------------------
 
-		ParserVarNamed() {
+		JsonVarNamed() {
 
 			std::vector<char> vec = {_T_NAME... };
 			std::string s_aux(vec.begin(), vec.end());
@@ -19,7 +19,7 @@ namespace zetjsoncpp{
 
 			strcpy(buffer, s_aux.c_str());
 			this->variable_name = buffer;
-			this->size_data = sizeof(ParserVarNamed);
+			this->size_data = sizeof(JsonVarNamed);
 
 		}
 
@@ -29,6 +29,6 @@ namespace zetjsoncpp{
 			return this->str_value;
 		}
 
-		virtual ~ParserVarNamed() {}
+		virtual ~JsonVarNamed() {}
 	};
 }

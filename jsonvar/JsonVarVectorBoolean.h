@@ -2,12 +2,12 @@ namespace zetjsoncpp{
 
 	// ARRAY BOOL
 	template<char... _T_NAME>
-	class ArrayBoolean : public ParserVarNamed<_T_NAME...>, public Array<bool> {
+	class JsonVarVectorBoolean : public JsonVarNamed<_T_NAME...>, public JsonVarVector<bool> {
 	public:
 		//_T_NAME name;
-		ArrayBoolean() {
-			this->type = ParserVar::TYPE_ARRAY_BOOLEAN;
-			this->size = sizeof(ArrayBoolean<_T_NAME...>);
+		JsonVarVectorBoolean() {
+			this->type = JsonVar::JSON_VAR_TYPE_VECTOR_BOOLEAN;
+			this->size = sizeof(JsonVarVectorBoolean<_T_NAME...>);
 			this->p_data = &this->vec_data;
 		}
 
@@ -16,7 +16,7 @@ namespace zetjsoncpp{
 		}
 
 		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
-			bool not_minimized = ((ParserVar::PROPERTY_STR_MINIMIZED & flags) == 0);
+			bool not_minimized = ((JsonVar::PROPERTY_STR_MINIMIZED & flags) == 0);
 			//this->str_value ="";
 			std::vector<bool> * v = (std::vector<bool> *)this->p_data;
 			this->str_value = "";
@@ -39,7 +39,7 @@ namespace zetjsoncpp{
 				this->str_value = this->str_value + "" + m_sfValue + " ";
 
 				if (not_minimized) {
-					if (j != 0 && ((j%N_ELEMENTS_JSON_ARRAY_PRINT) == 0)) {
+					if (j != 0 && ((j%N_ELEMENTS_JSON_VECTOR_PRINT) == 0)) {
 						for (int k = 0; k <= (ident + 1); k++)
 							this->str_value = this->str_value + "\t";
 
@@ -51,7 +51,7 @@ namespace zetjsoncpp{
 			return this->str_value;
 		}
 
-		virtual ~ArrayBoolean(){}
+		virtual ~JsonVarVectorBoolean(){}
 
 	};
 }

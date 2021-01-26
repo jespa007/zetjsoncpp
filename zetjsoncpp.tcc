@@ -168,7 +168,7 @@ namespace zetjsoncpp{
 	}
 
 	template <typename _T>
-	ParserVar *ZetJsonCpp<_T>::findProperty(ParserVar * c_data, char *variable_name) {
+	JsonVar *ZetJsonCpp<_T>::findProperty(JsonVar * c_data, char *variable_name) {
 
 		// no data no search...
 		if (c_data == NULL) return NULL;
@@ -179,7 +179,7 @@ namespace zetjsoncpp{
 		// Main loop iteration to whole C struct
 		for (; aux_p < end_p; ) {
 
-			ParserVar * p_sv = (ParserVar *)aux_p;
+			JsonVar * p_sv = (JsonVar *)aux_p;
 			if (p_sv->variable_name == variable_name)
 				return p_sv;
 
@@ -190,7 +190,7 @@ namespace zetjsoncpp{
 	}
 
 	template <typename _T>
-	void ZetJsonCpp<_T>::setPropertiesParsedToFalse(ParserVar * c_data) {
+	void ZetJsonCpp<_T>::setPropertiesParsedToFalse(JsonVar * c_data) {
 		// no data no search...
 		if (c_data == NULL)
 			return;
@@ -201,7 +201,7 @@ namespace zetjsoncpp{
 		// Main loop iteration to whole C struct
 		for (; aux_p < end_p; ) {
 
-			ParserVar * p_sv = (ParserVar *)aux_p;
+			JsonVar * p_sv = (JsonVar *)aux_p;
 			p_sv->setParsed(false);
 
 			aux_p += p_sv->size_data;
@@ -210,17 +210,18 @@ namespace zetjsoncpp{
 	}
 
 	template<typename _T>
-	int ZetJsonCpp<_T>::eval(const char * start_str, ParserVar *_root, int level) {
+	int ZetJsonCpp<_T>::evalInternal(const char * start_str, JsonVar *_root, int level) {
 
 		char variable_name[MAX_NAME_PROPERTY];
 		char old_variable_name[MAX_NAME_PROPERTY] = { 0 };
 		char val[4096];
 		int  size;
 		bool is_array = false;
+		//bool is_map=false;
 		char *str_end = NULL;
 
 		char *current_ptr = (char *)start_str;
-		ParserVar *c_property, *c_data;
+		JsonVar *c_property, *c_data;
 		int bytes_readed;
 		bool end = false;
 		bool ok = false;
@@ -237,13 +238,14 @@ namespace zetjsoncpp{
 		float number_value = 0;
 
 		if (IS_EMPTY(start_str)){
-			throw_error(this->filename, -1,NULL, NULL, "Empty string");
+			return 0;
+			//throw_error(this->filename, -1,NULL, NULL, "Empty string");
 		}
 
 
 		current_ptr = ignoreBlanks(current_ptr, this->line);
 
-		if (*current_ptr == '[' && (level == 0)) { // detected anonymous array (only valid for first level)...
+		if (*current_ptr == '[' && (level == 0)) { // detected anonymous vector (only valid for first level)...
 			anonymous_array = true;
 			current_ptr++;
 			current_ptr = ignoreBlanks(current_ptr, this->line);
@@ -259,8 +261,11 @@ namespace zetjsoncpp{
 
 				// create first property group and add it...
 				if (level == 0) { // create properties for first level only ...
-					c_data = _root->newData();
-					_root->add(c_data);
+					if((c_data = _root->newData()) != NULL){
+						_root->add(c_data);
+					}else{
+						c_data = _root;
+					}
 				}
 				else { // else root is c_data itself.
 					c_data = _root;
@@ -305,18 +310,28 @@ namespace zetjsoncpp{
 							// get c property
 							c_property = findProperty(c_data, variable_name);
 
-							if (c_property != NULL)
-								if (c_property->isParsed()) {
+							switch(c_data->type){
+							default:
+								if (c_property != NULL){
+									if (c_property->isParsed()) {
 
-									throw_warning(this->filename, this->line,"%s was already parsed (duplicate?)", variable_name);
+										throw_warning(this->filename, this->line,"%s was already parsed (duplicate?)", variable_name);
+									}
 								}
+								break;
+							case JsonVar::JSON_VAR_TYPE_MAP_STRING:
+								c_property=c_data;
+								//is_map=true;
+								break;
+							}
+
 
 							// next.. get value...
 							current_ptr = ignoreBlanks(str_end + 1, this->line);
 
 							if (*current_ptr == ':') {// ok check value
 
-								ParserVar *process_group = NULL;
+								JsonVar *process_group = NULL;
 								// check if group
 								current_ptr = ignoreBlanks(current_ptr + 1, this->line);
 								is_array = *current_ptr == '[';
@@ -326,12 +341,12 @@ namespace zetjsoncpp{
 
 								if (is_array /*&& (c_property != NULL)*/) {
 
-									print_info_json("property \"%s\" detected as array ", variable_name);
+									print_info_json("property \"%s\" detected as vector ", variable_name);
 									current_ptr = ignoreBlanks(current_ptr + 1, this->line);
 								}
 
 								// capture values ...
-								if (!is_array || (is_array && *current_ptr != ']')) {
+								if (is_array==false || (is_array && *current_ptr != ']')) {
 
 									do {
 
@@ -344,8 +359,9 @@ namespace zetjsoncpp{
 
 											if (is_array) { // make add...
 												if (c_property != NULL) {
-													process_group = c_property->newData();
-													c_property->add(process_group);
+													if((process_group = c_property->newData())!=NULL){
+														c_property->add(process_group);
+													}
 												}
 											}
 											else {
@@ -354,14 +370,14 @@ namespace zetjsoncpp{
 											}
 
 											// passing NULL if the record has been initialized (it doens't matter any c property in advence...
-											if ((bytes_readed = eval(current_ptr, process_group, level + 1)) == 0) {
+											if ((bytes_readed = evalInternal(current_ptr, process_group, level + 1)) == 0) {
 												return 0;
 											}
 
-											type_value = ParserVar::TYPE_OBJECT;
+											type_value = JsonVar::JSON_VAR_TYPE_OBJECT;
 
 										}
-										else { // string, number, boolean, etc ...
+										else { // check as value as string, number, boolean, etc ...
 											bytes_readed = 0;
 											if (*current_ptr == '\'' || *current_ptr == '\"') {// try string ...
 
@@ -377,7 +393,7 @@ namespace zetjsoncpp{
 													}
 													bytes_readed = str_end - current_ptr + 1;
 													memset(val, 0, sizeof(val));
-													type_value = ParserVar::TYPE_STRING;
+													type_value = JsonVar::JSON_VAR_TYPE_STRING;
 													if (bytes_readed > 2) {
 														unsigned copy_bytes = bytes_readed - 2;
 														if ((unsigned)bytes_readed >= sizeof(val)) {
@@ -402,7 +418,7 @@ namespace zetjsoncpp{
 													print_info_json("property \"%s\" detected as boolean", variable_name);
 												}
 
-												type_value = ParserVar::TYPE_BOOLEAN;
+												type_value = JsonVar::JSON_VAR_TYPE_BOOLEAN;
 												strcpy(val, "true");
 												bytes_readed = 4;
 												bool_value = true;
@@ -412,7 +428,7 @@ namespace zetjsoncpp{
 													print_info_json("property \"%s\"detected as boolean", variable_name);
 												}
 
-												type_value = ParserVar::TYPE_BOOLEAN;
+												type_value = JsonVar::JSON_VAR_TYPE_BOOLEAN;
 												strcpy(val, "false");
 												bytes_readed = 5;
 												bool_value = false;
@@ -441,7 +457,7 @@ namespace zetjsoncpp{
 														}
 
 														number_value = (float)strtol(val, NULL, 10);
-														type_value = ParserVar::TYPE_NUMBER;
+														type_value = JsonVar::JSON_VAR_TYPE_NUMBER;
 														ok = true;
 													}
 													else  if (type_number == zj_strutils::STR_NUMBER_TYPE_HEXA) {//RE2::FullMatch(val,"0[xX][0-9a-fA-F]+")) {// check for hexadecimal...
@@ -450,7 +466,7 @@ namespace zetjsoncpp{
 														}
 
 														number_value = (float)strtol(val, NULL, 16);
-														type_value = ParserVar::TYPE_NUMBER;
+														type_value = JsonVar::JSON_VAR_TYPE_NUMBER;
 														ok = true;
 
 													}
@@ -465,7 +481,7 @@ namespace zetjsoncpp{
 															}
 
 															ok = true;
-															type_value = ParserVar::TYPE_NUMBER;
+															type_value = JsonVar::JSON_VAR_TYPE_NUMBER;
 														}
 													}
 												}
@@ -477,58 +493,55 @@ namespace zetjsoncpp{
 											return 0;
 										}
 										else { // value ok
-											if (is_array)
-												type_value += ParserVar::TYPE_ARRAY;
+											if (is_array){
+												type_value += JsonVar::JSON_VAR_TYPE_VECTOR;
+											}
 
 											// ok, check if the value parsed is the same as c_property (only saves particular elements (string/boolean/etc) but not property groups (it was saved already in recursion before)
-											if (c_property != NULL && !c_property->isParsed()) {
+											if ((c_property != NULL && !c_property->isParsed())) {
 
 												if (type_value == c_property->type /*||
-														is_a_number*/
-													) {
 
+														is_a_number*/
+													|| c_property->type==JsonVar::JSON_VAR_TYPE_MAP_STRING
+													) {
 
 													switch (c_property->type) {
 													default:
-													case 	ParserVar::TYPE_UNKNOWN:
+													case 	JsonVar::JSON_VAR_TYPE_UNKNOWN:
 														fprintf(stderr,"unknown type %i", type_value);
 														return 0;
 														break;
-													case 	ParserVar::TYPE_ARRAY_BOOLEAN:
-													case 	ParserVar::TYPE_BOOLEAN:
-														if (is_array) {
-															print_info_json("added value boolean %i into array \"%s\"", bool_value, variable_name);
-															(*(ZJ_ARRAY_BOOLEAN_CAST c_property)).add(bool_value);
-														}
-														else {
-															print_info_json("set value %i into variable \"%s\"", bool_value, variable_name);
-															*(ZJ_BOOLEAN_CAST c_property) = bool_value;
-														}
+													case 	JsonVar::JSON_VAR_TYPE_VECTOR_BOOLEAN:
+														print_info_json("added value boolean %i into vector \"%s\"", bool_value, variable_name);
+														(*(JSON_VAR_VECTOR_BOOLEAN_CAST c_property)).add(bool_value);
 														break;
-													case 	ParserVar::TYPE_ARRAY_NUMBER:
-													case 	ParserVar::TYPE_NUMBER:
-														if (is_array) {
-															print_info_json("added value number %f into array \"%s\"", number_value, variable_name);
-															(*(ZJ_ARRAY_NUMBER_CAST c_property)).add(number_value);
-														}
-														else {
-															print_info_json("set value %f into variable \"%s\"", number_value, variable_name);
-															*(ZJ_NUMBER_CAST c_property) = number_value;
-														}
+													case 	JsonVar::JSON_VAR_TYPE_BOOLEAN:
+														print_info_json("set value %i into variable \"%s\"", bool_value, variable_name);
+														*(JSON_VAR_BOOLEAN_CAST c_property) = bool_value;
 														break;
-													case 	ParserVar::TYPE_ARRAY_STRING:
-													case 	ParserVar::TYPE_STRING:
-														if (is_array) {
-															print_info_json("added value string %s into array \"%s\"", val, variable_name);
-															(*(ZJ_ARRAY_STRING_CAST c_property)).add(val);
-														}
-														else {
-															print_info_json("set value %s into variable \"%s\"", val, variable_name);
-															*(ZJ_STRING_CAST c_property) = val;
-														}
+													case 	JsonVar::JSON_VAR_TYPE_VECTOR_NUMBER:
+														print_info_json("added value number %f into vector \"%s\"", number_value, variable_name);
+														(*(JSON_VAR_VECTOR_NUMBER_CAST c_property)).add(number_value);
 														break;
-													case 	ParserVar::TYPE_OBJECT_ARRAY:
-													case 	ParserVar::TYPE_OBJECT:
+													case 	JsonVar::JSON_VAR_TYPE_NUMBER:
+														print_info_json("set value %f into variable \"%s\"", number_value, variable_name);
+														*(JSON_VAR_NUMBER_CAST c_property) = number_value;
+														break;
+													case 	JsonVar::JSON_VAR_TYPE_VECTOR_STRING:
+														print_info_json("added value string %s into vector \"%s\"", val, variable_name);
+														(*(JSON_VAR_VECTOR_STRING_CAST c_property)).add(val);
+														break;
+													case 	JsonVar::JSON_VAR_TYPE_MAP_STRING:
+														print_info_json("added value string %s into map \"%s\"", val, variable_name);
+														(*(JSON_VAR_MAP_STRING_CAST c_property)).insert(variable_name,val);
+														break;
+													case 	JsonVar::JSON_VAR_TYPE_STRING:
+														print_info_json("set value %s into variable \"%s\"", val, variable_name);
+														*(JSON_VAR_STRING_CAST c_property) = val;
+														break;
+													case 	JsonVar::JSON_VAR_TYPE_VECTOR_OBJECT:
+													case 	JsonVar::JSON_VAR_TYPE_OBJECT:
 														// Nothing ... is well done!
 														break;
 													}
@@ -539,7 +552,7 @@ namespace zetjsoncpp{
 
 												}
 												else {
-													throw_warning(this->filename, this->line,"variable \"%s\"not matches. JSon is %s and C struct is %s", variable_name, ParserVar::idTypeToString(type_value), ParserVar::idTypeToString(c_property->type));
+													throw_warning(this->filename, this->line,"variable \"%s\"not matches. JSon is %s and C struct is %s", variable_name, JsonVar::idTypeToString(type_value), JsonVar::idTypeToString(c_property->type));
 												}
 											}
 											/* do not throw if there's json variables not registered in struct...
@@ -556,7 +569,7 @@ namespace zetjsoncpp{
 
 										current_ptr = ignoreBlanks(current_ptr, this->line);
 										another_element = false;
-										// special case (another array element is needed)
+										// special case (another vector element is needed)
 										if (is_array) {
 											if (*current_ptr == ',') {
 												current_ptr = ignoreBlanks(current_ptr + 1, this->line);

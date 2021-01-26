@@ -2,14 +2,14 @@ namespace zetjsoncpp{
 
 	// ARRAY FLOAT
 	template<char... _T_NAME>
-	class ArrayNumber : public ParserVarNamed<_T_NAME...>, public Array<float> {
+	class ArrayNumber : public JsonVarNamed<_T_NAME...>, public JsonVarVector<float> {
 		short * shortBuf;
 		float * floatBuf;
 
 	public:
 		//_T_NAME name;
 		ArrayNumber() {
-			this->type = ParserVar::TYPE_ARRAY_NUMBER;
+			this->type = JsonVar::JSON_VAR_TYPE_VECTOR_NUMBER;
 			this->size_data = sizeof(ArrayNumber<_T_NAME...>);
 			this->p_data = &this->vec_data;
 			shortBuf=NULL;
@@ -22,7 +22,7 @@ namespace zetjsoncpp{
 
 		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
 			//this->str_value ="";
-			bool not_minimized = ((flags & ParserVar::PROPERTY_STR_MINIMIZED) == 0);
+			bool not_minimized = ((flags & JsonVar::PROPERTY_STR_MINIMIZED) == 0);
 			std::vector<float> * v = (std::vector<float> *)this->p_data;
 			this->str_value = "";
 			std::string m_sfValue;
@@ -40,7 +40,7 @@ namespace zetjsoncpp{
 				this->str_value = this->str_value + "" + m_sfValue + " ";
 
 				if (not_minimized) {
-					if (j != 0 && ((j%N_ELEMENTS_JSON_ARRAY_PRINT) == 0)) {
+					if (j != 0 && ((j%N_ELEMENTS_JSON_VECTOR_PRINT) == 0)) {
 						for (int k = 0; k <= (ident + 1); k++)
 							this->str_value = this->str_value + "\t";
 						this->str_value += "\n";

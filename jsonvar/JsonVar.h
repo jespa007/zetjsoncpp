@@ -6,7 +6,7 @@
 
 #pragma once
 
-#define N_ELEMENTS_JSON_ARRAY_PRINT	10
+#define N_ELEMENTS_JSON_VECTOR_PRINT	10
 
 
 #if  !defined(MIN)
@@ -70,16 +70,17 @@
 
 #define getChr(name, ii) ((MIN(ii,ZJ_MAX_CONST_CHAR))<sizeof(name)/sizeof(*name)?name[ii]:0)
 
-#define ZJ_STRING_CAST 				(zetjsoncpp::String<> *)
-#define ZJ_BOOLEAN_CAST 			(zetjsoncpp::Boolean<> *)
-#define ZJ_NUMBER_CAST 				(zetjsoncpp::Number<> *)
-#define ZJ_ARRAY_BOOLEAN_CAST 		(zetjsoncpp::ArrayBoolean<> *)
-#define ZJ_ARRAY_NUMBER_CAST 		(zetjsoncpp::ArrayNumber<> *)
-#define ZJ_ARRAY_STRING_CAST 		(zetjsoncpp::ArrayString<> *)
+#define JSON_VAR_STRING_CAST 			(zetjsoncpp::JsonVarString<> *)
+#define JSON_VAR_BOOLEAN_CAST 			(zetjsoncpp::JsonVarBoolean<> *)
+#define JSON_VAR_NUMBER_CAST 			(zetjsoncpp::JsonVarNumber<> *)
+#define JSON_VAR_VECTOR_BOOLEAN_CAST 	(zetjsoncpp::JsonVarVectorBoolean<> *)
+#define JSON_VAR_VECTOR_NUMBER_CAST 	(zetjsoncpp::ArrayNumber<> *)
+#define JSON_VAR_VECTOR_STRING_CAST 	(zetjsoncpp::JsonVarVectorString<> *)
+#define JSON_VAR_MAP_STRING_CAST 		(zetjsoncpp::JsonVarMapString<> *)
 
 namespace zetjsoncpp {
 
-	class ParserVar {//: public CVariable {
+	class JsonVar {//: public CVariable {
 	protected:
 		std::string result_json;
 		std::string str_value;
@@ -87,18 +88,21 @@ namespace zetjsoncpp {
 
 	public:
 
-		enum {
-			TYPE_UNKNOWN = 0, // 0
-			TYPE_BOOLEAN, // 1
-			TYPE_NUMBER,// 2
-			TYPE_STRING, // 3
-			TYPE_OBJECT,
-			TYPE_ARRAY = 0x100,
-			TYPE_ARRAY_BOOLEAN = TYPE_BOOLEAN + TYPE_ARRAY, // 6
-			TYPE_ARRAY_NUMBER = TYPE_NUMBER + TYPE_ARRAY, // 7
-			TYPE_ARRAY_STRING = TYPE_STRING + TYPE_ARRAY, // 9
-			TYPE_OBJECT_ARRAY = TYPE_OBJECT + TYPE_ARRAY
-		};
+		typedef enum {
+			JSON_VAR_TYPE_UNKNOWN = 0, // 0
+			JSON_VAR_TYPE_BOOLEAN, // 1
+			JSON_VAR_TYPE_NUMBER,// 2
+			JSON_VAR_TYPE_STRING, // 3
+			JSON_VAR_TYPE_OBJECT, // 4
+			JSON_VAR_TYPE_VECTOR = 0x100,
+			JSON_VAR_TYPE_VECTOR_BOOLEAN = JSON_VAR_TYPE_BOOLEAN + JSON_VAR_TYPE_VECTOR, // 6
+			JSON_VAR_TYPE_VECTOR_NUMBER = JSON_VAR_TYPE_NUMBER + JSON_VAR_TYPE_VECTOR, // 7
+			JSON_VAR_TYPE_VECTOR_STRING =JSON_VAR_TYPE_STRING + JSON_VAR_TYPE_VECTOR, // 9
+			JSON_VAR_TYPE_VECTOR_OBJECT = JSON_VAR_TYPE_OBJECT + JSON_VAR_TYPE_VECTOR, //10
+			JSON_VAR_TYPE_MAP=0x200,
+			JSON_VAR_TYPE_MAP_STRING = JSON_VAR_TYPE_STRING + JSON_VAR_TYPE_MAP // 12
+
+		}JsonVarType;
 
 		enum {
 			PROPERTY_STR_MINIMIZED = 0x1 << 0
@@ -108,25 +112,25 @@ namespace zetjsoncpp {
 		static const char *idTypeToString(int index);
 
 		static char const STR_EMPTY[];
-		int type;
+		JsonVarType type;
 		int size_data;
 		std::string  variable_name;
-		ParserVar *p_ini_data;
+		JsonVar *p_ini_data;
 		void 	     *p_data; // can be int, bool, vector, prop_grp, etc ...
-		ParserVar *p_end_data;
+		JsonVar *p_end_data;
 		//_T_NAME name;
 
-		ParserVar();
+		JsonVar();
 
 		virtual std::string & toString();
 
-		virtual ParserVar * newData();
+		virtual JsonVar * newData();
 
 		virtual std::string & getStrValue(int ident, uint32_t flags);
 
-		virtual void add(ParserVar * s);
+		virtual void add(JsonVar * s);
 
-		virtual ~ParserVar();
+		virtual ~JsonVar();
 
 		void setParsed(bool parsed);
 
@@ -137,13 +141,16 @@ namespace zetjsoncpp {
 
 };
 
-#include "ParserVarNamed.h"
-#include "Boolean.h"
-#include "Number.h"
-#include "String.h"
-#include "Object.h"
-#include "Array.h"
-#include "ArrayBoolean.h"
-#include "ArrayNumber.h"
-#include "ArrayString.h"
-#include "ArrayObject.h"
+#include "JsonVarNamed.h"
+#include "JsonVarBoolean.h"
+#include "JsonVarNumber.h"
+#include "JsonVarString.h"
+#include "JsonVarObject.h"
+#include "JsonVarVector.h"
+#include "JsonVarVectorBoolean.h"
+#include "JsonVarVectorNumber.h"
+#include "JsonVarVectorString.h"
+#include "JsonVarVectorObject.h"
+#include "JsonVarMap.h"
+#include "JsonVarMapString.h"
+

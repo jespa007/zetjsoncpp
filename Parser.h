@@ -12,7 +12,7 @@ namespace zetjsoncpp {
 
 	protected:
 
-		ArrayObject<_T> * root_struct_field;
+		_T * root_struct_field;
 		const char *filename;
 		int line;
 
@@ -21,13 +21,15 @@ namespace zetjsoncpp {
 		Parser() {
 			filename = NULL;
 			line = 0;
-			root_struct_field = new ArrayObject<_T>;
+			root_struct_field=NULL;
+
 		}
 
-		virtual void eval(const std::string & m_expression) = 0;
+		virtual _T * eval(const std::string & m_expression) = 0;
 
-		virtual void evalFile(const std::string & _filename) {
+		virtual _T * evalFile(const std::string & _filename) {
 
+			//_T * json_element;
 			filename = _filename.c_str();
 
 			char *buf = zj_file::read(filename);
@@ -36,7 +38,7 @@ namespace zetjsoncpp {
 					eval(buf);
 				}
 				catch(parse_error_exception & err){
-					delete buf;
+					free(buf);
 					throw err;
 				}
 				catch(parse_warning_exception & wrn){
@@ -46,11 +48,13 @@ namespace zetjsoncpp {
 				}
 				free(buf);
 			}
-		}
 
-		ArrayObject<_T> *getData() {
 			return root_struct_field;
 		}
+
+		/*_T *getData() {
+			return root_struct_field;
+		}*/
 
 		virtual ~Parser() {
 			if (root_struct_field != NULL) {

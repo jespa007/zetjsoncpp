@@ -1,12 +1,12 @@
 namespace zetjsoncpp{
 
 	template<typename _T_DATA>
-	class Array {
+	class JsonVarVector {
 	protected:
 		std::vector<_T_DATA> vec_data;
 	public:
 
-		Array() {}
+		JsonVarVector() {}
 
 		_T_DATA & 	operator[](int i) {
 			return vec_data.at(i);

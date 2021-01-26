@@ -2,9 +2,9 @@
 
 namespace zetjsoncpp{
 
-	void ObjectToString(ParserVar * c_data, std::string & result_s, int level, uint32_t flags) {
+	void objectToString(JsonVar * c_data, std::string & result_s, int level, uint32_t flags) {
 
-		bool not_minimized = ((flags & ParserVar::PROPERTY_STR_MINIMIZED) == 0);
+		bool not_minimized = ((flags & JsonVar::PROPERTY_STR_MINIMIZED) == 0);
 
 		if (not_minimized)
 			for (int i = 0; i < level; i++)
@@ -19,7 +19,7 @@ namespace zetjsoncpp{
 
 		for (; aux_p < end_p; ) {
 			// if(chkType()) // --> get and parse ...
-			ParserVar * p_sv = (ParserVar *)aux_p;
+			JsonVar * p_sv = (JsonVar *)aux_p;
 			if (p_sv != NULL) {
 				if (not_minimized){
 					for (int i = 0; i <= level; i++){
@@ -31,24 +31,24 @@ namespace zetjsoncpp{
 
 				switch (p_sv->type)// == )
 				{
-				case ParserVar::TYPE_BOOLEAN:
-				case ParserVar::TYPE_NUMBER:
-				case ParserVar::TYPE_STRING:
+				case JsonVar::JSON_VAR_TYPE_BOOLEAN:
+				case JsonVar::JSON_VAR_TYPE_NUMBER:
+				case JsonVar::JSON_VAR_TYPE_STRING:
 					result_s = result_s + p_sv->getStrValue(level, flags);
 					break;
 
-				case ParserVar::TYPE_OBJECT:
+				case JsonVar::JSON_VAR_TYPE_OBJECT:
 
 					if (not_minimized)
 						result_s += "\n";
 
-					ObjectToString(p_sv, result_s, level + 1, flags);
+					objectToString(p_sv, result_s, level + 1, flags);
 					break;
 					// arrays
-				case ParserVar::TYPE_ARRAY_BOOLEAN:
+				case JsonVar::JSON_VAR_TYPE_VECTOR_BOOLEAN:
 
-				case ParserVar::TYPE_ARRAY_STRING:
-				case ParserVar::TYPE_OBJECT_ARRAY:
+				case JsonVar::JSON_VAR_TYPE_VECTOR_STRING:
+				case JsonVar::JSON_VAR_TYPE_VECTOR_OBJECT:
 
 					if (not_minimized) {
 						result_s += "\n";
@@ -62,11 +62,11 @@ namespace zetjsoncpp{
 					if (not_minimized)
 						result_s += "\n";
 
-					if (p_sv->type != ParserVar::TYPE_OBJECT_ARRAY)
+					if (p_sv->type != JsonVar::JSON_VAR_TYPE_VECTOR_OBJECT)
 						result_s = result_s + p_sv->getStrValue(level, flags);
 					else
 					{
-						std::vector <ParserVar *>  *vec = (std::vector<ParserVar *> *)(p_sv->p_data);
+						std::vector <JsonVar *>  *vec = (std::vector<JsonVar *> *)(p_sv->p_data);
 
 						for (unsigned k = 0; k < vec->size(); k++)
 						{
@@ -77,7 +77,7 @@ namespace zetjsoncpp{
 								result_s += "\n";
 
 
-							ObjectToString(vec->at(k), result_s, level + 2, flags);
+							objectToString(vec->at(k), result_s, level + 2, flags);
 						}
 					}
 
