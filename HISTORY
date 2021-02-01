@@ -13,10 +13,11 @@ organize zetjsoncpp_utils to string and io files
 #10 Change ParseJson name by ZetJsonCpp
 > #11 Test operator functions for number/string/boolean 
 #12 Change Json Object names starting by JsonVarXXXXX
-> #13 Implement JsonVarMapString
+> #13 Implement JsonVarMap
 #14 Specify starting type JsonVar (i.e JsonVarNumber,JsonVarObject, JsonVarArrayObject, ...) instead of fixed JsonVarArrayObject<_T>
-> # 15 CMake: add -DFCOMPILE
-
+> #15 CMake: add -DFCOMPILE
+> #16 create tests test
+> #17 Support UTF-8 with/out BOM mark Feature 
 
 //----------------------------
 Date: 15/05/2018
