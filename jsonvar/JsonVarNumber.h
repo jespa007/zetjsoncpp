@@ -24,6 +24,11 @@ namespace zetjsoncpp{
 				this->value = f;
 			}
 
+			 JsonVarNumber(const std::string & s) {
+				init();
+				this->value = parse(s);
+			}
+
 			// operators
 			JsonVarNumber & operator=(float _value){
 				value=_value;

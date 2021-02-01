@@ -1,12 +1,12 @@
 namespace zetjsoncpp{
 
 	template<char... _T_NAME>
-	class JsonVarMapString: public JsonVarNamed<_T_NAME...>, public JsonVarMap<std::string> {
+	class JsonVarMapString: public JsonVarNamed<_T_NAME...>, public JsonVarMap<float> {
 
 	public:
 
 		JsonVarMapString() {
-			this->type = JsonVar::JSON_VAR_TYPE_MAP_STRING;
+			this->type = JsonVar::JSON_VAR_TYPE_MAP_NUMBER;
 			this->size_data = sizeof(JsonVarMapString< _T_NAME...>);
 			this->p_data = &this->map_data;
 		}
@@ -44,7 +44,7 @@ namespace zetjsoncpp{
 					this->str_value = this->str_value + ",";
 				}
 
-				this->str_value = this->result_json += "\""+it->first +"\":\""+ it->second+"\"";// this->str_value + "\"" + v->at(j) + "\" ";
+				this->str_value = this->result_json += "\""+it->first +"\":"+ zj_strutils::float_to_str(it->second)+"";// this->str_value + "\"" + v->at(j) + "\" ";
 
 				if (not_minimized)
 					if (j != 0 && ((j%N_ELEMENTS_JSON_VECTOR_PRINT) == 0))

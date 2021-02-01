@@ -146,17 +146,8 @@ set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 	zetjsoncpp.cpp
 )
 
-#JSON TEST OPERATORS executable
-set(JSON_TEST_OPERATORS_SRCS ${PROJECT_SOURCE_DIR}/test/test_operators.cpp)
-
-#JSON TEST OBJECT executable
-set(JSON_TEST_OBJECT_SRCS ${PROJECT_SOURCE_DIR}/test/test_object.cpp)
-
-#JSON TEST ARRAY OBJECT executable
-set(JSON_TEST_VECTOR_OBJECT_SRCS ${PROJECT_SOURCE_DIR}/test/test_array_object.cpp)
-
-#JSON TEST MAP executable
-set(JSON_TEST_MAP_SRCS ${PROJECT_SOURCE_DIR}/test/test_map.cpp)
+#JSON TEST executable
+set(JSON_TEST_SRCS ${PROJECT_SOURCE_DIR}/test/test.cpp)
 
 
 # json2cpplib
@@ -199,35 +190,12 @@ INSTALL_HEADERS_WITH_DIRECTORY(HS)
 #-----------------------------------------
 # EXECUTABLES
 
-# Test operators
-#add_executable(json_test_operators${POST_NAME}
-#	${JSON_TEST_OPERATORS_SRCS}
-#)
-
-#target_link_libraries(test_operators${POST_NAME} zetjsoncpp${POST_NAME})
-
-# Test object
-add_executable(test_object${POST_NAME}
-	${JSON_TEST_OBJECT_SRCS}
+# Test 
+add_executable(test${POST_NAME}
+	${JSON_TEST_SRCS}
 )
 
-target_link_libraries(test_object${POST_NAME} zetjsoncpp${POST_NAME})
-
-# Test array object
-add_executable(test_array_object${POST_NAME}
-	${JSON_TEST_VECTOR_OBJECT_SRCS}
-)
-
-target_link_libraries(test_array_object${POST_NAME} zetjsoncpp${POST_NAME})
-
-
-# Test map
-add_executable(test_map${POST_NAME}
-	${JSON_TEST_MAP_SRCS}
-)
-
-target_link_libraries(test_map${POST_NAME} zetjsoncpp${POST_NAME})
-
+target_link_libraries(test${POST_NAME} zetjsoncpp${POST_NAME})
 
 
 INSTALL(TARGETS zetjsoncpp${POST_NAME}
