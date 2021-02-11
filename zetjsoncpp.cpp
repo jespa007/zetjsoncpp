@@ -161,7 +161,7 @@ namespace zetjsoncpp{
 		// no data no search...
 		if (c_data == NULL) return NULL;
 
-		char *aux_p = (char *)c_data->getPtrDataStart();
+		char *aux_p = (char *)c_data->getPtrData();
 		char *end_p = (char *)c_data->getPtrDataEnd();
 
 		// Main loop iteration to whole C struct
@@ -183,7 +183,7 @@ namespace zetjsoncpp{
 			return;
 		}
 
-		char *aux_p = (char *)c_data->getPtrDataStart();
+		char *aux_p = (char *)c_data->getPtrData();
 		char *end_p = (char *)c_data->getPtrDataEnd();
 
 		// Main loop iteration to whole C struct
@@ -227,11 +227,180 @@ namespace zetjsoncpp{
 		return ignore_blanks(str_end + 1, line);
 	}
 
-	int parse_main(const char * str_start, JsonVar *_root,const char *filename, int & line, int level) {
+	char * parse_primitive(
+			  const char *str_start
+			, char *str_current
+			, JsonVar *json_var
+			, const std::string & variable_name=""
+			, const std::string & key_id=""
+			, const char *filename=""
+			, int line=-1){
+		// ptr_data: can be a bool/string or number in function of type value
+		// type_value: defines the value to parse
+		// key in case
+		int bytes_readed=0;
+		char *str_end=NULL;
+		void *ptr_data=NULL;
+		float number_aux=0;
+		bool bool_aux=false;
+		std::string str_aux="";
+		JsonVarType js_container_type=JsonVarType::JSON_VAR_TYPE_UNKNOWN;
+		int type_value=JsonVarType::JSON_VAR_TYPE_UNKNOWN;
+
+		if(json_var->getType()  == JsonVarType::JSON_VAR_TYPE_MAP){
+			js_container_type=JsonVarType::JSON_VAR_TYPE_MAP;
+		}else if(JsonVarType::JSON_VAR_TYPE_VECTOR){ // create a new slot
+			js_container_type=JsonVarType::JSON_VAR_TYPE_VECTOR;
+		}
+		/*else{
+
+			switch(json_var->getType()){
+			case 	JsonVarType::JSON_VAR_TYPE_BOOLEAN:
+			case 	JsonVarType::JSON_VAR_TYPE_NUMBER:
+			case 	JsonVarType::JSON_VAR_TYPE_STRING:
+			default: // unexpected
+				break;
+			}
+		}*/
+
+		if (*str_current == '\'' || *str_current == '\"') {// try string ...
+
+			char start_chr=*str_current++;
+
+			while(*str_current!='\n' && *str_current!='\r' && *str_current!=0 && (*str_current !=(start_chr) )){
+				str_aux=*str_current++;
+			}
+
+			if(*str_current !=(start_chr)){
+
+				throw_error(filename, line,str_start, str_current, "string not closed with %s", start_chr);
+			}
+
+			str_current++;
+
+			type_value = JsonVarType::JSON_VAR_TYPE_STRING;
+		}
+		else if (!strncmp(str_current, "true", 4)) { // true detected ...
+			type_value = JsonVarType::JSON_VAR_TYPE_BOOLEAN;
+			bool_aux = true;
+			str_current+=4;
+		}
+		else if (!strncmp(str_current, "false", 5)) {// boolean detected
+			type_value = JsonVarType::JSON_VAR_TYPE_BOOLEAN;
+			bool_aux = false;
+			str_current+=5;
+		}
+		else { // must a number
+			// try read until next comma
+			char str_value[1024]={0};
+			str_end = advance_to_one_of_collection_of_char(str_current + 1, (char *)end_char_standard_value, line);
+			bytes_readed = str_end - str_current;
+			if (*str_end != 0) {
+				str_end--;
+			}
+
+			if (bytes_readed > 0) {
+				char *p;
+				float number_value = 0;
+				number_value = (float)strtod(str_value, &p);
+				if (*p == '\0') {
+					type_value = JsonVarType::JSON_VAR_TYPE_NUMBER;
+					number_aux = number_value;
+				}
+
+				str_current+=bytes_readed;
+			}
+		}
+
+		// if container type is map/vector addit
+		type_value += (int)js_container_type;
+
+		// ok, check if the value parsed is the same as c_property (only saves particular elements (string/boolean/etc) but not property groups (it was saved already in recursion before)
+		if (!json_var->isParsed()){
+
+			if ((type_value & json_var->getType()) == type_value) {
+
+				switch (json_var->getType()) {
+				default:
+				case 	JsonVarType::JSON_VAR_TYPE_UNKNOWN:
+					fprintf(stderr,"unknown type %i", type_value);
+					return 0;
+					break;
+				case 	JsonVarType::JSON_VAR_TYPE_BOOLEAN:
+					print_info_json("set value %i into variable \"%s\"", bool_value, str_variable_name);
+					*(ZJ_CAST_JSON_VAR_BOOLEAN json_var) = bool_aux;
+					break;
+				case 	JsonVarType::JSON_VAR_TYPE_NUMBER:
+					print_info_json("set value %f into variable \"%s\"", number_value, str_variable_name);
+					*(ZJ_CAST_JSON_VAR_NUMBER json_var) = number_aux;
+					break;
+				case 	JsonVarType::JSON_VAR_TYPE_STRING:
+					print_info_json("set value %s into variable \"%s\"", val, str_variable_name);
+					*(ZJ_CAST_JSON_VAR_STRING json_var) = str_aux;
+					break;
+
+					// VECTORS
+				case 	JsonVarType::JSON_VAR_TYPE_VECTOR_OF_BOOLEANS:
+					print_info_json("added value %s into vector \"%s\"", bool_aux?"true":"false", str_variable_name);
+					(*(ZJ_CAST_JSON_VAR_VECTOR_OF_BOOLEANS json_var)).add(bool_aux);
+					break;
+
+				case 	JsonVarType::JSON_VAR_TYPE_VECTOR_OF_NUMBERS:
+					print_info_json("added value %f into vector \"%s\"", number_aux, str_variable_name);
+					(*(ZJ_CAST_JSON_VAR_VECTOR_OF_NUMBERS json_var)).add(number_aux);
+					break;
+
+				case 	JsonVarType::JSON_VAR_TYPE_VECTOR_OF_STRINGS:
+					print_info_json("added value string %s into vector \"%s\"", val, str_variable_name);
+					(*(ZJ_CAST_JSON_VAR_VECTOR_OF_STRINGS json_var)).add(str_aux);
+					break;
+
+					// MAPS
+				case 	JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS:
+					print_info_json("added value number %s=%s into map \"%s\"", keyid.c_str(),bool_aux?"true":"false", str_variable_name);
+					(*(ZJ_CAST_JSON_VAR_MAP_OF_BOOLEANS json_var)).insert(key_id,bool_aux);
+					break;
+				case 	JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS:
+					print_info_json("added value number %s=%f into map \"%s\"", keyid.c_str(),number_aux, str_variable_name);
+					(*(ZJ_CAST_JSON_VAR_MAP_OF_NUMBERS json_var)).insert(key_id,number_aux);
+					break;
+				case 	JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS:
+					print_info_json("added value string %s=%s into map \"%s\"", key_id.c_str(), str_aux.c_str(), str_variable_name);
+					(*(ZJ_CAST_JSON_VAR_MAP_OF_STRINGS json_var)).insert(key_id,str_aux);
+					break;
+
+				case 	JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS:
+				case 	JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS:
+				case 	JsonVarType::JSON_VAR_TYPE_OBJECT:
+					// Do nothing
+					break;
+				}
+				// set parsed element...
+				if (js_container_type == JsonVarType::JSON_VAR_TYPE_UNKNOWN){
+					json_var->setParsed(true);
+				}
+			}
+			else {
+				throw_warning(filename
+						, line
+						,"variable \"%s\"not matches. JSon is %s and C struct is %s"
+						, variable_name.c_str()
+						, JsonVar::idTypeToString(type_value)
+						, json_var->toTypeStr());
+			}
+
+			return str_current;
+		}
+
+		return NULL;
+	}
+
+	int parse_main_recursive(const char * str_start, JsonVar *_root,const char *filename, int & line, int level) {
 		std::string variable_name,key_id;
 		const char *str_variable_name;
-		char str_value[4096];
-		JsonVarType js_container_type=JsonVarType::JSON_VAR_TYPE_UNKNOWN;
+
+		JsonVarType js_container_type=JsonVarType::JSON_VAR_TYPE_UNKNOWN,
+					type_value=JsonVarType::JSON_VAR_TYPE_UNKNOWN;
 		char *str_end = NULL;
 		char *str_current = (char *)str_start;
 		JsonVar *c_property=NULL, *c_data=NULL;
@@ -240,14 +409,8 @@ namespace zetjsoncpp{
 		bool ok = false;
 		bool starts_with_vector = false;
 		bool more_group_properties = true;
-
-		int type_value=JsonVarType::JSON_VAR_TYPE_UNKNOWN;
-
 		bool another_element;
 
-		// values to store...
-		bool bool_value = false;
-		float number_value = 0;
 
 		if (IS_EMPTY(str_start)){
 			return 0;
@@ -369,194 +532,22 @@ namespace zetjsoncpp{
 									}
 
 									// passing NULL if the record has been initialized (it doens't matter any c property in advence...
-									if ((bytes_readed = parse_main(str_current, json_object, filename, line, level + 1)) == 0) {
+									if ((bytes_readed = parse_main_recursive(str_current, json_object, filename, line, level + 1)) == 0) {
 										return 0;
 									}
 
 									type_value = JsonVarType::JSON_VAR_TYPE_OBJECT;
 
 								}
-								else { // check as value as map keyid, string, number, boolean, etc ...
-									bytes_readed = 0;
-									if (*str_current == '\'' || *str_current == '\"') {// try string ...
+								else { // parse primitive ...
 
-										if (*str_current == '\''){ // try to advance double quote
-											str_end = advance_to_char(str_current + 1, '\'');
-										}else if (*str_current == '\"'){ // try to single quote...
-											str_end = advance_to_char(str_current + 1, '\"');
-										}
-
-										if (*str_current == *str_end) {
-											if (js_container_type != JsonVarType::JSON_VAR_TYPE_UNKNOWN) {
-												print_info_json("property \"%s\" detected as string", str_variable_name);
-											}
-											bytes_readed = str_end - str_current + 1;
-											memset(str_value, 0, sizeof(str_value));
-											type_value = JsonVarType::JSON_VAR_TYPE_STRING;
-											if (bytes_readed > 2) {
-												unsigned copy_bytes = bytes_readed - 2;
-												if ((unsigned)bytes_readed >= sizeof(str_value)) {
-													throw_error(
-															filename
-															, line
-															,NULL
-															,NULL
-															,"Reached max size value \"%s\" (max:%i)\n", str_variable_name, (int)(sizeof(str_value)));
-
-													copy_bytes = sizeof(str_value) - 1;
-												}
-												strncpy(str_value, str_current + 1, copy_bytes);
-											}
-										}
-										else {
-											throw_error(
-													filename
-													, line
-													,NULL
-													,NULL
-													,"Error reading property \"%s\" as string", str_variable_name);
-										}
-									}
-									else if (!strncmp(str_current, "true", 4)) { // true detected ...
-										if (js_container_type != JsonVarType::JSON_VAR_TYPE_UNKNOWN) {
-											print_info_json("property \"%s\" detected as boolean", str_variable_name);
-										}
-
-										type_value = JsonVarType::JSON_VAR_TYPE_BOOLEAN;
-										strcpy(str_value, "true");
-										bytes_readed = 4;
-										bool_value = true;
-									}
-									else if (!strncmp(str_current, "false", 5)) {// boolean detected
-										if (js_container_type != JsonVarType::JSON_VAR_TYPE_UNKNOWN) {
-											print_info_json("property \"%s\"detected as boolean", str_variable_name);
-										}
-
-										type_value = JsonVarType::JSON_VAR_TYPE_BOOLEAN;
-										strcpy(str_value, "false");
-										bytes_readed = 5;
-										bool_value = false;
-									}
-									else { // must a number in ex or double format
-										// try read until next comma
-										str_end = advance_to_one_of_collection_of_char(str_current + 1, (char *)end_char_standard_value, line);
-										bytes_readed = str_end - str_current;
-										if (*str_end != 0) {
-											str_end--;
-										}
-
-										ok = false;
-
-										if (bytes_readed > 0) {
-											memset(str_value, 0, sizeof(str_value));
-											strncpy(str_value, str_current, bytes_readed);
-
-											// and try to convert in to standard number ...
-											zj_strutils::STR_NUMBER_TYPE type_number = zj_strutils::is_number(str_value);
-
-											//if(type_number != 0){
-											if (type_number == zj_strutils::STR_NUMBER_TYPE_INT) { // check for normal int...
-												if (js_container_type != JsonVarType::JSON_VAR_TYPE_UNKNOWN) {
-													print_info_json("property \"%s\" detected as int32", str_variable_name);
-												}
-
-												number_value = (float)strtol(str_value, NULL, 10);
-												type_value = JsonVarType::JSON_VAR_TYPE_NUMBER;
-												ok = true;
-											}
-											else  if (type_number == zj_strutils::STR_NUMBER_TYPE_HEXA) {// check for hexadecimal...
-												if (js_container_type != JsonVarType::JSON_VAR_TYPE_UNKNOWN) {
-													print_info_json("property \"%s\" detected as hex", str_variable_name);
-												}
-
-												number_value = (float)strtol(str_value, NULL, 16);
-												type_value = JsonVarType::JSON_VAR_TYPE_NUMBER;
-												ok = true;
-
-											}
-											else { // check for double / float...
-												char *p;
-												number_value = (float)strtod(str_value, &p);
-
-												if (*p == '\0') {
-
-													if (js_container_type != JsonVarType::JSON_VAR_TYPE_UNKNOWN) {
-														print_info_json("property \"%s\" detected as float/double", str_variable_name);
-													}
-
-													ok = true;
-													type_value = JsonVarType::JSON_VAR_TYPE_NUMBER;
-												}
-											}
-										}
+									if((str_current=parse_primitive(str_start,str_current,c_property,variable_name,key_id,filename,line)) == NULL){
+										throw_error(filename, line,str_start, str_current, "Impossible to parse value of property \"%s\"", str_variable_name);
+										return 0;
 									}
 								}
 
-								if (bytes_readed==0 || !ok) {
-									throw_error(filename, line,str_start, str_current, "Impossible to parse value of property \"%s\"", str_variable_name);
-									return 0;
-								}
-								else { // value ok
-									// if container type is map/vector addit
-									type_value += (int)js_container_type;
-
-									// ok, check if the value parsed is the same as c_property (only saves particular elements (string/boolean/etc) but not property groups (it was saved already in recursion before)
-									if ((c_property != NULL && !c_property->isParsed())) {
-
-										if ((type_value & c_property->getType()) == type_value) {
-
-											switch (c_property->getType()) {
-											default:
-											case 	JsonVarType::JSON_VAR_TYPE_UNKNOWN:
-												fprintf(stderr,"unknown type %i", type_value);
-												return 0;
-												break;
-											case 	JsonVarType::JSON_VAR_TYPE_VECTOR_OF_BOOLEANS:
-												print_info_json("added value boolean %i into vector \"%s\"", bool_value, str_variable_name);
-												(*(ZJ_CAST_JSON_VAR_VECTOR_OF_BOOLEANS c_property)).add(bool_value);
-												break;
-											case 	JsonVarType::JSON_VAR_TYPE_BOOLEAN:
-												print_info_json("set value %i into variable \"%s\"", bool_value, str_variable_name);
-												*(ZJ_CAST_JSON_VAR_BOOLEAN c_property) = bool_value;
-												break;
-											case 	JsonVarType::JSON_VAR_TYPE_VECTOR_OF_NUMBERS:
-												print_info_json("added value number %f into vector \"%s\"", number_value, str_variable_name);
-												(*(ZJ_CAST_JSON_VAR_VECTOR_OF_NUMBERS c_property)).add(number_value);
-												break;
-											case 	JsonVarType::JSON_VAR_TYPE_NUMBER:
-												print_info_json("set value %f into variable \"%s\"", number_value, str_variable_name);
-												*(ZJ_CAST_JSON_VAR_NUMBER c_property) = number_value;
-												break;
-											case 	JsonVarType::JSON_VAR_TYPE_VECTOR_OF_STRINGS:
-												print_info_json("added value string %s into vector \"%s\"", val, str_variable_name);
-												(*(ZJ_CAST_JSON_VAR_VECTOR_OF_STRINGS c_property)).add(str_value);
-												break;
-											case 	JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS:
-												print_info_json("added value string %s into map \"%s\"", val, str_variable_name);
-												(*(ZJ_CAST_JSON_VAR_MAP_OF_STRINGS c_property)).insert(key_id,str_value);
-												break;
-											case 	JsonVarType::JSON_VAR_TYPE_STRING:
-												print_info_json("set value %s into variable \"%s\"", val, str_variable_name);
-												*(ZJ_CAST_JSON_VAR_STRING c_property) = str_value;
-												break;
-											case 	JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS:
-											case 	JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS:
-											case 	JsonVarType::JSON_VAR_TYPE_OBJECT:
-												// Do nothing
-												break;
-											}
-											// set parsed element...
-											if (js_container_type == JsonVarType::JSON_VAR_TYPE_UNKNOWN){
-												c_property->setParsed(true);
-											}
-										}
-										else {
-											throw_warning(filename, line,"variable \"%s\"not matches. JSon is %s and C struct is %s", str_variable_name, JsonVar::idTypeToString(type_value), c_property->toTypeStr());
-										}
-									}
-								}
-
-								str_current += bytes_readed;
+								//str_current += bytes_readed;
 
 								str_current = ignore_blanks(str_current, line);
 								another_element = false;
@@ -634,6 +625,23 @@ namespace zetjsoncpp{
 				more_group_properties = false;
 		}
 		return str_current - str_start;
+	}
+
+
+	void parse_main(const char * str_start, JsonVar *_root,const char *filename) {
+		int line=1;
+
+		// check if primitive
+		switch(_root->getType()){
+		case JsonVarType::JSON_VAR_TYPE_BOOLEAN:
+		case JsonVarType::JSON_VAR_TYPE_NUMBER:
+		case JsonVarType::JSON_VAR_TYPE_STRING:
+			parse_primitive(str_start,(char *)str_start,_root,"","",filename,0);
+			break;
+		}
+
+		parse_main_recursive(str_start, _root,filename, line, 0);
+
 	}
 };
 

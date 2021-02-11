@@ -6,18 +6,18 @@ namespace zetjsoncpp{
 	public:
 		//_T_NAME name;
 		JsonVarVectorBoolean() {
-			this->type = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_BOOLEANS;
-			this->size = sizeof(JsonVarVectorBoolean<_T_NAME...>);
-			this->p_data = &this->__js_vec_data__;
+			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_BOOLEANS;
+			this->__js_size_data__ = sizeof(JsonVarVectorBoolean<_T_NAME...>);
+			this->__js_ptr_data__ = &this->__js_vec_data__;
 		}
 
 		void add(bool s) {
-			((std::vector<bool> *)this->__js_ptr_data_start__)->push_back(s);
+			((std::vector<bool> *)this->__js_ptr_data__)->push_back(s);
 		}
 
 		virtual std::string toStringFormatted(int ident, uint16_t properties) {
 			bool not_minimized = ((ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED & properties) == 0);
-			std::vector<bool> * v = (std::vector<bool> *)this->p_data;
+			std::vector<bool> * v = (std::vector<bool> *)this->__js_ptr_data__;
 			std::string str_value = "";
 
 			if (not_minimized){

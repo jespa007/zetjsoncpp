@@ -6,9 +6,9 @@ namespace zetjsoncpp{
 	public:
 
 		JsonVarMapBoolean() {
-			this->type = JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS;
-			this->size_data = sizeof(JsonVarMapBoolean< _T_NAME...>);
-			this->p_data = &this->__js_map_data__;
+			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS;
+			this->__js_size_data__ = sizeof(JsonVarMapBoolean< _T_NAME...>);
+			this->__js_ptr_data__ = &this->__js_map_data__;
 		}
 
 		//std::string result_json;
@@ -44,8 +44,5 @@ namespace zetjsoncpp{
 		virtual ~JsonVarMapBoolean() {
 			destroy();
 		}
-
-
-
 	};
 }

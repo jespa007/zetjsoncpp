@@ -19,15 +19,54 @@ namespace zetjsoncpp{
 		//_T_NAME name;
 		JsonVarBoolean(bool b) {
 			init();
-			*((bool *)this->__js_ptr_data_start__) = b;
+			*((bool *)this->__js_ptr_data__) = b;
 		}
 
 		// operators
-		JsonVarBoolean & operator=(bool _value){ __js_value__=_value; return *this;}
-		JsonVarBoolean & operator=(const JsonVarBoolean & _b){ __js_value__=_b.value; return *this;}
+		JsonVarBoolean & operator=(bool _value){
+			__js_value__=_value;
+			return *this;
+		}
+
+		JsonVarBoolean & operator=(const JsonVarBoolean & _b){
+			__js_value__=_b.value;
+			return *this;
+		}
+
+		bool operator ||(bool  b)  const {
+			return this->__js_value__ || b;
+		}
+
+		bool operator ||(const JsonVarBoolean & b)  const {
+			return this->__js_value__ || b.__js_value__;
+		}
+
+		bool operator &&(bool  b)  const {
+			return this->__js_value__ && b;
+		}
+
+		bool operator &&(const JsonVarBoolean & b)  const {
+			return this->__js_value__ && b.__js_value__;
+		}
+
+		bool operator ==(const JsonVarBoolean & b)  const {
+			return this->__js_value__ == b.__js_value__;
+		}
+
+		bool operator ==(bool  b)  const {
+			return this->__js_value__ == b;
+		}
+
+		bool operator !=(const JsonVarBoolean & b)  const {
+			return  this->__js_value__ != b.__js_value__;
+		}
+
+		bool operator !=(bool  b)  const {
+			return this->__js_value__ == b;
+		}
 
 		virtual std::string toString() {
-			return std::string("") + (*((bool *)this->__js_ptr_data_start__) == false ? "false" : "true");
+			return std::string("") + (*((bool *)this->__js_ptr_data__) == false ? "false" : "true");
 		}
 
 		virtual ~JsonVarBoolean(){}
@@ -40,7 +79,7 @@ namespace zetjsoncpp{
 			__js_value__=false;
 			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_BOOLEAN;
 			this->__js_size_data__ = sizeof(JsonVarBoolean<_T_NAME...>);
-			this->__js_ptr_data_start__ = &this->__js_value__;
+			this->__js_ptr_data__ = &this->__js_value__;
 		}
 
 	};

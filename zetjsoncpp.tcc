@@ -48,15 +48,14 @@ namespace zetjsoncpp{
 			0
 	};
 
-	int parse_main(const char * start_str, JsonVar *_root,const char *filename, int & line, int level);
+	void parse_main(const char * start_str, JsonVar *_root,const char *filename);
 
 	template <typename _T>
 	_T * parse(const std::string & expression) {
 
 		_T *data=new _T;
-		int line = 1;
 
-		parse_main(expression.c_str(), data, NULL,line,0);
+		parse_main(expression.c_str(), data, NULL);
 
 		return data;
 	}
@@ -66,7 +65,6 @@ namespace zetjsoncpp{
 		//_T * json_element;
 		std::string filename = _filename.c_str();
 		_T *data=NULL;
-		int line=1;
 
 		char *buf = zj_file::read(filename);
 		if (buf != NULL) {
@@ -78,7 +76,7 @@ namespace zetjsoncpp{
 					aux_p+=sizeof(bom_signature);
 				}
 
-				parse_main(aux_p, data,_filename.c_str(),line,0);
+				parse_main(aux_p, data,_filename.c_str());
 			}
 			catch(parse_error_exception & err){
 				delete data;

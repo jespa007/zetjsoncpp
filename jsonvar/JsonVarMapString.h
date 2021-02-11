@@ -8,7 +8,7 @@ namespace zetjsoncpp{
 		JsonVarMapString() {
 			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS;
 			this->__js_size_data__ = sizeof(JsonVarMapString< _T_NAME...>);
-			this->__js_ptr_data_start__ = &this->__js_map_data__;
+			this->__js_ptr_data__ = &this->__js_map_data__;
 		}
 
 

@@ -21,12 +21,12 @@ namespace zetjsoncpp{
 			this->__js_size_data__ = sizeof(JsonVarObject<_T_DATA,_T_NAME...>);
 
 			JsonVar *ptr = ((JsonVar *)&this->__zj_var_ini__ + 1);
-			this->__js_ptr_data_start__ = ptr;
+			this->__js_ptr_data__ = ptr;
 			this->__js_ptr_data_end__ = ((JsonVar *)&__zj_var_end__ - 1);
 
 			//-------
 			// Iterate on all its elements ...
-			char *aux_p = (char *)this->__js_ptr_data_start__;
+			char *aux_p = (char *)this->__js_ptr_data__;
 			char *end_p = (char *)this->__js_ptr_data_end__;
 
 			va_list arg_list;

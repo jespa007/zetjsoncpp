@@ -8,9 +8,9 @@ namespace zetjsoncpp{
 			init();
 		}
 
-		JsonVarString(std::string & s) {
+		JsonVarString(std::string s) {
 			init();
-			*((std::string *)this->p_data) = s;
+			__js_value__ = s;
 		}
 
 		operator std::string(){return __js_value__;}
@@ -42,17 +42,11 @@ namespace zetjsoncpp{
 		}
 
 		JsonVarString operator +(const std::string & s)  const {
-			JsonVarString ss;
-			ss.__js_value__ = this->__js_value__ + s;
-
-			return ss;
+			return JsonVarString(this->__js_value__ + s);
 		}
 
 		JsonVarString operator +(const JsonVarString & s)  const {
-			JsonVarString ss;
-			ss.__js_value__ = this->__js_value__ + s.value;
-
-			return ss;
+			return JsonVarString(this->__js_value__ + s.__js_value__);
 		}
 
 		operator const char * () const{
@@ -64,7 +58,7 @@ namespace zetjsoncpp{
 		}
 
 		virtual std::string toString() {
-			return std::string("\"") + *((std::string *)this->__js_ptr_data_start__) + "\"";
+			return std::string("\"") + *((std::string *)this->__js_ptr_data__) + "\"";
 		}
 
 		virtual ~JsonVarString(){}
@@ -73,7 +67,7 @@ namespace zetjsoncpp{
 		virtual void init() {
 			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_STRING;
 			this->__js_size_data__ = sizeof(JsonVarString<_T_NAME...>);
-			this->__js_ptr_data_start__ = &this->__js_value__;
+			this->__js_ptr_data__ = &this->__js_value__;
 		}
 
 	private:

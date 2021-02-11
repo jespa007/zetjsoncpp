@@ -18,7 +18,7 @@ namespace zetjsoncpp{
 			result_s += "\n";
 		}
 
-		char *aux_p = (char *)c_data->getPtrDataStart();
+		char *aux_p = (char *)c_data->getPtrData();
 		char *end_p = (char *)c_data->getPtrDataEnd();
 
 		for (; aux_p < end_p; ) {
@@ -72,7 +72,7 @@ namespace zetjsoncpp{
 					if (p_sv->getType() != JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS){
 						result_s += p_sv->toStringFormatted(level, properties);
 					}else{
-						std::vector <JsonVar *>  *vec = (std::vector<JsonVar *> *)(p_sv->getPtrDataStart());
+						std::vector <JsonVar *>  *vec = (std::vector<JsonVar *> *)(p_sv->getPtrData());
 
 						for (unsigned k = 0; k < vec->size(); k++)
 						{
@@ -118,7 +118,7 @@ namespace zetjsoncpp{
 						result_s += p_sv->toStringFormatted(level, properties);
 					/*}else{ // map object
 						int k=0;
-						std::map <std::string,JsonVar *>  *map_data = (std::map<std::string,JsonVar *> *)(p_sv->getPtrDataStart());
+						std::map <std::string,JsonVar *>  *map_data = (std::map<std::string,JsonVar *> *)(p_sv->getPtrData());
 
 
 						for (auto it=map_data->begin();it !=map_data->end();it++,k++) {

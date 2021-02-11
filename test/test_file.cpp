@@ -93,13 +93,10 @@ int main(int argc, char *argv[]){
 
 		// iterate of all interpolations and replace its data values...
 		for(auto it_map = json_object->interpolations.begin(); it_map != json_object->interpolations.end(); it_map++) {
-			std::cout << "Changing data for key "<< it_map->first << std::endl;
 			for(auto it = it_map->second->data.begin(); it != it_map->second->data.end(); it++) {
 				*it = rand();
 			}
 		}
-
-
 
 		std::cout << "------------------------------------------------------------------------------" << std::endl;
 		std::cout << " After modifications:"<< std::endl;

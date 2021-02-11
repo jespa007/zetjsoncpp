@@ -39,7 +39,7 @@ namespace zetjsoncpp {
 	JsonVar::JsonVar() {
 		this->__js_variable_name__ = "";
 		this->__js_ptr_data_end__ = NULL;
-		this->__js_ptr_data_start__ = NULL;
+		this->__js_ptr_data__ = NULL;
 		this->__js_size_data__ = 0;
 		this->__js_type__ = JsonVarType::JSON_VAR_TYPE_UNKNOWN;
 		this->__js_is_parsed__ = false;
