@@ -4,8 +4,6 @@ namespace zetjsoncpp{
 	class JsonVarNumber : public JsonVarNamed<_T_NAME ...>{
 	public:
 
-			float value;
-
 			static float parse(const std::string & str ){
 				float f=0;
 				if(zj_strutils::str_to_float(&f,str)!=zj_strutils::STR_2_NUMBER_SUCCESS){
@@ -21,47 +19,47 @@ namespace zetjsoncpp{
 
 			 JsonVarNumber(float f) {
 				init();
-				this->value = f;
+				this->__js_value__ = f;
 			}
 
 			 JsonVarNumber(const std::string & s) {
 				init();
-				this->value = parse(s);
+				this->__js_value__ = parse(s);
 			}
 
 			// operators
 			JsonVarNumber & operator=(float _value){
-				value=_value;
+				__js_value__=_value;
 				return *this;
 			}
 
 			JsonVarNumber & operator=(const JsonVarNumber & _n){
-				value=_n.value;
+				__js_value__=_n.__js_value__;
 				return *this;
 			}
 
 			JsonVarNumber   operator +  (const JsonVarNumber & n) const{
 				JsonVarNumber n1;
-				n1.value = value + n.value;
+				n1.__js_value__ = __js_value__ + n.__js_value__;
 				return n1;
 			}
 
 			JsonVarNumber   operator +  (float n) const {
 				JsonVarNumber n1;
-				n1.value = value + n;
+				n1.__js_value__ = __js_value__ + n;
 				return n1;
 
 			}
 
 			JsonVarNumber   operator -  (const JsonVarNumber & n) const{
 				JsonVarNumber n1;
-				n1.value = value - n.value;
+				n1.__js_value__ = __js_value__ - n.__js_value__;
 				return n1;
 			}
 
 			JsonVarNumber   operator -  (){
 				JsonVarNumber n1;
-				n1.value = -value;
+				n1.__js_value__ = -__js_value__;
 				return n1;
 			}
 			//--- /
@@ -71,79 +69,79 @@ namespace zetjsoncpp{
 				if(n.m_numVar ==0)
 					throw ("Error divide by 0");
 
-				n1.value = value / n.value;
+				n1.__js_value__ = __js_value__ / n.__js_value__;
 				return n1;
 			}
 			//--- ==
 			bool 	  operator == (const JsonVarNumber & n){
-				return value == n.value;
+				return __js_value__ == n.__js_value__;
 			}
 			bool 	  operator == (float n){
-				return value == n;
+				return __js_value__ == n;
 			}
 
 			bool 	  operator != (const JsonVarNumber & n){
-				return value != n.value;
+				return __js_value__ != n.__js_value__;
 			}
 			bool 	  operator != (float n){
-				return value != n;
+				return __js_value__ != n;
 			}
 
 			bool 	  operator <  (const JsonVarNumber & n){
-				return value < n.value;
+				return __js_value__ < n.__js_value__;
 			}
 			bool 	  operator <  (float n){
-				return value < n;
+				return __js_value__ < n;
 			}
 
 			bool 	  operator <= (const JsonVarNumber & n){
-				return value <= n.value;
+				return __js_value__ <= n.__js_value__;
 			}
 
 			bool 	  operator <= (float n){
-				return value <= n;
+				return __js_value__ <= n;
 			}
 
 			bool 	  operator >  (const JsonVarNumber & n){
-				return value > n.value;
+				return __js_value__ > n.__js_value__;
 			}
 			bool 	  operator >  (float n){
-				return value > n;
+				return __js_value__ > n;
 			}
 
 			bool	operator >= (const JsonVarNumber & n){
-				return value >= n.value;
+				return __js_value__ >= n.__js_value__;
 			}
 
 			bool 	  operator >= (float n){
-				return value >= n;
+				return __js_value__ >= n;
 			}
 
 			JsonVarNumber & operator += (const JsonVarNumber & n){
-				value += n.value;
+				__js_value__ += n.__js_value__;
 				return (*this);
 			}
 
 			JsonVarNumber & operator += (float n1){
-				value += n1;
+				__js_value__ += n1;
 				return (*this);
 			}
 
 			JsonVarNumber & operator *= (const JsonVarNumber & n){
-				value *= n.value;
+				__js_value__ *= n.__js_value__;
 				return (*this);
 			}
 
 			JsonVarNumber & operator *= (float n1){
-				value *= n1;
+				__js_value__ *= n1;
 				return (*this);
 			}
 
 			JsonVarNumber & operator /= (const JsonVarNumber & n){
-				if(n.value == 0)
+				if(n.__js_value__ == 0)
 					throw("Divide by 0!");
 
-				value /= n.value;
+				__js_value__ /= n.__js_value__;
 				return (*this);
 			}
 
@@ -153,55 +151,44 @@ namespace zetjsoncpp{
 					throw("Divide by 0!");
 				}
 
-				value /= n1;
+				__js_value__ /= n1;
 				return (*this);
 			}
 			//--- -=
 			JsonVarNumber & operator -= (const JsonVarNumber & n){
-				value -= n.m_numVar;
+				__js_value__ -= n.m_numVar;
 				return (*this);
 			}
 
 			JsonVarNumber & operator -= (float n1){
-				value -= n1;
+				__js_value__ -= n1;
 				return (*this);
 			}
 
 			JsonVarNumber & operator ++(){
-				value++;
+				__js_value__++;
 				return (*this);
 			}
 			JsonVarNumber  operator ++(int){
-				JsonVarNumber n(value);
+				JsonVarNumber n(__js_value__);
 				operator++();
 				return n;
 			}
 
-			void setForceInteger(bool force) {
-				m_forceInteger = force;
-			}
-
-			virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
-
-				if (m_forceInteger){
-					this->str_value = "" + zj_strutils::int_to_str(this->value);
-				}
-				else{
-					this->str_value = "" + zj_strutils::float_to_str(this->value);
-				}
-				return this->str_value;
+			virtual std::string toString() {
+				return  zj_strutils::float_to_str(__js_value__);
 			}
 
 			virtual ~JsonVarNumber(){}
 	private:
-		bool m_forceInteger;
-		void init() {
-			value = 0;
-			this->type = JsonVar::JSON_VAR_TYPE_NUMBER;
-			this->size_data = sizeof(JsonVarNumber<_T_NAME...>);
-			this->p_data = &this->value;
-			m_forceInteger = false;
 
+		float __js_value__;
+
+		void init() {
+			__js_value__ = 0;
+			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_NUMBER;
+			this->__js_size_data__ = sizeof(JsonVarNumber<_T_NAME...>);
+			this->__js_ptr_data_start__ = &this->__js_value__;
 		}
 
 

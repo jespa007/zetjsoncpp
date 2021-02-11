@@ -21,55 +21,56 @@ namespace zetjsoncpp {
 		case JSON_VAR_TYPE_STRING: return "STRING TYPE";
 		case JSON_VAR_TYPE_OBJECT: return "TYPE_OBJECT";
 
-		case JSON_VAR_TYPE_VECTOR_BOOLEAN: return "VECTOR BOOL TYPE";
+		case JSON_VAR_TYPE_VECTOR_OF_BOOLEANS: return "VECTOR BOOL TYPE";
 			//case ARRAY_INT32_TYPE: return "ARRAY INT32 TYPE";
-		case JSON_VAR_TYPE_VECTOR_NUMBER: return "VECTOR FLOAT TYPE";
-		case JSON_VAR_TYPE_VECTOR_STRING: return "VECTOR STRING TYPE";
-		case JSON_VAR_TYPE_VECTOR_OBJECT: return "VECTOR PROPERTY GROUP TYPE";
+		case JSON_VAR_TYPE_VECTOR_OF_NUMBERS: return "VECTOR FLOAT TYPE";
+		case JSON_VAR_TYPE_VECTOR_OF_STRINGS: return "VECTOR STRING TYPE";
+		case JSON_VAR_TYPE_VECTOR_OF_OBJECTS: return "VECTOR PROPERTY GROUP TYPE";
 
-		case JSON_VAR_TYPE_MAP_BOOLEAN: return "MAP BOOLEAN TYPE";
-		case JSON_VAR_TYPE_MAP_NUMBER: return "MAP NUMBER TYPE";
-		case JSON_VAR_TYPE_MAP_STRING: return "MAP STRING TYPE";
-		case JSON_VAR_TYPE_MAP_OBJECT: return "MAP OBJECT TYPE";
+		case JSON_VAR_TYPE_MAP_OF_BOOLEANS: return "MAP BOOLEAN TYPE";
+		case JSON_VAR_TYPE_MAP_OF_NUMBERS: return "MAP NUMBER TYPE";
+		case JSON_VAR_TYPE_MAP_OF_STRINGS: return "MAP STRING TYPE";
+		case JSON_VAR_TYPE_MAP_OF_OBJECTS: return "MAP OBJECT TYPE";
 		}
 
 		return "UNKNOWN";
 	}
 
 	JsonVar::JsonVar() {
-		this->variable_name = "";
-		this->p_end_data = NULL;
-		this->p_data = NULL;
-		this->size_data = 0;
-		this->p_ini_data = NULL;
-		this->type = JsonVar::JSON_VAR_TYPE_UNKNOWN;
-		this->is_parsed = false;
+		this->__js_variable_name__ = "";
+		this->__js_ptr_data_end__ = NULL;
+		this->__js_ptr_data_start__ = NULL;
+		this->__js_size_data__ = 0;
+		this->__js_type__ = JsonVarType::JSON_VAR_TYPE_UNKNOWN;
+		this->__js_is_parsed__ = false;
 	}
 
-	std::string & JsonVar::toString() {
-		result_json = "//no data:\n{}\n";
-		return result_json;
-	}
-
-	JsonVar * JsonVar::newData() {
+	JsonVar *JsonVar::newData(){
 		return NULL;
 	}
 
-	std::string & JsonVar::getStrValue(int ident, uint32_t flags) {
-		this->str_value = "??";
-		return str_value;
+	JsonVar *JsonVar::newData(const std::string & key){
+		return NULL;
 	}
 
-	void JsonVar::add(JsonVar * s) {}
+	const char *JsonVar::toTypeStr(){
+		return idTypeToString(this->__js_type__);
+	}
 
+	std::string JsonVar::toStringFormatted(int ident, uint16_t properties) {
+		return "";
+	}
 
+	std::string JsonVar::toString() {
+		return toStringFormatted(0,0);
+	}
 
 	void JsonVar::setParsed(bool parsed) {
-		is_parsed = parsed;
+		__js_is_parsed__ = parsed;
 	}
 
 	bool JsonVar::isParsed() const {
-		return is_parsed;
+		return __js_is_parsed__;
 	}
 
 	JsonVar::~JsonVar() {

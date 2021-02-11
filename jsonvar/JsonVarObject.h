@@ -1,48 +1,51 @@
 namespace zetjsoncpp{
 
+	//----------------------------------------------------------------
+	// DON'T DEFINE ANY VARIABLE ON JsonVarObject CLASS !!!!
 	template<typename _T_DATA, char... _T_NAME>
 	class JsonVarObject : public JsonVarNamed< _T_NAME...>, public _T_DATA {
-
-	public:
+	protected:
 		//----------------------------------------------------------------
-		// DON'T MOVE zj_var_end ON THIS CLASS !!!!
-
-		JsonVar 	zj_var_end;
-
+		// DON'T DEFINE ANY VARIABLE UP __zj_var_end__ !!!!
+		JsonVar 	__zj_var_end__;
+		//
+		//----------------------------------------------------------------
+	public:
 		//----------------------------------------------------------------
 
 		void setup(uint32_t numParam = 0, ...) {
-			// PRE: All args must be std::string. The program can parse the apropiate type var
+			// PRE: All arguments must be std::string. The program can parse the appropiate type variable
 			// with its emmbedded type.
 
-			this->type = JsonVar::JSON_VAR_TYPE_OBJECT;
-			this->size_data = sizeof(JsonVarObject<_T_DATA,_T_NAME...>);
+			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_OBJECT;
+			this->__js_size_data__ = sizeof(JsonVarObject<_T_DATA,_T_NAME...>);
 
-			JsonVar *ptr = ((JsonVar *)&this->zj_var_ini + 1);
-			this->p_data = ptr;
-			this->p_end_data = ((JsonVar *)&zj_var_end - 1);
+			JsonVar *ptr = ((JsonVar *)&this->__zj_var_ini__ + 1);
+			this->__js_ptr_data_start__ = ptr;
+			this->__js_ptr_data_end__ = ((JsonVar *)&__zj_var_end__ - 1);
 
 			//-------
 			// Iterate on all its elements ...
-			char *aux_p = (char *)this->p_data;
-			char *end_p = (char *)this->p_end_data;
+			char *aux_p = (char *)this->__js_ptr_data_start__;
+			char *end_p = (char *)this->__js_ptr_data_end__;
 
 			va_list arg_list;
+
 			// inicialize all vars struct in order of pass parameters ...
 			va_start(arg_list, numParam);
 			for (unsigned i = 0; i < numParam && (aux_p < end_p); i++) {
 				const char * variable = va_arg(arg_list, const char *);
 				JsonVar * p_sv = (JsonVar *)aux_p;
 
-				switch (p_sv->type)
+				switch (p_sv->getType())
 				{
-				case JsonVar::JSON_VAR_TYPE_STRING:
+				case JsonVarType::JSON_VAR_TYPE_STRING:
 					//print_info_cr("std::string ...!\n\n");
-					*(JSON_VAR_STRING_CAST p_sv) = variable;//->assign();
+					*(ZJ_CAST_JSON_VAR_STRING p_sv) = variable;//->assign();
 					break;
 				}
 
-				aux_p += p_sv->size_data;
+				aux_p += p_sv->getSizeData();
 			}
 			va_end(arg_list);
 			//---------
@@ -58,21 +61,21 @@ namespace zetjsoncpp{
 		}
 
 		//std::string result_json;
-		virtual std::string & toString(uint32_t flags = 0) {
-			bool not_minimized = ((flags & JsonVar::PROPERTY_STR_MINIMIZED) == 0);
-			this->result_json = "";
-			objectToString(this, this->result_json, 0, flags);
+		virtual std::string toStringFormatted(int level,uint16_t properties) {
+			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
+			std::string result_json="";
+			objectToString(this,result_json, level, properties);
 
 			if (not_minimized){
-				this->result_json += "\n";
+				result_json += "\n";
 			}
 
-			return this->result_json;
+			return result_json;
 
 		}
 		virtual ~JsonVarObject(){};
 
 	};
 
-	void objectToString(JsonVar * c_data, std::string & result_s, int level, uint32_t flags);
+	void objectToString(JsonVar * c_data, std::string & result_s, int level, uint16_t properties);
 }

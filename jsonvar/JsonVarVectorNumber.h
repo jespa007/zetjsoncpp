@@ -2,94 +2,72 @@ namespace zetjsoncpp{
 
 	// ARRAY FLOAT
 	template<char... _T_NAME>
-	class ArrayNumber : public JsonVarNamed<_T_NAME...>, public JsonVarVector<float> {
+	class JsonVarVectorNumber : public JsonVarNamed<_T_NAME...>, public JsonVarVector<float> {
 		short * shortBuf;
 		float * floatBuf;
 
 	public:
 		//_T_NAME name;
-		ArrayNumber() {
-			this->type = JsonVar::JSON_VAR_TYPE_VECTOR_NUMBER;
-			this->size_data = sizeof(ArrayNumber<_T_NAME...>);
-			this->p_data = &this->vec_data;
+		JsonVarVectorNumber() {
+			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_NUMBERS;
+			this->__js_size_data__ = sizeof(JsonVarVectorNumber<_T_NAME...>);
+			this->__js_ptr_data_start__ = &this->__js_vec_data__;
 			shortBuf=NULL;
 			floatBuf=NULL;
 		}
 
 		void add(float s) {
-			((std::vector<float> *)this->p_data)->push_back(s);
+			((std::vector<float> *)this->__js_ptr_data_start__)->push_back(s);
 		}
 
-		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
-			//this->str_value ="";
-			bool not_minimized = ((flags & JsonVar::PROPERTY_STR_MINIMIZED) == 0);
-			std::vector<float> * v = (std::vector<float> *)this->p_data;
-			this->str_value = "";
-			std::string m_sfValue;
-			for (int k = 0; k <= (ident + 1); k++)
-				this->str_value = this->str_value + "\t";
+		virtual std::string toStringFormatted(int ident, uint16_t properties) {
+			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
+			std::vector<float> * v = (std::vector<float> *)this->__js_ptr_data_start__;
+			std::string str_value = "";
+
+			if (not_minimized){
+				ZJ_FORMAT_OUTPUT_IDENT(str_value,ident);
+			}
 
 			for (unsigned j = 0; j < v->size(); j++) {
 
 				if (j > 0){
-					this->str_value = this->str_value + ",";
+					str_value += ",";
 				}
 
-				m_sfValue = zj_strutils::float_to_str(v->at(j));
-
-				this->str_value = this->str_value + "" + m_sfValue + " ";
+				str_value += zj_strutils::float_to_str(v->at(j));
 
 				if (not_minimized) {
-					if (j != 0 && ((j%N_ELEMENTS_JSON_VECTOR_PRINT) == 0)) {
-						for (int k = 0; k <= (ident + 1); k++)
-							this->str_value = this->str_value + "\t";
-						this->str_value += "\n";
-					}
+					ZJ_FORMAT_OUTPUT_NEW_LINE_VECTOR_ELEMENTS(str_value,ident,j);
 				}
-
 			}
-			return this->str_value;
+			return str_value;
 		}
 
-		float *getFloatBuffer(size_t & length) {
+		float *toFloatBuffer(size_t & length) {
 
-			if(floatBuf == NULL){
-				floatBuf = new float[vec_data.size()];
-
-				for (unsigned i = 0; i < vec_data.size(); i++){
-					floatBuf[i]=vec_data[i];
-				}
+			float *floatBuf = new float[__js_vec_data__.size()];
+			for (unsigned i = 0; i < __js_vec_data__.size(); i++){
+				floatBuf[i]=__js_vec_data__[i];
 			}
 
-			length=vec_data.size();
+			length=__js_vec_data__.size();
 			return floatBuf;
 		}
 
 
-		short *getShortBuffer(size_t & length) {
+		short *toShortBuffer(size_t & length) {
 
-			if(shortBuf == NULL){
-
-				short * shortBuf = new short[vec_data.size()];
-				for (unsigned i = 0; i < vec_data.size(); i++){
-					shortBuf[i]=vec_data[i];
-				}
+			short * shortBuf = new short[__js_vec_data__.size()];
+			for (unsigned i = 0; i < __js_vec_data__.size(); i++){
+				shortBuf[i]=__js_vec_data__[i];
 			}
 
-			length = vec_data.size();
+			length = __js_vec_data__.size();
 			return shortBuf;
 		}
 
-
-		//virtual ~ArrayNumber(){}
-		virtual ~ArrayNumber() {
-			if (floatBuf!=NULL)
-				free(floatBuf);
-
-			if (shortBuf!=NULL)
-				free(shortBuf);
-
-
+		virtual ~JsonVarVectorNumber() {
 		}
 	};
 }

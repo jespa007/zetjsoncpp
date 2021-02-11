@@ -41,56 +41,18 @@
 
 #include "exception.h"
 #include "jsonvar/JsonVar.h"
-#include "ParserBase.h"
-#include "Parser.h"
 
 
 // static zetjsoncpp
 
 namespace zetjsoncpp {
 
-	template <typename _T>
-	class ZetJsonCpp : public Parser<_T> {
 
-	public:
+		template <typename _T>
+		_T * parse(const std::string & expression);
 
-		ZetJsonCpp() {}
-
-		virtual _T * eval(const std::string & expression) {
-
-			this->line = 1;
-
-			if(this->root_struct_field != NULL){
-				delete this->root_struct_field; // destroy previous elements!
-				this->root_struct_field=NULL;
-			}
-
-			this->root_struct_field=new _T;
-
-			evalInternal((const char *)expression.c_str(), this->root_struct_field, 0);
-
-			return this->root_struct_field;
-		}
-
-		virtual ~ZetJsonCpp() {}
-	private:
-
-		static bool isSingleComment(char *str);
-		static bool isStartComment(char *str);
-		static bool isEndComment(char *str);
-		static char *advanceToChar(char *str,char c);
-		static char *advanceToEndComment(char *aux_p, int &line);
-		static char *ignoreBlanks(char *str, int &line);
-		static char *advanceToOneOfCollectionOfChar(char *str,char *end_char_standard_value, int &line);
-
-		JsonVar *findProperty(JsonVar * c_data, char *variable_name);
-		void setPropertiesParsedToFalse(JsonVar * c_data);
-		//void printJsonError(char *m_start_ptr, char *m_current_ptr, int column, const char *error_message);
-		bool bothAreTypeNumbers(int type1, int type2);
-
-		int evalInternal(const char * start_str, JsonVar *c_data, int level = 0);
-
-	};
+		template <typename _T>
+		_T * parse_file(const std::string & _filename);
 
 };
 

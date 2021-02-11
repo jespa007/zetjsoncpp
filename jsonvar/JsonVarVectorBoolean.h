@@ -6,49 +6,38 @@ namespace zetjsoncpp{
 	public:
 		//_T_NAME name;
 		JsonVarVectorBoolean() {
-			this->type = JsonVar::JSON_VAR_TYPE_VECTOR_BOOLEAN;
+			this->type = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_BOOLEANS;
 			this->size = sizeof(JsonVarVectorBoolean<_T_NAME...>);
-			this->p_data = &this->vec_data;
+			this->p_data = &this->__js_vec_data__;
 		}
 
 		void add(bool s) {
-			((std::vector<bool> *)this->p_data)->push_back(s);
+			((std::vector<bool> *)this->__js_ptr_data_start__)->push_back(s);
 		}
 
-		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
-			bool not_minimized = ((JsonVar::PROPERTY_STR_MINIMIZED & flags) == 0);
-			//this->str_value ="";
+		virtual std::string toStringFormatted(int ident, uint16_t properties) {
+			bool not_minimized = ((ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED & properties) == 0);
 			std::vector<bool> * v = (std::vector<bool> *)this->p_data;
-			this->str_value = "";
-			std::string m_sfValue;
+			std::string str_value = "";
 
-			if (not_minimized)
-				for (int k = 0; k <= (ident + 1); k++)
-					this->str_value = this->str_value + "\t";
+			if (not_minimized){
+				ZJ_FORMAT_OUTPUT_IDENT(str_value,ident);
+			}
 
 			for (unsigned j = 0; j < v->size(); j++) {
 
-				if (j > 0)
-					this->str_value = this->str_value + ",";
+				if (j > 0){
+					str_value += ",";
+				}
 
-				m_sfValue = "False";
-				if (v->at(j) == true)
-					m_sfValue = "True";
-
-
-				this->str_value = this->str_value + "" + m_sfValue + " ";
+				str_value += (v->at(j) == true?"True":"False");
 
 				if (not_minimized) {
-					if (j != 0 && ((j%N_ELEMENTS_JSON_VECTOR_PRINT) == 0)) {
-						for (int k = 0; k <= (ident + 1); k++)
-							this->str_value = this->str_value + "\t";
-
-						this->str_value += "\n";
-					}
+					ZJ_FORMAT_OUTPUT_NEW_LINE_VECTOR_ELEMENTS(str_value,ident,j);
 				}
 
 			}
-			return this->str_value;
+			return str_value;
 		}
 
 		virtual ~JsonVarVectorBoolean(){}

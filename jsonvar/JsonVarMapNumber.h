@@ -1,77 +1,49 @@
 namespace zetjsoncpp{
 
 	template<char... _T_NAME>
-	class JsonVarMapString: public JsonVarNamed<_T_NAME...>, public JsonVarMap<float> {
+	class JsonVarMapNumber: public JsonVarNamed<_T_NAME...>, public JsonVarMap<float> {
 
 	public:
 
-		JsonVarMapString() {
-			this->type = JsonVar::JSON_VAR_TYPE_MAP_NUMBER;
-			this->size_data = sizeof(JsonVarMapString< _T_NAME...>);
-			this->p_data = &this->map_data;
+		JsonVarMapNumber() {
+			this->type = JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS;
+			this->size_data = sizeof(JsonVarMapNumber< _T_NAME...>);
+			this->p_data = &this->__js_map_data__;
 		}
-
-		/*void set(std::string const & key, std::string const & value) {
-			((std::map<std::string,std::string> *)this->p_data)->;
-		}*/
-
-
-		/*virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
-			this->str_value = "??";
-			return this->str_value;
-		}*/
-
-		/*virtual void add(JsonVar * s) {
-			JsonVarObject< _T_DATA> *tt = (JsonVarObject< _T_DATA> *)s;
-			this->push_back(tt);
-		}*/
 
 		//std::string result_json;
-		virtual std::string & toString(int ident=0, uint32_t flags = 0) {
+		virtual std::string & toStringFormatted(int ident, uint16_t properties){
 
-			bool not_minimized = ((flags & JsonVar::PROPERTY_STR_MINIMIZED) == 0);
-			this->str_value = "";
-
-			if (not_minimized)
-				for (int k = 0; k <= (ident + 1); k++){
-					this->str_value = this->str_value + "\t";
-				}
+			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
+			std::string str_value = this->toStringFormattedStart(ident, properties);
 
 			int j=0;
-			for (auto it=map_data.begin();it !=map_data.end();it++,j++) {
+			for (auto it=__js_map_data__.begin();it !=__js_map_data__.end();it++,j++) {
 
 				if (j > 0){
-					this->str_value = this->str_value + ",";
+					str_value += ",";
 				}
 
-				this->str_value = this->result_json += "\""+it->first +"\":"+ zj_strutils::float_to_str(it->second)+"";// this->str_value + "\"" + v->at(j) + "\" ";
+				str_value += "\""+it->first +"\":"+ zj_strutils::float_to_str(it->second)+"";// this->str_value + "\"" + v->at(j) + "\" ";
 
-				if (not_minimized)
-					if (j != 0 && ((j%N_ELEMENTS_JSON_VECTOR_PRINT) == 0))
-					{
-						for (int k = 0; k <= (ident + 1); k++){
-							this->str_value = this->str_value + "\t";
-						}
-						this->str_value += "\n";
-					}
+				if (not_minimized){
+					ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident);
+				}
+
 
 			}
-			return this->str_value;
+
+			str_value += this->toStringFormattedEnd(ident,properties);
+
+			return str_value;
 
 		}
 
-		void destroy() {
+		virtual ~JsonVarMapNumber() {
 
-			/*for (unsigned i = 0; i < this->vec_data.size(); i++) {
-				delete this->vec_data[i];
-				this->vec_data[i] = NULL;
-			}
-
-			this->vec_data.clear();*/
 		}
 
-		virtual ~JsonVarMapString() {
-			destroy();
-		}
+	protected:
+
 	};
 }

@@ -2,11 +2,13 @@ namespace zetjsoncpp{
 
 	template<char... _T_NAME>
 	class JsonVarNamed : public JsonVar {
-	public:
+	protected:
 		//----------------------------------------------------------------
-		// DON'T zj_var_ini AND NOT DECLARE ANY JsonVar UNDER IT !!!!
-
-		JsonVar 	zj_var_ini;
+		// DON'T MOVE zj_var_ini AND NOT DECLARE ANY VAR UNDER __zj_var_ini__!!!!
+		JsonVar 	__zj_var_ini__;
+		//
+		//----------------------------------------------------------------
+	public:
 
 		//----------------------------------------------------------------
 
@@ -18,17 +20,13 @@ namespace zetjsoncpp{
 			char buffer[512] = { 0 };
 
 			strcpy(buffer, s_aux.c_str());
-			this->variable_name = buffer;
-			this->size_data = sizeof(JsonVarNamed);
+			this->__js_variable_name__ = buffer;
+			this->__js_size_data__ = sizeof(JsonVarNamed);
 
-		}
-
-		virtual std::string & getStrValue(int ident, uint32_t flags = 0)
-		{
-			this->str_value = "??";
-			return this->str_value;
 		}
 
 		virtual ~JsonVarNamed() {}
+
+
 	};
 }

@@ -4,7 +4,6 @@ namespace zetjsoncpp{
 	class JsonVarBoolean : public JsonVarNamed<_T_NAME ...>{
 
 	public:
-		bool value;
 
 		static bool parse(const std::string & s){
 			if(zj_strutils::to_lower(s) == "true") return true;
@@ -20,28 +19,28 @@ namespace zetjsoncpp{
 		//_T_NAME name;
 		JsonVarBoolean(bool b) {
 			init();
-			*((bool *)this->p_data) = b;
+			*((bool *)this->__js_ptr_data_start__) = b;
 		}
 
 		// operators
-		JsonVarBoolean & operator=(bool _value){ value=_value; return *this;}
-		JsonVarBoolean & operator=(const JsonVarBoolean & _b){ value=_b.value; return *this;}
+		JsonVarBoolean & operator=(bool _value){ __js_value__=_value; return *this;}
+		JsonVarBoolean & operator=(const JsonVarBoolean & _b){ __js_value__=_b.value; return *this;}
 
-		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
-
-			std::string result_bool = (*((bool *)this->p_data) == false ? "false" : "true");
-			this->str_value = "" + result_bool;
-			return this->str_value;
+		virtual std::string toString() {
+			return std::string("") + (*((bool *)this->__js_ptr_data_start__) == false ? "false" : "true");
 		}
 
 		virtual ~JsonVarBoolean(){}
 
 	private:
+
+		bool __js_value__;
+
 		void init() {
-			value=false;
-			this->type = JsonVar::JSON_VAR_TYPE_BOOLEAN;
-			this->size_data = sizeof(JsonVarBoolean<_T_NAME...>);
-			this->p_data = &this->value;
+			__js_value__=false;
+			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_BOOLEAN;
+			this->__js_size_data__ = sizeof(JsonVarBoolean<_T_NAME...>);
+			this->__js_ptr_data_start__ = &this->__js_value__;
 		}
 
 	};

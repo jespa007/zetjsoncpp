@@ -6,52 +6,46 @@ namespace zetjsoncpp{
 	public:
 
 		JsonVarVectorObject() {
-			this->type = JsonVar::JSON_VAR_TYPE_VECTOR_OBJECT;
-			this->size_data = sizeof(JsonVarVectorObject<_T_DATA, _T_NAME...>);
-			this->p_data = &this->vec_data;
+			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS;
+			this->__js_size_data__ = sizeof(JsonVarVectorObject<_T_DATA, _T_NAME...>);
+			this->__js_ptr_data_start__ = &this->__js_vec_data__;
 		}
 
 		virtual JsonVar *newData() {
-			return new JsonVarObject<_T_DATA>;
-		}
 
-		virtual std::string & getStrValue(int ident, uint32_t flags = 0) {
-			this->str_value = "??";
-			return this->str_value;
-		}
-
-		virtual void add(JsonVar * s) {
-			JsonVarObject< _T_DATA> *tt = (JsonVarObject< _T_DATA> *)s;
+			JsonVarObject< _T_DATA> *tt = new JsonVarObject<_T_DATA>;
 			this->push_back(tt);
+			return (JsonVar *)tt;
 		}
 
 		//std::string result_json;
-		virtual std::string & toString(uint32_t flags = 0) {
-			bool not_minimized = ((flags & JsonVar::PROPERTY_STR_MINIMIZED) == 0);
-			this->result_json = "[";
+		virtual std::string toStringFormatted(int ident, uint16_t properties) {
+			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
+			std::string str_value = "[";
 			for (unsigned i = 0; i < this->size(); i++) {
 				if (i > 0) {
-					this->result_json += ",";
+					str_value += ",";
 				}
-				objectToString(this->at(i), this->result_json, 0, flags);
+				objectToString(this->at(i), str_value, ident, properties);
 			}
 
-			this->result_json += "]";
-			if (not_minimized)
-				this->result_json += "\n";
+			str_value += "]";
+			if (not_minimized){
+				str_value += "\n";
+			}
 
-			return this->result_json;
+			return str_value;
 
 		}
 
 		void destroy() {
 
-			for (unsigned i = 0; i < this->vec_data.size(); i++) {
-				delete this->vec_data[i];
-				this->vec_data[i] = NULL;
+			for (unsigned i = 0; i < this->__js_vec_data__.size(); i++) {
+				delete this->__js_vec_data__[i];
+				this->__js_vec_data__[i] = NULL;
 			}
 
-			this->vec_data.clear();
+			this->__js_vec_data__.clear();
 		}
 
 		virtual ~JsonVarVectorObject() {
