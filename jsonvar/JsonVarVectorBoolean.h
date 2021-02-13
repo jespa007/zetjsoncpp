@@ -2,7 +2,7 @@ namespace zetjsoncpp{
 
 	// ARRAY BOOL
 	template<char... _T_NAME>
-	class JsonVarVectorBoolean : public JsonVarNamed<_T_NAME...>, public JsonVarVector<bool> {
+	class JsonVarVectorBoolean : public JsonVarNamed<_T_NAME...>, public JsonVarVector<JsonVarBoolean<>> {
 	public:
 		//_T_NAME name;
 		JsonVarVectorBoolean() {
@@ -11,18 +11,19 @@ namespace zetjsoncpp{
 			this->__js_ptr_data__ = &this->__js_vec_data__;
 		}
 
-		void add(bool s) {
-			((std::vector<bool> *)this->__js_ptr_data__)->push_back(s);
+
+		virtual JsonVar *newJsonVar(){
+			this->__js_vec_data__.push_back(JsonVarBoolean<>());
+
+			return &this->__js_vec_data__[this->__js_vec_data__.size()-1];
 		}
 
 		virtual std::string toStringFormatted(int ident, uint16_t properties) {
 			bool not_minimized = ((ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED & properties) == 0);
-			std::vector<bool> * v = (std::vector<bool> *)this->__js_ptr_data__;
+			std::vector<JsonVarBoolean<>> * v = (std::vector<JsonVarBoolean<>> *)this->__js_ptr_data__;
 			std::string str_value = "";
 
-			if (not_minimized){
-				ZJ_FORMAT_OUTPUT_IDENT(str_value,ident);
-			}
+			str_value+=toStringFormattedStart(ident,properties);
 
 			for (unsigned j = 0; j < v->size(); j++) {
 
@@ -37,6 +38,9 @@ namespace zetjsoncpp{
 				}
 
 			}
+
+			str_value+=toStringFormattedEnd(ident,properties);
+
 			return str_value;
 		}
 

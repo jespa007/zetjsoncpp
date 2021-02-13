@@ -66,5 +66,40 @@ namespace zetjsoncpp{
 			return __js_vec_data__;
 		}
 
+		virtual ~JsonVarVector() {
+
+		}
+
+	protected:
+
+		std::string toStringFormattedStart(int ident, uint16_t properties ){
+			std::string str_value ="";
+			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
+
+			if (not_minimized){
+				ZJ_FORMAT_OUTPUT_IDENT(str_value,ident-1);
+			}
+
+			str_value += "[";
+
+			if (not_minimized){
+				ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident);
+			}
+
+			return str_value;
+		}
+
+		std::string toStringFormattedEnd(int ident, uint16_t properties ){
+			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
+			std::string str_value="";
+
+			if (not_minimized){
+				ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident-1);
+			}
+
+			str_value += "]";
+
+			return str_value;
+		}
 	};
 }

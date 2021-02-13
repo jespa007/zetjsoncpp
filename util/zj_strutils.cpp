@@ -5,13 +5,22 @@
 
 #include "zetjsoncpp.h"
 
-
+#define	ZJ_MAX_STR_BUFFER 	4096
 
 
 namespace zetjsoncpp{
 
 	namespace zj_strutils{
 
+		std::string  format(const  char  *input_text, ...){
+			char  _sformat_buffer[ZJ_MAX_STR_BUFFER] = { 0 };
+			va_list  ap;
+			va_start(ap,  input_text);
+			vsprintf(_sformat_buffer,  input_text,  ap);
+			va_end(ap);
+
+			return std::string(_sformat_buffer);
+		}
 
 		STR_2_NUMBER str_to_int(int * i, const std::string & s, int base){
 			 char *end;

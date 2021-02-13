@@ -22,6 +22,8 @@ namespace zetjsoncpp{
 				this->__js_value__ = f;
 			}
 
+			 virtual void * getPtrValue(){ return &__js_value__;}
+
 			 JsonVarNumber(const std::string & s) {
 				init();
 				this->__js_value__ = parse(s);
@@ -38,28 +40,48 @@ namespace zetjsoncpp{
 				return *this;
 			}
 
-			JsonVarNumber   operator +  (const JsonVarNumber & n) const{
-				return JsonVarNumber(__js_value__ + n.__js_value__);
+			operator float(){
+				return this->__js_value__;
 			}
 
-			JsonVarNumber   operator +  (float n) const {
+			JsonVarNumber   operator +  (const JsonVarNumber & n) {
+				return (__js_value__ + n.__js_value__);
+			}
+
+			JsonVarNumber   operator +  (float n)  {
 				return JsonVarNumber(__js_value__ + n);
 			}
 
-			JsonVarNumber   operator -  (const JsonVarNumber & n) const{
-				return JsonVarNumber( __js_value__ - n.__js_value__);
+			JsonVarNumber   operator -  (const JsonVarNumber & n) {
+				return  JsonVarNumber(__js_value__ - n.__js_value__);
 			}
 
 			JsonVarNumber   operator -  (){
-				return JsonVarNumber( -__js_value__);
+				return JsonVarNumber(-__js_value__);
 			}
 			//--- /
-			JsonVarNumber   operator /  (const JsonVarNumber & n) const{
+			JsonVarNumber   operator /  (const JsonVarNumber & n) {
 
 				if(n.m_numVar ==0)
 					throw ("Error divide by 0");
 
-				return JsonVarNumber( __js_value__ / n.__js_value__);
+				return JsonVarNumber(__js_value__ / n.__js_value__);
+			}
+
+			JsonVarNumber   operator /  (float  n) {
+
+				if(n ==0)
+					throw ("Error divide by 0");
+
+				return JsonVarNumber(__js_value__ / n);
+			}
+			//--- *
+			JsonVarNumber   operator *  (const JsonVarNumber & n) {
+				return JsonVarNumber(__js_value__ * n.__js_value__);
+			}
+
+			JsonVarNumber   operator *  (float  n) {
+				return JsonVarNumber(__js_value__ * n);
 			}
 			//--- ==
 			bool 	  operator == (const JsonVarNumber & n){
@@ -158,7 +180,7 @@ namespace zetjsoncpp{
 				__js_value__++;
 				return (*this);
 			}
-			JsonVarNumber  operator ++(int){
+			float  operator ++(int){
 				JsonVarNumber n(__js_value__);
 				operator++();
 				return n;
@@ -177,7 +199,6 @@ namespace zetjsoncpp{
 			__js_value__ = 0;
 			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_NUMBER;
 			this->__js_size_data__ = sizeof(JsonVarNumber<_T_NAME...>);
-			this->__js_ptr_data__ = &this->__js_value__;
 		}
 
 

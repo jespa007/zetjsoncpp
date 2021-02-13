@@ -54,97 +54,15 @@ namespace zetjsoncpp{
 				case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_STRINGS:
 				case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_NUMBERS:
 				case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS:
-
-					if (not_minimized) {
-						result_s += "\n";
-
-						for (int i = 0; i <= level; i++){
-							result_s += "\t";
-						}
-					}
-
-					result_s += "[";
-
-					if (not_minimized){
-						result_s += "\n";
-					}
-
-					if (p_sv->getType() != JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS){
-						result_s += p_sv->toStringFormatted(level, properties);
-					}else{
-						std::vector <JsonVar *>  *vec = (std::vector<JsonVar *> *)(p_sv->getPtrData());
-
-						for (unsigned k = 0; k < vec->size(); k++)
-						{
-							if (k > 0){
-								result_s = result_s + ",";
-							}
-
-							if (not_minimized)
-								result_s += "\n";
-
-							objectToString(vec->at(k),result_s, level + 2, properties);
-						}
-					}
-
-					if (not_minimized) {
-						result_s += "\n";
-
-						for (int i = 0; i <= level; i++){
-							result_s += "\t";
-						}
-					}
-
-					result_s += "]";
-					break;
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS:
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS:
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS:
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS:
 					if (not_minimized) {
 						result_s += "\n";
-						/*for (int i = 0; i < level; i++){
-							result_s += "\t";
-						}*/
+
 					}
-
-					//result_s += "{";
-
-					/*if (not_minimized){
-						result_s += "\n";
-					}*/
-
-					//if (p_sv->getType() != JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS){*/
-						result_s += p_sv->toStringFormatted(level, properties);
-					/*}else{ // map object
-						int k=0;
-						std::map <std::string,JsonVar *>  *map_data = (std::map<std::string,JsonVar *> *)(p_sv->getPtrData());
-
-
-						for (auto it=map_data->begin();it !=map_data->end();it++,k++) {
-							if (k > 0){
-								result_s += ",";
-							}
-
-							if (not_minimized){
-								result_s += "\n";
-							}
-
-							result_s += "\""+it->first +"\":\"";
-							objectToString(it->second,result_s, level + 2, properties);
-							result_s +="\"";// this->str_value + "\"" + v->at(j) + "\" ";
-						}
-					}*/
-
-					/*if (not_minimized) {
-						result_s += "\n";
-
-						for (int i = 0; i <= level; i++){
-							result_s += "\t";
-						}
-					}
-
-					result_s += "}";*/
+					result_s += p_sv->toStringFormatted(level, properties);
 					break;
 				}
 			}

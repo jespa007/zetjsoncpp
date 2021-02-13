@@ -13,21 +13,27 @@ namespace zetjsoncpp{
 			__js_value__ = s;
 		}
 
-		operator std::string(){return __js_value__;}
+		virtual void * getPtrValue(){ return &__js_value__;}
 
-		operator std::string *(){return &__js_value__;}
+		explicit operator std::string(){return __js_value__;}
 
 		JsonVarString & operator =(const std::string & _value){
 			this->__js_value__ = _value;
 			return (*this);
 		}
 
+		JsonVarString & operator =(const JsonVarString<> & _value){
+			this->__js_value__ = _value.__js_value__;
+			return (*this);
+		}
+
+
 		bool operator ==(const std::string & _value) const{
 			return this->__js_value__ == _value;
 		}
 
 		bool operator ==(const JsonVarString & s) const{
-			return this->__js_value__ == s.value;
+			return this->__js_value__ == s.__js_value__;
 
 		}
 
@@ -37,28 +43,24 @@ namespace zetjsoncpp{
 		}
 
 		bool operator !=(const JsonVarString & s) const{
-			return this->__js_value__ != s.value;
+			return this->__js_value__ != s.__js_value__;
 
 		}
 
-		JsonVarString operator +(const std::string & s)  const {
-			return JsonVarString(this->__js_value__ + s);
+		friend JsonVarString operator +(const std::string & s1,const JsonVarString & s2)  {
+			return JsonVarString(s1+s2.__js_value__);
 		}
 
-		JsonVarString operator +(const JsonVarString & s)  const {
-			return JsonVarString(this->__js_value__ + s.__js_value__);
+		friend JsonVarString operator +(const JsonVarString & s1,const std::string & s2)  {
+			return JsonVarString(s1.__js_value__+s2);
 		}
 
-		operator const char * () const{
-			return (char *)__js_value__.c_str();
-		}
-
-		operator char * () const{
-			return __js_value__.c_str();
+		friend JsonVarString operator +(const JsonVarString & s1,const JsonVarString & s2)  {
+			return JsonVarString(s1.__js_value__+s2.__js_value__);
 		}
 
 		virtual std::string toString() {
-			return std::string("\"") + *((std::string *)this->__js_ptr_data__) + "\"";
+			return std::string("\"") + this->__js_value__ + "\"";
 		}
 
 		virtual ~JsonVarString(){}
@@ -67,7 +69,6 @@ namespace zetjsoncpp{
 		virtual void init() {
 			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_STRING;
 			this->__js_size_data__ = sizeof(JsonVarString<_T_NAME...>);
-			this->__js_ptr_data__ = &this->__js_value__;
 		}
 
 	private:

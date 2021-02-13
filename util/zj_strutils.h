@@ -25,6 +25,7 @@ namespace zetjsoncpp {
 
 		bool is_empty(const std::string & str);
 
+		std::string  format(const  char  *input_text, ...);
 		STR_2_NUMBER str_to_int(int * i, const std::string & s, int base = 0);
 		STR_2_NUMBER str_to_float(float * f, const std::string & s);
 		std::string int_to_str(int number);

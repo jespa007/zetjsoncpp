@@ -54,6 +54,10 @@ namespace zetjsoncpp{
 			return &__js_map_data__;
 		}
 
+		virtual ~JsonVarMap() {
+
+		}
+
 	protected:
 
 		std::string toStringFormattedStart(int ident, uint16_t properties ){

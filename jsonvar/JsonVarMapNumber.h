@@ -1,7 +1,7 @@
 namespace zetjsoncpp{
 
 	template<char... _T_NAME>
-	class JsonVarMapNumber: public JsonVarNamed<_T_NAME...>, public JsonVarMap<float> {
+	class JsonVarMapNumber: public JsonVarNamed<_T_NAME...>, public JsonVarMap<JsonVarNumber<>> {
 
 	public:
 
@@ -9,6 +9,15 @@ namespace zetjsoncpp{
 			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS;
 			this->__js_size_data__ = sizeof(JsonVarMapNumber< _T_NAME...>);
 			this->__js_ptr_data__ = &this->__js_map_data__;
+		}
+
+		virtual JsonVar *newJsonVar(const std::string & key_id){
+			if(this->__js_map_data__.count(key_id) != 0){
+				throw std::runtime_error("key already exists");
+			}
+			this->__js_map_data__[key_id]=JsonVarNumber<>();
+
+			return &this->__js_map_data__[key_id];
 		}
 
 		//std::string result_json;

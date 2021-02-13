@@ -48,43 +48,51 @@ namespace zetjsoncpp{
 			0
 	};
 
-	void parse_main(const char * start_str, JsonVar *_root,const char *filename);
+	char * parse_json_var(const char * _start_str, char * _current_str,JsonVar *_json_var,const char *filename, int & line);
 
 	template <typename _T>
 	_T * parse(const std::string & expression) {
 
-		_T *data=new _T;
+		int line=-1;
+		_T *json_var=new _T;
 
-		parse_main(expression.c_str(), data, NULL);
+		try{
+			parse_json_var(expression.c_str(),(char *)expression.c_str(), json_var, NULL,line);
+		}catch(parse_error_exception & err){
+			delete json_var;
+			json_var=NULL;
+			throw err;
+		}
 
-		return data;
+		return json_var;
 	}
 
 	template <typename _T>
 	_T * parse_file(const std::string & _filename) {
 		//_T * json_element;
 		std::string filename = _filename.c_str();
-		_T *data=NULL;
+		_T *json_var=NULL;
+		int line=1;
 
 		char *buf = zj_file::read(filename);
 		if (buf != NULL) {
 			try{
-				data=new _T;
+				json_var=new _T;
 				char *aux_p=buf;
 				uint8_t bom_signature[]={0xef,0xbb,0xbf};
 				if(memcmp(aux_p,bom_signature,sizeof(bom_signature))==0){ // ignore BOM signature
 					aux_p+=sizeof(bom_signature);
 				}
 
-				parse_main(aux_p, data,_filename.c_str());
+				parse_json_var(aux_p,aux_p, json_var,_filename.c_str(),line);
 			}
 			catch(parse_error_exception & err){
-				delete data;
+				delete json_var;
 				free(buf);
 				throw err;
 			}
 			catch(parse_warning_exception & wrn){
-				delete data;
+				delete json_var;
 				free(buf);
 				throw wrn;
 
@@ -92,7 +100,7 @@ namespace zetjsoncpp{
 			free(buf);
 		}
 
-		return data;
+		return json_var;
 	}
 }
 

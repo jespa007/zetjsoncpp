@@ -1,7 +1,7 @@
 namespace zetjsoncpp{
 
 	template<char... _T_NAME>
-	class JsonVarMapString: public JsonVarNamed<_T_NAME...>, public JsonVarMap<std::string> {
+	class JsonVarMapString: public JsonVarNamed<_T_NAME...>, public JsonVarMap<JsonVarString<>> {
 
 	public:
 
@@ -11,6 +11,14 @@ namespace zetjsoncpp{
 			this->__js_ptr_data__ = &this->__js_map_data__;
 		}
 
+		virtual JsonVar *newJsonVar(const std::string & key_id){
+			if(this->__js_map_data__.count(key_id) != 0){
+				throw std::runtime_error("key already exists");
+			}
+			this->__js_map_data__[key_id]=JsonVarString<>();
+
+			return &this->__js_map_data__[key_id];
+		}
 
 		virtual std::string toStringFormatted(int ident, uint16_t properties) {
 
@@ -24,7 +32,7 @@ namespace zetjsoncpp{
 					str_value = str_value + ",";
 				}
 
-				str_value += "\""+it->first +"\":\""+ it->second+"\"";// str_value + "\"" + v->at(j) + "\" ";
+				/*str_value += "\""+it->first +*/"\":\""+(it->second+"\"");// str_value + "\"" + v->at(j) + "\" ";
 
 				if (not_minimized){
 					ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident);
@@ -36,12 +44,8 @@ namespace zetjsoncpp{
 			return str_value;
 		}
 
-		void destroy() {
-
-		}
-
 		virtual ~JsonVarMapString() {
-			destroy();
+
 		}
 	};
 }

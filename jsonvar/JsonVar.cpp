@@ -15,22 +15,22 @@ namespace zetjsoncpp {
 		default:
 		case JSON_VAR_TYPE_UNKNOWN:
 			break;
-		case JSON_VAR_TYPE_BOOLEAN: return "TYPE_BOOLEAN";
+		case JSON_VAR_TYPE_BOOLEAN: return "JsonVarBoolean";
 			//case INT32_TYPE: return "INT32_TYPE";
-		case JSON_VAR_TYPE_NUMBER: return "TYPE_NUMBER";
-		case JSON_VAR_TYPE_STRING: return "STRING TYPE";
-		case JSON_VAR_TYPE_OBJECT: return "TYPE_OBJECT";
+		case JSON_VAR_TYPE_NUMBER: return "JsonVarNumber";
+		case JSON_VAR_TYPE_STRING: return "JsonVarString";
+		case JSON_VAR_TYPE_OBJECT: return "JsonVarObject";
 
-		case JSON_VAR_TYPE_VECTOR_OF_BOOLEANS: return "VECTOR BOOL TYPE";
+		case JSON_VAR_TYPE_VECTOR_OF_BOOLEANS: return "JsonVarVectorBoolean";
 			//case ARRAY_INT32_TYPE: return "ARRAY INT32 TYPE";
-		case JSON_VAR_TYPE_VECTOR_OF_NUMBERS: return "VECTOR FLOAT TYPE";
-		case JSON_VAR_TYPE_VECTOR_OF_STRINGS: return "VECTOR STRING TYPE";
-		case JSON_VAR_TYPE_VECTOR_OF_OBJECTS: return "VECTOR PROPERTY GROUP TYPE";
+		case JSON_VAR_TYPE_VECTOR_OF_NUMBERS: return "JsonVarVectorNumber";
+		case JSON_VAR_TYPE_VECTOR_OF_STRINGS: return "JsonVarVectorString";
+		case JSON_VAR_TYPE_VECTOR_OF_OBJECTS: return "JsonVarVectorObject";
 
-		case JSON_VAR_TYPE_MAP_OF_BOOLEANS: return "MAP BOOLEAN TYPE";
-		case JSON_VAR_TYPE_MAP_OF_NUMBERS: return "MAP NUMBER TYPE";
-		case JSON_VAR_TYPE_MAP_OF_STRINGS: return "MAP STRING TYPE";
-		case JSON_VAR_TYPE_MAP_OF_OBJECTS: return "MAP OBJECT TYPE";
+		case JSON_VAR_TYPE_MAP_OF_BOOLEANS: return "JsonVarMapBoolean";
+		case JSON_VAR_TYPE_MAP_OF_NUMBERS: return "JsonVarMapNumber";
+		case JSON_VAR_TYPE_MAP_OF_STRINGS: return "JsonVarMapString";
+		case JSON_VAR_TYPE_MAP_OF_OBJECTS: return "JsonVarMapObject";
 		}
 
 		return "UNKNOWN";
@@ -45,11 +45,11 @@ namespace zetjsoncpp {
 		this->__js_is_parsed__ = false;
 	}
 
-	JsonVar *JsonVar::newData(){
+	JsonVar *JsonVar::newJsonVar(){
 		return NULL;
 	}
 
-	JsonVar *JsonVar::newData(const std::string & key){
+	JsonVar *JsonVar::newJsonVar(const std::string & key){
 		return NULL;
 	}
 

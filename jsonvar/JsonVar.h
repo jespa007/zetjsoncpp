@@ -83,6 +83,7 @@
 #define ZJ_CAST_JSON_VAR_MAP_OF_STRINGS 		(zetjsoncpp::JsonVarMapString<> *)
 #define ZJ_CAST_JSON_VAR_MAP_OF_OBJECTS 		(zetjsoncpp::JsonVarMapObject<> *)
 
+
 #define ZJ_FORMAT_OUTPUT_IDENT(str_value,ident)  for (int k = 0; k <= (ident + 1); k++) str_value += "\t";
 #define ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident) \
 	str_value += "\n";\
@@ -120,8 +121,12 @@ namespace zetjsoncpp {
 
 		JsonVar();
 
-		virtual JsonVar *newData();
-		virtual JsonVar *newData(const std::string & key);
+
+		// It create a new json var slot for vector container.
+		virtual JsonVar *newJsonVar();
+		// It create a new json var slot for map container.
+		virtual JsonVar *newJsonVar(const std::string & key);
+
 
 		const char *toTypeStr();
 
@@ -131,6 +136,9 @@ namespace zetjsoncpp {
 		virtual ~JsonVar();
 
 		void * getPtrData(){ return __js_ptr_data__;}
+		virtual void * getPtrValue(){ return NULL;}
+
+
 		void * getPtrDataEnd(){return __js_ptr_data_end__;}
 		size_t  getSizeData(){return __js_size_data__;}
 		JsonVarType getType(){return __js_type__;}

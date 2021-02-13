@@ -1,7 +1,7 @@
 namespace zetjsoncpp{
 
 	template<char... _T_NAME>
-	class JsonVarMapBoolean: public JsonVarNamed<_T_NAME...>, public JsonVarMap<bool> {
+	class JsonVarMapBoolean: public JsonVarNamed<_T_NAME...>, public JsonVarMap<JsonVarBoolean<>> {
 
 	public:
 
@@ -10,6 +10,16 @@ namespace zetjsoncpp{
 			this->__js_size_data__ = sizeof(JsonVarMapBoolean< _T_NAME...>);
 			this->__js_ptr_data__ = &this->__js_map_data__;
 		}
+
+		virtual JsonVar *newJsonVar(const std::string & key_id){
+			if(this->__js_map_data__.count(key_id) != 0){
+				throw std::runtime_error("key already exists");
+			}
+			this->__js_map_data__[key_id]=JsonVarBoolean<>();
+
+			return &this->__js_map_data__[key_id];
+		}
+
 
 		//std::string result_json;
 		virtual std::string toStringFormatted(int ident, uint16_t properties) {
@@ -37,12 +47,8 @@ namespace zetjsoncpp{
 
 		}
 
-		void destroy() {
-
-		}
-
 		virtual ~JsonVarMapBoolean() {
-			destroy();
+
 		}
 	};
 }

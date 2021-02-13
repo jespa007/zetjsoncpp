@@ -2,7 +2,7 @@ namespace zetjsoncpp{
 
 	// ARRAY FLOAT
 	template<char... _T_NAME>
-	class JsonVarVectorNumber : public JsonVarNamed<_T_NAME...>, public JsonVarVector<float> {
+	class JsonVarVectorNumber : public JsonVarNamed<_T_NAME...>, public JsonVarVector<JsonVarNumber<>> {
 		short * shortBuf;
 		float * floatBuf;
 
@@ -16,18 +16,19 @@ namespace zetjsoncpp{
 			floatBuf=NULL;
 		}
 
-		void add(float s) {
-			((std::vector<float> *)this->__js_ptr_data__)->push_back(s);
+
+		virtual JsonVar *newJsonVar(){
+			this->__js_vec_data__.push_back(JsonVarNumber<>(10));
+
+			return &this->__js_vec_data__[this->__js_vec_data__.size()-1];
 		}
 
 		virtual std::string toStringFormatted(int ident, uint16_t properties) {
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
-			std::vector<float> * v = (std::vector<float> *)this->__js_ptr_data__;
+			std::vector<JsonVarNumber<>> * v = (std::vector<JsonVarNumber<>> *)this->__js_ptr_data__;
 			std::string str_value = "";
 
-			if (not_minimized){
-				ZJ_FORMAT_OUTPUT_IDENT(str_value,ident);
-			}
+			str_value+=toStringFormattedStart(ident,properties);
 
 			for (unsigned j = 0; j < v->size(); j++) {
 
@@ -35,12 +36,15 @@ namespace zetjsoncpp{
 					str_value += ",";
 				}
 
-				str_value += zj_strutils::float_to_str(v->at(j));
+				str_value += v->at(j).toString();
 
 				if (not_minimized) {
 					ZJ_FORMAT_OUTPUT_NEW_LINE_VECTOR_ELEMENTS(str_value,ident,j);
 				}
 			}
+
+			str_value+=toStringFormattedEnd(ident,properties);
+
 			return str_value;
 		}
 

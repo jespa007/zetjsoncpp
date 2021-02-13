@@ -11,8 +11,8 @@ namespace zetjsoncpp {
 	{
 		const char *error_type;
 
-		std::string file;
-		int	   line;
+		//std::string file;
+		//int	   line;
 		std::string	error_description;
 
 		char what_msg[4096];
@@ -20,12 +20,19 @@ namespace zetjsoncpp {
 
 
 		parse_exception(const char *  _file, int _line, const char * _error_description, const char *_error_type){
+
 			error_type=_error_type;
-			file=_file;
-			line=_line;
+			/*if(file != NULL){
+				file=_file;
+				line=_line;
+			}*/
 			error_description=_error_description;
 
-			sprintf(what_msg,"[%s %s:%i] %s",error_type,_file, _line, (char *)error_description.c_str());
+			if(_file != NULL){
+				sprintf(what_msg,"[%s %s:%i] %s",error_type,_file, _line, (char *)error_description.c_str());
+			}else{
+				sprintf(what_msg,"[%s] %s",error_type, (char *)error_description.c_str());
+			}
 		}
 
 	    virtual const char* what() const throw()

@@ -12,7 +12,7 @@ namespace zetjsoncpp{
 			this->__js_ptr_data__ = &this->__js_map_data__;
 		}
 
-		virtual JsonVar *newData(const std::string & key) {
+		virtual JsonVar *newJsonVar(const std::string & key) {
 
 			if(this->__js_map_data__.count(key) != 0){
 				throw std::runtime_error("key already exists");

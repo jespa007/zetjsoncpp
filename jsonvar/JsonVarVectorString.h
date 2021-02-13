@@ -2,7 +2,7 @@ namespace zetjsoncpp{
 
 	// ARRAY STRING
 	template<char... _T_NAME>
-	class JsonVarVectorString : public JsonVarNamed<_T_NAME...>, public JsonVarVector<std::string> {
+	class JsonVarVectorString : public JsonVarNamed<_T_NAME...>, public JsonVarVector<JsonVarString<>> {
 	public:
 		//_T_NAME name;
 		JsonVarVectorString() {
@@ -11,18 +11,18 @@ namespace zetjsoncpp{
 			this->__js_ptr_data__ = &this->__js_vec_data__;
 		}
 
-		void add(std::string const & s) {
-			((std::vector<std::string> *)this->__js_ptr_data__)->push_back(s);
+		virtual JsonVar *newJsonVar(){
+			this->__js_vec_data__.push_back(JsonVarString<>());
+
+			return &this->__js_vec_data__[this->__js_vec_data__.size()-1];
 		}
 
 		virtual std::string toStringFormatted(int ident, uint16_t properties = 0) {
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
 			std::string str_value = "";
-			std::vector<std::string> * v = (std::vector<std::string> *)this->__js_ptr_data__;
+			std::vector<JsonVarString<>> * v = (std::vector<JsonVarString<>> *)this->__js_ptr_data__;
 
-			if (not_minimized){
-				ZJ_FORMAT_OUTPUT_IDENT(str_value,ident);
-			}
+			str_value+=toStringFormattedStart(ident,properties);
 
 			for (unsigned j = 0; j < v->size(); j++) {
 
@@ -30,13 +30,16 @@ namespace zetjsoncpp{
 					str_value += ",";
 				}
 
-				str_value = str_value + "\"" + v->at(j) + "\"";
+				str_value += (std::string)("\"" + v->at(j) + "\"");
 
 				if(not_minimized){
 					ZJ_FORMAT_OUTPUT_NEW_LINE_VECTOR_ELEMENTS(str_value,ident,j);
 				}
 
 			}
+
+			str_value+=toStringFormattedEnd(ident,properties);
+
 			return str_value;
 		}
 
