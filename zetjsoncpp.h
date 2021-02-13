@@ -14,6 +14,7 @@
 #include <string>
 #include <string.h>
 #include <vector>
+#include <map>
 #include <locale>
 #include <codecvt>
 #include <sys/stat.h>

@@ -201,18 +201,16 @@ namespace zetjsoncpp{
 
 	char * read_string_between_quotes(const char *str_start, char *str_current,std::string & str_out, const char *filename,int line){
 		size_t str_size;
-		char *str_end;
+		char *str_end=NULL;
 		char str_aux[128]={0};
 		str_out = "";
 
-		if (*str_current == '\'') // try to advance double quote
-			str_end = advance_to_char(str_current + 1, '\'');
-		else if (*str_current == '\"'){ // try to single quote...
+		if (*str_current == '\"'){ // try to single quote...
 			str_end = advance_to_char(str_current + 1, '\"');
 		}
 
 		if (*str_current != *str_end) {
-			throw_error(filename, line,str_start, str_current, "Was expect a double/single quote. format example --> \"property\":\"value\"");
+			throw_error(filename, line,str_start, str_current, "Was expect a double quote. format example --> \"property\":\"value\"");
 		}
 
 		str_size = str_end - str_current - 1;
@@ -474,7 +472,7 @@ namespace zetjsoncpp{
 			case JsonVarType::JSON_VAR_TYPE_STRING:
 
 				if((_str_current=parse_json_value(_str_current,_json_var,error))==NULL){
-					throw_error(filename, line,_str_start,_str_current,"Cannot parse value as %s",_json_var->toTypeStr()));
+					throw_error(filename, line,_str_start,_str_current,"Cannot parse value as %s",_json_var->toTypeStr());
 				}
 				break;
 			case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_BOOLEANS:
