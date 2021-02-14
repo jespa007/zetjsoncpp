@@ -1,3 +1,21 @@
+# CMakeLists.txt
+#
+# Copyright 2021 by
+# Jordi Espada
+#
+# Say
+#
+#   cmake CMakeLists.txt
+#
+# to create a Makefile that builds a static version of the library.  For a
+# dynamic library, use
+#
+#   cmake CMakeLists.txt -DBUILD_SHARED_LIBS:BOOL=true
+#
+# instead.  Please refer to the cmake manual for further options, in
+# particular, how to modify compilation and linking parameters.
+#
+
 cmake_minimum_required(VERSION 2.8)
  
 project(zetjsoncpp)
@@ -42,7 +60,7 @@ if(MSVC)
 
 else()
 
-	SET( COMMON_PARAMS " ${COMMON_PARAMS} -D__STDC_CONSTANT_MACROS -std=gnu++0x -I -Wall")
+	SET( COMMON_PARAMS " ${COMMON_PARAMS} -D__STDC_CONSTANT_MACROS -std=gnu++0x -I -Wall -Wextra")
    
 	if (MINGW)
 		MESSAGE ("-- Plataform: MINGW" )
@@ -137,22 +155,19 @@ endif()
 set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
 	
-	util/zj_string.cpp
-	util/zj_io.cpp
+	util/zj_strutils.cpp
+	util/zj_file.cpp
 	util/zj_path.cpp
-	var/ZJ_Number.cpp
-	var/ZJ_String.cpp
-	var/ZJ_Boolean.cpp
-	parser_var/CParserVar.cpp
-
-	CParserBase.cpp
-	CParserJson.cpp
+	jsonvar/JsonVar.cpp
+	jsonvar/JsonVarObject.cpp	
+	zetjsoncpp.cpp
 )
 
 #JSON TEST executable
-set(JSON_TEST_SRCS ${PROJECT_SOURCE_DIR}/test/json_test.cpp)
+set(JSON_TEST_SRCS ${PROJECT_SOURCE_DIR}/test/test.cpp)
 
-
+#JSON TEST_FILE executable
+set(JSON_TEST_FILE_SRCS ${PROJECT_SOURCE_DIR}/test/test_file.cpp)
 
 # json2cpplib
 add_library( zetjsoncpp${POST_NAME} STATIC ${ZETJSONCPP_LIB_SRCS} )
@@ -166,30 +181,23 @@ endif()
 
 SET(
 	HS
-	util/zj_string.h
-	util/zj_io.h
+	util/zj_strutils.h
+	util/zj_file.h
 	util/zj_path.h
-	zetjsoncpp.h
-	var/ZJ_Boolean.h
-	var/ZJ_Number.h
-	var/ZJ_String.h
-	parser_var/CDinamicVector.h
-	parser_var/CParserVar.h
-	parser_var/CParserVar.inc
-	parser_var/CParserVarArrayBool.h
-	parser_var/CParserVarArrayNumber.h
-	parser_var/CParserVarArrayPropertyGroup.h
-	parser_var/CParserVarArrayString.h
-	parser_var/CParserVarBoolean.h
-	parser_var/CParserVarNamed.h
-	parser_var/CParserVarNumber.h
-	parser_var/CParserVarPropertyGroup.h
-	parser_var/CParserVarString.h
+	jsonvar/JsonVarVector.h
+	jsonvar/JsonVar.h
+	jsonvar/JsonVarVectorBoolean.h
+	jsonvar/JsonVarVectorNumber.h
+	jsonvar/JsonVarVectorObject.h
+	jsonvar/JsonVarVectorString.h
+	jsonvar/JsonVarBoolean.h
+	jsonvar/JsonVarNamed.h
+	jsonvar/JsonVarNumber.h
+	jsonvar/JsonVarObject.h
+	jsonvar/JsonVarString.h
 		
-	CParser.h
-	CParserBase.h
-	CParserJson.h
-	CParserJson.cxx
+	zetjsoncpp.h
+	zetjsoncpp.tcc
 	exception.h
 )
 
@@ -198,12 +206,22 @@ INSTALL_HEADERS_WITH_DIRECTORY(HS)
 
 #-----------------------------------------
 # EXECUTABLES
-add_executable(json_test${POST_NAME}
+
+# Test 
+add_executable(test${POST_NAME}
 	${JSON_TEST_SRCS}
 )
 
+target_link_libraries(test${POST_NAME} zetjsoncpp${POST_NAME})
 
-target_link_libraries(json_test${POST_NAME} zetjsoncpp${POST_NAME})	
+
+# Test File
+add_executable(test_file${POST_NAME}
+	${JSON_TEST_FILE_SRCS}
+)
+
+target_link_libraries(test_file${POST_NAME} zetjsoncpp${POST_NAME})
+
 
 INSTALL(TARGETS zetjsoncpp${POST_NAME}
 		ARCHIVE DESTINATION  		${CMAKE_INSTALL_PREFIX}/lib
