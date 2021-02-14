@@ -22,6 +22,8 @@ namespace zetjsoncpp{
 			*((bool *)this->__js_ptr_data_start__) = b;
 		}
 
+		operator bool(){return __js_value__;}
+
 		virtual void * getPtrValue(){ return &__js_value__;}
 
 		// operators

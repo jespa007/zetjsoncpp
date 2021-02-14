@@ -9,10 +9,6 @@ typedef struct{
 
 }TestJson;
 
-void test_1(const std::string & std){
-
-}
-
 int main(int argc, char *argv[]){
 
 	std::cout << "zetjsoncpp ver. "<< ZETJSONCPP_MAJOR_VERSION << "." << ZETJSONCPP_MINOR_VERSION << "."<< ZETJSONCPP_PATCH_VERSION << std::endl;
@@ -28,8 +24,6 @@ int main(int argc, char *argv[]){
 		auto s1=zetjsoncpp::parse<zetjsoncpp::JsonVarString<>>("\"my_string\"");
 		auto s2=zetjsoncpp::parse<zetjsoncpp::JsonVarString<>>("\"_2\"");
 		auto s3="s1_"+*s1+"_s2_"+*s2+"_end"; // concatenate
-
-		test_1(*s1);
 
 		printf("s1=%s s2=%s s3=%s\n",s1->toString().c_str(),s2->toString().c_str(),s3.toString().c_str());
 
