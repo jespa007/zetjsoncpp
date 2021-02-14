@@ -66,8 +66,8 @@ int main(int argc, char *argv[]){
 		auto json_object=zetjsoncpp::parse_file<zetjsoncpp::JsonVarObject<SampleJson>>("sample.json");
 		// .... operate data with loaded json_object
 
-    		// destroy json_object
-    		delete json_object;
+        // destroy json_object
+        delete json_object;
 	}catch(std::exception & ex){
 		fprintf(stderr, "%s\n",ex.what());
 	}
