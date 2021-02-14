@@ -15,7 +15,7 @@ namespace zetjsoncpp{
 
 		virtual void * getPtrValue(){ return &__js_value__;}
 
-		explicit operator std::string(){return __js_value__;}
+		operator std::string(){return __js_value__;}
 
 		JsonVarString & operator =(const std::string & _value){
 			this->__js_value__ = _value;
