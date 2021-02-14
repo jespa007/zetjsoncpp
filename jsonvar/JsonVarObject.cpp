@@ -36,12 +36,6 @@ namespace zetjsoncpp{
 
 				result_s += "\"" + p_sv->getVariableName()+ "\":";
 
-				if (not_minimized){
-					result_s += "\n";
-					for (int i = 0; i <= ident; i++){
-						result_s += "\t";
-					}
-				}
 
 				switch (p_sv->getType())// == )
 				{
@@ -52,6 +46,12 @@ namespace zetjsoncpp{
 					break;
 
 				case JsonVarType::JSON_VAR_TYPE_OBJECT:
+					if (not_minimized){
+						result_s += "\n";
+						for (int i = 0; i <= ident; i++){
+							result_s += "\t";
+						}
+					}
 					objectToString(p_sv,result_s, ident + 1, properties);
 					break;
 					// arrays
@@ -63,6 +63,12 @@ namespace zetjsoncpp{
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS:
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS:
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS:
+					if (not_minimized){
+						result_s += "\n";
+						for (int i = 0; i <= ident; i++){
+							result_s += "\t";
+						}
+					}
 					result_s += p_sv->toStringFormatted(ident+1, properties);
 					break;
 				}
