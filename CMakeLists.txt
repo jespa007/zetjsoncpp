@@ -190,6 +190,11 @@ SET(
 	jsonvar/JsonVarVectorNumber.h
 	jsonvar/JsonVarVectorObject.h
 	jsonvar/JsonVarVectorString.h
+	jsonvar/JsonVarMapBoolean.h
+	jsonvar/JsonVarMapNumber.h
+	jsonvar/JsonVarMapObject.h
+	jsonvar/JsonVarMapString.h
+	
 	jsonvar/JsonVarBoolean.h
 	jsonvar/JsonVarNamed.h
 	jsonvar/JsonVarNumber.h
