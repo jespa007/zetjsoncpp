@@ -2,12 +2,10 @@
 
 typedef struct{
 	// Number length
-	zetjsoncpp::JsonVarNumber<ZJ_CONST_CHAR("length")>
-	length;
+	ZJ_VAR_NUMBER(length);
 
 	// Boolean use_space
-	zetjsoncpp::JsonVarBoolean<ZJ_CONST_CHAR("use_space")>
-	use_space;
+	ZJ_VAR_BOOLEAN(use_space);
 
 }TestJson;
 
@@ -34,7 +32,7 @@ int main(int argc, char *argv[]){
 		printf("b1=%s b2=%s b3=%s\n",b1->toString().c_str(),b2->toString().c_str(),b3?"true":"false");
 
 
-		std::cout << "2. Testing object..."<< std::endl;
+		std::cout << std::endl << "2. Testing object..."<< std::endl<< std::endl;
 		auto o1=zetjsoncpp::parse<zetjsoncpp::JsonVarObject<TestJson>>("{"
 			"\"length\":1000"
 			",\"use_space\":false"
@@ -42,9 +40,9 @@ int main(int argc, char *argv[]){
 
 		printf("o1.length=%.02f o1.use_space=%s\n",(float)o1->length,o1->use_space==true?"true":"false");
 
-		std::cout << "3. Testing json vector primitives..."<< std::endl;
+		std::cout << std::endl << "3. Testing json vector primitives..."<< std::endl<< std::endl;
 
-		auto v1=zetjsoncpp::parse<zetjsoncpp::JsonVarVectorNumber<>>("[1,2,3,4]");
+		auto v1=zetjsoncpp::parse<zetjsoncpp::JsonVarVectorNumber<>>("[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]");
 		printf("v1=%s\n",v1->toString().c_str());
 
 		auto v2=zetjsoncpp::parse<zetjsoncpp::JsonVarVectorString<>>("[\"string_1\",\"string_2\",\"string_3\",\"string_5\"]");
@@ -62,15 +60,17 @@ int main(int argc, char *argv[]){
 		"}]");
 		printf("v4=%s\n",v4->toString().c_str());
 
-		std::cout << "3. Testing json map primitives..."<< std::endl;
+		std::cout << std::endl << "4. Testing json map primitives..."<< std::endl<< std::endl;
 
 		auto m1=zetjsoncpp::parse<zetjsoncpp::JsonVarMapNumber<>>("{\"id1\":1,\"id2\":2,\"id3\":3,\"id4\":4}");
 		printf("m1=%s\n",m1->toString().c_str());
 
 		auto m2=zetjsoncpp::parse<zetjsoncpp::JsonVarMapString<>>("{\"id1\":\"string_1\",\"id2\":\"string_2\",\"id3\":\"string_3\",\"id4\":\"string_5\"}");
 		printf("m2=%s\n",m2->toString().c_str());
+
 		auto m3=zetjsoncpp::parse<zetjsoncpp::JsonVarMapBoolean<>>("{\"id1\":true,\"id2\":false,\"id3\":true}");
 		printf("m3=%s\n",m3->toString().c_str());
+
 		auto m4=zetjsoncpp::parse<zetjsoncpp::JsonVarMapObject<TestJson>>("{"
 			"\"id1\":{"
 				"\"length\":1000"

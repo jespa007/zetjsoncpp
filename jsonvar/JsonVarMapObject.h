@@ -31,21 +31,18 @@ namespace zetjsoncpp{
 			int j=0;
 			for (auto it=this->__js_map_data__.begin(); it != this->__js_map_data__.end(); it++,j++) {
 				if (j > 0) {
+					if (not_minimized){
+						ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident+1);
+					}
 					str_value += ",";
 				}
 
 				str_value+="\""+it->first +"\":";
-				if (not_minimized){
-					str_value += "\n";
-				}
 
-				objectToString(it->second, str_value, ident+2, properties);
 
-				if (not_minimized){
-					ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident);
-				}
+				objectToString(it->second, str_value, ident+1, properties);
+
 			}
-
 
 			str_value += this->toStringFormattedEnd(ident,properties);
 

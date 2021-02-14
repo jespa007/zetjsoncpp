@@ -5,10 +5,12 @@ Date: XX/XX/2018
 Version: 2.0.0
 
 Main features
--Implemented map of elements
+
+-Added support for map/dictionary of elements
 -Massive code organization and clean up
--parse object in one line
--Last version (i.e 1.3.0) the parser was limited to vector of objects. Now it can parse any starting by number/string/boolean/object, vector or map of elements 
+-straightforward way to get a json file/string parsed and assigned into native variable.
+-Support uft-8 files with bom
+-Support for parse any json type (i.e number/string/boolean/object, vector or map of elements) 
 
 Detail
 
@@ -21,11 +23,11 @@ Detail
 #5 ZJ_Number: Only works with floats 
 #6 Migrate new c++ style 
 #10 Change ParseJson name by ZetJsonCpp
-> #11 Test operator functions for number/string/boolean 
+#11 Test operator functions for number/string/boolean 
 #12 Change Json Object names starting by JsonVarXXXXX
 #13 Implement JsonVarMap
 #14 Specify starting type JsonVar (i.e JsonVarNumber,JsonVarObject, JsonVarArrayObject, ...) instead of fixed JsonVarArrayObject<_T>
-> #16 create tests test
+#16 create tests test
 #17 Support UTF-8 with/out BOM mark Feature 
 #18 Pre/Post name all variables associated with JsonVar 
 

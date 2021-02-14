@@ -30,16 +30,13 @@ namespace zetjsoncpp{
 			for (auto it=__js_map_data__.begin();it !=__js_map_data__.end();it++,j++) {
 
 				if (j > 0){
+					if (not_minimized){
+						ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident+1);
+					}
 					str_value += ",";
 				}
 
 				str_value += "\""+it->first +"\":"+ zj_strutils::float_to_str(it->second)+"";// this->str_value + "\"" + v->at(j) + "\" ";
-
-				if (not_minimized){
-					ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident);
-				}
-
-
 			}
 
 			str_value += this->toStringFormattedEnd(ident,properties);

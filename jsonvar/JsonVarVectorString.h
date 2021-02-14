@@ -27,14 +27,13 @@ namespace zetjsoncpp{
 			for (unsigned j = 0; j < v->size(); j++) {
 
 				if (j > 0){
+					if (not_minimized) {
+						ZJ_FORMAT_OUTPUT_NEW_LINE_VECTOR_ELEMENTS(str_value,ident+1,j);
+					}
 					str_value += ",";
 				}
 
 				str_value += (std::string)("\"" + v->at(j) + "\"");
-
-				if(not_minimized){
-					ZJ_FORMAT_OUTPUT_NEW_LINE_VECTOR_ELEMENTS(str_value,ident,j);
-				}
 
 			}
 

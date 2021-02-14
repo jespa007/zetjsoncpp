@@ -1,7 +1,5 @@
 #include "../zetjsoncpp.h"
 
-// json data to c-structure
-
 typedef struct{
 	// Number length
 	zetjsoncpp::JsonVarNumber<ZJ_CONST_CHAR("length")>

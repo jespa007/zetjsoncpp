@@ -3,10 +3,10 @@
 #define ZJ_FORMAT_OUTPUT_VECTOR_N_ELEMENTS			10
 #define ZJ_FORMAT_OUTPUT_NEW_LINE_VECTOR_ELEMENTS(str_out,ident,n_element) \
 	if (n_element != 0 && ((n_element%ZJ_FORMAT_OUTPUT_VECTOR_N_ELEMENTS) == 0)){\
-		for (int k = 0; k <= (ident + 1); k++){\
+		str_out += "\n";\
+		for (int k = 0; k < (ident); k++){\
 			str_out += "\t";\
 		}\
-		str_out += "\n";\
 	}\
 
 
@@ -76,14 +76,14 @@ namespace zetjsoncpp{
 			std::string str_value ="";
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
 
-			if (not_minimized){
-				ZJ_FORMAT_OUTPUT_IDENT(str_value,ident-1);
-			}
+			/*if (not_minimized){
+				ZJ_FORMAT_OUTPUT_IDENT(str_value,ident);
+			}*/
 
 			str_value += "[";
 
 			if (not_minimized){
-				ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident);
+				ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident+1);
 			}
 
 			return str_value;
@@ -94,7 +94,7 @@ namespace zetjsoncpp{
 			std::string str_value="";
 
 			if (not_minimized){
-				ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident-1);
+				ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident);
 			}
 
 			str_value += "]";

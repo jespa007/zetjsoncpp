@@ -64,14 +64,14 @@ namespace zetjsoncpp{
 			std::string str_value ="";
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
 
-			if (not_minimized){
+			/*if (not_minimized){
 				ZJ_FORMAT_OUTPUT_IDENT(str_value,ident-1);
-			}
+			}*/
 
 			str_value += "{";
 
 			if (not_minimized){
-				ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident);
+				ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident+1);
 			}
 
 			return str_value;
@@ -82,7 +82,7 @@ namespace zetjsoncpp{
 			std::string str_value="";
 
 			if (not_minimized){
-				ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident-1);
+				ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident);
 			}
 
 			str_value += "}";

@@ -25,16 +25,21 @@
 #define print_info_json(s,...)
 #endif
 
-#define PREVIEW_SSTRING(start, current,n) (((current)-(n))<((start))?(start):((current)-(n)))
+
 
 namespace zetjsoncpp{
+
+	typedef struct{
+		const char *filename;
+		const char *str_start;
+	}ParseData;
 
 	extern char json_message_error[16836];
 
 
 
-	void throw_error(const char *file, int line, const char *start_str, char *current_ptr, const char *string_text, ...);
-	void throw_warning(const char *file, int line, const char *string_text, ...);
+	void throw_error(ParseData *parse_data, const char * str_current, int line, const char *string_text, ...);
+	void throw_warning(ParseData *parse_data, const char * str_current, int line, const char *string_text, ...);
 
 
 	const char end_char_standard_value[] = {
@@ -48,7 +53,7 @@ namespace zetjsoncpp{
 			0
 	};
 
-	char * parse_json_var(const char * _start_str, char * _current_str,JsonVar *_json_var,const char *filename, int & line);
+	char * parse_json_var(ParseData *parse_data, const char * str_current, int & line,JsonVar *json_var);
 
 	template <typename _T>
 	_T * parse(const std::string & expression) {
@@ -57,7 +62,10 @@ namespace zetjsoncpp{
 		_T *json_var=new _T;
 
 		try{
-			parse_json_var(expression.c_str(),(char *)expression.c_str(), json_var, NULL,line);
+			ParseData parse_data;
+			parse_data.filename=NULL;
+			parse_data.str_start=expression.c_str();
+			parse_json_var(&parse_data,expression.c_str(),line, json_var);
 		}catch(parse_error_exception & err){
 			delete json_var;
 			json_var=NULL;
@@ -80,22 +88,20 @@ namespace zetjsoncpp{
 				json_var=new _T;
 				char *aux_p=buf;
 				uint8_t bom_signature[]={0xef,0xbb,0xbf};
+				ParseData parse_data;
 				if(memcmp(aux_p,bom_signature,sizeof(bom_signature))==0){ // ignore BOM signature
 					aux_p+=sizeof(bom_signature);
 				}
 
-				parse_json_var(aux_p,aux_p, json_var,_filename.c_str(),line);
+				parse_data.filename=_filename.c_str();
+				parse_data.str_start=aux_p;
+
+				parse_json_var(&parse_data,aux_p,line,json_var);
 			}
 			catch(parse_error_exception & err){
 				delete json_var;
 				free(buf);
 				throw err;
-			}
-			catch(parse_warning_exception & wrn){
-				delete json_var;
-				free(buf);
-				throw wrn;
-
 			}
 			free(buf);
 		}

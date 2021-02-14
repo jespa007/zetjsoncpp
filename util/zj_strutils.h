@@ -15,14 +15,6 @@ namespace zetjsoncpp {
 			STR_2_NUMBER_INCONVERTIBLE
 		} STR_2_NUMBER;
 
-		typedef enum {
-			STR_NUMBER_TYPE_INVALID = 0,
-			STR_NUMBER_TYPE_HEXA,
-			STR_NUMBER_TYPE_INT,
-			STR_NUMBER_TYPE_DOUBLE
-		}STR_NUMBER_TYPE;
-
-
 		bool is_empty(const std::string & str);
 
 		std::string  format(const  char  *input_text, ...);
@@ -33,7 +25,7 @@ namespace zetjsoncpp {
 
 		std::string to_lower(const std::string & str);
 		bool ends_with(const std::string & fullString, const std::string & ending);
-		STR_NUMBER_TYPE is_number(const std::string & test_str_number);
+
 		std::wstring to_wstring_utf8(const std::string & s);
 
 

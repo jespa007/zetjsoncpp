@@ -19,7 +19,7 @@ namespace zetjsoncpp {
 	public:
 
 
-		parse_exception(const char *  _file, int _line, const char * _error_description, const char *_error_type){
+		parse_exception(const char *  _file, int _line, const std::string & _error_description, const char *_error_type){
 
 			error_type=_error_type;
 			/*if(file != NULL){
@@ -37,24 +37,17 @@ namespace zetjsoncpp {
 
 	    virtual const char* what() const throw()
 		{
-
 	    	return (const char *)what_msg;
-	    	//return "["+file+":"+to_string(line)+"]"+error;
 		}
-	};
-
-
-	class parse_warning_exception: public parse_exception{
-		public:
-		parse_warning_exception(const char *  _file, int _line, const char * _error):parse_exception(_file,  _line, _error,"WRN"){}
 	};
 
 	class parse_error_exception: public parse_exception{
 	public:
 
-		parse_error_exception(const char *  _file, int _line, const char * _error):parse_exception(_file,  _line, _error,"ERR"){}
+		parse_error_exception(const char *  _file, int _line, const std::string & _error):parse_exception(_file,  _line, _error,"ERR"){}
 
 	};
+
 };
 
 #endif
