@@ -33,7 +33,7 @@ namespace zetjsoncpp{
 					str_value += ",";
 				}
 
-				str_value += (std::string)("\"" + v->at(j) + "\"");
+				str_value += "\"" + v->at(j) + "\"";
 
 			}
 

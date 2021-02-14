@@ -36,9 +36,7 @@ namespace zetjsoncpp{
 					str_value = str_value + ",";
 				}
 
-				str_value += (std::string)("\""+it->first +"\":\""+it->second+"\"");// str_value + "\"" + v->at(j) + "\" ";
-
-
+				str_value += "\""+it->first +"\":\""+it->second+"\"";// str_value + "\"" + v->at(j) + "\" ";
 			}
 
 			str_value += this->toStringFormattedEnd(ident,properties);
