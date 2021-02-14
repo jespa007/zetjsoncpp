@@ -18,10 +18,6 @@ int main(int argc, char *argv[]){
 		std::cout << "1. Testing json primitives and basic operations..."<< std::endl;
 		auto n1=zetjsoncpp::parse<zetjsoncpp::JsonVarNumber<>>("1");
 		auto n2=zetjsoncpp::parse<zetjsoncpp::JsonVarNumber<>>("3.7e+2");
-		if(*n1==0){}
-		//if(*n1!=0){}
-
-
 		auto n3=1.2+*n1+1+*n2+10; // test operations
 		printf("n1=%.2f n2=%.2f n3=%.2f\n",(float)*n1,(float)*n2,(float)n3);
 
