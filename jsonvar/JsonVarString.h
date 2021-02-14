@@ -17,6 +17,10 @@ namespace zetjsoncpp{
 
 		operator std::string(){return __js_value__;}
 
+		const char *c_str(){
+			return __js_value__.c_str();
+		}
+
 		JsonVarString & operator =(const std::string & _value){
 			this->__js_value__ = _value;
 			return (*this);
