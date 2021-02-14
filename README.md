@@ -6,7 +6,6 @@ As an example, let's supose we want to load the following json data that is save
 
 <pre lang="javascript">
 {
-    // Default encoding for text
     "encoding" : "UTF-8",
     "number": 3.34E-5
      "plug-ins" : [
@@ -35,21 +34,21 @@ typedef struct{
 
 typedef struct
 {
-    // String encoding
+	// String encoding
 	zetjsoncpp::JsonVarString<ZJ_CONST_CHAR("encoding")>
 	encoding;
-
-    // Number number
+	
+	// Number number
 	zetjsoncpp::JsonVarNumber<ZJ_CONST_CHAR("number")>
 	number;
 
-    // Vector of strings plug-ins
+	// Vector of strings plug-ins
 	zetjsoncpp::JsonVarVectorString<ZJ_CONST_CHAR("plug-ins")>
 	plugins;
-
-    // Object indent
-    zetjsoncpp::JsonVarObject<Ident,ZJ_CONST_CHAR("indent")>
-    indent;
+	
+	// Object indent
+	zetjsoncpp::JsonVarObject<Ident,ZJ_CONST_CHAR("indent")>
+	indent;
 
 }SampleJson;
 </pre>
@@ -65,17 +64,15 @@ int main(int argc, char *argv[]){
 
 	try{
 		auto json_object=zetjsoncpp::parse_file<zetjsoncpp::JsonVarObject<SampleJson>>("sample.json");
-		
-        // .... operate data with loaded json_object
+		// .... operate data with loaded json_object
 
-    	// destroy json_object
-    	delete json_object;
-    	
-    }catch(std::exception & ex){
-    	fprintf(stderr, "%s\n",ex.what());
-    }
+    		// destroy json_object
+    		delete json_object;
+	}catch(std::exception & ex){
+		fprintf(stderr, "%s\n",ex.what());
+	}
     
-    return 0;
+	return 0;
 }
 </pre>
 
@@ -110,10 +107,10 @@ int main(int argc, char *argv[]){
 		delete json_object;
 
 	}catch(std::exception & ex){
-    	fprintf(stderr, "%s\n",ex.what());
-    }
+		fprintf(stderr, "%s\n",ex.what());
+	}
 
-    return 0;
+	return 0;
 }
 </pre>
 
