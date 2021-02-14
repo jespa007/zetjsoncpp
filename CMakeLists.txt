@@ -184,22 +184,25 @@ SET(
 	util/zj_strutils.h
 	util/zj_file.h
 	util/zj_path.h
-	jsonvar/JsonVarVector.h
 	jsonvar/JsonVar.h
+	jsonvar/JsonVarNamed.h
+	
+	jsonvar/JsonVarBoolean.h
+	jsonvar/JsonVarNumber.h
+	jsonvar/JsonVarObject.h
+	jsonvar/JsonVarString.h
+	
+	jsonvar/JsonVarVector.h
 	jsonvar/JsonVarVectorBoolean.h
 	jsonvar/JsonVarVectorNumber.h
 	jsonvar/JsonVarVectorObject.h
 	jsonvar/JsonVarVectorString.h
+	
+	jsonvar/JsonVarMap.h	
 	jsonvar/JsonVarMapBoolean.h
 	jsonvar/JsonVarMapNumber.h
 	jsonvar/JsonVarMapObject.h
 	jsonvar/JsonVarMapString.h
-	
-	jsonvar/JsonVarBoolean.h
-	jsonvar/JsonVarNamed.h
-	jsonvar/JsonVarNumber.h
-	jsonvar/JsonVarObject.h
-	jsonvar/JsonVarString.h
 		
 	zetjsoncpp.h
 	zetjsoncpp.tcc
