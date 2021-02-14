@@ -151,7 +151,7 @@ namespace zetjsoncpp {
 
 		virtual ~JsonVar();
 
-		void * getPtrData(){ return __js_ptr_data__;}
+		void * getPtrData(){ return __js_ptr_data_start__;}
 		virtual void * getPtrValue(){ return NULL;}
 
 
@@ -169,7 +169,7 @@ namespace zetjsoncpp {
 		JsonVarType __js_type__;
 		size_t __js_size_data__;
 		std::string  __js_variable_name__;
-		void 	     *__js_ptr_data__; // can be int, bool, vector, prop_grp, etc ...
+		void 	     *__js_ptr_data_start__; // can be int, bool, vector, prop_grp, etc ...
 		JsonVar *__js_ptr_data_end__;
 	};
 

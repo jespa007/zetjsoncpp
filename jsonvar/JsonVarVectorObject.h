@@ -8,7 +8,7 @@ namespace zetjsoncpp{
 		JsonVarVectorObject() {
 			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS;
 			this->__js_size_data__ = sizeof(JsonVarVectorObject<_T_DATA, _T_NAME...>);
-			this->__js_ptr_data__ = &this->__js_vec_data__;
+			this->__js_ptr_data_start__ = &this->__js_vec_data__;
 		}
 
 		virtual JsonVar *newJsonVar() {

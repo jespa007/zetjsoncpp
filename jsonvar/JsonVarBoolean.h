@@ -19,7 +19,7 @@ namespace zetjsoncpp{
 		//_T_NAME name;
 		JsonVarBoolean(bool b) {
 			init();
-			*((bool *)this->__js_ptr_data__) = b;
+			*((bool *)this->__js_ptr_data_start__) = b;
 		}
 
 		virtual void * getPtrValue(){ return &__js_value__;}

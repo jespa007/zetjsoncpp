@@ -22,6 +22,13 @@ namespace zetjsoncpp{
 				this->__js_value__ = f;
 			}
 
+			//-----
+			// pre neg
+			JsonVarNumber   operator -  (){
+				return JsonVarNumber(-__js_value__);
+			}
+
+
 			 virtual void * getPtrValue(){ return &__js_value__;}
 
 			 JsonVarNumber(const std::string & s) {
@@ -44,6 +51,8 @@ namespace zetjsoncpp{
 				return this->__js_value__;
 			}
 
+			//-----
+			// +
 			JsonVarNumber   operator +  (const JsonVarNumber & n) {
 				return (__js_value__ + n.__js_value__);
 			}
@@ -52,14 +61,35 @@ namespace zetjsoncpp{
 				return JsonVarNumber(__js_value__ + n);
 			}
 
+			JsonVarNumber   operator +  (int n)  {
+				return JsonVarNumber(__js_value__ + n);
+			}
+			//-----
+			// -
 			JsonVarNumber   operator -  (const JsonVarNumber & n) {
-				return  JsonVarNumber(__js_value__ - n.__js_value__);
+				return (__js_value__ - n.__js_value__);
 			}
 
-			JsonVarNumber   operator -  (){
-				return JsonVarNumber(-__js_value__);
+			JsonVarNumber   operator -  (float n)  {
+				return JsonVarNumber(__js_value__ - n);
 			}
-			//--- /
+
+			JsonVarNumber   operator -  (int n)  {
+				return JsonVarNumber(__js_value__ - n);
+			}
+			//-----
+			// *
+			JsonVarNumber   operator *  (const JsonVarNumber & n) {
+				return JsonVarNumber(__js_value__ * n.__js_value__);
+			}
+			JsonVarNumber   operator *  (float  n) {
+				return JsonVarNumber(__js_value__ * n);
+			}
+			JsonVarNumber   operator *  (int  n) {
+				return JsonVarNumber(__js_value__ * n);
+			}
+			//-----
+			// /
 			JsonVarNumber   operator /  (const JsonVarNumber & n) {
 
 				if(n.m_numVar ==0)
@@ -75,59 +105,108 @@ namespace zetjsoncpp{
 
 				return JsonVarNumber(__js_value__ / n);
 			}
-			//--- *
-			JsonVarNumber   operator *  (const JsonVarNumber & n) {
-				return JsonVarNumber(__js_value__ * n.__js_value__);
+
+			JsonVarNumber   operator /  (int  n) {
+
+				if(n ==0)
+					throw ("Error divide by 0");
+
+				return JsonVarNumber(__js_value__ / n);
+			}
+			//-----
+			// %
+			JsonVarNumber   operator %  (const JsonVarNumber & n) {
+
+				if(n.m_numVar ==0)
+					throw ("Error divide by 0");
+
+				return JsonVarNumber(fmod(__js_value__ , n.__js_value__));
 			}
 
-			JsonVarNumber   operator *  (float  n) {
-				return JsonVarNumber(__js_value__ * n);
+			JsonVarNumber   operator %  (float  n) {
+
+				if(n ==0)
+					throw ("Error divide by 0");
+
+				return JsonVarNumber(fmod(__js_value__, n));
 			}
-			//--- ==
+
+			JsonVarNumber   operator %  (int  n) {
+
+				if(n ==0)
+					throw ("Error divide by 0");
+
+				return JsonVarNumber(fmod(__js_value__ , n));
+			}
+			//-----
+			// !=
 			bool 	  operator == (const JsonVarNumber & n){
 				return __js_value__ == n.__js_value__;
 			}
 			bool 	  operator == (float n){
 				return __js_value__ == n;
 			}
-
+			bool 	  operator == (int n){
+				return __js_value__ == n;
+			}
+			//-----
+			// !=
 			bool 	  operator != (const JsonVarNumber & n){
 				return __js_value__ != n.__js_value__;
 			}
 			bool 	  operator != (float n){
 				return __js_value__ != n;
 			}
-
+			bool 	  operator != (int n){
+				return __js_value__ != n;
+			}
+			//-----
+			// !=
 			bool 	  operator <  (const JsonVarNumber & n){
 				return __js_value__ < n.__js_value__;
 			}
 			bool 	  operator <  (float n){
 				return __js_value__ < n;
 			}
-
+			bool 	  operator <  (int n){
+				return __js_value__ < n;
+			}
+			//-----
+			// <=
 			bool 	  operator <= (const JsonVarNumber & n){
 				return __js_value__ <= n.__js_value__;
 			}
-
 			bool 	  operator <= (float n){
 				return __js_value__ <= n;
 			}
+			bool 	  operator <= (int n){
+				return __js_value__ <= n;
+			}
 
+			//-----
+			// >
 			bool 	  operator >  (const JsonVarNumber & n){
 				return __js_value__ > n.__js_value__;
 			}
 			bool 	  operator >  (float n){
 				return __js_value__ > n;
 			}
-
+			bool 	  operator >  (int n){
+				return __js_value__ > n;
+			}
+			//-----
+			// >=
 			bool	operator >= (const JsonVarNumber & n){
 				return __js_value__ >= n.__js_value__;
 			}
-
 			bool 	  operator >= (float n){
 				return __js_value__ >= n;
 			}
-
+			bool 	  operator >= (int n){
+				return __js_value__ >= n;
+			}
+			//-----
+			// +=
 			JsonVarNumber & operator += (const JsonVarNumber & n){
 				__js_value__ += n.__js_value__;
 				return (*this);
