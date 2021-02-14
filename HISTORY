@@ -1,3 +1,36 @@
+> #15 CMake: add -DFCOMPILE
+
+//----------------------------
+Date: 14/02/2021
+Version: 2.0.0
+
+Main features
+
+-Added support for map/dictionary of elements
+-Massive code organization and clean up
+-straightforward way to get a json file/string parsed and assigned into native variable.
+-Support uft-8 files with bom
+-Support for parse any json type (i.e number/string/boolean/object, vector or map of elements) 
+
+Detail
+
+#19 Support unicode files/strings
+#20 throw error instead of if(error)
+#21 Removed CBuffer
+#22 Changed var/C* to var/JZ_*
+#23 organize zetjsoncpp_utils to string and io files 
+#4 changed CParserVarXXXXArray by CParserVarArrayXXXX 
+#5 ZJ_Number: Only works with floats 
+#6 Migrate new c++ style 
+#10 Change ParseJson name by ZetJsonCpp
+#11 Test operator functions for number/string/boolean 
+#12 Change Json Object names starting by JsonVarXXXXX
+#13 Implement JsonVarMap
+#14 Specify starting type JsonVar (i.e JsonVarNumber,JsonVarObject, JsonVarArrayObject, ...) instead of fixed JsonVarArrayObject<_T>
+#16 create tests test
+#17 Support UTF-8 with/out BOM mark Feature 
+#18 Pre/Post name all variables associated with JsonVar 
+
 //----------------------------
 Date: 15/05/2018
 Version: 1.3.0
