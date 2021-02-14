@@ -8,7 +8,7 @@ namespace zetjsoncpp{
 		JsonVarVectorString() {
 			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_STRINGS;
 			this->__js_size_data__ = sizeof(JsonVarVectorString< _T_NAME...>);
-			this->__js_ptr_data__ = &this->__js_vec_data__;
+			this->__js_ptr_data_start__ = &this->__js_vec_data__;
 		}
 
 		virtual JsonVar *newJsonVar(){
@@ -20,7 +20,7 @@ namespace zetjsoncpp{
 		virtual std::string toStringFormatted(int ident, uint16_t properties = 0) {
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
 			std::string str_value = "";
-			std::vector<JsonVarString<>> * v = (std::vector<JsonVarString<>> *)this->__js_ptr_data__;
+			std::vector<JsonVarString<>> * v = (std::vector<JsonVarString<>> *)this->__js_ptr_data_start__;
 
 			str_value+=toStringFormattedStart(ident,properties);
 
