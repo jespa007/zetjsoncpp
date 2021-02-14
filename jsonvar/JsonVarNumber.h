@@ -22,6 +22,13 @@ namespace zetjsoncpp{
 				this->__js_value__ = f;
 			}
 
+			//-----
+			// pre neg
+			JsonVarNumber   operator -  (){
+				return JsonVarNumber(-__js_value__);
+			}
+
+
 			 virtual void * getPtrValue(){ return &__js_value__;}
 
 			 JsonVarNumber(const std::string & s) {
@@ -44,172 +51,161 @@ namespace zetjsoncpp{
 				return this->__js_value__;
 			}
 
-			//--------------------------
+			//-----
 			// +
-			friend JsonVarNumber operator +(float s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1+s2.__js_value__);
+			JsonVarNumber   operator +  (const JsonVarNumber & n) {
+				return (__js_value__ + n.__js_value__);
 			}
 
-			friend JsonVarNumber operator +(const JsonVarNumber & s1,float s2)  {
-				return JsonVarNumber(s1.__js_value__+s2);
+			JsonVarNumber   operator +  (float n)  {
+				return JsonVarNumber(__js_value__ + n);
 			}
 
-			friend JsonVarNumber operator +(const JsonVarNumber & s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1.__js_value__+s2.__js_value__);
+			JsonVarNumber   operator +  (int n)  {
+				return JsonVarNumber(__js_value__ + n);
 			}
-			//--------------------------
+			//-----
 			// -
-			friend JsonVarNumber operator -(float s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1-s2.__js_value__);
+			JsonVarNumber   operator -  (const JsonVarNumber & n) {
+				return (__js_value__ - n.__js_value__);
 			}
 
-			friend JsonVarNumber operator -(const JsonVarNumber & s1,float & s2)  {
-				return JsonVarNumber(s1.__js_value__-s2);
+			JsonVarNumber   operator -  (float n)  {
+				return JsonVarNumber(__js_value__ - n);
 			}
 
-			friend JsonVarNumber operator -(const JsonVarNumber & s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1.__js_value__-s2.__js_value__);
+			JsonVarNumber   operator -  (int n)  {
+				return JsonVarNumber(__js_value__ - n);
 			}
-			//--------------------------
+			//-----
 			// *
-			friend JsonVarNumber operator *(float s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1*s2.__js_value__);
+			JsonVarNumber   operator *  (const JsonVarNumber & n) {
+				return JsonVarNumber(__js_value__ * n.__js_value__);
 			}
-
-			friend JsonVarNumber operator *(const JsonVarNumber & s1,float & s2)  {
-				return JsonVarNumber(s1.__js_value__*s2);
+			JsonVarNumber   operator *  (float  n) {
+				return JsonVarNumber(__js_value__ * n);
 			}
-
-			friend JsonVarNumber operator *(const JsonVarNumber & s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1.__js_value__*s2.__js_value__);
+			JsonVarNumber   operator *  (int  n) {
+				return JsonVarNumber(__js_value__ * n);
 			}
-			//--------------------------
+			//-----
 			// /
-			friend JsonVarNumber operator /(float s1,const JsonVarNumber & s2)  {
-				if(s2.__js_value__ ==0){
-					throw ("Error divide by 0");
-				}
+			JsonVarNumber   operator /  (const JsonVarNumber & n) {
 
-				return JsonVarNumber(s1/s2.__js_value__);
+				if(n.m_numVar ==0)
+					throw ("Error divide by 0");
+
+				return JsonVarNumber(__js_value__ / n.__js_value__);
 			}
 
-			friend JsonVarNumber operator /(const JsonVarNumber & s1,float & s2)  {
+			JsonVarNumber   operator /  (float  n) {
 
-				if(s2 ==0){
+				if(n ==0)
 					throw ("Error divide by 0");
-				}
-				return JsonVarNumber(s1.__js_value__/s2);
+
+				return JsonVarNumber(__js_value__ / n);
 			}
 
-			friend JsonVarNumber operator /(const JsonVarNumber & s1,const JsonVarNumber & s2)  {
-				if(s2.__js_value__ ==0){
+			JsonVarNumber   operator /  (int  n) {
+
+				if(n ==0)
 					throw ("Error divide by 0");
-				}
-				return JsonVarNumber(s1.__js_value__/s2.__js_value__);
+
+				return JsonVarNumber(__js_value__ / n);
 			}
-			//--------------------------
+			//-----
 			// %
-			friend JsonVarNumber operator %(float s1,const JsonVarNumber & s2)  {
-				if(s2.__js_value__ ==0){
+			JsonVarNumber   operator %  (const JsonVarNumber & n) {
+
+				if(n.m_numVar ==0)
 					throw ("Error divide by 0");
-				}
 
-				return JsonVarNumber(s1%s2.__js_value__);
+				return JsonVarNumber(fmod(__js_value__ , n.__js_value__));
 			}
 
-			friend JsonVarNumber operator %(const JsonVarNumber & s1,float & s2)  {
+			JsonVarNumber   operator %  (float  n) {
 
-				if(s2 ==0){
+				if(n ==0)
 					throw ("Error divide by 0");
-				}
-				return JsonVarNumber(s1.__js_value__%s2);
+
+				return JsonVarNumber(fmod(__js_value__, n));
 			}
 
-			friend JsonVarNumber operator %(const JsonVarNumber & s1,const JsonVarNumber & s2)  {
-				if(s2.__js_value__ ==0){
+			JsonVarNumber   operator %  (int  n) {
+
+				if(n ==0)
 					throw ("Error divide by 0");
-				}
-				return JsonVarNumber(s1.__js_value__%s2.__js_value__);
-			}
-			//--------------------------
-			// ==
-			friend bool operator ==(float s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1==s2.__js_value__);
-			}
 
-			friend bool operator ==(const JsonVarNumber & s1,float & s2)  {
-				return JsonVarNumber(s1.__js_value__==s2);
+				return JsonVarNumber(fmod(__js_value__ , n));
 			}
-
-			friend bool operator ==(const JsonVarNumber & s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1.__js_value__==s2.__js_value__);
-			}
-			//--------------------------
+			//-----
 			// !=
-			friend bool operator !=(float s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1!=s2.__js_value__);
+			bool 	  operator == (const JsonVarNumber & n){
+				return __js_value__ == n.__js_value__;
 			}
-
-			friend bool operator !=(const JsonVarNumber & s1,float & s2)  {
-				return JsonVarNumber(s1.__js_value__!=s2);
+			bool 	  operator == (float n){
+				return __js_value__ == n;
 			}
-
-			friend bool operator !=(const JsonVarNumber & s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1.__js_value__!=s2.__js_value__);
+			bool 	  operator == (int n){
+				return __js_value__ == n;
 			}
-			//--------------------------
-			// <
-			friend bool operator <(float s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1<s2.__js_value__);
+			//-----
+			// !=
+			bool 	  operator != (const JsonVarNumber & n){
+				return __js_value__ != n.__js_value__;
 			}
-
-			friend bool operator <(const JsonVarNumber & s1,float & s2)  {
-				return JsonVarNumber(s1.__js_value__<s2);
+			bool 	  operator != (float n){
+				return __js_value__ != n;
 			}
-
-			friend bool operator <(const JsonVarNumber & s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1.__js_value__<s2.__js_value__);
+			bool 	  operator != (int n){
+				return __js_value__ != n;
 			}
-			//--------------------------
+			//-----
+			// !=
+			bool 	  operator <  (const JsonVarNumber & n){
+				return __js_value__ < n.__js_value__;
+			}
+			bool 	  operator <  (float n){
+				return __js_value__ < n;
+			}
+			bool 	  operator <  (int n){
+				return __js_value__ < n;
+			}
+			//-----
 			// <=
-			friend bool operator <=(float s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1<=s2.__js_value__);
+			bool 	  operator <= (const JsonVarNumber & n){
+				return __js_value__ <= n.__js_value__;
+			}
+			bool 	  operator <= (float n){
+				return __js_value__ <= n;
+			}
+			bool 	  operator <= (int n){
+				return __js_value__ <= n;
 			}
 
-			friend bool operator <=(const JsonVarNumber & s1,float & s2)  {
-				return JsonVarNumber(s1.__js_value__<=s2);
-			}
-
-			friend bool operator <=(const JsonVarNumber & s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1.__js_value__<=s2.__js_value__);
-			}
-			//--------------------------
+			//-----
 			// >
-			friend bool operator >(float s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1>s2.__js_value__);
+			bool 	  operator >  (const JsonVarNumber & n){
+				return __js_value__ > n.__js_value__;
 			}
-
-			friend bool operator >(const JsonVarNumber & s1,float & s2)  {
-				return JsonVarNumber(s1.__js_value__>s2);
+			bool 	  operator >  (float n){
+				return __js_value__ > n;
 			}
-
-			friend bool operator >(const JsonVarNumber & s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1.__js_value__>s2.__js_value__);
+			bool 	  operator >  (int n){
+				return __js_value__ > n;
 			}
-			//--------------------------
+			//-----
 			// >=
-			friend bool operator >=(float s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1>=s2.__js_value__);
+			bool	operator >= (const JsonVarNumber & n){
+				return __js_value__ >= n.__js_value__;
 			}
-
-			friend bool operator >=(const JsonVarNumber & s1,float & s2)  {
-				return JsonVarNumber(s1.__js_value__>=s2);
+			bool 	  operator >= (float n){
+				return __js_value__ >= n;
 			}
-
-			friend bool operator >=(const JsonVarNumber & s1,const JsonVarNumber & s2)  {
-				return JsonVarNumber(s1.__js_value__>=s2.__js_value__);
+			bool 	  operator >= (int n){
+				return __js_value__ >= n;
 			}
-			//--------------------------
+			//-----
 			// +=
 			JsonVarNumber & operator += (const JsonVarNumber & n){
 				__js_value__ += n.__js_value__;
@@ -220,8 +216,7 @@ namespace zetjsoncpp{
 				__js_value__ += n1;
 				return (*this);
 			}
-			//--------------------------
-			// *=
+
 			JsonVarNumber & operator *= (const JsonVarNumber & n){
 				__js_value__ *= n.__js_value__;
 				return (*this);
@@ -231,8 +226,7 @@ namespace zetjsoncpp{
 				__js_value__ *= n1;
 				return (*this);
 			}
-			//--------------------------
-			// /=
+
 			JsonVarNumber & operator /= (const JsonVarNumber & n){
 				if(n.__js_value__ == 0)
 					throw("Divide by 0!");
@@ -240,6 +234,7 @@ namespace zetjsoncpp{
 				__js_value__ /= n.__js_value__;
 				return (*this);
 			}
+
 			JsonVarNumber & operator /= (float n1){
 
 				if(n1 == 0){
@@ -249,8 +244,7 @@ namespace zetjsoncpp{
 				__js_value__ /= n1;
 				return (*this);
 			}
-			//--------------------------
-			// -=
+			//--- -=
 			JsonVarNumber & operator -= (const JsonVarNumber & n){
 				__js_value__ -= n.m_numVar;
 				return (*this);
@@ -260,8 +254,7 @@ namespace zetjsoncpp{
 				__js_value__ -= n1;
 				return (*this);
 			}
-			//--------------------------
-			// ++
+
 			JsonVarNumber & operator ++(){
 				__js_value__++;
 				return (*this);

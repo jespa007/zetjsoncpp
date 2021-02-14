@@ -23,7 +23,7 @@
 #include <stdexcept>
 #include <float.h>
 #include <limits.h>
-
+#include <math.h>
 
 #define ZETJSONCPP_MAJOR_VERSION 2
 #define ZETJSONCPP_MINOR_VERSION 0

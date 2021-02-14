@@ -19,7 +19,7 @@ int main(int argc, char *argv[]){
 		auto n1=zetjsoncpp::parse<zetjsoncpp::JsonVarNumber<>>("1");
 		auto n2=zetjsoncpp::parse<zetjsoncpp::JsonVarNumber<>>("3.7e+2");
 		if(*n1==0){}
-		if(*n1!=0){}
+		//if(*n1!=0){}
 
 
 		auto n3=1.2+*n1+1+*n2+10; // test operations
