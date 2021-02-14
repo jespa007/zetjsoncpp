@@ -28,28 +28,6 @@ namespace zetjsoncpp{
 			// Iterate on all its elements ...
 			char *aux_p = (char *)this->__js_ptr_data_start__;
 			char *end_p = (char *)this->__js_ptr_data_end__;
-
-			va_list arg_list;
-
-			// inicialize all vars struct in order of pass parameters ...
-			va_start(arg_list, numParam);
-			for (unsigned i = 0; i < numParam && (aux_p < end_p); i++) {
-				const char * variable = va_arg(arg_list, const char *);
-				JsonVar * p_sv = (JsonVar *)aux_p;
-
-				switch (p_sv->getType())
-				{
-				case JsonVarType::JSON_VAR_TYPE_STRING:
-					//print_info_cr("std::string ...!\n\n");
-					*(ZJ_CAST_JSON_VAR_STRING p_sv) = variable;//->assign();
-					break;
-				}
-
-				aux_p += p_sv->getSizeData();
-			}
-			va_end(arg_list);
-			//---------
-
 		}
 
 		JsonVarObject(...) {
