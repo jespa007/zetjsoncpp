@@ -21,7 +21,7 @@
 
 namespace zetjsoncpp{
 
-	char * parse_json_var_object(ParseData *parse_data, const char *str_current, int & line, JsonVar *_root);
+	char * parse_json_var_object(ParseData *parse_data, const char *str_current, int & line, JsonVar *json_var);
 
 	void json_parse_error(ParseData *parse_data, const char *str_current,int line, const char *string_text, ...) {
 
@@ -238,7 +238,7 @@ namespace zetjsoncpp{
 		ParseData *parse_data
 		,const char *str_start
 		, int & line
-		, JsonVar *json_var=NULL
+		, JsonVar *json_var
 	){
 		// ptr_data: can be a bool/string or number in function of type value
 		// type_value: defines the value to parse
@@ -317,6 +317,10 @@ namespace zetjsoncpp{
 
 		// if the parse was ok or json_var was not found we advance anyway
 		if(ok || json_var == NULL){
+			if(ok == true && json_var != NULL){
+				json_var->setParsed(true);
+			}
+
 			return str_current;
 		}
 		else{
@@ -392,10 +396,14 @@ namespace zetjsoncpp{
 			}while(*str_current != ']');
 		}
 
+		if(json_var != NULL){
+			json_var->setParsed(true);
+		}
+
 		return str_current+1;
 	}
 
-	char * parse_json_var_object(ParseData *parse_data, const char * str_start, int & line, JsonVar *json_var=NULL) {
+	char * parse_json_var_object(ParseData *parse_data, const char * str_start, int & line, JsonVar *json_var) {
 		char *str_current = (char *)str_start;
 		std::string variable_name,key_id;
 		std::string error;
@@ -408,7 +416,7 @@ namespace zetjsoncpp{
 		str_current = ignore_blanks(str_current, line);
 
 		if(*str_current != '{'){
-			json_parse_error(parse_data, str_start, line, "A '{' was expected to parse %s type",json_var->toTypeStr());
+			json_parse_error(parse_data, str_start, line, "A '{' was expected to parse %s type",json_var!=NULL?json_var->toTypeStr():"");
 			return 0;
 		}
 
@@ -456,10 +464,15 @@ namespace zetjsoncpp{
 			}while(*str_current != '}');
 		}
 
+		if(json_var != NULL){
+			json_var->setParsed(true);
+		}
+
+
 		return str_current+1;
 	}
 
-	char * parse_json_var(ParseData *parse_data, const char * str_start, int & line,JsonVar *json_var=NULL) {
+	char * parse_json_var(ParseData *parse_data, const char * str_start, int & line,JsonVar *json_var) {
 		// PRE: If json_var == NULL it parses but not saves
 		char * str_current = (char *)str_start;
 		std::string error="";
@@ -468,11 +481,11 @@ namespace zetjsoncpp{
 		if(json_var == NULL){ // continue parse file/string
 			//try to deduce ...
 			if(*str_current == '['){ // try parse vector
-				str_current=parse_json_var_vector(parse_data, str_current+1, line, json_var);
+				str_current=parse_json_var_vector(parse_data, str_current+1, line,json_var);
 			}else if(*str_current == '{') {// can be a map or object but we try as a object
 				str_current=parse_json_var_object(parse_data, str_current+1, line,json_var);
 			}else{
-				str_current=parse_json_var_value(parse_data, str_current,line, json_var);
+				str_current=parse_json_var_value(parse_data, str_current,line,json_var);
 			}
 		}else{
 
