@@ -4,7 +4,7 @@ ZetJsonCpp it allows load data form json format into C estructures.
 
 As an example, let's supose we want to load the following json data that is saved in sample.json file,
 
-<pre lang="javascript">
+```
 {
     "encoding" : "UTF-8",
     "number": 3.34E-5
@@ -15,13 +15,13 @@ As an example, let's supose we want to load the following json data that is save
         ],
     "indent" : { "length" : 3, "use_space": true }
 }
-</pre>
+```
 
 List 1.1
 
 To load the code saw on list 1.1 we have to declare the following C estructure,
 
-<pre lang="c++">
+```
 typedef struct{
 	// Number length
 	zetjsoncpp::JsonVarNumber<ZJ_CONST_CHAR("length")>
@@ -51,13 +51,13 @@ typedef struct
 	indent;
 
 }SampleJson;
-</pre>
+```
 
 List 1.2
 
 And then we have to write the following code to load the data seen on list 1.1 into the estructure on list 1.2,
 
-<pre lang="c++">
+```
 #include "zetjsoncpp.h"
 
 int main(int argc, char *argv[]){
@@ -74,12 +74,11 @@ int main(int argc, char *argv[]){
     
 	return 0;
 }
-</pre>
+```
 
 As an example, we present a way to operate loaded json data into C++ code,
 
-<pre lang="c++">
-
+```
 #include "zetjsoncpp.h"
 
 int main(int argc, char *argv[]){
@@ -112,6 +111,6 @@ int main(int argc, char *argv[]){
 
 	return 0;
 }
-</pre>
+```
 
 
