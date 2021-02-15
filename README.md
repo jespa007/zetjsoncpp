@@ -63,7 +63,7 @@ And then we have to write the following code to load the data seen on list 1.1 i
 int main(int argc, char *argv[]){
 
 	try{
-		auto json_object=zetjsoncpp::parse_file<zetjsoncpp::JsonVarObject<SampleJson>>("sample.json");
+		zetjsoncpp::JsonVarObject<SampleJson> *json_object=zetjsoncpp::parse_file<zetjsoncpp::JsonVarObject<SampleJson>>("sample.json");
 		// .... operate data with loaded json_object
 
 		// destroy json_object
@@ -85,7 +85,7 @@ As an example, we present a way to operate loaded json data into C++ code,
 int main(int argc, char *argv[]){
 
 	try{
-		auto json_object=zetjsoncpp::parse_file<zetjsoncpp::JsonVarObject<SampleJson>>("sample.json");
+		zetjsoncpp::JsonVarObject<SampleJson> *json_object=zetjsoncpp::parse_file<zetjsoncpp::JsonVarObject<SampleJson>>("sample.json");
 		
 		// the values before modifications.
 		std::cout << "------------------------------------------------------------------------------" << std::endl;
