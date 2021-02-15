@@ -4,7 +4,7 @@ ZetJsonCpp it allows load data form json format into C estructures.
 
 As an example, let's supose we want to load the following json data that is saved in sample.json file,
 
-<pre lang="javascript">
+```
 {
     "encoding" : "UTF-8",
     "number": 3.34E-5
@@ -15,55 +15,61 @@ As an example, let's supose we want to load the following json data that is save
         ],
     "indent" : { "length" : 3, "use_space": true }
 }
-</pre>
+```
 
 List 1.1
 
 To load the code saw on list 1.1 we have to declare the following C estructure,
 
-<pre lang="c++">
+```
+#include "zetjsoncpp.h"
+
+using zetjsoncpp::JsonVarNumber;
+using zetjsoncpp::JsonVarBoolean;
+using zetjsoncpp::JsonVarString;
+using zetjsoncpp::JsonVarVectorString;
+using zetjsoncpp::JsonVarObject;
+
 typedef struct{
 	// Number length
-	zetjsoncpp::JsonVarNumber<ZJ_CONST_CHAR("length")>
+	JsonVarNumber<ZJ_CONST_CHAR("length")>
 	length;
 
 	// Boolean use_space
-	zetjsoncpp::JsonVarBoolean<ZJ_CONST_CHAR("use_space")>
+	JsonVarBoolean<ZJ_CONST_CHAR("use_space")>
 	use_space;
 }Ident;
 
 typedef struct
 {
 	// String encoding
-	zetjsoncpp::JsonVarString<ZJ_CONST_CHAR("encoding")>
+	JsonVarString<ZJ_CONST_CHAR("encoding")>
 	encoding;
 	
 	// Number number
-	zetjsoncpp::JsonVarNumber<ZJ_CONST_CHAR("number")>
+	JsonVarNumber<ZJ_CONST_CHAR("number")>
 	number;
 
 	// Vector of strings plug-ins
-	zetjsoncpp::JsonVarVectorString<ZJ_CONST_CHAR("plug-ins")>
+	JsonVarVectorString<ZJ_CONST_CHAR("plug-ins")>
 	plugins;
 	
 	// Object indent
-	zetjsoncpp::JsonVarObject<Ident,ZJ_CONST_CHAR("indent")>
+	JsonVarObject<Ident,ZJ_CONST_CHAR("indent")>
 	indent;
 
 }SampleJson;
-</pre>
+```
 
 List 1.2
 
 And then we have to write the following code to load the data seen on list 1.1 into the estructure on list 1.2,
 
-<pre lang="c++">
-#include "zetjsoncpp.h"
-
+```
 int main(int argc, char *argv[]){
 
 	try{
-		auto json_object=zetjsoncpp::parse_file<zetjsoncpp::JsonVarObject<SampleJson>>("sample.json");
+		JsonVarObject<SampleJson> *json_object=zetjsoncpp::parse_file<JsonVarObject<SampleJson>>("sample.json");
 		// .... operate data with loaded json_object
 
 		// destroy json_object
@@ -74,18 +80,15 @@ int main(int argc, char *argv[]){
     
 	return 0;
 }
-</pre>
+```
 
 As an example, we present a way to operate loaded json data into C++ code,
 
-<pre lang="c++">
-
-#include "zetjsoncpp.h"
-
+```
 int main(int argc, char *argv[]){
 
 	try{
-		auto json_object=zetjsoncpp::parse_file<zetjsoncpp::JsonVarObject<SampleJson>>("sample.json");
+		JsonVarObject<SampleJson> *json_object=zetjsoncpp::parse_file<JsonVarObject<SampleJson>>("sample.json");
 		
 		// the values before modifications.
 		std::cout << "------------------------------------------------------------------------------" << std::endl;
@@ -112,6 +115,6 @@ int main(int argc, char *argv[]){
 
 	return 0;
 }
-</pre>
+```
 
 
