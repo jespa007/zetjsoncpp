@@ -20,8 +20,8 @@ namespace zetjsoncpp{
 			char buffer[512] = { 0 };
 
 			strcpy(buffer, s_aux.c_str());
-			this->__js_variable_name__ = buffer;
-			this->__js_size_data__ = sizeof(JsonVarNamed);
+			this->__zj_variable_name__ = buffer;
+			this->__zj_size_data__ = sizeof(JsonVarNamed);
 
 		}
 

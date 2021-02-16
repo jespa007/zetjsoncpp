@@ -151,26 +151,26 @@ namespace zetjsoncpp {
 
 		virtual ~JsonVar();
 
-		void * getPtrData(){ return __js_ptr_data_start__;}
+		void * getPtrData(){ return __zj_ptr_data_start__;}
 		virtual void * getPtrValue(){ return NULL;}
 
 
-		void * getPtrDataEnd(){return __js_ptr_data_end__;}
-		size_t  getSizeData(){return __js_size_data__;}
-		JsonVarType getType(){return __js_type__;}
-		std::string getVariableName(){return __js_variable_name__;}
+		void * getPtrDataEnd(){return __zj_ptr_data_end__;}
+		size_t  getSizeData(){return __zj_size_data__;}
+		JsonVarType getType(){return __zj_type__;}
+		std::string getVariableName(){return __zj_variable_name__;}
 
 		void setParsed(bool parsed);
 
 		bool isParsed() const;
 
 	protected:
-		bool __js_is_parsed__;
-		JsonVarType __js_type__;
-		size_t __js_size_data__;
-		std::string  __js_variable_name__;
-		void 	     *__js_ptr_data_start__; // can be int, bool, vector, prop_grp, etc ...
-		JsonVar *__js_ptr_data_end__;
+		bool __zj_is_parsed__;
+		JsonVarType __zj_type__;
+		size_t __zj_size_data__;
+		std::string  __zj_variable_name__;
+		void 	     *__zj_ptr_data_start__; // can be int, bool, vector, prop_grp, etc ...
+		JsonVar *__zj_ptr_data_end__;
 	};
 
 

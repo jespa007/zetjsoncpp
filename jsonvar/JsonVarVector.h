@@ -15,7 +15,7 @@ namespace zetjsoncpp{
 	template<typename _T_DATA>
 	class JsonVarVector {
 	protected:
-		std::vector<_T_DATA> __js_vec_data__;
+		std::vector<_T_DATA> __zj_vec_data__;
 	public:
 
 		typedef typename std::vector<_T_DATA>::iterator JsonVarIteratorVector;
@@ -23,47 +23,47 @@ namespace zetjsoncpp{
 		JsonVarVector() {}
 
 		JsonVarIteratorVector begin(){
-			return __js_vec_data__.begin();
+			return __zj_vec_data__.begin();
 		}
 
 		JsonVarIteratorVector end(){
-			return __js_vec_data__.end();
+			return __zj_vec_data__.end();
 		}
 
 
 		_T_DATA & 	operator[](int i) {
-			return __js_vec_data__.at(i);
+			return __zj_vec_data__.at(i);
 		}
 
 		_T_DATA const& 	operator[](int i) const {
-			return __js_vec_data__.at(i);
+			return __zj_vec_data__.at(i);
 		}
 
 		_T_DATA const& 	at(unsigned int i) const {
 
-			return __js_vec_data__.at(i);
+			return __zj_vec_data__.at(i);
 		}
 
 		void			 	push_back(const _T_DATA & tt) {
-			__js_vec_data__.push_back(tt);
+			__zj_vec_data__.push_back(tt);
 		}
 
 		void			 	clear() {
-			__js_vec_data__.clear();
+			__zj_vec_data__.clear();
 		}
 
 		void 	erase(unsigned int i) {
-			if (i < __js_vec_data__.size()) {
-				__js_vec_data__.erase(__js_vec_data__.begin() + i);
+			if (i < __zj_vec_data__.size()) {
+				__zj_vec_data__.erase(__zj_vec_data__.begin() + i);
 			}
 		}
 
 		unsigned 			size() const {
-			return __js_vec_data__.size();
+			return __zj_vec_data__.size();
 		}
 
 		const std::vector<_T_DATA> & getStdVector() {
-			return __js_vec_data__;
+			return __zj_vec_data__;
 		}
 
 		virtual ~JsonVarVector() {

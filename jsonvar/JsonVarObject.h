@@ -17,12 +17,12 @@ namespace zetjsoncpp{
 			// PRE: All arguments must be std::string. The program can parse the appropiate type variable
 			// with its emmbedded type.
 
-			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_OBJECT;
-			this->__js_size_data__ = sizeof(JsonVarObject<_T_DATA,_T_NAME...>);
+			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_OBJECT;
+			this->__zj_size_data__ = sizeof(JsonVarObject<_T_DATA,_T_NAME...>);
 
 			JsonVar *ptr = ((JsonVar *)&this->__zj_var_ini__ + 1);
-			this->__js_ptr_data_start__ = ptr;
-			this->__js_ptr_data_end__ = ((JsonVar *)&__zj_var_end__ - 1);
+			this->__zj_ptr_data_start__ = ptr;
+			this->__zj_ptr_data_end__ = ((JsonVar *)&__zj_var_end__ - 1);
 
 		}
 

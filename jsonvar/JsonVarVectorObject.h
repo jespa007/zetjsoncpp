@@ -6,9 +6,9 @@ namespace zetjsoncpp{
 	public:
 
 		JsonVarVectorObject() {
-			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS;
-			this->__js_size_data__ = sizeof(JsonVarVectorObject<_T_DATA, _T_NAME...>);
-			this->__js_ptr_data_start__ = &this->__js_vec_data__;
+			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS;
+			this->__zj_size_data__ = sizeof(JsonVarVectorObject<_T_DATA, _T_NAME...>);
+			this->__zj_ptr_data_start__ = &this->__zj_vec_data__;
 		}
 
 		virtual JsonVar *newJsonVar() {
@@ -34,12 +34,12 @@ namespace zetjsoncpp{
 
 		void destroy() {
 
-			for (unsigned i = 0; i < this->__js_vec_data__.size(); i++) {
-				delete this->__js_vec_data__[i];
-				this->__js_vec_data__[i] = NULL;
+			for (unsigned i = 0; i < this->__zj_vec_data__.size(); i++) {
+				delete this->__zj_vec_data__[i];
+				this->__zj_vec_data__[i] = NULL;
 			}
 
-			this->__js_vec_data__.clear();
+			this->__zj_vec_data__.clear();
 		}
 
 		virtual ~JsonVarVectorObject() {
