@@ -13,7 +13,7 @@ namespace zetjsoncpp{
 
 		virtual JsonVar *newJsonVar(const std::string & key_id){
 			if(this->__zj_map_data__.count(key_id) != 0){
-				throw std::runtime_error("key already exists");
+				throw std::runtime_error(zj_strutils::format("property name \"%s\" already exists",key_id.c_str()));
 			}
 			this->__zj_map_data__[key_id]=JsonVarBoolean<>();
 

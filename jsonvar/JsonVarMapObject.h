@@ -12,21 +12,20 @@ namespace zetjsoncpp{
 			this->__zj_ptr_data_start__ = &this->__zj_map_data__;
 		}
 
-		virtual JsonVar *newJsonVar(const std::string & key) {
+		virtual JsonVar *newJsonVar(const std::string & key_id) {
 
-			if(this->__zj_map_data__.count(key) != 0){
-				throw std::runtime_error("key already exists");
+			if(this->__zj_map_data__.count(key_id) != 0){
+				throw std::runtime_error(zj_strutils::format("property name \"%s\" already exists",key_id.c_str()));
 			}
 
 			JsonVarObject< _T_DATA> *tt = new JsonVarObject<_T_DATA>;
-			this->__zj_map_data__[key]=tt;
+			this->__zj_map_data__[key_id]=tt;
 			return (JsonVar *)tt;
 		}
 
 		virtual std::string toStringFormatted(int ident, uint16_t properties) {
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
 			std::string str_value = this->toStringFormattedStart(ident, properties);
-
 
 			int j=0;
 			for (auto it=this->__zj_map_data__.begin(); it != this->__zj_map_data__.end(); it++,j++) {
