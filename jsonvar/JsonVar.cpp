@@ -37,12 +37,12 @@ namespace zetjsoncpp {
 	}
 
 	JsonVar::JsonVar() {
-		this->__js_variable_name__ = "";
-		this->__js_ptr_data_end__ = NULL;
-		this->__js_ptr_data_start__ = NULL;
-		this->__js_size_data__ = 0;
-		this->__js_type__ = JsonVarType::JSON_VAR_TYPE_UNKNOWN;
-		this->__js_is_parsed__ = false;
+		this->__zj_variable_name__ = "";
+		this->__zj_ptr_data_end__ = NULL;
+		this->__zj_ptr_data_start__ = NULL;
+		this->__zj_size_data__ = 0;
+		this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_UNKNOWN;
+		this->__zj_is_parsed__ = false;
 	}
 
 	JsonVar *JsonVar::newJsonVar(){
@@ -54,7 +54,7 @@ namespace zetjsoncpp {
 	}
 
 	const char *JsonVar::toTypeStr(){
-		return idTypeToString(this->__js_type__);
+		return idTypeToString(this->__zj_type__);
 	}
 
 	std::string JsonVar::toStringFormatted(int ident, uint16_t properties) {
@@ -66,11 +66,11 @@ namespace zetjsoncpp {
 	}
 
 	void JsonVar::setParsed(bool parsed) {
-		__js_is_parsed__ = parsed;
+		__zj_is_parsed__ = parsed;
 	}
 
 	bool JsonVar::isParsed() const {
-		return __js_is_parsed__;
+		return __zj_is_parsed__;
 	}
 
 	JsonVar::~JsonVar() {

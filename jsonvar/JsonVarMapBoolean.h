@@ -6,18 +6,18 @@ namespace zetjsoncpp{
 	public:
 
 		JsonVarMapBoolean() {
-			this->__js_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS;
-			this->__js_size_data__ = sizeof(JsonVarMapBoolean< _T_NAME...>);
-			this->__js_ptr_data_start__ = &this->__js_map_data__;
+			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS;
+			this->__zj_size_data__ = sizeof(JsonVarMapBoolean< _T_NAME...>);
+			this->__zj_ptr_data_start__ = &this->__zj_map_data__;
 		}
 
 		virtual JsonVar *newJsonVar(const std::string & key_id){
-			if(this->__js_map_data__.count(key_id) != 0){
-				throw std::runtime_error("key already exists");
+			if(this->__zj_map_data__.count(key_id) != 0){
+				throw std::runtime_error(zj_strutils::format("property name \"%s\" already exists",key_id.c_str()));
 			}
-			this->__js_map_data__[key_id]=JsonVarBoolean<>();
+			this->__zj_map_data__[key_id]=JsonVarBoolean<>();
 
-			return &this->__js_map_data__[key_id];
+			return &this->__zj_map_data__[key_id];
 		}
 
 
@@ -28,7 +28,7 @@ namespace zetjsoncpp{
 			std::string str_value = this->toStringFormattedStart(ident, properties);
 
 			int j=0;
-			for (auto it=__js_map_data__.begin();it !=__js_map_data__.end();it++,j++) {
+			for (auto it=__zj_map_data__.begin();it !=__zj_map_data__.end();it++,j++) {
 
 				if (j > 0){
 					if (not_minimized){

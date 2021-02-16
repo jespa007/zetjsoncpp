@@ -417,7 +417,7 @@ namespace zetjsoncpp{
 
 		if(*str_current != '{'){
 			json_parse_error(parse_data, str_start, line, "A '{' was expected to parse %s type",json_var!=NULL?json_var->toTypeStr():"");
-			return 0;
+			return NULL;
 		}
 
 		str_current = ignore_blanks(str_current+1, line);
@@ -430,6 +430,7 @@ namespace zetjsoncpp{
 
 				if (*str_current != ':') {// ok check value
 					json_parse_error(parse_data, str_current, line, "Error ':' expected");
+					return NULL;
 				}
 
 				str_current = ignore_blanks(str_current + 1, line);
@@ -439,13 +440,20 @@ namespace zetjsoncpp{
 					json_var_property = find_property(json_var, key_id);
 					if (json_var_property != NULL){
 						if (json_var_property->isParsed()) {
-							json_parse_error(parse_data, str_current, line,"%s was already parsed (duplicate?)", key_id.c_str());
+							json_parse_error(parse_data, str_current, line,"property name \"%s\" already exist", key_id.c_str());
+							return NULL;
 						}
 					}
 
 				}else{ // parse map...
 					if(json_var != NULL){
-						json_var_property = json_var->newJsonVar(key_id);
+						try{
+							json_var_property = json_var->newJsonVar(key_id);
+						}catch(std::exception &ex){
+							json_parse_error(parse_data, str_current, line,ex.what());
+							return NULL;
+						}
+
 					}
 				}
 
@@ -458,7 +466,7 @@ namespace zetjsoncpp{
 					str_current = ignore_blanks(str_current+1, line);
 				}else if(*str_current!='}'){
 					json_parse_error(parse_data, str_current, line, "Expected ',' or '}'");
-					return 0;
+					return NULL;
 				}
 
 			}while(*str_current != '}');
@@ -481,9 +489,9 @@ namespace zetjsoncpp{
 		if(json_var == NULL){ // continue parse file/string
 			//try to deduce ...
 			if(*str_current == '['){ // try parse vector
-				str_current=parse_json_var_vector(parse_data, str_current+1, line,json_var);
+				str_current=parse_json_var_vector(parse_data, str_current, line,json_var);
 			}else if(*str_current == '{') {// can be a map or object but we try as a object
-				str_current=parse_json_var_object(parse_data, str_current+1, line,json_var);
+				str_current=parse_json_var_object(parse_data, str_current, line,json_var);
 			}else{
 				str_current=parse_json_var_value(parse_data, str_current,line,json_var);
 			}
