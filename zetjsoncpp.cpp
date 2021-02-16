@@ -489,9 +489,9 @@ namespace zetjsoncpp{
 		if(json_var == NULL){ // continue parse file/string
 			//try to deduce ...
 			if(*str_current == '['){ // try parse vector
-				str_current=parse_json_var_vector(parse_data, str_current+1, line,json_var);
+				str_current=parse_json_var_vector(parse_data, str_current, line,json_var);
 			}else if(*str_current == '{') {// can be a map or object but we try as a object
-				str_current=parse_json_var_object(parse_data, str_current+1, line,json_var);
+				str_current=parse_json_var_object(parse_data, str_current, line,json_var);
 			}else{
 				str_current=parse_json_var_value(parse_data, str_current,line,json_var);
 			}

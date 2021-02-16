@@ -1,6 +1,5 @@
 // Configuration options
 {
-	"encoding" : "UTF-16",
     // Default encoding for text
     "encoding" : "UTF-8",
     "number": 3.34E-5,
