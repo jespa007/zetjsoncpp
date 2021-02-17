@@ -14,12 +14,30 @@ namespace zetjsoncpp{
 		virtual JsonVar *newJsonVar() {
 
 			JsonVarObject< _T_DATA> *tt = new JsonVarObject<_T_DATA>;
-			this->push_back(tt);
+			this->__zj_vec_data__.push_back(tt);
 			return (JsonVar *)tt;
 		}
 
+		virtual void			 	push_back(const _T_DATA & tt) {
+			throw std::runtime_error("push_back not available, please use newJsonVar in order to add JsonVarObject");
+		}
+
+		virtual  void 	erase(int idx_position) {
+			JsonVar *json_object = this->__zj_vec_data__.at(idx_position);
+			this->__zj_vec_data__.erase(this->__zj_vec_data__.begin()+idx_position);
+			delete json_object;
+		}
+
+		virtual  void 	insert(int idx_position, const _T_DATA & tt) {
+			throw std::runtime_error("insert not available, please use newJsonVar in order to add JsonVarObject");
+		}
+
+		virtual void		clear() {
+			destroy();
+		}
+
 		//std::string result_json;
-		virtual std::string toStringFormatted(int ident, uint16_t properties) {
+		virtual std::string serializeFormatted(int ident, uint16_t properties) {
 			std::string str_value="[";
 			for (unsigned i = 0; i < this->size(); i++) {
 				if (i > 0) {

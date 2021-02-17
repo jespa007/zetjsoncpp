@@ -90,7 +90,7 @@ namespace zetjsoncpp{
 			return b1.__zj_value__ != b2.__zj_value__;
 		}
 
-		virtual std::string toString() {
+		virtual std::string serialize() {
 			return this->__zj_value__ == false ? "false" : "true";
 		}
 

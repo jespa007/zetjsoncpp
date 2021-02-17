@@ -32,21 +32,21 @@ namespace zetjsoncpp{
 			return __zj_map_data__.at(key);
 		}
 
-		void 	insert(const std::string & key, const _T_DATA & tt) {
+		virtual void 	insert(const std::string & key, const _T_DATA & tt) {
 			__zj_map_data__.insert ( std::pair<std::string,_T_DATA>(key,tt) );
 		}
 
-		void 	clear() {
-			__zj_map_data__.clear();
-		}
-
-		void 	erase(const std::string & key) {
+		virtual void 	erase(const std::string & key) {
 			if (__zj_map_data__.count(key)>0) {
 				__zj_map_data__.erase(key);
 			}
 		}
 
-		unsigned 			size() const {
+		virtual void 	clear() {
+			__zj_map_data__.clear();
+		}
+
+		size_t 			size() const {
 			return __zj_map_data__.size();
 		}
 
@@ -60,7 +60,7 @@ namespace zetjsoncpp{
 
 	protected:
 
-		std::string toStringFormattedStart(int ident, uint16_t properties ){
+		std::string toJsonFormattedStart(int ident, uint16_t properties ){
 			std::string str_value ="";
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
 
@@ -77,7 +77,7 @@ namespace zetjsoncpp{
 			return str_value;
 		}
 
-		std::string toStringFormattedEnd(int ident, uint16_t properties ){
+		std::string toJsonFormattedEnd(int ident, uint16_t properties ){
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
 			std::string str_value="";
 

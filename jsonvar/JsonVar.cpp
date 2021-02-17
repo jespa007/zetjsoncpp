@@ -46,23 +46,24 @@ namespace zetjsoncpp {
 	}
 
 	JsonVar *JsonVar::newJsonVar(){
+		throw std::runtime_error("internal error: newJsonVar not implemented");
 		return NULL;
 	}
 
 	JsonVar *JsonVar::newJsonVar(const std::string & key){
-		return NULL;
+		throw std::runtime_error("internal error: newJsonVar not implemented");
 	}
 
 	const char *JsonVar::toTypeStr(){
 		return idTypeToString(this->__zj_type__);
 	}
 
-	std::string JsonVar::toStringFormatted(int ident, uint16_t properties) {
+	std::string JsonVar::serializeFormatted(int ident, uint16_t properties) {
 		return "";
 	}
 
-	std::string JsonVar::toString() {
-		return toStringFormatted(0,0);
+	std::string JsonVar::serialize() {
+		return serializeFormatted(0,0);
 	}
 
 	void JsonVar::setParsed(bool parsed) {

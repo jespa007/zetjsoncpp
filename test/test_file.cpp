@@ -73,12 +73,12 @@ int main(int argc, char *argv[]){
 	}
 
 	try{
-		auto json_object=zetjsoncpp::parse_file<zetjsoncpp::JsonVarObject<SampleJson>>(argv[1]);
+		auto json_object=zetjsoncpp::deserialize_file<zetjsoncpp::JsonVarObject<SampleJson>>(argv[1]);
 
 		// the values before modifications.
 		std::cout << "------------------------------------------------------------------------------" << std::endl;
 		std::cout << " Before modifications:"<< std::endl;
-		std::cout << json_object->toString();
+		std::cout << json_object->serialize();
 
 		// From here we can operate with loaded data in our program using c++ operators
 		// put m_use_space to false...
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]){
 
 		std::cout << "------------------------------------------------------------------------------" << std::endl;
 		std::cout << " After modifications:"<< std::endl;
-		std::cout << json_object->toString();
+		std::cout << json_object->serialize();
 
 		// destroy json_object
 		delete json_object;

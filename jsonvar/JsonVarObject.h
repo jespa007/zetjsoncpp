@@ -35,7 +35,7 @@ namespace zetjsoncpp{
 		}
 
 		//std::string result_json;
-		virtual std::string toStringFormatted(int level,uint16_t properties) {
+		virtual std::string serializeFormatted(int level,uint16_t properties) {
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
 			std::string result_json="";
 			objectToString(this,result_json, level, properties);

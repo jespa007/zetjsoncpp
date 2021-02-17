@@ -265,7 +265,7 @@ namespace zetjsoncpp{
 				return n;
 			}
 
-			virtual std::string toString() {
+			virtual std::string serialize() {
 				return  zj_strutils::float_to_str(__zj_value__);
 			}
 

@@ -50,10 +50,10 @@ namespace zetjsoncpp {
 
 
 		template <typename _T>
-		_T * parse(const std::string & expression);
+		_T * deserialize(const std::string & expression);
 
 		template <typename _T>
-		_T * parse_file(const std::string & _filename);
+		_T * deserialize_file(const std::string & _filename);
 
 };
 

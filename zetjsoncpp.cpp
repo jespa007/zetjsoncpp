@@ -21,9 +21,9 @@
 
 namespace zetjsoncpp{
 
-	char * parse_json_var_object(ParseData *parse_data, const char *str_current, int & line, JsonVar *json_var);
+	char * deserialize_json_var_object(DeserializeData *deserialize_data, const char *str_current, int & line, JsonVar *json_var);
 
-	void json_parse_error(ParseData *parse_data, const char *str_current,int line, const char *string_text, ...) {
+	void json_deserialize_error(DeserializeData *deserialize_data, const char *str_current,int line, const char *string_text, ...) {
 
 
 		char  where[1024]={0};
@@ -39,7 +39,7 @@ namespace zetjsoncpp{
 			aux--;
 		}
 
-		while(n<40 && parse_data->str_start<aux){
+		while(n<40 && deserialize_data->str_start<aux){
 			if(*(aux-1) == '\r' || *(aux-1) == '\n'){
 				break;
 			}
@@ -52,11 +52,11 @@ namespace zetjsoncpp{
 
 		/*sprintf(where,"...%s..."
 				  "\n              ^   "
-				  "\n  ------------+ \n", captured);//PREVIEW_SSTRING(parse_data->str_start, aux, n));
+				  "\n  ------------+ \n", captured);//PREVIEW_SSTRING(deserialize_data->str_start, aux, n));
 		//strncpy(where,str_start,str_end-str_start);
 
 		sprintf(temp_buff,"%s\n%s\n",text,where);*/
-		throw parse_error_exception(parse_data->filename,line,text);
+		throw deserialize_error_exception(deserialize_data->filename,line,text);
 	}
 
 
@@ -209,33 +209,35 @@ namespace zetjsoncpp{
 		}
 	}
 
-	char * read_string_between_quotes(ParseData *parse_data, const char *str_start,int & line, std::string & str_out){
+	char * read_string_between_quotes(DeserializeData *deserialize_data, const char *str_start,int & line, std::string * str_out){
 		char *str_current = (char *) str_start;
 		size_t str_size;
-		char *str_end=NULL;
-		char str_aux[128]={0};
-		str_out = "";
+
+		if(str_out != NULL){
+			*str_out="";
+		}
 
 		if (*str_current == '\"'){ // try to single quote...
-			str_end = advance_to_char(str_current + 1, '\"');
+			str_current++;
+			while(*str_current!='\n' && *str_current!='\r' && *str_current!=0 &&  (*str_current=='\"' && *(str_current-1)!='\\')==false){
+				if(str_out != NULL){
+					(*str_out)+=*str_current;
+				}
+				str_current++;
+			}
+		}else{
+			json_deserialize_error(deserialize_data,str_start,line,"expected string value");
 		}
 
-		if (*str_current != *str_end) {
-			throw parse_error_exception(parse_data->filename,line,zetjsoncpp::zj_strutils::format("property name not enclosed into double quotes (i.e \"property_name\")"));
+		if(*str_current != '\"'){
+			json_deserialize_error(deserialize_data,str_start,line,"string value not closed");
 		}
 
-		str_size = str_end - str_current - 1;
-		str_current++;
-
-		for(unsigned i=0; i < str_size; i++){
-			str_out+=*str_current++;//str_size
-		}
-;
-		return ignore_blanks(str_end + 1, line);
+		return ignore_blanks(str_current+1, line);
 	}
 
-	char * parse_json_var_value(
-		ParseData *parse_data
+	char * deserialize_json_var_value(
+		DeserializeData *deserialize_data
 		,const char *str_start
 		, int & line
 		, JsonVar *json_var
@@ -257,21 +259,7 @@ namespace zetjsoncpp{
 
 		if (*str_current == '\"') {// try string ...
 			std::string *str_aux=(std::string *)ptr_data;
-			*str_current++;
-
-			while(*str_current!='\n' && *str_current!='\r' && *str_current!=0 && (*str_current !='\"' )){
-				if(str_aux != NULL){
-					*str_aux+=*str_current;
-				}
-				str_current++;
-			}
-
-			if(*str_current !='\"'){
-				throw parse_error_exception(parse_data->filename,line,zetjsoncpp::zj_strutils::format("string value not closed"));
-				return NULL;
-			}
-
-			str_current++;
+			str_current=read_string_between_quotes(deserialize_data,str_current,line,str_aux);
 			ok=(type_data ==  JsonVarType::JSON_VAR_TYPE_STRING);
 		}
 		else if (strncmp(str_current, "true", 4)==0) { // true detected ...
@@ -332,17 +320,16 @@ namespace zetjsoncpp{
 					effective_value+=*str_aux;
 				}
 
-
-				throw parse_error_exception(parse_data->filename,line,zetjsoncpp::zj_strutils::format("Cannot parse value \"%s\" as %s",effective_value.c_str(),json_var->toTypeStr()));
-				//json_parse_error(parse_data,str_current, line,"Cannot parse value as %s",json_var->toTypeStr());
+				throw deserialize_error_exception(deserialize_data->filename,line,zetjsoncpp::zj_strutils::format("Cannot parse value \"%s\" as %s",effective_value.c_str(),json_var->toTypeStr()));
+				//json_deserialize_error(deserialize_data,str_current, line,"Cannot parse value as %s",json_var->toTypeStr());
 			}
 		}
 
 		return NULL;
 	}
 
-	char * parse_json_var_vector(
-			ParseData *parse_data
+	char * deserialize_json_var_vector(
+			DeserializeData *deserialize_data
 			,const char *str_start
 			, int & line
 			, JsonVar *json_var
@@ -362,7 +349,7 @@ namespace zetjsoncpp{
 		str_current = ignore_blanks(str_current, line);
 
 		if(*str_current != '['){
-			json_parse_error(parse_data,str_start,line,"A '[' was expected to parse JsonVarVector type");
+			json_deserialize_error(deserialize_data,str_start,line,"A '[' was expected to parse JsonVarVector type");
 			return 0;
 		}
 
@@ -376,12 +363,12 @@ namespace zetjsoncpp{
 					json_var_property = json_var->newJsonVar();
 
 					if((type_data & JsonVarType::JSON_VAR_TYPE_OBJECT)== JsonVarType::JSON_VAR_TYPE_OBJECT){
-						str_current=parse_json_var_object(parse_data, str_current, line, json_var_property);
+						str_current=deserialize_json_var_object(deserialize_data, str_current, line, json_var_property);
 					}else{
-						str_current=parse_json_var_value(parse_data,str_current,line, json_var_property);
+						str_current=deserialize_json_var_value(deserialize_data,str_current,line, json_var_property);
 					}
 				}else{ // try to deduce
-					str_current=parse_json_var(parse_data,str_current,line,json_var);
+					str_current=deserialize_json_var(deserialize_data,str_current,line,json_var);
 				}
 
 				str_current = ignore_blanks(str_current, line);
@@ -389,7 +376,7 @@ namespace zetjsoncpp{
 				if(*str_current==','){
 					str_current = ignore_blanks(str_current+1, line);
 				}else if(*str_current!=']'){
-					json_parse_error(parse_data, str_current, line,  "Expected ',' or ']'");
+					json_deserialize_error(deserialize_data, str_current, line,  "Expected ',' or ']'");
 					return 0;
 				}
 
@@ -403,7 +390,7 @@ namespace zetjsoncpp{
 		return str_current+1;
 	}
 
-	char * parse_json_var_object(ParseData *parse_data, const char * str_start, int & line, JsonVar *json_var) {
+	char * deserialize_json_var_object(DeserializeData *deserialize_data, const char * str_start, int & line, JsonVar *json_var) {
 		char *str_current = (char *)str_start;
 		std::string variable_name,key_id;
 		std::string error;
@@ -416,7 +403,7 @@ namespace zetjsoncpp{
 		str_current = ignore_blanks(str_current, line);
 
 		if(*str_current != '{'){
-			json_parse_error(parse_data, str_start, line, "A '{' was expected to parse %s type",json_var!=NULL?json_var->toTypeStr():"");
+			json_deserialize_error(deserialize_data, str_start, line, "A '{' was expected to parse %s type",json_var!=NULL?json_var->toTypeStr():"");
 			return NULL;
 		}
 
@@ -425,11 +412,9 @@ namespace zetjsoncpp{
 		if(*str_current != '}'){ // do parsing object values...
 			do{
 				JsonVar *json_var_property=NULL;
-				str_current =read_string_between_quotes(parse_data, str_current, line, key_id);
-				//str_variable_name=variable_name.c_str();
-
+				str_current =read_string_between_quotes(deserialize_data, str_current, line, &key_id);
 				if (*str_current != ':') {// ok check value
-					json_parse_error(parse_data, str_current, line, "Error ':' expected");
+					json_deserialize_error(deserialize_data, str_current, line, "Error ':' expected");
 					return NULL;
 				}
 
@@ -440,7 +425,7 @@ namespace zetjsoncpp{
 					json_var_property = find_property(json_var, key_id);
 					if (json_var_property != NULL){
 						if (json_var_property->isParsed()) {
-							json_parse_error(parse_data, str_current, line,"property name \"%s\" already exist", key_id.c_str());
+							json_deserialize_error(deserialize_data, str_current, line,"property name \"%s\" already exist", key_id.c_str());
 							return NULL;
 						}
 					}
@@ -450,14 +435,13 @@ namespace zetjsoncpp{
 						try{
 							json_var_property = json_var->newJsonVar(key_id);
 						}catch(std::exception &ex){
-							json_parse_error(parse_data, str_current, line,ex.what());
+							json_deserialize_error(deserialize_data, str_current, line,ex.what());
 							return NULL;
 						}
-
 					}
 				}
 
-				str_current=parse_json_var(parse_data, str_current, line, json_var_property);
+				str_current=deserialize_json_var(deserialize_data, str_current, line, json_var_property);
 
 
 				str_current = ignore_blanks(str_current, line);
@@ -465,7 +449,7 @@ namespace zetjsoncpp{
 				if(*str_current==','){
 					str_current = ignore_blanks(str_current+1, line);
 				}else if(*str_current!='}'){
-					json_parse_error(parse_data, str_current, line, "Expected ',' or '}'");
+					json_deserialize_error(deserialize_data, str_current, line, "Expected ',' or '}'");
 					return NULL;
 				}
 
@@ -480,7 +464,7 @@ namespace zetjsoncpp{
 		return str_current+1;
 	}
 
-	char * parse_json_var(ParseData *parse_data, const char * str_start, int & line,JsonVar *json_var) {
+	char * deserialize_json_var(DeserializeData *deserialize_data, const char * str_start, int & line,JsonVar *json_var) {
 		// PRE: If json_var == NULL it parses but not saves
 		char * str_current = (char *)str_start;
 		std::string error="";
@@ -489,11 +473,11 @@ namespace zetjsoncpp{
 		if(json_var == NULL){ // continue parse file/string
 			//try to deduce ...
 			if(*str_current == '['){ // try parse vector
-				str_current=parse_json_var_vector(parse_data, str_current, line,json_var);
+				str_current=deserialize_json_var_vector(deserialize_data, str_current, line,json_var);
 			}else if(*str_current == '{') {// can be a map or object but we try as a object
-				str_current=parse_json_var_object(parse_data, str_current, line,json_var);
+				str_current=deserialize_json_var_object(deserialize_data, str_current, line,json_var);
 			}else{
-				str_current=parse_json_var_value(parse_data, str_current,line,json_var);
+				str_current=deserialize_json_var_value(deserialize_data, str_current,line,json_var);
 			}
 		}else{
 
@@ -502,13 +486,13 @@ namespace zetjsoncpp{
 			case JsonVarType::JSON_VAR_TYPE_BOOLEAN:
 			case JsonVarType::JSON_VAR_TYPE_NUMBER:
 			case JsonVarType::JSON_VAR_TYPE_STRING:
-				str_current=parse_json_var_value(parse_data,str_current,line,json_var);
+				str_current=deserialize_json_var_value(deserialize_data,str_current,line,json_var);
 				break;
 			case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_BOOLEANS:
 			case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_NUMBERS:
 			case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_STRINGS:
 			case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS:
-				str_current=parse_json_var_vector(parse_data, str_current, line, json_var);
+				str_current=deserialize_json_var_vector(deserialize_data, str_current, line, json_var);
 				break;
 			default: // tries to parse a map of values or object
 			case JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS:
@@ -516,7 +500,7 @@ namespace zetjsoncpp{
 			case JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS:
 			case JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS:
 			case JsonVarType::JSON_VAR_TYPE_OBJECT:
-				str_current=parse_json_var_object(parse_data, str_current, line, json_var);
+				str_current=deserialize_json_var_object(deserialize_data, str_current, line, json_var);
 				break;
 			}
 		}

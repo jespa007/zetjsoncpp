@@ -17,12 +17,12 @@ namespace zetjsoncpp{
 			return &this->__zj_vec_data__[this->__zj_vec_data__.size()-1];
 		}
 
-		virtual std::string toStringFormatted(int ident, uint16_t properties = 0) {
+		virtual std::string serializeFormatted(int ident, uint16_t properties = 0) {
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
 			std::string str_value = "";
 			std::vector<JsonVarString<>> * v = (std::vector<JsonVarString<>> *)this->__zj_ptr_data_start__;
 
-			str_value+=toStringFormattedStart(ident,properties);
+			str_value+=toJsonFormattedStart(ident,properties);
 
 			for (unsigned j = 0; j < v->size(); j++) {
 
@@ -37,7 +37,7 @@ namespace zetjsoncpp{
 
 			}
 
-			str_value+=toStringFormattedEnd(ident,properties);
+			str_value+=toJsonFormattedEnd(ident,properties);
 
 			return str_value;
 		}
