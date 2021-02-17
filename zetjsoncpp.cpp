@@ -424,7 +424,7 @@ namespace zetjsoncpp{
 				if(json_var==NULL || type == JsonVarType::JSON_VAR_TYPE_OBJECT){ // parse json object
 					json_var_property = find_property(json_var, key_id);
 					if (json_var_property != NULL){
-						if (json_var_property->isParsed()) {
+						if (json_var_property->isDeserialized()) {
 							json_deserialize_error(deserialize_data, str_current, line,"property name \"%s\" already exist", key_id.c_str());
 							return NULL;
 						}

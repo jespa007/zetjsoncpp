@@ -70,7 +70,7 @@ namespace zetjsoncpp {
 		__zj_is_parsed__ = parsed;
 	}
 
-	bool JsonVar::isParsed() const {
+	bool JsonVar::isDeserialized() const {
 		return __zj_is_parsed__;
 	}
 

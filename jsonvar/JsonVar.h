@@ -162,7 +162,7 @@ namespace zetjsoncpp {
 
 		void setParsed(bool parsed);
 
-		bool isParsed() const;
+		bool isDeserialized() const;
 
 	protected:
 		bool __zj_is_parsed__;
