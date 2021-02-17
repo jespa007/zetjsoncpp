@@ -8,9 +8,8 @@ Main features
 
 -Added support for map/dictionary of elements
 -Massive code organization and clean up
--straightforward way to get a json file/string parsed and assigned into native variable.
 -Support uft-8 files with bom
--Support for parse any json type (i.e number/string/boolean/object, vector or map of elements) 
+-Support for deserialize any json type (i.e number/string/boolean/object, vector or map of elements) 
 
 Detail
 

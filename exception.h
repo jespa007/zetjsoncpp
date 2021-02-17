@@ -7,7 +7,7 @@
 
 namespace zetjsoncpp {
 
-	class parse_exception: public std::exception
+	class deserialize_exception: public std::exception
 	{
 		const char *error_type;
 
@@ -19,7 +19,7 @@ namespace zetjsoncpp {
 	public:
 
 
-		parse_exception(const char *  _file, int _line, const std::string & _error_description, const char *_error_type){
+		deserialize_exception(const char *  _file, int _line, const std::string & _error_description, const char *_error_type){
 
 			error_type=_error_type;
 			/*if(file != NULL){
@@ -41,10 +41,10 @@ namespace zetjsoncpp {
 		}
 	};
 
-	class parse_error_exception: public parse_exception{
+	class deserialize_error_exception: public deserialize_exception{
 	public:
 
-		parse_error_exception(const char *  _file, int _line, const std::string & _error):parse_exception(_file,  _line, _error,"ERR"){}
+		deserialize_error_exception(const char *  _file, int _line, const std::string & _error):deserialize_exception(_file,  _line, _error,"ERR"){}
 
 	};
 

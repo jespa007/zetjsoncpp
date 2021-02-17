@@ -30,7 +30,6 @@ namespace zetjsoncpp{
 			return __zj_vec_data__.end();
 		}
 
-
 		_T_DATA & 	operator[](int i) {
 			return __zj_vec_data__.at(i);
 		}
@@ -44,21 +43,23 @@ namespace zetjsoncpp{
 			return __zj_vec_data__.at(i);
 		}
 
-		void			 	push_back(const _T_DATA & tt) {
+		virtual void			 	push_back(const _T_DATA & tt) {
 			__zj_vec_data__.push_back(tt);
 		}
 
-		void			 	clear() {
+		virtual  void 	erase(int idx_position) {
+			__zj_vec_data__.erase(__zj_vec_data__.begin()+idx_position);
+		}
+
+		virtual  void 	insert(int idx_position, const _T_DATA & tt) {
+			__zj_vec_data__.insert(__zj_vec_data__.begin()+idx_position,tt);
+		}
+
+		virtual void		clear() {
 			__zj_vec_data__.clear();
 		}
 
-		void 	erase(unsigned int i) {
-			if (i < __zj_vec_data__.size()) {
-				__zj_vec_data__.erase(__zj_vec_data__.begin() + i);
-			}
-		}
-
-		unsigned 			size() const {
+		size_t			size() const {
 			return __zj_vec_data__.size();
 		}
 
@@ -72,7 +73,7 @@ namespace zetjsoncpp{
 
 	protected:
 
-		std::string toStringFormattedStart(int ident, uint16_t properties ){
+		std::string toJsonFormattedStart(int ident, uint16_t properties ){
 			std::string str_value ="";
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
 
@@ -89,7 +90,7 @@ namespace zetjsoncpp{
 			return str_value;
 		}
 
-		std::string toStringFormattedEnd(int ident, uint16_t properties ){
+		std::string toJsonFormattedEnd(int ident, uint16_t properties ){
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
 			std::string str_value="";
 

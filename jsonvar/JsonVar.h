@@ -146,8 +146,8 @@ namespace zetjsoncpp {
 
 		const char *toTypeStr();
 
-		virtual std::string toString();
-		virtual std::string toStringFormatted(int ident, uint16_t properties);
+		virtual std::string serialize();
+		virtual std::string serializeFormatted(int ident, uint16_t properties);
 
 		virtual ~JsonVar();
 
@@ -162,7 +162,7 @@ namespace zetjsoncpp {
 
 		void setParsed(bool parsed);
 
-		bool isParsed() const;
+		bool isDeserialized() const;
 
 	protected:
 		bool __zj_is_parsed__;

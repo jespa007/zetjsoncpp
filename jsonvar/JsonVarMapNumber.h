@@ -21,10 +21,10 @@ namespace zetjsoncpp{
 		}
 
 		//std::string result_json;
-		virtual std::string toStringFormatted(int ident, uint16_t properties){
+		virtual std::string serializeFormatted(int ident, uint16_t properties){
 
 			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
-			std::string str_value = this->toStringFormattedStart(ident, properties);
+			std::string str_value = this->toJsonFormattedStart(ident, properties);
 
 			int j=0;
 			for (auto it=__zj_map_data__.begin();it !=__zj_map_data__.end();it++,j++) {
@@ -39,7 +39,7 @@ namespace zetjsoncpp{
 				str_value += "\""+it->first +"\":"+ zj_strutils::float_to_str(it->second)+"";// this->str_value + "\"" + v->at(j) + "\" ";
 			}
 
-			str_value += this->toStringFormattedEnd(ident,properties);
+			str_value += this->toJsonFormattedEnd(ident,properties);
 
 			return str_value;
 

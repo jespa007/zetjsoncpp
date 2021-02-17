@@ -42,7 +42,7 @@ namespace zetjsoncpp{
 				case JsonVarType::JSON_VAR_TYPE_BOOLEAN:
 				case JsonVarType::JSON_VAR_TYPE_NUMBER:
 				case JsonVarType::JSON_VAR_TYPE_STRING:
-					result_s += p_sv->toString();
+					result_s += p_sv->serialize();
 					break;
 
 				case JsonVarType::JSON_VAR_TYPE_OBJECT:
@@ -69,7 +69,7 @@ namespace zetjsoncpp{
 							result_s += "\t";
 						}
 					}
-					result_s += p_sv->toStringFormatted(ident+1, properties);
+					result_s += p_sv->serializeFormatted(ident+1, properties);
 					break;
 				}
 			}
