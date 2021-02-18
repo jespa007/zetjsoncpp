@@ -63,9 +63,7 @@ namespace zetjsoncpp{
 			return JsonVarString(s1.__zj_value__+s2.__zj_value__);
 		}
 
-		virtual std::string serialize() {
-			return std::string("\"") + this->__zj_value__ + "\"";
-		}
+
 
 		virtual ~JsonVarString(){}
 	protected:

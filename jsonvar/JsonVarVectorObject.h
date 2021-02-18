@@ -36,20 +36,6 @@ namespace zetjsoncpp{
 			destroy();
 		}
 
-		//std::string result_json;
-		virtual std::string serializeFormatted(int ident, uint16_t properties) {
-			std::string str_value="[";
-			for (unsigned i = 0; i < this->size(); i++) {
-				if (i > 0) {
-					str_value += ",";
-				}
-				objectToString(this->at(i), str_value, ident, properties);
-			}
-
-			str_value+="]";
-			return str_value;
-		}
-
 		void destroy() {
 
 			for (unsigned i = 0; i < this->__zj_vec_data__.size(); i++) {

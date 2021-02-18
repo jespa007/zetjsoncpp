@@ -16,36 +16,10 @@ namespace zetjsoncpp{
 			floatBuf=NULL;
 		}
 
-
 		virtual JsonVar *newJsonVar(){
 			this->__zj_vec_data__.push_back(JsonVarNumber<>(10));
 
 			return &this->__zj_vec_data__[this->__zj_vec_data__.size()-1];
-		}
-
-		virtual std::string serializeFormatted(int ident, uint16_t properties) {
-			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
-			std::vector<JsonVarNumber<>> * v = (std::vector<JsonVarNumber<>> *)this->__zj_ptr_data_start__;
-			std::string str_value = "";
-
-			str_value+=toJsonFormattedStart(ident,properties);
-
-			for (unsigned j = 0; j < v->size(); j++) {
-
-				if (j > 0){
-					if (not_minimized) {
-						ZJ_FORMAT_OUTPUT_NEW_LINE_VECTOR_ELEMENTS(str_value,ident+1,j);
-					}
-					str_value += ",";
-				}
-
-				str_value += v->at(j).serialize();
-
-			}
-
-			str_value+=toJsonFormattedEnd(ident,properties);
-
-			return str_value;
 		}
 
 		float *toFloatBuffer(size_t & length) {

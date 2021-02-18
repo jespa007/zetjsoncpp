@@ -9,7 +9,23 @@ typedef struct{
 
 }TestJson;
 
-int main(int argc, char *argv[]){
+/*
+
+-int test primitive values from C and test them out automatically
+
+std::vector<bool/float/string> [1,2,-3,4]
+add
+remove
+
+std::map<bool/float/string> [1,2,-3,4]
+add
+remove
+
+
+
+*/
+
+it main(int argc, char *argv[]){
 
 	std::cout << "zetjsoncpp ver. "<< ZETJSONCPP_MAJOR_VERSION << "." << ZETJSONCPP_MINOR_VERSION << "."<< ZETJSONCPP_PATCH_VERSION << std::endl;
 

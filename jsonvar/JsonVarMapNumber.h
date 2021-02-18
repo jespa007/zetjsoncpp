@@ -20,31 +20,6 @@ namespace zetjsoncpp{
 			return &this->__zj_map_data__[key_id];
 		}
 
-		//std::string result_json;
-		virtual std::string serializeFormatted(int ident, uint16_t properties){
-
-			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
-			std::string str_value = this->toJsonFormattedStart(ident, properties);
-
-			int j=0;
-			for (auto it=__zj_map_data__.begin();it !=__zj_map_data__.end();it++,j++) {
-
-				if (j > 0){
-					if (not_minimized){
-						ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident+1);
-					}
-					str_value += ",";
-				}
-
-				str_value += "\""+it->first +"\":"+ zj_strutils::float_to_str(it->second)+"";// this->str_value + "\"" + v->at(j) + "\" ";
-			}
-
-			str_value += this->toJsonFormattedEnd(ident,properties);
-
-			return str_value;
-
-		}
-
 		virtual ~JsonVarMapNumber() {
 
 		}
