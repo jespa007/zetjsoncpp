@@ -5,23 +5,9 @@
 
 #include "zetjsoncpp.h"
 
+namespace zetjsoncpp{
 
-// BOOLEAN
-		virtual std::string serialize() {
-			return this->__zj_value__ == false ? "false" : "true";
-		}
-
-// NUMBER
-			virtual std::string serialize() {
-				return  zj_strutils::float_to_str(__zj_value__);
-			}
-
-// STRING
-		virtual std::string serialize() {
-			return std::string("\"") + this->__zj_value__ + "\"";
-		}
-
-
+/*
 		// MAP NUMBERS
 		virtual std::string serializeFormatted(int ident, uint16_t properties){
 
@@ -219,17 +205,27 @@
 		}
 
 
-		// OBJECT
+		//
+	void objectToString(JsonVar * c_data, std::string & result_s, int level, uint16_t properties);
+	//std::string result_json;
+	virtual std::string serializeFormatted(int level,uint16_t properties) {
+		bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
+		std::string result_json="";
+		objectToString(this,result_json, level, properties);
+
+		if (not_minimized){
+			result_json += "\n";
+		}
+
+		return result_json;
+
+	}
 	void objectToString(JsonVar * c_data, std::string & result_s, int ident, uint16_t properties) {
 
 		int k=0;
 		bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
 
-		/*if (not_minimized){
-			for (int i = 0; i <= ident; i++){
-				result_s += "\t";
-			}
-		}*/
+
 		result_s += "{";
 
 		if (not_minimized){
@@ -311,4 +307,44 @@
 
 		result_s += "}";
 
+	}*/
+
+
+
+	void serialize_json_var(std::string & result, JsonVar *json_var){
+		switch(json_var->getType()){
+		default:
+			break;
+		case JSON_VAR_TYPE_BOOLEAN:
+			result+=(*((JsonVarBoolean<> *)json_var)==true)?"true":"false";
+			break;
+		case JSON_VAR_TYPE_NUMBER:
+			result+=zj_strutils::float_to_str(*((float *)json_var->getPtrData()));
+			break;
+		case JSON_VAR_TYPE_STRING:
+			result+=std::string("\"") + *((JsonVarString<> *)json_var) + "\"";
+			break;
+		case JSON_VAR_TYPE_OBJECT:
+			break;
+		case JSON_VAR_TYPE_VECTOR_OF_BOOLEANS:
+		case JSON_VAR_TYPE_VECTOR_OF_NUMBERS:
+		case JSON_VAR_TYPE_VECTOR_OF_STRINGS:
+		case JSON_VAR_TYPE_VECTOR_OF_OBJECTS:
+			break;
+		case JSON_VAR_TYPE_MAP_OF_BOOLEANS:
+		case JSON_VAR_TYPE_MAP_OF_NUMBERS:
+		case JSON_VAR_TYPE_MAP_OF_STRINGS:
+		case JSON_VAR_TYPE_MAP_OF_OBJECTS:
+			break;
+		}
 	}
+
+	std::string serialize(JsonVar *json_var){
+		std::string serialized_var="";
+
+		serialize_json_var(serialized_var,json_var);
+
+		return serialized_var;
+	}
+
+}

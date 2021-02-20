@@ -146,9 +146,6 @@ namespace zetjsoncpp {
 
 		const char *toTypeStr();
 
-		virtual std::string serialize();
-		virtual std::string serializeFormatted(int ident, uint16_t properties);
-
 		virtual ~JsonVar();
 
 		void * getPtrData(){ return __zj_ptr_data_start__;}
