@@ -6,9 +6,12 @@ namespace zetjsoncpp{
 	public:
 
 		JsonVarMapBoolean() {
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS;
-			this->__zj_size_data__ = sizeof(JsonVarMapBoolean< _T_NAME...>);
-			this->__zj_ptr_data_start__ = &this->__zj_map_data__;
+			init();
+		}
+
+		JsonVarMapBoolean(const std::map<std::string,bool> & _map_bools) {
+			init();
+			copy(_map_bools);
 		}
 
 		virtual JsonVar *newJsonVar(const std::string & key_id){
@@ -22,6 +25,18 @@ namespace zetjsoncpp{
 
 		virtual ~JsonVarMapBoolean() {
 
+		}
+	private:
+		void copy(const std::map<std::string,bool> & m){
+			this->__zj_map_data__.clear();
+			for(auto it=m.begin(); it != m.end();it++){
+				this->__zj_map_data__[it->first]=it->second;
+			}
+		}
+
+		void init(){
+			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS;
+			this->__zj_size_data__ = sizeof(JsonVarMapBoolean< _T_NAME...>);
 		}
 	};
 }

@@ -7,9 +7,7 @@ namespace zetjsoncpp{
 	public:
 
 		JsonVarMapObject() {
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS;
-			this->__zj_size_data__ = sizeof(JsonVarMapObject<_T_DATA, _T_NAME...>);
-			this->__zj_ptr_data_start__ = &this->__zj_map_data__;
+			init();
 		}
 
 		virtual JsonVar *newJsonVar(const std::string & key_id) {
@@ -27,6 +25,9 @@ namespace zetjsoncpp{
 			destroy();
 		}
 
+		virtual JsonVar * getJsonVarPtr(const std::string & key_id) {
+			return (JsonVar *)this->__zj_map_data__.at(key_id);
+		}
 		void destroy() {
 
 			for (auto it = this->__zj_map_data__.begin(); it != this->__zj_map_data__.end(); it++) {
@@ -38,6 +39,11 @@ namespace zetjsoncpp{
 
 		virtual ~JsonVarMapObject() {
 			destroy();
+		}
+	private:
+		void init(){
+			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS;
+			this->__zj_size_data__ = sizeof(JsonVarMapObject<_T_DATA, _T_NAME...>);
 		}
 	};
 }

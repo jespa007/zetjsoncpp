@@ -19,7 +19,7 @@ namespace zetjsoncpp{
 		//_T_NAME name;
 		JsonVarBoolean(bool b) {
 			init();
-			*((bool *)this->__zj_ptr_data_start__) = b;
+			this->__zj_value__ = b;
 		}
 
 		operator bool(){return __zj_value__;}

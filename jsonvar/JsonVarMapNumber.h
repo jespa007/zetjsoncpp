@@ -6,9 +6,18 @@ namespace zetjsoncpp{
 	public:
 
 		JsonVarMapNumber() {
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS;
-			this->__zj_size_data__ = sizeof(JsonVarMapNumber< _T_NAME...>);
-			this->__zj_ptr_data_start__ = &this->__zj_map_data__;
+			init();
+		}
+
+		JsonVarMapNumber(const std::map<std::string,float> & _map_numbers) {
+			init();
+			copy(_map_numbers);
+		}
+
+
+		JsonVarVectorNumber<> & operator=(const  std::map<std::string,float> & _map_numbers){
+			copy(_map_numbers);
+			return *this;
 		}
 
 		virtual JsonVar *newJsonVar(const std::string & key_id){
@@ -24,7 +33,18 @@ namespace zetjsoncpp{
 
 		}
 
-	protected:
+	private:
+		void copy(const std::map<std::string,float> & m){
+			this->__zj_map_data__.clear();
+			for(auto it=m.begin(); it != m.end();it++){
+				this->__zj_map_data__[it->first]=it->second;
+			}
+		}
+
+		void init(){
+			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS;
+			this->__zj_size_data__ = sizeof(JsonVarMapNumber< _T_NAME...>);
+		}
 
 	};
 }

@@ -12,8 +12,19 @@ namespace zetjsoncpp{
 		//----------------------------------------------------------------
 	public:
 		//----------------------------------------------------------------
+		JsonVarObject(...) {
+			init();
+		}
 
-		void setup(uint32_t numParam = 0, ...) {
+		JsonVarObject(uint32_t numParam,...) {
+			init(numParam);
+		}
+
+
+		virtual ~JsonVarObject(){};
+
+	private:
+		void init(uint32_t numParam = 0, ...) {
 			// PRE: All arguments must be std::string. The program can parse the appropiate type variable
 			// with its emmbedded type.
 
@@ -25,17 +36,6 @@ namespace zetjsoncpp{
 			this->__zj_ptr_data_end__ = ((JsonVar *)&__zj_var_end__ - 1);
 
 		}
-
-		JsonVarObject(...) {
-			setup();
-		}
-
-		JsonVarObject(uint32_t numParam,...) {
-			setup(numParam);
-		}
-
-
-		virtual ~JsonVarObject(){};
 
 	};
 

@@ -1,4 +1,10 @@
+#include <assert.h>
 #include "../zetjsoncpp.h"
+
+
+#include "test_number.cpp"
+#include "test_boolean.cpp"
+#include "test_string.cpp"
 
 typedef struct{
 	// Number length
@@ -8,6 +14,8 @@ typedef struct{
 	ZJ_VAR_BOOLEAN(use_space);
 
 }TestJson;
+
+
 
 /*
 
@@ -20,8 +28,6 @@ remove
 std::map<bool/float/string> [1,2,-3,4]
 add
 remove
-
-
 
 */
 
@@ -127,6 +133,9 @@ int main(int argc, char *argv[]){
 		delete m3;
 		delete m4;
 
+		test_json_var_number();
+		test_json_var_boolean();
+		test_json_var_string();
 
 	}catch(std::exception & ex){
     	fprintf(stderr, "%s\n",ex.what());

@@ -6,19 +6,41 @@ namespace zetjsoncpp{
 	public:
 		//_T_NAME name;
 		JsonVarVectorBoolean() {
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_BOOLEANS;
-			this->__zj_size_data__ = sizeof(JsonVarVectorBoolean<_T_NAME...>);
-			this->__zj_ptr_data_start__ = &this->__zj_vec_data__;
+			init();
+		}
+
+		JsonVarVectorBoolean(const std::vector<bool> & _vec_booleans) {
+			init();
+			copy(_vec_booleans);
 		}
 
 
-		virtual JsonVar *newJsonVar(){
-			this->__zj_vec_data__.push_back(JsonVarBoolean<>());
+		JsonVarVectorBoolean<> & operator=(const std::vector<bool> & _vec_booleans){
+			copy(_vec_booleans);
+			return *this;
+		}
 
-			return &this->__zj_vec_data__[this->__zj_vec_data__.size()-1];
+		virtual JsonVar *newJsonVar(){
+			this->__zj_vector_data__.push_back(JsonVarBoolean<>());
+
+			return &this->__zj_vector_data__[this->__zj_vector_data__.size()-1];
 		}
 
 		virtual ~JsonVarVectorBoolean(){}
+
+	private:
+		void copy(const std::vector<bool> & v){
+			this->__zj_vector_data__.clear();
+			for(auto it=v.begin(); it != v.end();it++){
+				this->__zj_vector_data__.push_back(*it);
+			}
+		}
+
+		void init(){
+			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_BOOLEANS;
+			this->__zj_size_data__ = sizeof(JsonVarVectorBoolean<_T_NAME...>);
+		}
+
 
 	};
 }
