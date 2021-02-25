@@ -25,7 +25,7 @@ To serialize json variable it done using zetjsoncpp::deserialize. Zet JsonCpp su
 To deserialize a json boolean, it is done through JsonVarBoolean as it shows below,
 
 ```
-	zetjsoncpp::deserialize<zetjsoncpp::JsonVarBoolean<>>("true");
+zetjsoncpp::deserialize<zetjsoncpp::JsonVarBoolean<>>("true");
 ```
 
 ### Vector of Booleans
@@ -33,7 +33,7 @@ To deserialize a json boolean, it is done through JsonVarBoolean as it shows bel
 A json vector of booleans it could be the following,
 
 ```
-	[true,false,true]
+[true,false,true]
 ```
 
 To deserialize a json vector of booleans, it is done through JsonVarVectorBoolean as it shows below,
@@ -169,7 +169,7 @@ A json object it could be the following
  ,"use_space":false
 }
 ```
-List 2.1
+**List 2.1**
 
 Taking the example of list 2.1, in zetjsoncpp it defines json object using a structure in C as it shows below,
 
@@ -180,7 +180,7 @@ typedef struct{
     zetjsoncpp::JsonVarBoolean<ZJ_CONST_CHAR("use_space")>  use_space; 
 }JsonSample;
 ```
-List 2.2
+**List 2.2**
 Note:
 
 You may noticed that of ZJ_CONST_CHAR(s). This is a trick to pass literal string through variadic templates char by char, due that templates doesn't accept pass literal strings (i.e const char *) as a parameter.
@@ -290,7 +290,7 @@ std::cout << zetjsoncpp::serialize(json_var); << std::enl;
 
 ## A big example
 
-As an example, let's supose we want to load the following json data that is saved in sample.json file,
+Let's suppose it has a file called sample.json with the following content,
 
 ```
 // Configuration options
@@ -358,7 +358,7 @@ As an example, let's supose we want to load the following json data that is save
 }
 ```
 
-List 1.1
+**List 3.1**
 
 To load the code saw on list 1.1 we have to declare the following C estructure,
 
@@ -427,7 +427,7 @@ typedef struct
 }SampleJson;
 ```
 
-List 1.2
+**List 3.2**
 
 And then we have to write the following code to load the data seen on list 1.1 into the estructure on list 1.2,
 
