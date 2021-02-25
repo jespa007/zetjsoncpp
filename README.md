@@ -472,33 +472,39 @@ As an example, we present a way to operate loaded json data into C++ code,
 ```
 int main(int argc, char *argv[]){
 
-	try{
-		JsonVarObject<SampleJson> *json_object=zetjsoncpp::parse_file<JsonVarObject<SampleJson>>("sample.json");
-		
-		// the values before modifications.
-		std::cout << "------------------------------------------------------------------------------" << std::endl;
-		std::cout << " Before modifications:"<< std::endl;
-		std::cout << json_object->toString();
+    try{
+        auto json_object=zetjsoncpp::deserialize_file<JsonVarObject<SampleJson>>("sample.json");
 
-		// From here we can operate with loaded data in our program using c++ operators
-		json_object->indent.use_space = false;
+        // the values before modifications.
+        std::cout << "---------------------------------------------------" << std::endl;
+        std::cout << " Before modifications:"<< std::endl;
+        std::cout << zetjsoncpp::serialize(json_object);
 
-		for(unsigned i = 0; i < json_object->plugins.size(); i++) {
-			json_object->plugins[i] = "my_randomstring"+zetjsoncpp::zj_strutils::int_to_str(i+1);
-		}
+        // From here we can operate with loaded data in our program using c++ operators
+        // put m_use_space to false...
+        json_object->indent.use_space = false;
 
-		std::cout << "------------------------------------------------------------------------------" << std::endl;
-		std::cout << " After modifications:"<< std::endl;
-		std::cout << json_object->toString();
+        // iterate of all plugins and replace with random strings...
+        for(unsigned i = 0; i < json_object->plugins.size(); i++) {
+            json_object->plugins[i] = "my_randomstring"+zetjsoncpp::zj_strutils::int_to_str(i+1);
+        }
 
-		// destroy json_object
-		delete json_object;
+        // iterate of all interpolations and replace its data values...
+        for(auto it_map = json_object->interpolations.begin(); it_map != json_object->interpolations.end(); it_map++) {
+            for(auto it = it_map->second->data.begin(); it != it_map->second->data.end(); it++) {
+                *it = rand();
+            }
+        }
 
-	}catch(std::exception & ex){
-		fprintf(stderr, "%s\n",ex.what());
-	}
+        std::cout << "--------------------------------------------------" << std::endl;
+        std::cout << " After modifications:"<< std::endl;
+        std::cout << zetjsoncpp::serialize(json_object);
 
-	return 0;
+        // destroy json_object
+        delete json_object;
+  }catch(std::exception & ex){
+    std::cerr << "Error:" << ex.what() << std::endl;
+  }
 }
 ```
 After its execution the output shows the serialized json before and after the changes,
