@@ -99,14 +99,6 @@
 #define ZJ_VAR_MAP_OBJECT(type,name) zetjsoncpp::JsonVarMapObject<type,ZJ_CONST_CHAR(#name)>		name
 
 
-
-#define ZJ_FORMAT_OUTPUT_IDENT(str_value,ident)  for (int k = 0; k < (ident); k++) str_value += "\t";
-#define ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident) \
-	str_value += "\n";\
-	for (int k = 0; k < (ident); k++)	str_value += "\t";
-
-#define ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED 	(0x1 << 0)
-
 namespace zetjsoncpp {
 
 	typedef enum:uint16_t{
@@ -144,14 +136,11 @@ namespace zetjsoncpp {
 		virtual JsonVar *newJsonVar(const std::string & key);
 
 
-		const char *toTypeStr();
-
-		virtual std::string serialize();
-		virtual std::string serializeFormatted(int ident, uint16_t properties);
+		const char *getTypeStr();
 
 		virtual ~JsonVar();
 
-		void * getPtrData(){ return __zj_ptr_data_start__;}
+		void * getPtrDataStart(){ return __zj_ptr_data_start__;}
 		virtual void * getPtrValue(){ return NULL;}
 
 

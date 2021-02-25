@@ -78,7 +78,7 @@ int main(int argc, char *argv[]){
 		// the values before modifications.
 		std::cout << "------------------------------------------------------------------------------" << std::endl;
 		std::cout << " Before modifications:"<< std::endl;
-		std::cout << json_object->serialize();
+		std::cout << zetjsoncpp::serialize(json_object);
 
 		// From here we can operate with loaded data in our program using c++ operators
 		// put m_use_space to false...
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]){
 
 		std::cout << "------------------------------------------------------------------------------" << std::endl;
 		std::cout << " After modifications:"<< std::endl;
-		std::cout << json_object->serialize();
+		std::cout << zetjsoncpp::serialize(json_object);
 
 		// destroy json_object
 		delete json_object;

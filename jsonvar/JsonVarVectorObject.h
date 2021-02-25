@@ -6,15 +6,13 @@ namespace zetjsoncpp{
 	public:
 
 		JsonVarVectorObject() {
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS;
-			this->__zj_size_data__ = sizeof(JsonVarVectorObject<_T_DATA, _T_NAME...>);
-			this->__zj_ptr_data_start__ = &this->__zj_vec_data__;
+			init();
 		}
 
 		virtual JsonVar *newJsonVar() {
 
 			JsonVarObject< _T_DATA> *tt = new JsonVarObject<_T_DATA>;
-			this->__zj_vec_data__.push_back(tt);
+			this->__zj_vector_data__.push_back(tt);
 			return (JsonVar *)tt;
 		}
 
@@ -23,8 +21,8 @@ namespace zetjsoncpp{
 		}
 
 		virtual  void 	erase(int idx_position) {
-			JsonVar *json_object = this->__zj_vec_data__.at(idx_position);
-			this->__zj_vec_data__.erase(this->__zj_vec_data__.begin()+idx_position);
+			JsonVar *json_object = this->__zj_vector_data__.at(idx_position);
+			this->__zj_vector_data__.erase(this->__zj_vector_data__.begin()+idx_position);
 			delete json_object;
 		}
 
@@ -36,32 +34,28 @@ namespace zetjsoncpp{
 			destroy();
 		}
 
-		//std::string result_json;
-		virtual std::string serializeFormatted(int ident, uint16_t properties) {
-			std::string str_value="[";
-			for (unsigned i = 0; i < this->size(); i++) {
-				if (i > 0) {
-					str_value += ",";
-				}
-				objectToString(this->at(i), str_value, ident, properties);
-			}
-
-			str_value+="]";
-			return str_value;
+		virtual JsonVar * getJsonVarPtr(int index) {
+			return (JsonVar *)this->__zj_vector_data__.at(index);
 		}
 
 		void destroy() {
 
-			for (unsigned i = 0; i < this->__zj_vec_data__.size(); i++) {
-				delete this->__zj_vec_data__[i];
-				this->__zj_vec_data__[i] = NULL;
+			for (unsigned i = 0; i < this->__zj_vector_data__.size(); i++) {
+				delete this->__zj_vector_data__[i];
+				this->__zj_vector_data__[i] = NULL;
 			}
 
-			this->__zj_vec_data__.clear();
+			this->__zj_vector_data__.clear();
 		}
 
 		virtual ~JsonVarVectorObject() {
 			destroy();
+		}
+	private:
+
+		void init(){
+			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS;
+			this->__zj_size_data__ = sizeof(JsonVarVectorObject<_T_DATA, _T_NAME...>);
 		}
 	};
 }

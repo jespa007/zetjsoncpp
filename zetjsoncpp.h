@@ -55,6 +55,8 @@ namespace zetjsoncpp {
 		template <typename _T>
 		_T * deserialize_file(const std::string & _filename);
 
+		std::string serialize(JsonVar *json_var, bool minimized=false);
+
 };
 
 #include "zetjsoncpp.tcc"

@@ -7,9 +7,7 @@ namespace zetjsoncpp{
 	public:
 
 		JsonVarMapObject() {
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS;
-			this->__zj_size_data__ = sizeof(JsonVarMapObject<_T_DATA, _T_NAME...>);
-			this->__zj_ptr_data_start__ = &this->__zj_map_data__;
+			init();
 		}
 
 		virtual JsonVar *newJsonVar(const std::string & key_id) {
@@ -27,31 +25,9 @@ namespace zetjsoncpp{
 			destroy();
 		}
 
-		virtual std::string serializeFormatted(int ident, uint16_t properties) {
-			bool not_minimized = ((properties & ZJ_PROPERTY_OUTPUT_FORMAT_MINIMIZED) == 0);
-			std::string str_value = this->toJsonFormattedStart(ident, properties);
-
-			int j=0;
-			for (auto it=this->__zj_map_data__.begin(); it != this->__zj_map_data__.end(); it++,j++) {
-				if (j > 0) {
-					if (not_minimized){
-						ZJ_FORMAT_OUTPUT_NEW_LINE(str_value,ident+1);
-					}
-					str_value += ",";
-				}
-
-				str_value+="\""+it->first +"\":";
-
-
-				objectToString(it->second, str_value, ident+1, properties);
-
-			}
-
-			str_value += this->toJsonFormattedEnd(ident,properties);
-
-			return str_value;
+		virtual JsonVar * getJsonVarPtr(const std::string & key_id) {
+			return (JsonVar *)this->__zj_map_data__.at(key_id);
 		}
-
 		void destroy() {
 
 			for (auto it = this->__zj_map_data__.begin(); it != this->__zj_map_data__.end(); it++) {
@@ -63,6 +39,11 @@ namespace zetjsoncpp{
 
 		virtual ~JsonVarMapObject() {
 			destroy();
+		}
+	private:
+		void init(){
+			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS;
+			this->__zj_size_data__ = sizeof(JsonVarMapObject<_T_DATA, _T_NAME...>);
 		}
 	};
 }

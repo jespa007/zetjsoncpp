@@ -22,6 +22,11 @@ namespace zetjsoncpp{
 				this->__zj_value__ = f;
 			}
 
+			 JsonVarNumber(const std::string & s) {
+				init();
+				this->__zj_value__ = parse(s);
+			}
+
 			//-----
 			// pre neg
 			JsonVarNumber   operator -  (){
@@ -31,10 +36,7 @@ namespace zetjsoncpp{
 
 			 virtual void * getPtrValue(){ return &__zj_value__;}
 
-			 JsonVarNumber(const std::string & s) {
-				init();
-				this->__zj_value__ = parse(s);
-			}
+
 
 			// operators
 			JsonVarNumber & operator=(float _value){
@@ -92,7 +94,7 @@ namespace zetjsoncpp{
 			// /
 			JsonVarNumber   operator /  (const JsonVarNumber & n) {
 
-				if(n.m_numVar ==0)
+				if(n.__zj_value__ ==0)
 					throw ("Error divide by 0");
 
 				return JsonVarNumber(__zj_value__ / n.__zj_value__);
@@ -263,10 +265,6 @@ namespace zetjsoncpp{
 				JsonVarNumber n(__zj_value__);
 				operator++();
 				return n;
-			}
-
-			virtual std::string serialize() {
-				return  zj_strutils::float_to_str(__zj_value__);
 			}
 
 			virtual ~JsonVarNumber(){}

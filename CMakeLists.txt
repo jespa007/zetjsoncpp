@@ -160,7 +160,8 @@ set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 	util/zj_path.cpp
 	jsonvar/JsonVar.cpp
 	jsonvar/JsonVarObject.cpp	
-	zetjsoncpp.cpp
+	zetjsoncpp_deserializer.cpp
+	zetjsoncpp_serializer.cpp
 )
 
 #JSON TEST executable

@@ -8,7 +8,7 @@ namespace zetjsoncpp{
 			init();
 		}
 
-		JsonVarString(std::string s) {
+		JsonVarString(const std::string & s) {
 			init();
 			__zj_value__ = s;
 		}
@@ -32,24 +32,30 @@ namespace zetjsoncpp{
 		}
 
 
-		bool operator ==(const std::string & _value) const{
-			return this->__zj_value__ == _value;
+		friend bool operator ==(const std::string & s1,const JsonVarString & s2)  {
+			return s1==s2.__zj_value__;
 		}
 
-		bool operator ==(const JsonVarString & s) const{
-			return this->__zj_value__ == s.__zj_value__;
-
+		friend bool operator ==(const JsonVarString & s1,const std::string & s2)  {
+			return s1.__zj_value__==s2;
 		}
 
-		bool operator != (const std::string _value) const {
-			return this->__zj_value__ != _value;
-
+		friend bool operator ==(const JsonVarString & s1,const JsonVarString & s2)  {
+			return s1.__zj_value__==s2.__zj_value__;
 		}
 
-		bool operator !=(const JsonVarString & s) const{
-			return this->__zj_value__ != s.__zj_value__;
-
+		friend bool operator !=(const std::string & s1,const JsonVarString & s2)  {
+			return s1!=s2.__zj_value__;
 		}
+
+		friend bool operator !=(const JsonVarString & s1,const std::string & s2)  {
+			return s1.__zj_value__!=s2;
+		}
+
+		friend bool operator !=(const JsonVarString & s1,const JsonVarString & s2)  {
+			return s1.__zj_value__!=s2.__zj_value__;
+		}
+
 
 		friend JsonVarString operator +(const std::string & s1,const JsonVarString & s2)  {
 			return JsonVarString(s1+s2.__zj_value__);
@@ -63,9 +69,6 @@ namespace zetjsoncpp{
 			return JsonVarString(s1.__zj_value__+s2.__zj_value__);
 		}
 
-		virtual std::string serialize() {
-			return std::string("\"") + this->__zj_value__ + "\"";
-		}
 
 		virtual ~JsonVarString(){}
 	protected:

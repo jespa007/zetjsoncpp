@@ -174,7 +174,7 @@ namespace zetjsoncpp{
 		// no data no search...
 		if (c_data == NULL) return NULL;
 
-		char *aux_p = (char *)c_data->getPtrData();
+		char *aux_p = (char *)c_data->getPtrDataStart();
 		char *end_p = (char *)c_data->getPtrDataEnd();
 
 		// Main loop iteration to whole C struct
@@ -196,7 +196,7 @@ namespace zetjsoncpp{
 			return;
 		}
 
-		char *aux_p = (char *)c_data->getPtrData();
+		char *aux_p = (char *)c_data->getPtrDataStart();
 		char *end_p = (char *)c_data->getPtrDataEnd();
 
 		// Main loop iteration to whole C struct
@@ -320,8 +320,8 @@ namespace zetjsoncpp{
 					effective_value+=*str_aux;
 				}
 
-				throw deserialize_error_exception(deserialize_data->filename,line,zetjsoncpp::zj_strutils::format("Cannot parse value \"%s\" as %s",effective_value.c_str(),json_var->toTypeStr()));
-				//json_deserialize_error(deserialize_data,str_current, line,"Cannot parse value as %s",json_var->toTypeStr());
+				throw deserialize_error_exception(deserialize_data->filename,line,zetjsoncpp::zj_strutils::format("Cannot parse value \"%s\" as %s",effective_value.c_str(),json_var->getTypeStr()));
+				//json_deserialize_error(deserialize_data,str_current, line,"Cannot parse value as %s",json_var->getTypeStr());
 			}
 		}
 
@@ -403,7 +403,7 @@ namespace zetjsoncpp{
 		str_current = ignore_blanks(str_current, line);
 
 		if(*str_current != '{'){
-			json_deserialize_error(deserialize_data, str_start, line, "A '{' was expected to parse %s type",json_var!=NULL?json_var->toTypeStr():"");
+			json_deserialize_error(deserialize_data, str_start, line, "A '{' was expected to parse %s type",json_var!=NULL?json_var->getTypeStr():"");
 			return NULL;
 		}
 
