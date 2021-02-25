@@ -57,12 +57,6 @@ namespace zetjsoncpp {
 
 		std::string serialize(JsonVar *json_var, bool minimized=false);
 
-		template <typename _T>
-		std::string serialize(const _T & json_var, bool minimized=false){
-			return serialize((JsonVar *)&json_var, minimized);
-		}
-
-
 };
 
 #include "zetjsoncpp.tcc"
