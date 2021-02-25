@@ -22,7 +22,7 @@ To serialize json variable it done using zetjsoncpp::deserialize. Zet JsonCpp su
  
 ### Boolean
 
-To deserialize a json boolean, it is done through JsonVarBoolean as it shows below,
+To deserialize a json boolean, it is done through `JsonVarBoolean` as it shows below,
 
 ```
 zetjsoncpp::deserialize<zetjsoncpp::JsonVarBoolean<>>("true");
@@ -36,7 +36,7 @@ A json vector of booleans it could be the following,
 [true,false,true]
 ```
 
-To deserialize a json vector of booleans, it is done through JsonVarVectorBoolean as it shows below,
+To deserialize a json vector of booleans, it is done through `JsonVarVectorBoolean` as it shows below,
 
 ```
 zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorBoolean<>>(
@@ -59,7 +59,7 @@ A json map of booleans it could be the following,
 }
 ```
 
-To deserialize a json map of booleans, it is done through JsonVarMapBoolean as it shows below,
+To deserialize a json map of booleans, it is done through `JsonVarMapBoolean` as it shows below,
 
 ```
 zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapBoolean<>>(
@@ -78,7 +78,7 @@ A json number it could be the following,
 * 2.5
 * 3.7e+2
 
-To deserialize a json number, it is done through JsonVarNumber as it shows below,
+To deserialize a json number, it is done through `JsonVarNumber` as it shows below,
 
 ```
 zetjsoncpp::deserialize<zetjsoncpp::JsonVarNumber<>>("1");
@@ -89,7 +89,7 @@ A json vector of numbers it could be the following,
 ```
 [1,3.7e+2,-3]
 ```
-To deserialize a json vector of numbers, it is done through JsonVarVectorNumber as it shows below,
+To deserialize a json vector of numbers, it is done through `JsonVarVectorNumber` as it shows below,
 
 ```
 zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorNumber<>>(
@@ -109,7 +109,7 @@ A json map of numbers it could be the following,
  ,"id3":-3
 }
 ```
-To deserialize a json map of numbers, it is done through JsonVarMapNumber as it shows below,
+To deserialize a json map of numbers, it is done through `JsonVarMapNumber` as it shows below,
 
 ```
 zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapNumber<>>(
@@ -120,7 +120,7 @@ zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapNumber<>>(
 "}");
 ```
 ### String
-To deserialize a json string, it is done through JsonVarString as it shows below,
+To deserialize a json string, it is done through `JsonVarString` as it shows below,
 ```
 zetjsoncpp::deserialize<zetjsoncpp::JsonVarString<>>("\"my_string\"")
 ```
@@ -129,7 +129,7 @@ A json vector of strings it could be the following,
 ```
 ["string_1","string_2","string_3"]
 ```
-To deserialize a vector of strings, it is done through JsonVarVectorString as it shows below,
+To deserialize a vector of strings, it is done through `JsonVarVectorString` as it shows below,
 ```
 zetjsoncpp::deserialize<JsonVarVectorString<>>(
 "["
@@ -147,7 +147,7 @@ A json map of strings it could be the following,
    ,"id3":"string_3" 
 }
 ```
-To deserialize a map of strings, it is done through JsonVarMapString as it shows below,
+To deserialize a map of strings, it is done through `JsonVarMapString` as it shows below,
 
 ```
 JsonVarMapString<> *m3=zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapString<>>(
@@ -185,7 +185,7 @@ Note:
 
 You may noticed that of ZJ_CONST_CHAR(s). This is a trick to pass literal string through variadic templates char by char, due that templates doesn't accept pass literal strings (i.e const char *) as a parameter.
 
-An finally, to deserialize a json object, it is done through JsonVarObject passing the type of structure to deserialize it has seen in list 2.2,
+An finally, to deserialize a json object, it is done through `JsonVarObject` passing the type of structure to deserialize it has seen in list 2.2,
 
 ```
 auto json_object=zetjsoncpp::deserialize<zetjsoncpp::JsonVarObject<JsonSample>>(
@@ -223,7 +223,7 @@ A json vector of objects it could be the following,
    ,"use_space":true 
 }]
 ```
-To deserialize a vector of objects, it is done through JsonVarVectorObject passing the type of structure to deserialize it has seen in list 2.2,
+To deserialize a vector of objects, it is done through `JsonVarVectorObject` passing the type of structure to deserialize it has seen in list 2.2,
 
 ```
 zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorObject<JsonSample>>(
@@ -254,7 +254,7 @@ A json map of objects it could be the following,
   }
 }
 ```
-To deserialize a map of objects, it is done through JsonVarMapObject passing the type of structure to deserialize it has seen in list 2.2,
+To deserialize a map of objects, it is done through `JsonVarMapObject` passing the type of structure to deserialize it has seen in list 2.2,
 
 ```
 zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapObject<JsonSample>>(
