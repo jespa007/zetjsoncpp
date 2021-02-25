@@ -1,10 +1,10 @@
-﻿# zetjsoncpp 
+# zetjsoncpp 
 
-ZetJsonCpp parses and bind Json string or files to C structure 
+A library that deserializes/serializes from/to Json string or files
 
 ## Deserialization
 
-To serialize json variable it done using zetjsoncpp::deserialize. Zet JsonCpp supports deserialization of the following types,
+To serialize json variable it done using zetjsoncpp::deserialize. ZetJsonCpp supports deserialization of the following types,
 
 * Boolean
 * Vector of booleans
