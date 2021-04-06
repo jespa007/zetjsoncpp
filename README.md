@@ -32,9 +32,9 @@ zetjsoncpp::deserialize<zetjsoncpp::JsonVarBoolean<>>("true");
 
 A json vector of booleans it could be the following,
 
-```
+<pre lang="javascript">
 [true,false,true]
-```
+</pre>
 
 To deserialize a json vector of booleans, it is done through `JsonVarVectorBoolean` as it shows below,
 
@@ -51,13 +51,13 @@ zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorBoolean<>>(
 
 A json map of booleans it could be the following,
 
-```
+<pre lang="javascript">
 {
    "id1":true
   ,"id2":false
   ,"id3":true
 }
-```
+</pre>
 
 To deserialize a json map of booleans, it is done through `JsonVarMapBoolean` as it shows below,
 
@@ -83,12 +83,14 @@ To deserialize a json number, it is done through `JsonVarNumber` as it shows bel
 <pre lang="c++">
 zetjsoncpp::deserialize<zetjsoncpp::JsonVarNumber<>>("1");
 </pre>
+
 ### Vector of Numbers
 A json vector of numbers it could be the following,
 
-```
+<pre lang="javascript">
 [1,3.7e+2,-3]
-```
+</pre>
+
 To deserialize a json vector of numbers, it is done through `JsonVarVectorNumber` as it shows below,
 
 <pre lang="c++">
@@ -99,6 +101,7 @@ zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorNumber<>>(
    ",-3"
 "]");
 </pre>
+
 ### Map of numbers
 A json map of numbers it could be the following,
 
@@ -109,6 +112,7 @@ A json map of numbers it could be the following,
  ,"id3":-3
 }
 </pre>
+
 To deserialize a json map of numbers, it is done through `JsonVarMapNumber` as it shows below,
 
 <pre lang="c++">
@@ -119,17 +123,21 @@ zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapNumber<>>(
    ",\"id3\":-3"
 "}");
 </pre>
+
 ### String
 To deserialize a json string, it is done through `JsonVarString` as it shows below,
+
 <pre lang="c++">
 zetjsoncpp::deserialize<zetjsoncpp::JsonVarString<>>("\"my_string\"")
 </pre>
+
 ### Vector of Strings
 A json vector of strings it could be the following,
 <pre lang="javascript">
 ["string_1","string_2","string_3"]
 </pre>
 To deserialize a vector of strings, it is done through `JsonVarVectorString` as it shows below,
+
 <pre lang="c++">
 zetjsoncpp::deserialize<JsonVarVectorString<>>(
 "["
@@ -138,8 +146,10 @@ zetjsoncpp::deserialize<JsonVarVectorString<>>(
     ",\"string_3\""
 "]");
 </pre>
+
 ### Map of Strings
 A json map of strings it could be the following,
+
 <pre lang="javascript">
 { 
    "id1":"string_1"
@@ -147,6 +157,7 @@ A json map of strings it could be the following,
    ,"id3":"string_3" 
 }
 </pre>
+
 To deserialize a map of strings, it is done through `JsonVarMapString` as it shows below,
 
 <pre lang="c++">
@@ -157,6 +168,7 @@ JsonVarMapString<> *m3=zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapString<>>(
     ",\"id3\":\"string_3\""
 "}");
 </pre>
+
 ### Object
 Until now it has seen a way to serialize primitive and structured types easy to understant. Now we presents the method to deserialize json object that it requires a little bit of setup. A json object is like a json map with different content on its values.
 
@@ -169,6 +181,7 @@ A json object it could be the following
  ,"use_space":false
 }
 </pre>
+
 **List 2.1**
 
 Taking the example of list 2.1, in zetjsoncpp it defines json object using a structure in C as it shows below,
@@ -180,6 +193,7 @@ typedef struct{
     zetjsoncpp::JsonVarBoolean<ZJ_CONST_CHAR("use_space")>  use_space; 
 }JsonSample;
 </pre>
+
 **List 2.2**
 Note:
 
@@ -195,6 +209,7 @@ auto json_object=zetjsoncpp::deserialize<zetjsoncpp::JsonVarObject<JsonSample>>(
    ",\"use_space\":false"         
 "}");
 </pre>
+
 If any variable has not been deserialized, because it does not exist in string/file either it doesn't match json property name json with that defined in the C++ structure, it has to use isDeserialized() to check whether the variable was deserialized or not.
 
 For example:
@@ -206,13 +221,14 @@ if(json_object->encoding.isDeserialized()){
 
 }
 </pre>
+
 List 3.4
 By default, any no deserialized variable the strings are set empty, numbers and booleans will set as 0 and false respectively.
 
 ### Vector of Objects
 A json vector of objects it could be the following,
 
-<pre lang="javascript>
+<pre lang="javascript">
 [{ 
     "encoding":"UTF-8" 
     ,"length":1000 
@@ -223,6 +239,7 @@ A json vector of objects it could be the following,
    ,"use_space":true 
 }]
 </pre>
+
 To deserialize a vector of objects, it is done through `JsonVarVectorObject` passing the type of structure to deserialize it has seen in list 2.2,
 
 <pre lang="c++">
@@ -237,6 +254,7 @@ zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorObject<JsonSample>>(
     ",\"use_space\":true" 
 "}]");
 </pre>
+
 ### Map of Objects
 A json map of objects it could be the following,
 
@@ -254,6 +272,7 @@ A json map of objects it could be the following,
   }
 }
 </pre>
+
 To deserialize a map of objects, it is done through `JsonVarMapObject` passing the type of structure to deserialize it has seen in list 2.2,
 
 <pre lang="c++">
@@ -271,6 +290,7 @@ zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapObject<JsonSample>>(
   "}"
 "}");
 </pre>
+
 ## Serialize
 To serialize json variable it done using zetjsoncpp::serialize.
 
@@ -507,6 +527,7 @@ int main(int argc, char *argv[]){
   }
 }
 </pre>
+
 After its execution the output shows the serialized json before and after the changes,
 
 ```
