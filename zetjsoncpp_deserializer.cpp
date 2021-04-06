@@ -247,6 +247,7 @@ namespace zetjsoncpp{
 		// key in case
 		char *str_current = (char *)str_start;
 		int bytes_readed=0;
+		std::string str_value="";
 		char *str_end=NULL;
 		bool ok=false;
 		JsonVarType type_data=JsonVarType::JSON_VAR_TYPE_UNKNOWN;
@@ -258,27 +259,40 @@ namespace zetjsoncpp{
 		}
 
 		if (*str_current == '\"') {// try string ...
-			std::string *str_aux=(std::string *)ptr_data;
-			str_current=read_string_between_quotes(deserialize_data,str_current,line,str_aux);
-			ok=(type_data ==  JsonVarType::JSON_VAR_TYPE_STRING);
+			//std::string str_aux;
+			str_current=read_string_between_quotes(deserialize_data,str_current,line,&str_value);
+
+			if(type_data ==  JsonVarType::JSON_VAR_TYPE_STRING){ // is string, save...
+				*(std::string *)ptr_data = str_value;
+				ok=true;
+			}
 		}
 		else if (strncmp(str_current, "true", 4)==0) { // true detected ...
-			if(ptr_data != NULL){
-				*((bool *) ptr_data)= true;
-			}
+			str_value="true";
 			str_current+=4;
-			ok=type_data ==  JsonVarType::JSON_VAR_TYPE_BOOLEAN;
+			if(type_data ==  JsonVarType::JSON_VAR_TYPE_BOOLEAN){
+				if(ptr_data != NULL){
+					*((bool *) ptr_data)= true;
+				}
+				ok=true;
+			}
 		}
 		else if (strncmp(str_current, "false", 5) == 0) {// boolean detected
-			if(ptr_data != NULL){
-				*((bool *) ptr_data) = false;
-			}
+			str_value="false";
 			str_current+=5;
-			ok=type_data ==  JsonVarType::JSON_VAR_TYPE_BOOLEAN;
+
+
+			if(type_data ==  JsonVarType::JSON_VAR_TYPE_BOOLEAN){
+				if(ptr_data != NULL){
+					*((bool *) ptr_data) = false;
+				}
+
+				ok=true;
+			}
 		}
 		else{ // must a number
 			// try read until next comma
-			char str_value[1024]={0};
+			char str_char_value[1024]={0};
 
 			str_end = advance_to_one_of_collection_of_char(str_current, (char *)end_char_standard_value, line);
 			bytes_readed = str_end - str_current;
@@ -288,16 +302,20 @@ namespace zetjsoncpp{
 
 			if (bytes_readed > 0) {
 				// copy string...
-				strncpy(str_value,str_current,bytes_readed);
+				strncpy(str_char_value,str_current,bytes_readed);
+				str_value=str_char_value;
 				str_current+=bytes_readed;
 
 
 				float number_value = 0;
 				if(zetjsoncpp::zj_strutils::str_to_float(&number_value,str_value) == zetjsoncpp::zj_strutils::STR_2_NUMBER_SUCCESS){
-					if(ptr_data!=NULL){
-						*((float *) ptr_data) = number_value;
+					if(type_data ==  JsonVarType::JSON_VAR_TYPE_NUMBER){
+						if(ptr_data!=NULL){
+							*((float *) ptr_data) = number_value;
+						}
+
+						ok=true;
 					}
-					ok=type_data ==  JsonVarType::JSON_VAR_TYPE_NUMBER;
 
 				}
 			}
@@ -313,15 +331,16 @@ namespace zetjsoncpp{
 		}
 		else{
 			if(json_var != NULL){
-				std::string effective_value="";
-				str_end = advance_to_one_of_collection_of_char(str_current, (char *)end_char_standard_value, line);
 
-				for(char *str_aux=(char *)str_start;str_aux<str_end;str_aux++){
-					effective_value+=*str_aux;
-				}
+				throw deserialize_error_exception(
+						zj_path::get_filename(deserialize_data->filename).c_str()
+						,line,zetjsoncpp::zj_strutils::format(
+								"Cannot parse value \"%s\" as %s"
+								,str_value.c_str()
+								,json_var->getTypeStr()
+						)
+				);
 
-				throw deserialize_error_exception(deserialize_data->filename,line,zetjsoncpp::zj_strutils::format("Cannot parse value \"%s\" as %s",effective_value.c_str(),json_var->getTypeStr()));
-				//json_deserialize_error(deserialize_data,str_current, line,"Cannot parse value as %s",json_var->getTypeStr());
 			}
 		}
 

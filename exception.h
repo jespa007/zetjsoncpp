@@ -21,6 +21,7 @@ namespace zetjsoncpp {
 
 		deserialize_exception(const char *  _file, int _line, const std::string & _error_description, const char *_error_type){
 
+			memset(what_msg,0,sizeof(what_msg));
 			error_type=_error_type;
 			/*if(file != NULL){
 				file=_file;
