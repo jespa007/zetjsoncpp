@@ -1,7 +1,7 @@
 > #15 CMake: add -DFCOMPILE
 
 //----------------------------
-Date: 14/02/2021
+Date: 7/04/2021
 Version: 2.0.1
 
 Fix bug crash when cannot parse json value
