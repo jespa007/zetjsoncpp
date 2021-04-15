@@ -66,7 +66,7 @@ namespace zetjsoncpp{
 			deserialize_data.filename=NULL;
 			deserialize_data.str_start=expression.c_str();
 			deserialize_json_var(&deserialize_data,expression.c_str(),line, json_var);
-		}catch(deserialize_error_exception & err){
+		}catch(deserialize_exception & err){
 			delete json_var;
 			json_var=NULL;
 			throw err;
@@ -98,7 +98,7 @@ namespace zetjsoncpp{
 
 				deserialize_json_var(&deserialize_data,aux_p,line,json_var);
 			}
-			catch(deserialize_error_exception & err){
+			catch(deserialize_exception & err){
 				delete json_var;
 				free(buf);
 				throw err;

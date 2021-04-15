@@ -32,31 +32,13 @@ namespace zetjsoncpp{
 		CAPTURE_VARIABLE_ARGS(text, string_text);
 		char *aux=(char *)str_current-1;
 		char captured[100]={0};
-
+		std::string filename="";
 		int n=0;
-
-		/*if(*(aux) == '\r' || *(aux) == '\n' ){
-			aux--;
+		if(deserialize_data->filename!=NULL){
+			filename=zj_path::get_filename(deserialize_data->filename);
 		}
 
-		while(n<40 && deserialize_data->str_start<aux){
-			if(*(aux-1) == '\r' || *(aux-1) == '\n'){
-				break;
-			}
-			aux--;
-			n++;
-		}
-
-		strncpy(captured,aux,n);*/
-
-
-		/*sprintf(where,"...%s..."
-				  "\n              ^   "
-				  "\n  ------------+ \n", captured);//PREVIEW_SSTRING(deserialize_data->str_start, aux, n));
-		//strncpy(where,str_start,str_end-str_start);
-
-		sprintf(temp_buff,"%s\n%s\n",text,where);*/
-		throw deserialize_error_exception(deserialize_data->filename,line,text);
+		throw deserialize_exception(filename.c_str(),line,text);
 	}
 
 
@@ -331,9 +313,12 @@ namespace zetjsoncpp{
 		}
 		else{
 			if(json_var != NULL){
-
-				throw deserialize_error_exception(
-						zj_path::get_filename(deserialize_data->filename).c_str()
+				std::string filename="";
+				if(deserialize_data->filename!=NULL){
+					filename=zj_path::get_filename(deserialize_data->filename);
+				}
+				throw deserialize_exception(
+						filename.c_str()
 						,line,zetjsoncpp::zj_strutils::format(
 								"Cannot parse value \"%s\" as %s"
 								,str_value.c_str()

@@ -1,6 +1,13 @@
 > #15 CMake: add -DFCOMPILE
 
 //----------------------------
+Date: 15/04/2021
+Version: 2.0.2
+
+[x] Fix bug write exception message when filename is null (whn loads in mmeory)
+[x] Improve error exception
+
+//----------------------------
 Date: 7/04/2021
 Version: 2.0.1
 
