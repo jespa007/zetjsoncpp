@@ -58,8 +58,8 @@ if(MSVC)
 	add_definitions(/wd4800)
 	add_definitions(/wd4244)
 	
-	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 	
 	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")	
 
@@ -69,13 +69,6 @@ else()
    
 	if (MINGW)
 		MESSAGE ("-- Plataform: MINGW" )
-		message("-- Mingw path: $ENV{MINGWDIR} ")
-		
-		set(CMAKE_LEGACY_MINGW_WIN32 0)
-		set(CMAKE_PREFIX_PATH "$ENV{MINGWDIR}/local32/lib")
-
-		SET( COMMON_CXX_PARAMS " ${COMMON_CXX_PARAMS} ")
-  
     elseif(GNU)
     	MESSAGE ("-- Plataform: GNU" )
     else()
@@ -84,15 +77,12 @@ else()
 	
 	IF ( "${TARGET}" STREQUAL "debug")
 	
-		set(COMPILE_TARGET_FLAGS " -O0 -g ")
-	
 		IF( EXISTS ${PROJECT_SOURCE_DIR}/../../memmgr )
 			message("-- Memmanager: ON")
 			SET( COMMON_CXX_PARAMS " ${COMMON_CXX_PARAMS} -D__MEMMANAGER__")
 			include_directories (
 				${PROJECT_SOURCE_DIR}/../../memmgr
 			)
-		
 	   		set(ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS} ${PROJECT_SOURCE_DIR}/../../memmgr/memmgr.cpp)
 	   	else()
 	   		message("-- Memmanager: OFF (../../memmgr not exist)")
@@ -100,8 +90,8 @@ else()
 		
 	ELSE()
 		set(TARGET "release")
-		set(COMPILE_TARGET_FLAGS " -O2")
 		message("-- Memmanager: OFF")
+		set(COMMON_CXX_PARAMS " -O0 -g -D__DEBUG__ ")
 	ENDIF()
 	
 	#Redefine output dir ...
@@ -134,11 +124,7 @@ ENDIF()
  
 MESSAGE ("-- Target: " ${TARGET})
 
-IF ( "${TARGET}" STREQUAL "debug")
-	SET( COMMON_CXX_PARAMS " ${COMMON_CXX_PARAMS} -D__DEBUG__ ")
-ENDIF()
-
-SET(CMAKE_CXX_FLAGS   " ${COMPILE_TARGET_FLAGS} ${COMMON_CXX_PARAMS}  " )
+SET(CMAKE_CXX_FLAGS   " ${COMMON_CXX_PARAMS}  " )
 
 #
 # COMMON PARAMS
