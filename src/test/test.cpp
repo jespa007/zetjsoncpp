@@ -33,6 +33,8 @@ remove
 
 int main(int argc, char *argv[]){
 
+	ZJ_UNUSUED_2PARAMS(argc,argv);
+
 	std::cout << "zetjsoncpp ver. "<< ZETJSONCPP_MAJOR_VERSION << "." << ZETJSONCPP_MINOR_VERSION << "."<< ZETJSONCPP_PATCH_VERSION << std::endl;
 
 	try{

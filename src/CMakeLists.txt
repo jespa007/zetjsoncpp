@@ -152,9 +152,7 @@ SET(CMAKE_CXX_FLAGS   " ${COMPILE_TARGET_FLAGS} ${COMMON_CXX_PARAMS}  " )
 set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
 	
-	util/zj_strutils.cpp
-	util/zj_file.cpp
-	util/zj_path.cpp
+	util/zj_util.cpp
 	jsonvar/JsonVar.cpp
 	jsonvar/JsonVarObject.cpp	
 	zetjsoncpp_deserializer.cpp
@@ -193,6 +191,7 @@ SET(
 	util/zj_strutils.h
 	util/zj_file.h
 	util/zj_path.h
+	util/zj_util.h
 	jsonvar/JsonVar.h
 	jsonvar/JsonVarNamed.h
 	

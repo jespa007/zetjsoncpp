@@ -17,6 +17,7 @@ namespace zetjsoncpp{
 		}
 
 		virtual void			 	push_back(const _T_DATA & tt) {
+			ZJ_UNUSUED_PARAM(tt);
 			throw std::runtime_error("push_back not available, please use newJsonVar in order to add JsonVarObject");
 		}
 
@@ -27,6 +28,7 @@ namespace zetjsoncpp{
 		}
 
 		virtual  void 	insert(int idx_position, const _T_DATA & tt) {
+			ZJ_UNUSUED_2PARAMS(idx_position,tt);
 			throw std::runtime_error("insert not available, please use newJsonVar in order to add JsonVarObject");
 		}
 
