@@ -4,7 +4,11 @@
 Date: 10/07/2021
 Version: 2.0.3
 
+<<<<<<< HEAD
 [x] Organize files
+=======
+[x] Move src dir
+>>>>>>> origin/master
 
 //----------------------------
 Date: 15/04/2021
