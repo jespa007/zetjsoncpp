@@ -1,4 +1,4 @@
-#include "..\zetjsoncpp.h"
+#include "zetjsoncpp.h"
 
 namespace zetjsoncpp{
 
