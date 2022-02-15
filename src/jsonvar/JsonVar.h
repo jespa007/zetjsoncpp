@@ -164,7 +164,7 @@ namespace zetjsoncpp {
 
 
 
-};
+}
 
 #include "JsonVarNamed.h"
 #include "JsonVarBoolean.h"

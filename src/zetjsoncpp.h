@@ -27,7 +27,7 @@
 
 #define ZETJSONCPP_MAJOR_VERSION 2
 #define ZETJSONCPP_MINOR_VERSION 0
-#define ZETJSONCPP_PATCH_VERSION 3
+#define ZETJSONCPP_PATCH_VERSION 4
 
 #ifdef __MEMMANAGER__
 #include "memmgr.h"
@@ -57,7 +57,7 @@ namespace zetjsoncpp {
 
 		std::string serialize(JsonVar *json_var, bool minimized=false);
 
-};
+}
 
 #include "zetjsoncpp.tcc"
 
