@@ -1,10 +1,11 @@
 > #15 CMake: add -DFCOMPILE
 
 //----------------------------
-Date: 15/02/2022
+Date: XX/XX/2022
 Version: 2.0.4
 
 [x] Compile with pedantic
+[x] Adapt changes memmgr
 
 //----------------------------
 Date: 10/07/2021

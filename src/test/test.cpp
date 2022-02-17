@@ -143,10 +143,6 @@ int main(int argc, char *argv[]){
     	fprintf(stderr, "%s\n",ex.what());
     }
 
-#ifdef __MEMMANAGER__
-   MEMMGR_print_status();
-#endif
-
     // that's all :)
     return 0;
 
