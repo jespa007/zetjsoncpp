@@ -37,7 +37,7 @@ namespace zetjsoncpp {
 	}
 
 	JsonVar::JsonVar() {
-		this->__zj_variable_name__ = "";
+		memset(this->__zj_variable_name__,0,sizeof(this->__zj_variable_name__));// = "";
 		this->__zj_ptr_data_end__ = NULL;
 		this->__zj_ptr_data_start__ = NULL;
 		this->__zj_size_data__ = 0;
