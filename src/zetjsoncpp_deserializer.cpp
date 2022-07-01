@@ -511,5 +511,5 @@ namespace zetjsoncpp{
 
 		return str_current;
 	}
-};
+}
 

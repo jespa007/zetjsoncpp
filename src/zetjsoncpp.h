@@ -25,17 +25,17 @@
 #include <limits.h>
 #include <math.h>
 
-#define ZETJSONCPP_MAJOR_VERSION 2
-#define ZETJSONCPP_MINOR_VERSION 0
-#define ZETJSONCPP_PATCH_VERSION 3
+#define ZETJSONCPP_VERSION_MAJOR 2
+#define ZETJSONCPP_VERSION_MINOR 0
+#define ZETJSONCPP_VERSION_PATCH 4
 
 #ifdef __MEMMANAGER__
 #include "memmgr.h"
 #endif
 
-#include "util/zj_strutils.h"
-#include "util/zj_file.h"
-#include "util/zj_path.h"
+
+
+#include "util/zj_util.h"
 
 
 
@@ -57,7 +57,7 @@ namespace zetjsoncpp {
 
 		std::string serialize(JsonVar *json_var, bool minimized=false);
 
-};
+}
 
 #include "zetjsoncpp.tcc"
 

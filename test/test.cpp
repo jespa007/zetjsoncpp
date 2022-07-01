@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "../zetjsoncpp.h"
+#include "zetjsoncpp.h"
 
 
 #include "test_number.cpp"
@@ -33,7 +33,9 @@ remove
 
 int main(int argc, char *argv[]){
 
-	std::cout << "zetjsoncpp ver. "<< ZETJSONCPP_MAJOR_VERSION << "." << ZETJSONCPP_MINOR_VERSION << "."<< ZETJSONCPP_PATCH_VERSION << std::endl;
+	ZJ_UNUSUED_2PARAMS(argc,argv);
+
+	std::cout << "zetjsoncpp ver. "<< ZETJSONCPP_VERSION_MAJOR << "." << ZETJSONCPP_VERSION_MINOR << "."<< ZETJSONCPP_VERSION_PATCH << std::endl;
 
 	try{
 
@@ -140,10 +142,6 @@ int main(int argc, char *argv[]){
 	}catch(std::exception & ex){
     	fprintf(stderr, "%s\n",ex.what());
     }
-
-#ifdef __MEMMANAGER__
-   MEMMGR_print_status();
-#endif
 
     // that's all :)
     return 0;
