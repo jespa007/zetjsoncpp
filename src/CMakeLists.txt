@@ -20,6 +20,24 @@ cmake_minimum_required(VERSION 3.15)
  
 project(zetjsoncpp)
 
+file(READ "zetjsoncpp.h" zetjsoncpp_h)
+
+string(REGEX MATCH "ZETJSONCPP_VERSION_MAJOR ([0-9]*)" _ ${zetjsoncpp_h})
+set(ZETJSONCPP_VERSION_MAJOR ${CMAKE_MATCH_1})
+
+string(REGEX MATCH "ZETJSONCPP_VERSION_MINOR ([0-9]*)" _ ${zetjsoncpp_h})
+set(ZETJSONCPP_VERSION_MINOR ${CMAKE_MATCH_1})
+
+string(REGEX MATCH "ZETJSONCPP_VERSION_PATCH ([0-9]*)" _ ${zetjsoncpp_h})
+set(ZETJSONCPP_VERSION_PATCH ${CMAKE_MATCH_1})
+
+
+MESSAGE("-- zetjsoncpp version ${ZETJSONCPP_VERSION_MAJOR}.${ZETJSONCPP_VERSION_MINOR}.${ZETJSONCPP_VERSION_PATCH}" )
+
+set(ZETJSONCPP_LIB_NAME "zetjsoncpp-${ZETJSONCPP_VERSION_MAJOR}-${ZETJSONCPP_VERSION_MINOR}-${ZETJSONCPP_VERSION_PATCH}")
+
+
+
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #
 # MACRO UTILS
@@ -159,19 +177,19 @@ endif()
 message("-- Library type: " ${LIBRARY_TYPE_CREATION})
 
 # json2cpplib
-add_library( zetjsoncpp${POST_NAME}  ${LIBRARY_TYPE_CREATION}  ${ZETJSONCPP_LIB_SRCS} )
+add_library( ${ZETJSONCPP_LIB_NAME}${POST_NAME}  ${LIBRARY_TYPE_CREATION}  ${ZETJSONCPP_LIB_SRCS} )
 
 
 #JSON TEST executable
-set(JSON_TEST_SRCS ${PROJECT_SOURCE_DIR}/test/test.cpp)
+set(JSON_TEST_SRCS ${PROJECT_SOURCE_DIR}/../test/test.cpp)
 
 #JSON TEST_FILE executable
-set(JSON_TEST_FILE_SRCS ${PROJECT_SOURCE_DIR}/test/test_file.cpp)
+set(JSON_TEST_FILE_SRCS ${PROJECT_SOURCE_DIR}/../test/test_file.cpp)
 
 
 if(MSVC)
 	#only for msvc...
-	set_target_properties(zetjsoncpp${POST_NAME} PROPERTIES COMPILE_DEFINITIONS ZETJSONCPP_EXPORTS)
+	set_target_properties(${ZETJSONCPP_LIB_NAME}${POST_NAME} PROPERTIES COMPILE_DEFINITIONS ZETJSONCPP_EXPORTS)
 endif()
 	
 
@@ -217,7 +235,7 @@ add_executable(test${POST_NAME}
 	${JSON_TEST_SRCS}
 )
 
-target_link_libraries(test${POST_NAME} zetjsoncpp${POST_NAME})
+target_link_libraries(test${POST_NAME} ${ZETJSONCPP_LIB_NAME}${POST_NAME})
 
 
 # Test File
@@ -225,10 +243,10 @@ add_executable(test_file${POST_NAME}
 	${JSON_TEST_FILE_SRCS}
 )
 
-target_link_libraries(test_file${POST_NAME} zetjsoncpp${POST_NAME})
+target_link_libraries(test_file${POST_NAME} ${ZETJSONCPP_LIB_NAME}${POST_NAME})
 
 
-INSTALL(TARGETS zetjsoncpp${POST_NAME}
+INSTALL(TARGETS ${ZETJSONCPP_LIB_NAME}${POST_NAME}
 		ARCHIVE DESTINATION  		${CMAKE_INSTALL_PREFIX}/lib
 		RUNTIME DESTINATION  		${CMAKE_INSTALL_PREFIX}/bin
     	LIBRARY DESTINATION 		${CMAKE_INSTALL_PREFIX}/lib

@@ -1,4 +1,4 @@
-#include "../zetjsoncpp.h"
+#include "zetjsoncpp.h"
 
 typedef struct{
 	// Number length
@@ -66,7 +66,7 @@ typedef struct
 
 int main(int argc, char *argv[]){
 
-	std::cout << "zetjsoncpp ver. "<< ZETJSONCPP_MAJOR_VERSION << "." << ZETJSONCPP_MINOR_VERSION << "."<< ZETJSONCPP_PATCH_VERSION << std::endl;
+	std::cout << "zetjsoncpp ver. "<< ZETJSONCPP_VERSION_MAJOR << "." << ZETJSONCPP_VERSION_MINOR << "."<< ZETJSONCPP_VERSION_PATCH << std::endl;
 	if(argc <=1){
 		std::cerr << "put file to parse"<< std::endl;
 		return 0;

@@ -25,9 +25,9 @@
 #include <limits.h>
 #include <math.h>
 
-#define ZETJSONCPP_MAJOR_VERSION 2
-#define ZETJSONCPP_MINOR_VERSION 0
-#define ZETJSONCPP_PATCH_VERSION 4
+#define ZETJSONCPP_VERSION_MAJOR 2
+#define ZETJSONCPP_VERSION_MINOR 0
+#define ZETJSONCPP_VERSION_PATCH 4
 
 #ifdef __MEMMANAGER__
 #include "memmgr.h"
