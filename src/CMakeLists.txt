@@ -98,6 +98,8 @@ else()
 	
 	IF ( "${TARGET}" STREQUAL "debug")
 	
+		set(COMMON_CXX_PARAMS " ${COMMON_CXX_PARAMS} -O0 -g -D__DEBUG__ ")
+		
 		IF( EXISTS ${PROJECT_SOURCE_DIR}/../../memmgr )
 			message("-- Memmanager: ON")
 			SET( COMMON_CXX_PARAMS " ${COMMON_CXX_PARAMS} -D__MEMMANAGER__")
@@ -112,7 +114,7 @@ else()
 	ELSE()
 		set(TARGET "release")
 		message("-- Memmanager: OFF")
-		set(COMMON_CXX_PARAMS " -O0 -g -D__DEBUG__ ")
+		set(COMMON_CXX_PARAMS " ${COMMON_CXX_PARAMS} -O2 ")
 	ENDIF()
 	
 	#Redefine output dir ...
