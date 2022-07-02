@@ -9,8 +9,8 @@
 
 
 
-#if  !defined(MIN)
-#define  MIN(a,  b)              ((a)  <  (b)  ?  (a)  :  (b))
+#if  !defined(ZJ_MIN)
+#define  ZJ_MIN(a,  b)              ((a)  <  (b)  ?  (a)  :  (b))
 #endif
 
 #define ZJ_MAX_CONST_CHAR 50
@@ -68,7 +68,7 @@
 	getChr(s,49),\
 	getChr(s,50)
 
-#define getChr(name, ii) ((MIN(ii,ZJ_MAX_CONST_CHAR))<sizeof(name)/sizeof(*name)?name[ii]:0)
+#define getChr(name, ii) ((ZJ_MIN(ii,ZJ_MAX_CONST_CHAR))<sizeof(name)/sizeof(*name)?name[ii]:0)
 
 #define ZJ_CAST_JSON_VAR_STRING 				(zetjsoncpp::JsonVarString<> *)
 #define ZJ_CAST_JSON_VAR_BOOLEAN 				(zetjsoncpp::JsonVarBoolean<> *)
@@ -129,7 +129,6 @@ namespace zetjsoncpp {
 
 		JsonVar();
 
-
 		// It create a new json var slot for vector container.
 		virtual JsonVar *newJsonVar();
 		// It create a new json var slot for map container.
@@ -150,6 +149,7 @@ namespace zetjsoncpp {
 		std::string getVariableName(){return __zj_variable_name__;}
 
 		void setParsed(bool parsed);
+		void setFileLineDebug(const char *__file__, int __line__);
 
 		bool isDeserialized() const;
 
@@ -157,14 +157,14 @@ namespace zetjsoncpp {
 		bool __zj_is_parsed__;
 		JsonVarType __zj_type__;
 		size_t __zj_size_data__;
-		std::string  __zj_variable_name__;
+		char  __zj_variable_name__[ZJ_MAX_CONST_CHAR+1];
 		void 	     *__zj_ptr_data_start__; // can be int, bool, vector, prop_grp, etc ...
 		JsonVar *__zj_ptr_data_end__;
 	};
 
 
 
-};
+}
 
 #include "JsonVarNamed.h"
 #include "JsonVarBoolean.h"

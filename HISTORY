@@ -1,9 +1,19 @@
 > #15 CMake: add -DFCOMPILE
 
 //----------------------------
+Date: 01/07/2022
+Version: 2.0.4
+
+[x] Compile with pedantic
+[x] Adapt changes memmgr
+[x] JsonVar::__zs_variable__: change std::string type to char[ZJ_MAX_CONST_CHAR]
+[x] reorder dirs
+
+//----------------------------
 Date: 10/07/2021
 Version: 2.0.3
 
+[x] Organize files
 [x] Move src dir
 
 //----------------------------

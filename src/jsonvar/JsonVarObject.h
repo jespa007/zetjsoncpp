@@ -24,10 +24,9 @@ namespace zetjsoncpp{
 		virtual ~JsonVarObject(){};
 
 	private:
-		void init(uint32_t numParam = 0, ...) {
+		void init(...) {
 			// PRE: All arguments must be std::string. The program can parse the appropiate type variable
 			// with its emmbedded type.
-
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_OBJECT;
 			this->__zj_size_data__ = sizeof(JsonVarObject<_T_DATA,_T_NAME...>);
 

@@ -71,7 +71,6 @@ namespace zetjsoncpp{
 			json_var=NULL;
 			throw err;
 		}
-
 		return json_var;
 	}
 
@@ -105,7 +104,6 @@ namespace zetjsoncpp{
 			}
 			free(buf);
 		}
-
 		return json_var;
 	}
 }
