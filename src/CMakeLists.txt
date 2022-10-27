@@ -83,12 +83,12 @@ if(MSVC)
 
 else()
 
-	SET( COMMON_CXX_PARAMS " ${COMMON_CXX_PARAMS} -D__STDC_CONSTANT_MACROS -std=gnu++0x -I -Wall -Wextra -pedantic ")
+	SET( CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -D__STDC_CONSTANT_MACROS -std=gnu++0x -I -Wall -Wextra -pedantic ")
    
 	if (MINGW)
 		MESSAGE("-- Plataform: MINGW" )
 	else()
-		SET( COMMON_CXX_PARAMS " ${COMMON_CXX_PARAMS} -fPIC ")
+		SET( CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -fPIC ")
 		if(GNU)
     		MESSAGE ("-- Plataform: GNU" )
     	else()
@@ -98,11 +98,11 @@ else()
 	
 	IF ( "${TARGET}" STREQUAL "debug")
 	
-		set(COMMON_CXX_PARAMS " ${COMMON_CXX_PARAMS} -O0 -g -D__DEBUG__ ")
+		set(CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -O0 -g -D__DEBUG__ ")
 		
 		IF( EXISTS ${PROJECT_SOURCE_DIR}/../../memmgr )
 			message("-- Memmanager: ON")
-			SET( COMMON_CXX_PARAMS " ${COMMON_CXX_PARAMS} -D__MEMMANAGER__")
+			SET( CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -D__MEMMANAGER__")
 			include_directories (
 				${PROJECT_SOURCE_DIR}/../../memmgr
 			)
@@ -114,7 +114,7 @@ else()
 	ELSE()
 		set(TARGET "release")
 		message("-- Memmanager: OFF")
-		set(COMMON_CXX_PARAMS " ${COMMON_CXX_PARAMS} -O2 ")
+		set(CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -O2 ")
 	ENDIF()
 	
 	#Redefine output dir ...
@@ -146,8 +146,6 @@ IF ( "${TARGET}" STREQUAL "debug")
 ENDIF()
  
 MESSAGE ("-- Target: " ${TARGET})
-
-SET(CMAKE_CXX_FLAGS   " ${COMMON_CXX_PARAMS}  " )
 
 #
 # COMMON PARAMS
