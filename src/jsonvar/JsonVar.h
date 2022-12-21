@@ -6,9 +6,6 @@
 
 #pragma once
 
-
-
-
 #if  !defined(ZJ_MIN)
 #define  ZJ_MIN(a,  b)              ((a)  <  (b)  ?  (a)  :  (b))
 #endif

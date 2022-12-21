@@ -26,20 +26,14 @@
 #include <math.h>
 
 #define ZETJSONCPP_VERSION_MAJOR 2
-#define ZETJSONCPP_VERSION_MINOR 0
-#define ZETJSONCPP_VERSION_PATCH 4
+#define ZETJSONCPP_VERSION_MINOR 1
+#define ZETJSONCPP_VERSION_PATCH 0
 
 #ifdef __MEMMANAGER__
 #include "memmgr.h"
 #endif
 
-
-
 #include "util/zj_util.h"
-
-
-
-
 #include "exception.h"
 #include "jsonvar/JsonVar.h"
 
@@ -55,7 +49,11 @@ namespace zetjsoncpp {
 		template <typename _T>
 		_T * deserialize_file(const std::string & _filename);
 
-		std::string serialize(JsonVar *json_var, bool minimized=false);
+		std::string serialize(
+			JsonVar *_json_var
+			, bool _minimized=false
+			, bool _discard_non_serialized=true
+		);
 
 }
 
