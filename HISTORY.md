@@ -1,9 +1,11 @@
 
+
 //----------------------------
 Date: 21/12/2022
 Version: 2.1.0
 
-- [x] No serialize unserialized fields in objects
+- [x] Do not serialize unserialized fields in objects
+- [x] use -WSanitizer=Address in linux if memmgr directory not found
 
 //----------------------------
 Date: 01/07/2022
