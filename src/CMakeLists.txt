@@ -24,7 +24,7 @@ IF( NOT CMAKE_BUILD_TYPE )
    SET( CMAKE_BUILD_TYPE Release ... FORCE )
 ENDIF()
 
-set(IS_DEBUG IS_DEBUG)
+set(IS_DEBUG "${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 
 file(READ "zetjsoncpp.h" zetjsoncpp_h)
 
@@ -60,7 +60,7 @@ MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
 
 ENDMACRO(INSTALL_HEADERS_WITH_DIRECTORY)
 
-#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#--------------
 #
 # COMMON PARAMS
 #
@@ -72,7 +72,6 @@ include_directories (
 message("-- Install drectory: " ${CMAKE_INSTALL_PREFIX})
 
 set(ZETJSONCPP_LIB_SRCS "")
-
 
 if(MSVC)
 	MESSAGE ("-- Plataform: MSVC" )
@@ -97,11 +96,12 @@ else()
 		MESSAGE("-- Plataform: MINGW" )
 	else()
 		SET( CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -fPIC ")
-		if(GNU)
-    		MESSAGE ("-- Plataform: GNU" )
-    	else()
-    		MESSAGE ("-- Plataform: Unknown" )
-		endif()
+   		MESSAGE ("-- Plataform: Linux" )
+
+		file(READ "/etc/issue" ETC_ISSUE )
+		string(REGEX MATCH "Debian|Ubuntu|Alpine" DIST ${ETC_ISSUE})
+
+		MESSAGE ("-- Dist: " ${DIST} )
 	endif()
 	
 	IF ( IS_DEBUG)
@@ -116,12 +116,16 @@ else()
 			)
 	   		set(ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS} ${PROJECT_SOURCE_DIR}/../../memmgr/memmgr.cpp)
 	   	else()
-	   		if(UNIX)
-		 		set(CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -fsanitize=address ")
-		 		message("-- Memmanager: -fsanitize=address")
-		 	else()
-		 		message("-- Memmanager: OFF (../../memmgr not exist)")
-		 	endif()
+			if(UNIX)
+				if( NOT "${DIST}" STREQUAL "Alpine")
+					set(CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -fsanitize=address ")
+					message("-- Memmanager: -fsanitize=address")
+				else()
+					message("-- Memmanager: -fsanitize NOT supported")
+				endif()
+			else()
+				message("-- Memmanager: OFF ($ENV{EIPM_DEVELOP_LIBS_CPP}/memmgr not exist)")
+			endif()
 	   	endif()
 		
 	ELSE()
@@ -154,10 +158,11 @@ ENDIF()
  
 MESSAGE ("-- Target: " ${CMAKE_BUILD_TYPE})
 
+
 #
 # COMMON PARAMS
 #
-#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#---------------
 #
 # COMPILE PARAMS
 #
@@ -186,20 +191,17 @@ message("-- Library type: " ${LIBRARY_TYPE_CREATION})
 # json2cpplib
 add_library( ${ZETJSONCPP_LIB_NAME}${POST_NAME}  ${LIBRARY_TYPE_CREATION}  ${ZETJSONCPP_LIB_SRCS} )
 
-
 #JSON TEST executable
 set(JSON_TEST_SRCS ${PROJECT_SOURCE_DIR}/../test/test.cpp)
 
 #JSON TEST_FILE executable
 set(JSON_TEST_FILE_SRCS ${PROJECT_SOURCE_DIR}/../test/test_file.cpp)
 
-
 if(MSVC)
 	#only for msvc...
 	set_target_properties(${ZETJSONCPP_LIB_NAME}${POST_NAME} PROPERTIES COMPILE_DEFINITIONS ZETJSONCPP_EXPORTS)
 endif()
 	
-
 SET(
 	HS
 	util/zj_strutils.h
