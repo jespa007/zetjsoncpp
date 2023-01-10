@@ -20,7 +20,15 @@ cmake_minimum_required(VERSION 3.15)
  
 project(zetjsoncpp)
 
+IF( NOT CMAKE_BUILD_TYPE )
+   SET( CMAKE_BUILD_TYPE Release ... FORCE )
+ENDIF()
+
+set(IS_DEBUG IS_DEBUG)
+
 file(READ "zetjsoncpp.h" zetjsoncpp_h)
+
+
 
 string(REGEX MATCH "ZETJSONCPP_VERSION_MAJOR ([0-9]*)" _ ${zetjsoncpp_h})
 set(ZETJSONCPP_VERSION_MAJOR ${CMAKE_MATCH_1})
@@ -96,7 +104,7 @@ else()
 		endif()
 	endif()
 	
-	IF ( "${TARGET}" STREQUAL "debug")
+	IF ( IS_DEBUG)
 	
 		set(CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -O0 -g -D__DEBUG__ ")
 		
@@ -112,15 +120,14 @@ else()
 	   	endif()
 		
 	ELSE()
-		set(TARGET "release")
 		message("-- Memmanager: OFF")
 		set(CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -O2 ")
 	ENDIF()
 	
 	#Redefine output dir ...
-	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${TARGET})
-	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${TARGET})
-	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${TARGET})
+	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE})
+	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE})
+	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 	LINK_DIRECTORIES(${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
 	
 
@@ -135,17 +142,12 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
 endif()
 
 
-
-IF ( "${TARGET}" STREQUAL "")
-   SET ( TARGET "release" )
-ENDIF ()
-
 set( POST_NAME "")
-IF ( "${TARGET}" STREQUAL "debug")
+IF ( IS_DEBUG)
 	set( POST_NAME "_d")
 ENDIF()
  
-MESSAGE ("-- Target: " ${TARGET})
+MESSAGE ("-- Target: " ${CMAKE_BUILD_TYPE})
 
 #
 # COMMON PARAMS
