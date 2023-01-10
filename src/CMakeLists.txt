@@ -21,7 +21,7 @@ cmake_minimum_required(VERSION 3.15)
 project(zetjsoncpp)
 
 IF( NOT CMAKE_BUILD_TYPE )
-   SET( CMAKE_BUILD_TYPE Release ... FORCE )
+   SET( CMAKE_BUILD_TYPE Release )
 ENDIF()
 
 set(IS_DEBUG "${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
