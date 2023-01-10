@@ -8,6 +8,7 @@ namespace zetjsoncpp{
 	public:
 
 		typedef typename std::map<std::string,_T_DATA>::iterator JsonVarIteratorMap;
+		typedef typename std::map<std::string,_T_DATA>::size_type size_type;
 		//typename JsonVarIterator std::map<std::string,_T_DATA>::iterator;
 
 		JsonVarMap() {}
@@ -32,6 +33,10 @@ namespace zetjsoncpp{
 
 		_T_DATA const& 	at(const std::string & key) const {
 			return __zj_map_data__.at(key);
+		}
+
+		JsonVarMap::size_type count(const std::string & key) const {
+			return __zj_map_data__.count(key);
 		}
 
 		virtual void insert(const std::string & key, const _T_DATA & tt) {
