@@ -3,7 +3,6 @@
 	<name>zetjsoncpp</name>
 	<comment></comment>
 	<projects>
-		<project>memmgr</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
