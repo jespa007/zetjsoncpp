@@ -2,8 +2,7 @@
  *  This file is distributed under the MIT License.
  *  See LICENSE file for details.
  */
-#ifndef __ZJ_EXCEPTION_H__
-#define __ZJ_EXCEPTION_H__
+#pragma once
 
 namespace zetjsoncpp {
 
@@ -31,8 +30,5 @@ namespace zetjsoncpp {
 	    	return (const char *)what_msg;
 		}
 	};
-
-
 }
 
-#endif

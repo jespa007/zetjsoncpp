@@ -84,7 +84,10 @@ namespace zetjsoncpp{
 			aux_p+=2; //advance first
 			while(!is_end_comment(aux_p) && *aux_p != 0){
 				aux_p = advance_to_char(aux_p,'*');
-				if(*aux_p == '\n') aux_p++; // make compatible windows format...
+				if(*aux_p == '\n') {
+					aux_p++; // make compatible windows format...
+					line++;
+				}
 				if(*aux_p == '\r') aux_p++;
 				if(*(aux_p+1) != '/') aux_p++; // not end comment ... advance ...
 			}
