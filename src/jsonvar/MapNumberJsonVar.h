@@ -1,21 +1,21 @@
 namespace zetjsoncpp{
 
 	template<char... _T_NAME>
-	class JsonVarMapNumber: public JsonVarNamed<_T_NAME...>, public JsonVarMap<JsonVarNumber<>> {
+	class MapNumberJsonVar: public NamedJsonVar<_T_NAME...>, public MapJsonVar<NumberJsonVar<>> {
 
 	public:
 
-		JsonVarMapNumber() {
+		MapNumberJsonVar() {
 			init();
 		}
 
-		JsonVarMapNumber(const std::map<std::string,float> & _map_numbers) {
+		MapNumberJsonVar(const std::map<std::string,float> & _map_numbers) {
 			init();
 			copy(_map_numbers);
 		}
 
 
-		JsonVarVectorNumber<> & operator=(const  std::map<std::string,float> & _map_numbers){
+		ArrayJsonVarNumber<> & operator=(const  std::map<std::string,float> & _map_numbers){
 			copy(_map_numbers);
 			return *this;
 		}
@@ -24,12 +24,12 @@ namespace zetjsoncpp{
 			if(this->__zj_map_data__.count(key_id) != 0){
 				throw std::runtime_error(zj_strutils::format("property name \"%s\" already exists",key_id.c_str()));
 			}
-			this->__zj_map_data__[key_id]=JsonVarNumber<>();
+			this->__zj_map_data__[key_id]=NumberJsonVar<>();
 
 			return &this->__zj_map_data__[key_id];
 		}
 
-		virtual ~JsonVarMapNumber() {
+		virtual ~MapNumberJsonVar() {
 
 		}
 
@@ -43,7 +43,7 @@ namespace zetjsoncpp{
 
 		void init(){
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS;
-			this->__zj_size_data__ = sizeof(JsonVarMapNumber< _T_NAME...>);
+			this->__zj_size_data__ = sizeof(MapNumberJsonVar< _T_NAME...>);
 		}
 
 	};

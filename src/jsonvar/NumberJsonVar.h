@@ -1,7 +1,7 @@
 namespace zetjsoncpp{
 
 	template<char... _T_NAME>
-	class JsonVarNumber : public JsonVarNamed<_T_NAME ...>{
+	class NumberJsonVar : public NamedJsonVar<_T_NAME ...>{
 	public:
 
 			static float parse(const std::string & str ){
@@ -13,24 +13,24 @@ namespace zetjsoncpp{
 				return f;
 			}
 
-			JsonVarNumber() {
+			NumberJsonVar() {
 				init();
 			}
 
-			 JsonVarNumber(float f) {
+			 NumberJsonVar(float f) {
 				init();
 				this->__zj_value__ = f;
 			}
 
-			 JsonVarNumber(const std::string & s) {
+			 NumberJsonVar(const std::string & s) {
 				init();
 				this->__zj_value__ = parse(s);
 			}
 
 			//-----
 			// pre neg
-			JsonVarNumber   operator -  (){
-				return JsonVarNumber(-__zj_value__);
+			NumberJsonVar   operator -  (){
+				return NumberJsonVar(-__zj_value__);
 			}
 
 
@@ -39,12 +39,12 @@ namespace zetjsoncpp{
 
 
 			// operators
-			JsonVarNumber & operator=(float _value){
+			NumberJsonVar & operator=(float _value){
 				__zj_value__=_value;
 				return *this;
 			}
 
-			JsonVarNumber & operator=(const JsonVarNumber & _n){
+			NumberJsonVar & operator=(const NumberJsonVar & _n){
 				__zj_value__=_n.__zj_value__;
 				return *this;
 			}
@@ -55,94 +55,94 @@ namespace zetjsoncpp{
 
 			//-----
 			// +
-			JsonVarNumber   operator +  (const JsonVarNumber & n) {
+			NumberJsonVar   operator +  (const NumberJsonVar & n) {
 				return (__zj_value__ + n.__zj_value__);
 			}
 
-			JsonVarNumber   operator +  (float n)  {
-				return JsonVarNumber(__zj_value__ + n);
+			NumberJsonVar   operator +  (float n)  {
+				return NumberJsonVar(__zj_value__ + n);
 			}
 
-			JsonVarNumber   operator +  (int n)  {
-				return JsonVarNumber(__zj_value__ + n);
+			NumberJsonVar   operator +  (int n)  {
+				return NumberJsonVar(__zj_value__ + n);
 			}
 			//-----
 			// -
-			JsonVarNumber   operator -  (const JsonVarNumber & n) {
+			NumberJsonVar   operator -  (const NumberJsonVar & n) {
 				return (__zj_value__ - n.__zj_value__);
 			}
 
-			JsonVarNumber   operator -  (float n)  {
-				return JsonVarNumber(__zj_value__ - n);
+			NumberJsonVar   operator -  (float n)  {
+				return NumberJsonVar(__zj_value__ - n);
 			}
 
-			JsonVarNumber   operator -  (int n)  {
-				return JsonVarNumber(__zj_value__ - n);
+			NumberJsonVar   operator -  (int n)  {
+				return NumberJsonVar(__zj_value__ - n);
 			}
 			//-----
 			// *
-			JsonVarNumber   operator *  (const JsonVarNumber & n) {
-				return JsonVarNumber(__zj_value__ * n.__zj_value__);
+			NumberJsonVar   operator *  (const NumberJsonVar & n) {
+				return NumberJsonVar(__zj_value__ * n.__zj_value__);
 			}
-			JsonVarNumber   operator *  (float  n) {
-				return JsonVarNumber(__zj_value__ * n);
+			NumberJsonVar   operator *  (float  n) {
+				return NumberJsonVar(__zj_value__ * n);
 			}
-			JsonVarNumber   operator *  (int  n) {
-				return JsonVarNumber(__zj_value__ * n);
+			NumberJsonVar   operator *  (int  n) {
+				return NumberJsonVar(__zj_value__ * n);
 			}
 			//-----
 			// /
-			JsonVarNumber   operator /  (const JsonVarNumber & n) {
+			NumberJsonVar   operator /  (const NumberJsonVar & n) {
 
 				if(n.__zj_value__ ==0)
 					throw ("Error divide by 0");
 
-				return JsonVarNumber(__zj_value__ / n.__zj_value__);
+				return NumberJsonVar(__zj_value__ / n.__zj_value__);
 			}
 
-			JsonVarNumber   operator /  (float  n) {
+			NumberJsonVar   operator /  (float  n) {
 
 				if(n ==0)
 					throw ("Error divide by 0");
 
-				return JsonVarNumber(__zj_value__ / n);
+				return NumberJsonVar(__zj_value__ / n);
 			}
 
-			JsonVarNumber   operator /  (int  n) {
+			NumberJsonVar   operator /  (int  n) {
 
 				if(n ==0)
 					throw ("Error divide by 0");
 
-				return JsonVarNumber(__zj_value__ / n);
+				return NumberJsonVar(__zj_value__ / n);
 			}
 			//-----
 			// %
-			JsonVarNumber   operator %  (const JsonVarNumber & n) {
+			NumberJsonVar   operator %  (const NumberJsonVar & n) {
 
 				if(n.m_numVar ==0)
 					throw ("Error divide by 0");
 
-				return JsonVarNumber(fmod(__zj_value__ , n.__zj_value__));
+				return NumberJsonVar(fmod(__zj_value__ , n.__zj_value__));
 			}
 
-			JsonVarNumber   operator %  (float  n) {
+			NumberJsonVar   operator %  (float  n) {
 
 				if(n ==0)
 					throw ("Error divide by 0");
 
-				return JsonVarNumber(fmod(__zj_value__, n));
+				return NumberJsonVar(fmod(__zj_value__, n));
 			}
 
-			JsonVarNumber   operator %  (int  n) {
+			NumberJsonVar   operator %  (int  n) {
 
 				if(n ==0)
 					throw ("Error divide by 0");
 
-				return JsonVarNumber(fmod(__zj_value__ , n));
+				return NumberJsonVar(fmod(__zj_value__ , n));
 			}
 			//-----
 			// !=
-			bool 	  operator == (const JsonVarNumber & n){
+			bool 	  operator == (const NumberJsonVar & n){
 				return __zj_value__ == n.__zj_value__;
 			}
 			bool 	  operator == (float n){
@@ -153,7 +153,7 @@ namespace zetjsoncpp{
 			}
 			//-----
 			// !=
-			bool 	  operator != (const JsonVarNumber & n){
+			bool 	  operator != (const NumberJsonVar & n){
 				return __zj_value__ != n.__zj_value__;
 			}
 			bool 	  operator != (float n){
@@ -164,7 +164,7 @@ namespace zetjsoncpp{
 			}
 			//-----
 			// !=
-			bool 	  operator <  (const JsonVarNumber & n){
+			bool 	  operator <  (const NumberJsonVar & n){
 				return __zj_value__ < n.__zj_value__;
 			}
 			bool 	  operator <  (float n){
@@ -175,7 +175,7 @@ namespace zetjsoncpp{
 			}
 			//-----
 			// <=
-			bool 	  operator <= (const JsonVarNumber & n){
+			bool 	  operator <= (const NumberJsonVar & n){
 				return __zj_value__ <= n.__zj_value__;
 			}
 			bool 	  operator <= (float n){
@@ -187,7 +187,7 @@ namespace zetjsoncpp{
 
 			//-----
 			// >
-			bool 	  operator >  (const JsonVarNumber & n){
+			bool 	  operator >  (const NumberJsonVar & n){
 				return __zj_value__ > n.__zj_value__;
 			}
 			bool 	  operator >  (float n){
@@ -198,7 +198,7 @@ namespace zetjsoncpp{
 			}
 			//-----
 			// >=
-			bool	operator >= (const JsonVarNumber & n){
+			bool	operator >= (const NumberJsonVar & n){
 				return __zj_value__ >= n.__zj_value__;
 			}
 			bool 	  operator >= (float n){
@@ -209,27 +209,27 @@ namespace zetjsoncpp{
 			}
 			//-----
 			// +=
-			JsonVarNumber & operator += (const JsonVarNumber & n){
+			NumberJsonVar & operator += (const NumberJsonVar & n){
 				__zj_value__ += n.__zj_value__;
 				return (*this);
 			}
 
-			JsonVarNumber & operator += (float n1){
+			NumberJsonVar & operator += (float n1){
 				__zj_value__ += n1;
 				return (*this);
 			}
 
-			JsonVarNumber & operator *= (const JsonVarNumber & n){
+			NumberJsonVar & operator *= (const NumberJsonVar & n){
 				__zj_value__ *= n.__zj_value__;
 				return (*this);
 			}
 
-			JsonVarNumber & operator *= (float n1){
+			NumberJsonVar & operator *= (float n1){
 				__zj_value__ *= n1;
 				return (*this);
 			}
 
-			JsonVarNumber & operator /= (const JsonVarNumber & n){
+			NumberJsonVar & operator /= (const NumberJsonVar & n){
 				if(n.__zj_value__ == 0)
 					throw("Divide by 0!");
 
@@ -237,7 +237,7 @@ namespace zetjsoncpp{
 				return (*this);
 			}
 
-			JsonVarNumber & operator /= (float n1){
+			NumberJsonVar & operator /= (float n1){
 
 				if(n1 == 0){
 					throw("Divide by 0!");
@@ -247,27 +247,27 @@ namespace zetjsoncpp{
 				return (*this);
 			}
 			//--- -=
-			JsonVarNumber & operator -= (const JsonVarNumber & n){
+			NumberJsonVar & operator -= (const NumberJsonVar & n){
 				__zj_value__ -= n.m_numVar;
 				return (*this);
 			}
 
-			JsonVarNumber & operator -= (float n1){
+			NumberJsonVar & operator -= (float n1){
 				__zj_value__ -= n1;
 				return (*this);
 			}
 
-			JsonVarNumber & operator ++(){
+			NumberJsonVar & operator ++(){
 				__zj_value__++;
 				return (*this);
 			}
 			float  operator ++(int){
-				JsonVarNumber n(__zj_value__);
+				NumberJsonVar n(__zj_value__);
 				operator++();
 				return n;
 			}
 
-			virtual ~JsonVarNumber(){}
+			virtual ~NumberJsonVar(){}
 	private:
 
 		float __zj_value__;
@@ -275,7 +275,7 @@ namespace zetjsoncpp{
 		void init() {
 			__zj_value__ = 0;
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_NUMBER;
-			this->__zj_size_data__ = sizeof(JsonVarNumber<_T_NAME...>);
+			this->__zj_size_data__ = sizeof(NumberJsonVar<_T_NAME...>);
 		}
 
 

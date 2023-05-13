@@ -1,4 +1,9 @@
 
+//----------------------------
+Date: 13/05/2022
+Version: 2.2.0
+
+- [x] Change name JsonVarXXXX -> XXXXJsonVar
 
 //----------------------------
 Date: 21/12/2022

@@ -22,53 +22,53 @@ To serialize json variable it done using zetjsoncpp::deserialize. ZetJsonCpp sup
  
 ### Boolean
 
-To deserialize a json boolean, it is done through `JsonVarBoolean` as it shows below,
+To deserialize a json boolean, it is done through `BooleanJsonVar` as it shows below,
 
-<pre lang="c++">
-zetjsoncpp::deserialize<zetjsoncpp::JsonVarBoolean<>>("true");
-</pre>
+```cpp
+zetjsoncpp::deserialize<zetjsoncpp::BooleanJsonVar<>>("true");
+```
 
 ### Vector of Booleans
 
 A json vector of booleans it could be the following,
 
-<pre lang="javascript">
+```javscript
 [true,false,true]
-</pre>
+```
 
-To deserialize a json vector of booleans, it is done through `JsonVarVectorBoolean` as it shows below,
+To deserialize a json vector of booleans, it is done through `ArrayBooleanJsonVar` as it shows below,
 
-<pre lang="c++">
-zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorBoolean<>>(
+```cpp
+zetjsoncpp::deserialize<zetjsoncpp::ArrayBooleanJsonVar<>>(
 "["
    "true"
    ",false"
    ",true"
 "]");
-</pre>
+```
 
 ### Map of Booleans
 
 A json map of booleans it could be the following,
 
-<pre lang="javascript">
+```javascript
 {
    "id1":true
   ,"id2":false
   ,"id3":true
 }
-</pre>
+```
 
-To deserialize a json map of booleans, it is done through `JsonVarMapBoolean` as it shows below,
+To deserialize a json map of booleans, it is done through `MapBooleanJsonVar` as it shows below,
 
-<pre lang="c++">
-zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapBoolean<>>(
+```cpp
+zetjsoncpp::deserialize<zetjsoncpp::MapBooleanJsonVar<>>(
 "{"
    "\"id1\":true"
    ",\"id2\":false"
    ",\"id3\":true"
 "}");
-</pre>
+```
 
 ### Number
 A json number it could be the following,
@@ -78,149 +78,149 @@ A json number it could be the following,
 * 2.5
 * 3.7e+2
 
-To deserialize a json number, it is done through `JsonVarNumber` as it shows below,
+To deserialize a json number, it is done through `NumberJsonVar` as it shows below,
 
-<pre lang="c++">
-zetjsoncpp::deserialize<zetjsoncpp::JsonVarNumber<>>("1");
-</pre>
+```cpp
+zetjsoncpp::deserialize<zetjsoncpp::NumberJsonVar<>>("1");
+```
 
 ### Vector of Numbers
 A json vector of numbers it could be the following,
 
-<pre lang="javascript">
+```javscript
 [1,3.7e+2,-3]
-</pre>
+```
 
-To deserialize a json vector of numbers, it is done through `JsonVarVectorNumber` as it shows below,
+To deserialize a json vector of numbers, it is done through `ArrayNumberJsonVar` as it shows below,
 
-<pre lang="c++">
-zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorNumber<>>(
+```cpp
+zetjsoncpp::deserialize<zetjsoncpp::ArrayNumberJsonVar<>>(
 "["
    "1"
    ",3.7e+2"
    ",-3"
 "]");
-</pre>
+```
 
 ### Map of numbers
 A json map of numbers it could be the following,
 
-<pre lang="javascript">
+```javscript
 { 
   "id1":1
  ,"id2":3.7e+2
  ,"id3":-3
 }
-</pre>
+```
 
-To deserialize a json map of numbers, it is done through `JsonVarMapNumber` as it shows below,
+To deserialize a json map of numbers, it is done through `MapNumberJsonVar` as it shows below,
 
-<pre lang="c++">
-zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapNumber<>>(
+```cpp
+zetjsoncpp::deserialize<zetjsoncpp::MapNumberJsonVar<>>(
 "{"
    "\"id1\":1"
    ",\"id2\":3.7e+2"
    ",\"id3\":-3"
 "}");
-</pre>
+```
 
 ### String
-To deserialize a json string, it is done through `JsonVarString` as it shows below,
+To deserialize a json string, it is done through `StringJsonVar` as it shows below,
 
-<pre lang="c++">
-zetjsoncpp::deserialize<zetjsoncpp::JsonVarString<>>("\"my_string\"")
-</pre>
+```cpp
+zetjsoncpp::deserialize<zetjsoncpp::StringJsonVar<>>("\"my_string\"")
+```
 
 ### Vector of Strings
 A json vector of strings it could be the following,
-<pre lang="javascript">
+```javscript
 ["string_1","string_2","string_3"]
-</pre>
-To deserialize a vector of strings, it is done through `JsonVarVectorString` as it shows below,
+```
+To deserialize a vector of strings, it is done through `ArrayStringJsonVar` as it shows below,
 
-<pre lang="c++">
-zetjsoncpp::deserialize<JsonVarVectorString<>>(
+```cpp
+zetjsoncpp::deserialize<ArrayStringJsonVar<>>(
 "["
     "\"string_1\""
     ",\"string_2\""
     ",\"string_3\""
 "]");
-</pre>
+```
 
 ### Map of Strings
 A json map of strings it could be the following,
 
-<pre lang="javascript">
+```javscript
 { 
    "id1":"string_1"
    ,"id2":"string_2"
    ,"id3":"string_3" 
 }
-</pre>
+```
 
-To deserialize a map of strings, it is done through `JsonVarMapString` as it shows below,
+To deserialize a map of strings, it is done through `MapStringJsonVar` as it shows below,
 
-<pre lang="c++">
-JsonVarMapString<> *m3=zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapString<>>(
+```cpp
+MapStringJsonVar<> *m3=zetjsoncpp::deserialize<zetjsoncpp::MapStringJsonVar<>>(
 "{"
     "\"id1\":\"string_1\""
     ",\"id2\":\"string_2\""
     ",\"id3\":\"string_3\""
 "}");
-</pre>
+```
 
 ### Object
 Until now it has seen a way to serialize primitive and structured types easy to understant. Now we presents the method to deserialize json object that it requires a little bit of setup. A json object is like a json map with different content on its values.
 
 A json object it could be the following 
 
-<pre lang="javascript">
+```javscript
 {
   "encoding":"UTF-8"
  ,"length":1000
  ,"use_space":false
 }
-</pre>
+```
 
 **List 2.1**
 
 Taking the example of list 2.1, in zetjsoncpp it defines json object using a structure in C as it shows below,
 
-<pre lang="c++">
+```cpp
 typedef struct{
-    zetjsoncpp::JsonVarString<ZJ_CONST_CHAR("encoding")>    encoding;
-    zetjsoncpp::JsonVarNumber<ZJ_CONST_CHAR("length")>      length;     
-    zetjsoncpp::JsonVarBoolean<ZJ_CONST_CHAR("use_space")>  use_space; 
+    zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("encoding")>    encoding;
+    zetjsoncpp::NumberJsonVar<ZJ_CONST_CHAR("length")>      length;     
+    zetjsoncpp::BooleanJsonVar<ZJ_CONST_CHAR("use_space")>  use_space; 
 }JsonSample;
-</pre>
+```
 
 **List 2.2**
 Note:
 
 You may noticed that of ZJ_CONST_CHAR(s). This is a trick to pass literal string through variadic templates char by char, due that templates doesn't accept pass literal strings (i.e const char *) as a parameter.
 
-An finally, to deserialize a json object, it is done through `JsonVarObject` passing the type of structure to deserialize it has seen in list 2.2,
+An finally, to deserialize a json object, it is done through `ObjectJsonVar` passing the type of structure to deserialize it has seen in list 2.2,
 
-<pre lang="c++">
-auto json_object=zetjsoncpp::deserialize<zetjsoncpp::JsonVarObject<JsonSample>>(
+```cpp
+auto json_object=zetjsoncpp::deserialize<zetjsoncpp::ObjectJsonVar<JsonSample>>(
 "{"
    "\"encoding\":\"UTF-8\""
    ",\"length\":1000"
    ",\"use_space\":false"         
 "}");
-</pre>
+```
 
 If any variable has not been deserialized, because it does not exist in string/file either it doesn't match json property name json with that defined in the C++ structure, it has to use isDeserialized() to check whether the variable was deserialized or not.
 
 For example:
 
-<pre lang="c++">
+```cpp
 if(json_object->encoding.isDeserialized()){
 
 // value deserialized ok. do something... 
 
 }
-</pre>
+```
 
 List 3.4
 By default, any no deserialized variable the strings are set empty, numbers and booleans will set as 0 and false respectively.
@@ -228,7 +228,7 @@ By default, any no deserialized variable the strings are set empty, numbers and 
 ### Vector of Objects
 A json vector of objects it could be the following,
 
-<pre lang="javascript">
+```javscript
 [{ 
     "encoding":"UTF-8" 
     ,"length":1000 
@@ -238,12 +238,12 @@ A json vector of objects it could be the following,
    ,"length":1500   
    ,"use_space":true 
 }]
-</pre>
+```
 
-To deserialize a vector of objects, it is done through `JsonVarVectorObject` passing the type of structure to deserialize it has seen in list 2.2,
+To deserialize a vector of objects, it is done through `ArrayObjectJsonVar` passing the type of structure to deserialize it has seen in list 2.2,
 
-<pre lang="c++">
-zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorObject<JsonSample>>(
+```cpp
+zetjsoncpp::deserialize<zetjsoncpp::ArrayObjectJsonVar<JsonSample>>(
 "[{"  
    "\"encoding\":\"UTF-8\""  
    ",\"length\":1000"   
@@ -253,12 +253,12 @@ zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorObject<JsonSample>>(
     ",\"length\":1500"  
     ",\"use_space\":true" 
 "}]");
-</pre>
+```
 
 ### Map of Objects
 A json map of objects it could be the following,
 
-<pre lang="javascript">
+```javscript
 {
   "id1":{ 
      "encoding":"UTF-8" 
@@ -271,12 +271,12 @@ A json map of objects it could be the following,
      ,"use_space":true
   }
 }
-</pre>
+```
 
-To deserialize a map of objects, it is done through `JsonVarMapObject` passing the type of structure to deserialize it has seen in list 2.2,
+To deserialize a map of objects, it is done through `MapObjectJsonVar` passing the type of structure to deserialize it has seen in list 2.2,
 
-<pre lang="c++">
-zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapObject<JsonSample>>(
+```cpp
+zetjsoncpp::deserialize<zetjsoncpp::MapObjectJsonVar<JsonSample>>(
 "{"
   "\"id1\":{"
      "\"encoding\":\"UTF-8\""  
@@ -289,16 +289,16 @@ zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapObject<JsonSample>>(
       ",\"use_space\":true" 
   "}"
 "}");
-</pre>
+```
 
 ## Serialize
 To serialize json variable it done using zetjsoncpp::serialize.
 
 For example,
 
-<pre lang="c++">
+```cpp
 // parse json var number
-auto json_number=zetjsoncpp::deserialize<zetjsoncpp::JsonVarNumber<>>("2");
+auto json_number=zetjsoncpp::deserialize<zetjsoncpp::NumberJsonVar<>>("2");
 
 // change it by 3.5
 json_number=3.5;
@@ -306,13 +306,13 @@ json_number=3.5;
 std::cout << zetjsoncpp::serialize(json_var); << std::enl;
 
 // it outputs 3.5
-</pre>
+```
 
 ## A big example
 
 Let's suppose it has a file called sample.json with the following content,
 
-<pre lang="javascript">
+```javscript
 // Configuration options
 {
     // Default encoding for text
@@ -376,84 +376,84 @@ Let's suppose it has a file called sample.json with the following content,
 		}
 	}
 }
-</pre>
+```
 
 **List 3.1**
 
 To load the code saw on list 1.1 we have to declare the following C estructure,
 
-<pre lang="c++">
+```cpp
 #include "zetjsoncpp.h"
 
-using zetjsoncpp::JsonVarNumber;
-using zetjsoncpp::JsonVarBoolean;
-using zetjsoncpp::JsonVarString;
-using zetjsoncpp::JsonVarMapString;
-using zetjsoncpp::JsonVarVectorNumber;
-using zetjsoncpp::JsonVarVectorString;
-using zetjsoncpp::JsonVarObject;
-using zetjsoncpp::JsonVarVectorObject;
-using zetjsoncpp::JsonVarMapObject;
+using zetjsoncpp::NumberJsonVar;
+using zetjsoncpp::BooleanJsonVar;
+using zetjsoncpp::StringJsonVar;
+using zetjsoncpp::MapStringJsonVar;
+using zetjsoncpp::ArrayNumberJsonVar;
+using zetjsoncpp::ArrayStringJsonVar;
+using zetjsoncpp::ObjectJsonVar;
+using zetjsoncpp::ArrayObjectJsonVar;
+using zetjsoncpp::MapObjectJsonVar;
 
 typedef struct{
   // Number length
-  JsonVarNumber<ZJ_CONST_CHAR("length")>  length;
+  NumberJsonVar<ZJ_CONST_CHAR("length")>  length;
 
   // Boolean use_space
-  JsonVarBoolean<ZJ_CONST_CHAR("use_space")>use_space;
+  BooleanJsonVar<ZJ_CONST_CHAR("use_space")>use_space;
 }Ident;
 
 typedef struct{
   // String code
-  JsonVarString<ZJ_CONST_CHAR("code")>  code;
+  StringJsonVar<ZJ_CONST_CHAR("code")>  code;
 
   // Map of strings general_texts
-  JsonVarMapString<ZJ_CONST_CHAR("general_texts")>  general_texts;
+  MapStringJsonVar<ZJ_CONST_CHAR("general_texts")>  general_texts;
 }Language;
 
 
 typedef struct{
   // String type
-  JsonVarString<ZJ_CONST_CHAR("type")>  type;
+  StringJsonVar<ZJ_CONST_CHAR("type")>  type;
 
   // String channels
-  JsonVarString<ZJ_CONST_CHAR("channels")>  channels;
+  StringJsonVar<ZJ_CONST_CHAR("channels")>  channels;
 
   // Vector of numbers data
-  JsonVarVectorNumber<ZJ_CONST_CHAR("data")>  data;
+  ArrayNumberJsonVar<ZJ_CONST_CHAR("data")>  data;
 }Interpolation;
 
 typedef struct
 {
   // String encoding
-  JsonVarString<ZJ_CONST_CHAR("encoding")>  encoding;
+  StringJsonVar<ZJ_CONST_CHAR("encoding")>  encoding;
 
   // Number number
-  JsonVarNumber<ZJ_CONST_CHAR("number")>  number;
+  NumberJsonVar<ZJ_CONST_CHAR("number")>  number;
 
   // Vector of strings plug-ins
-  JsonVarVectorString<ZJ_CONST_CHAR("plug-ins")>  plugins;
+  ArrayStringJsonVar<ZJ_CONST_CHAR("plug-ins")>  plugins;
 
   // Object indent
-  JsonVarObject<Ident,ZJ_CONST_CHAR("indent")>  indent;
+  ObjectJsonVar<Ident,ZJ_CONST_CHAR("indent")>  indent;
 
   // Object languages
-  JsonVarVectorObject<Language,ZJ_CONST_CHAR("languages")>  languages;
+  ArrayObjectJsonVar<Language,ZJ_CONST_CHAR("languages")>  languages;
 
   // Map of objects interpolations
-  JsonVarMapObject<Interpolation,ZJ_CONST_CHAR("interpolations")>  interpolations;
+  MapObjectJsonVar<Interpolation,ZJ_CONST_CHAR("interpolations")>  interpolations;
 
 
 }SampleJson;
-</pre>
+```
 
 **List 3.2**
 
 And then we have to write the following code to load the data seen on list 1.1 into the estructure on list 1.2,
 
-<pre lang="c++">
+```cpp
 try{
-    auto json_object=zetjsoncpp::deserialize_file<JsonVarObject<SampleJson>>("sample.json");
+    auto json_object=zetjsoncpp::deserialize_file<ObjectJsonVar<SampleJson>>("sample.json");
 
     // the values before modifications.
     std::cout << "---------------------------------------------------" << std::endl;
@@ -485,15 +485,15 @@ try{
   }catch(std::exception & ex){
    std::cerr << "Error:" << ex.what() << std::endl;
  }
-</pre>
+```
 
 As an example, we present a way to operate loaded json data into C++ code,
 
-<pre lang="c++">
+```cpp
 int main(int argc, char *argv[]){
 
     try{
-        auto json_object=zetjsoncpp::deserialize_file<JsonVarObject<SampleJson>>("sample.json");
+        auto json_object=zetjsoncpp::deserialize_file<ObjectJsonVar<SampleJson>>("sample.json");
 
         // the values before modifications.
         std::cout << "---------------------------------------------------" << std::endl;
@@ -526,7 +526,7 @@ int main(int argc, char *argv[]){
     std::cerr << "Error:" << ex.what() << std::endl;
   }
 }
-</pre>
+```
 
 After its execution the output shows the serialized json before and after the changes,
 

@@ -242,13 +242,13 @@ namespace zetjsoncpp{
 		default:
 			break;
 		case JSON_VAR_TYPE_BOOLEAN:
-			_str_result+=(*((JsonVarBoolean<> *)_json_var)==true)?"true":"false";
+			_str_result+=(*((BooleanJsonVar<> *)_json_var)==true)?"true":"false";
 			break;
 		case JSON_VAR_TYPE_NUMBER:
-			_str_result+=zj_strutils::float_to_str(*((JsonVarNumber<> *)_json_var));
+			_str_result+=zj_strutils::float_to_str(*((NumberJsonVar<> *)_json_var));
 			break;
 		case JSON_VAR_TYPE_STRING:
-			_str_result+=std::string("\"") + *((JsonVarString<> *)_json_var) + "\"";
+			_str_result+=std::string("\"") + *((StringJsonVar<> *)_json_var) + "\"";
 			break;
 		case JSON_VAR_TYPE_OBJECT:
 			serialize_json_var_object(
@@ -260,70 +260,70 @@ namespace zetjsoncpp{
 			);
 			break;
 		case JSON_VAR_TYPE_VECTOR_OF_BOOLEANS:
-			serialize_json_var_vector<JsonVarVectorBoolean<>>(
+			serialize_json_var_vector<ArrayBooleanJsonVar<>>(
 				_str_result
-				, (JsonVarVectorBoolean<> *)_json_var
+				, (ArrayBooleanJsonVar<> *)_json_var
 				,_ident
 				,_minimized
 				,_discard_non_serialized
 			);
 			break;
 		case JSON_VAR_TYPE_VECTOR_OF_NUMBERS:
-			serialize_json_var_vector<JsonVarVectorNumber<>>(
+			serialize_json_var_vector<ArrayJsonVarNumber<>>(
 				_str_result
-				,(JsonVarVectorNumber<> *)_json_var
+				,(ArrayJsonVarNumber<> *)_json_var
 				,_ident
 				,_minimized
 				,_discard_non_serialized
 			);
 			break;
 		case JSON_VAR_TYPE_VECTOR_OF_STRINGS:
-			serialize_json_var_vector<JsonVarVectorString<>>(
+			serialize_json_var_vector<ArrayStringJsonVar<>>(
 				_str_result
-				,(JsonVarVectorString<> *)(_json_var)
+				,(ArrayStringJsonVar<> *)(_json_var)
 				,_ident,_minimized
 				,_discard_non_serialized
 			);
 			break;
 		case JSON_VAR_TYPE_VECTOR_OF_OBJECTS:
-			serialize_json_var_vector<JsonVarVectorObject<TestVoid>>(
+			serialize_json_var_vector<ArrayObjectJsonVar<TestVoid>>(
 				_str_result
-				,(JsonVarVectorObject<TestVoid> *)_json_var
+				,(ArrayObjectJsonVar<TestVoid> *)_json_var
 				,_ident
 				,_minimized
 				,_discard_non_serialized
 			);
 			break;
 		case JSON_VAR_TYPE_MAP_OF_BOOLEANS:
-			serialize_json_var_map<JsonVarMapBoolean<>>(
+			serialize_json_var_map<MapBooleanJsonVar<>>(
 				_str_result
-				, (JsonVarMapBoolean<> *)_json_var
+				, (MapBooleanJsonVar<> *)_json_var
 				,_ident
 				,_minimized
 				,_discard_non_serialized
 			);
 			break;
 		case JSON_VAR_TYPE_MAP_OF_NUMBERS:
-			serialize_json_var_map<JsonVarMapNumber<>>(
+			serialize_json_var_map<MapNumberJsonVar<>>(
 				_str_result
-				, (JsonVarMapNumber<> *)_json_var
+				, (MapNumberJsonVar<> *)_json_var
 				,_ident
 				,_minimized
 				,_discard_non_serialized
 			);
 			break;
 		case JSON_VAR_TYPE_MAP_OF_STRINGS:
-			serialize_json_var_map<JsonVarMapString<>>(
+			serialize_json_var_map<MapStringJsonVar<>>(
 				_str_result
-				, (JsonVarMapString<> *)_json_var
+				, (MapStringJsonVar<> *)_json_var
 				,_ident,_minimized
 				,_discard_non_serialized
 			);
 			break;
 		case JSON_VAR_TYPE_MAP_OF_OBJECTS:
-			serialize_json_var_map<JsonVarMapObject<TestVoid>>(
+			serialize_json_var_map<MapObjectJsonVar<TestVoid>>(
 				_str_result
-				, (JsonVarMapObject<TestVoid> *)_json_var
+				, (MapObjectJsonVar<TestVoid> *)_json_var
 				,_ident,_minimized
 				,_discard_non_serialized
 			);

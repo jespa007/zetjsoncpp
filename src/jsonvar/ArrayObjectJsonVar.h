@@ -1,24 +1,24 @@
 namespace zetjsoncpp{
 
 	template<typename _T_DATA, char... _T_NAME>
-	class JsonVarVectorObject : public JsonVarNamed<_T_NAME...>, public JsonVarVector<JsonVarObject<_T_DATA> * > {
+	class ArrayObjectJsonVar : public NamedJsonVar<_T_NAME...>, public ArrayJsonVar<ObjectJsonVar<_T_DATA> * > {
 
 	public:
 
-		JsonVarVectorObject() {
+		ArrayObjectJsonVar() {
 			init();
 		}
 
 		virtual JsonVar *newJsonVar() {
 
-			JsonVarObject< _T_DATA> *tt = new JsonVarObject<_T_DATA>;
+			ObjectJsonVar< _T_DATA> *tt = new ObjectJsonVar<_T_DATA>;
 			this->__zj_vector_data__.push_back(tt);
 			return (JsonVar *)tt;
 		}
 
 		virtual void			 	push_back(const _T_DATA & tt) {
 			ZJ_UNUSUED_PARAM(tt);
-			throw std::runtime_error("push_back not available, please use newJsonVar in order to add JsonVarObject");
+			throw std::runtime_error("push_back not available, please use newJsonVar in order to add ObjectJsonVar");
 		}
 
 		virtual  void 	erase(int idx_position) {
@@ -29,7 +29,7 @@ namespace zetjsoncpp{
 
 		virtual  void 	insert(int idx_position, const _T_DATA & tt) {
 			ZJ_UNUSUED_2PARAMS(idx_position,tt);
-			throw std::runtime_error("insert not available, please use newJsonVar in order to add JsonVarObject");
+			throw std::runtime_error("insert not available, please use newJsonVar in order to add ObjectJsonVar");
 		}
 
 		virtual void		clear() {
@@ -50,14 +50,14 @@ namespace zetjsoncpp{
 			this->__zj_vector_data__.clear();
 		}
 
-		virtual ~JsonVarVectorObject() {
+		virtual ~ArrayObjectJsonVar() {
 			destroy();
 		}
 	private:
 
 		void init(){
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS;
-			this->__zj_size_data__ = sizeof(JsonVarVectorObject<_T_DATA, _T_NAME...>);
+			this->__zj_size_data__ = sizeof(ArrayObjectJsonVar<_T_DATA, _T_NAME...>);
 		}
 	};
 }

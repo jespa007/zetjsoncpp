@@ -67,33 +67,33 @@
 
 #define getChr(name, ii) ((ZJ_MIN(ii,ZJ_MAX_CONST_CHAR))<sizeof(name)/sizeof(*name)?name[ii]:0)
 
-#define ZJ_CAST_JSON_VAR_STRING 				(zetjsoncpp::JsonVarString<> *)
-#define ZJ_CAST_JSON_VAR_BOOLEAN 				(zetjsoncpp::JsonVarBoolean<> *)
-#define ZJ_CAST_JSON_VAR_NUMBER 				(zetjsoncpp::JsonVarNumber<> *)
-#define ZJ_CAST_JSON_VAR_OBJECT 				(zetjsoncpp::JsonVarObject<> *)
-#define ZJ_CAST_JSON_VAR_VECTOR_OF_BOOLEANS 	(zetjsoncpp::JsonVarVectorBoolean<> *)
-#define ZJ_CAST_JSON_VAR_VECTOR_OF_NUMBERS 		(zetjsoncpp::JsonVarVectorNumber<> *)
-#define ZJ_CAST_JSON_VAR_VECTOR_OF_STRINGS 		(zetjsoncpp::JsonVarVectorString<> *)
-#define ZJ_CAST_JSON_VAR_VECTOR_OF_OBJECTS 		(zetjsoncpp::JsonVarVectorObject<> *)
-#define ZJ_CAST_JSON_VAR_MAP_OF_BOOLEANS 		(zetjsoncpp::JsonVarMapBoolean<> *)
-#define ZJ_CAST_JSON_VAR_MAP_OF_NUMBERS 		(zetjsoncpp::JsonVarMapNumber<> *)
-#define ZJ_CAST_JSON_VAR_MAP_OF_STRINGS 		(zetjsoncpp::JsonVarMapString<> *)
-#define ZJ_CAST_JSON_VAR_MAP_OF_OBJECTS 		(zetjsoncpp::JsonVarMapObject<> *)
+#define ZJ_CAST_JSON_VAR_STRING 				(zetjsoncpp::StringJsonVar<> *)
+#define ZJ_CAST_JSON_VAR_BOOLEAN 				(zetjsoncpp::BooleanJsonVar<> *)
+#define ZJ_CAST_JSON_VAR_NUMBER 				(zetjsoncpp::NumberJsonVar<> *)
+#define ZJ_CAST_JSON_VAR_OBJECT 				(zetjsoncpp::ObjectJsonVar<> *)
+#define ZJ_CAST_JSON_VAR_VECTOR_OF_BOOLEANS 	(zetjsoncpp::ArrayBooleanJsonVar<> *)
+#define ZJ_CAST_JSON_VAR_VECTOR_OF_NUMBERS 		(zetjsoncpp::ArrayJsonVarNumber<> *)
+#define ZJ_CAST_JSON_VAR_VECTOR_OF_STRINGS 		(zetjsoncpp::ArrayStringJsonVar<> *)
+#define ZJ_CAST_JSON_VAR_VECTOR_OF_OBJECTS 		(zetjsoncpp::ArrayObjectJsonVar<> *)
+#define ZJ_CAST_JSON_VAR_MAP_OF_BOOLEANS 		(zetjsoncpp::MapBooleanJsonVar<> *)
+#define ZJ_CAST_JSON_VAR_MAP_OF_NUMBERS 		(zetjsoncpp::MapNumberJsonVar<> *)
+#define ZJ_CAST_JSON_VAR_MAP_OF_STRINGS 		(zetjsoncpp::MapStringJsonVar<> *)
+#define ZJ_CAST_JSON_VAR_MAP_OF_OBJECTS 		(zetjsoncpp::MapObjectJsonVar<> *)
 
-#define ZJ_VAR_BOOLEAN(name) zetjsoncpp::JsonVarBoolean<ZJ_CONST_CHAR(#name)>						name
-#define ZJ_VAR_NUMBER(name) zetjsoncpp::JsonVarNumber<ZJ_CONST_CHAR(#name)>							name
-#define ZJ_VAR_STRING(name) zetjsoncpp::JsonVarString<ZJ_CONST_CHAR(#name)>							name
-#define ZJ_VAR_OBJECT(type,name) zetjsoncpp::JsonVarObject<type,ZJ_CONST_CHAR(#name)>				name
+#define ZJ_VAR_BOOLEAN(name) zetjsoncpp::BooleanJsonVar<ZJ_CONST_CHAR(#name)>						name
+#define ZJ_VAR_NUMBER(name) zetjsoncpp::NumberJsonVar<ZJ_CONST_CHAR(#name)>							name
+#define ZJ_VAR_STRING(name) zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR(#name)>							name
+#define ZJ_VAR_OBJECT(type,name) zetjsoncpp::ObjectJsonVar<type,ZJ_CONST_CHAR(#name)>				name
 
-#define ZJ_VAR_VECTOR_BOOLEAN(name) zetjsoncpp::JsonVarVectorBoolean<ZJ_CONST_CHAR(#name)>			name
-#define ZJ_VAR_VECTOR_NUMBER(name) zetjsoncpp::JsonVarVectorNumber<ZJ_CONST_CHAR(#name)>			name
-#define ZJ_VAR_VECTOR_STRING(name) zetjsoncpp::JsonVarVectorString<ZJ_CONST_CHAR(#name)>			name
-#define ZJ_VAR_VECTOR_OBJECT(type,name) zetjsoncpp::JsonVarVectorObject<type,ZJ_CONST_CHAR(#name)>	name
+#define ZJ_VAR_VECTOR_BOOLEAN(name) zetjsoncpp::ArrayBooleanJsonVar<ZJ_CONST_CHAR(#name)>			name
+#define ZJ_VAR_VECTOR_NUMBER(name) zetjsoncpp::ArrayJsonVarNumber<ZJ_CONST_CHAR(#name)>			name
+#define ZJ_VAR_VECTOR_STRING(name) zetjsoncpp::ArrayStringJsonVar<ZJ_CONST_CHAR(#name)>			name
+#define ZJ_VAR_VECTOR_OBJECT(type,name) zetjsoncpp::ArrayObjectJsonVar<type,ZJ_CONST_CHAR(#name)>	name
 
-#define ZJ_VAR_MAP_BOOLEAN(name) zetjsoncpp::JsonVarMapBoolean<ZJ_CONST_CHAR(#name)>				name
-#define ZJ_VAR_MAP_NUMBER(name) zetjsoncpp::JsonVarMapNumber<ZJ_CONST_CHAR(#name)>					name
-#define ZJ_VAR_MAP_STRING(name) zetjsoncpp::JsonVarMapString<ZJ_CONST_CHAR(#name)>					name
-#define ZJ_VAR_MAP_OBJECT(type,name) zetjsoncpp::JsonVarMapObject<type,ZJ_CONST_CHAR(#name)>		name
+#define ZJ_VAR_MAP_BOOLEAN(name) zetjsoncpp::MapBooleanJsonVar<ZJ_CONST_CHAR(#name)>				name
+#define ZJ_VAR_MAP_NUMBER(name) zetjsoncpp::MapNumberJsonVar<ZJ_CONST_CHAR(#name)>					name
+#define ZJ_VAR_MAP_STRING(name) zetjsoncpp::MapStringJsonVar<ZJ_CONST_CHAR(#name)>					name
+#define ZJ_VAR_MAP_OBJECT(type,name) zetjsoncpp::MapObjectJsonVar<type,ZJ_CONST_CHAR(#name)>		name
 
 
 namespace zetjsoncpp {
@@ -163,20 +163,20 @@ namespace zetjsoncpp {
 
 }
 
-#include "JsonVarNamed.h"
-#include "JsonVarBoolean.h"
-#include "JsonVarNumber.h"
-#include "JsonVarString.h"
-#include "JsonVarObject.h"
-#include "JsonVarVector.h"
-#include "JsonVarVectorBoolean.h"
-#include "JsonVarVectorNumber.h"
-#include "JsonVarVectorString.h"
-#include "JsonVarVectorObject.h"
-#include "JsonVarMap.h"
-#include "JsonVarMapBoolean.h"
-#include "JsonVarMapNumber.h"
-#include "JsonVarMapString.h"
-#include "JsonVarMapObject.h"
+#include "NamedJsonVar.h"
+#include "BooleanJsonVar.h"
+#include "NumberJsonVar.h"
+#include "StringJsonVar.h"
+#include "ObjectJsonVar.h"
+#include "ArrayJsonVar.h"
+#include "ArrayBooleanJsonVar.h"
+#include "ArrayNumberJsonVar.h"
+#include "ArrayStringJsonVar.h"
+#include "ArrayObjectJsonVar.h"
+#include "MapJsonVar.h"
+#include "MapBooleanJsonVar.h"
+#include "MapNumberJsonVar.h"
+#include "MapStringJsonVar.h"
+#include "MapObjectJsonVar.h"
 
 

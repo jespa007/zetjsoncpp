@@ -2,7 +2,7 @@ namespace zetjsoncpp{
 
 
 	template<typename _T_DATA>
-	class JsonVarMap {
+	class MapJsonVar {
 	protected:
 		std::map<std::string,_T_DATA> __zj_map_data__;
 	public:
@@ -11,7 +11,7 @@ namespace zetjsoncpp{
 		typedef typename std::map<std::string,_T_DATA>::size_type size_type;
 		//typename JsonVarIterator std::map<std::string,_T_DATA>::iterator;
 
-		JsonVarMap() {}
+		MapJsonVar() {}
 
 		JsonVarIteratorMap begin(){
 			return __zj_map_data__.begin();
@@ -35,7 +35,7 @@ namespace zetjsoncpp{
 			return __zj_map_data__.at(key);
 		}
 
-		JsonVarMap::size_type count(const std::string & key) const {
+		MapJsonVar::size_type count(const std::string & key) const {
 			return __zj_map_data__.count(key);
 		}
 
@@ -65,7 +65,7 @@ namespace zetjsoncpp{
 			return (JsonVar *)&__zj_map_data__.at(key_id);
 		}
 
-		virtual ~JsonVarMap() {
+		virtual ~MapJsonVar() {
 
 		}
 
