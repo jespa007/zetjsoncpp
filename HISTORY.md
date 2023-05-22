@@ -1,18 +1,19 @@
 
-//----------------------------
+
+----------------------------
 Date: 13/05/2022
 Version: 2.2.0
 
 - [x] Change name JsonVarXXXX -> XXXXJsonVar
 
-//----------------------------
+----------------------------
 Date: 21/12/2022
 Version: 2.1.0
 
 - [x] Do not serialize unserialized fields in objects
 - [x] use -WSanitizer=Address in linux if memmgr directory not found
 
-//----------------------------
+----------------------------
 Date: 01/07/2022
 Version: 2.0.4
 
@@ -21,27 +22,27 @@ Version: 2.0.4
 - [x] JsonVar::__zs_variable__: change std::string type to char[ZJ_MAX_CONST_CHAR]
 - [x] reorder dirs
 
-//----------------------------
+----------------------------
 Date: 10/07/2021
 Version: 2.0.3
 
 - [x] Organize files
 - [x] Move src dir
 
-//----------------------------
+----------------------------
 Date: 15/04/2021
 Version: 2.0.2
 
 - [x] Fix bug write exception message when filename is null (whn loads in mmeory)
 - [x] Improve error exception
 
-//----------------------------
+----------------------------
 Date: 7/04/2021
 Version: 2.0.1
 
 - [x] Fix bug crash when cannot parse json value
 
-//----------------------------
+----------------------------
 Date: 14/02/2021
 Version: 2.0.0
 
@@ -71,7 +72,7 @@ Detail
 #17 Support UTF-8 with/out BOM mark Feature 
 #18 Pre/Post name all variables associated with JsonVar 
 
-//----------------------------
+----------------------------
 Date: 15/05/2018
 Version: 1.3.0
 
@@ -81,7 +82,7 @@ Version: 1.3.0
 - [x] Fixed compile test_json shared library on MSVC plataform 
 - [x] improve cmake message prints 
 
-//----------------------------
+----------------------------
 Date: 10/05/2018
 Version: 1.2.0
 
@@ -92,7 +93,7 @@ Version: 1.2.0
 - [x] Added feature detect array types
 - [x] Changed GPL3 license to MIT
 
-//----------------------------
+----------------------------
 Date: 29/08/2015
 Version: 1.1.0
 
@@ -100,7 +101,7 @@ Version: 1.1.0
 - [x] Added feature on detecting property group or property group arrays.
 - [x] Fixed carry return line feeds compatible for Windows
 
-//----------------------------
+----------------------------
 Date: 08/08/2014
 Version: 1.0.0
 
