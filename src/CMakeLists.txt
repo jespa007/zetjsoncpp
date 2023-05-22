@@ -218,7 +218,7 @@ SET(
 	
 	jsonvar/ArrayJsonVar.h
 	jsonvar/ArrayBooleanJsonVar.h
-	jsonvar/ArrayJsonVarNumber.h
+	jsonvar/ArrayNumberJsonVar.h
 	jsonvar/ArrayObjectJsonVar.h
 	jsonvar/ArrayStringJsonVar.h
 	
