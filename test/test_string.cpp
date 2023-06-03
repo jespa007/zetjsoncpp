@@ -17,9 +17,9 @@ void test_json_var_string(){
 			,{"id_3","string_3_"}
 	};
 
-	zetjsoncpp::JsonVarVectorString<> jvn1=v1;
-	zetjsoncpp::JsonVarVectorString<> jvn2=v2;
-	zetjsoncpp::JsonVarMapString<>	  jmn1=m1;
+	zetjsoncpp::ArrayStringJsonVar<> jvn1=v1;
+	zetjsoncpp::ArrayStringJsonVar<> jvn2=v2;
+	zetjsoncpp::MapStringJsonVar<>	  jmn1=m1;
 	size_t len=v1.size();
 
 	//assert(1.00<-1.00 == 1.00<-1.00 == 1.00<-1.00);

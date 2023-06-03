@@ -1,7 +1,7 @@
 namespace zetjsoncpp{
 
 	template<char... _T_NAME>
-	class JsonVarBoolean : public JsonVarNamed<_T_NAME ...>{
+	class BooleanJsonVar : public NamedJsonVar<_T_NAME ...>{
 
 	public:
 
@@ -12,12 +12,12 @@ namespace zetjsoncpp{
 			throw ("Cannot parse string to boolean.");
 		}
 
-		JsonVarBoolean() {
+		BooleanJsonVar() {
 			init();
 		}
 
 		//_T_NAME name;
-		JsonVarBoolean(bool b) {
+		BooleanJsonVar(bool b) {
 			init();
 			this->__zj_value__ = b;
 		}
@@ -27,72 +27,72 @@ namespace zetjsoncpp{
 		virtual void * getPtrValue(){ return &__zj_value__;}
 
 		// operators
-		JsonVarBoolean & operator=(bool _value){
+		BooleanJsonVar & operator=(bool _value){
 			__zj_value__=_value;
 			return *this;
 		}
 
-		JsonVarBoolean & operator=(const JsonVarBoolean & _b){
+		BooleanJsonVar & operator=(const BooleanJsonVar & _b){
 			__zj_value__=_b.__zj_value__;
 			return *this;
 		}
 		//--------------------------------------------------------
 		// ||
-		friend bool operator ||(const JsonVarBoolean & b1, bool b2)  {
+		friend bool operator ||(const BooleanJsonVar & b1, bool b2)  {
 			return b1.__zj_value__ || b2;
 		}
 
-		friend bool operator ||(bool b1, const JsonVarBoolean & b2)  {
+		friend bool operator ||(bool b1, const BooleanJsonVar & b2)  {
 			return b1 || b2.__zj_value__;
 		}
 
-		friend bool operator ||(const JsonVarBoolean & b1, const JsonVarBoolean & b2)  {
+		friend bool operator ||(const BooleanJsonVar & b1, const BooleanJsonVar & b2)  {
 			return b1.__zj_value__ || b2.__zj_value__;
 		}
 
 		//--------------------------------------------------------
 		// &&
-		friend bool operator &&(const JsonVarBoolean & b1, bool b2)  {
+		friend bool operator &&(const BooleanJsonVar & b1, bool b2)  {
 			return b1.__zj_value__ && b2;
 		}
 
-		friend bool operator &&(bool b1, const JsonVarBoolean & b2)  {
+		friend bool operator &&(bool b1, const BooleanJsonVar & b2)  {
 			return b1 && b2.__zj_value__;
 		}
 
-		friend bool operator &&(const JsonVarBoolean & b1, const JsonVarBoolean & b2)  {
+		friend bool operator &&(const BooleanJsonVar & b1, const BooleanJsonVar & b2)  {
 			return b1.__zj_value__ && b2.__zj_value__;
 		}
 		//--------------------------------------------------------
 		// ==
-		friend bool operator ==(const JsonVarBoolean & b1, bool b2)  {
+		friend bool operator ==(const BooleanJsonVar & b1, bool b2)  {
 			return b1.__zj_value__ == b2;
 		}
 
-		friend bool operator ==(bool b1, const JsonVarBoolean & b2)  {
+		friend bool operator ==(bool b1, const BooleanJsonVar & b2)  {
 			return b1 == b2.__zj_value__;
 		}
 
-		friend bool operator ==(const JsonVarBoolean & b1, const JsonVarBoolean & b2)  {
+		friend bool operator ==(const BooleanJsonVar & b1, const BooleanJsonVar & b2)  {
 			return b1.__zj_value__ == b2.__zj_value__;
 		}
 		//--------------------------------------------------------
 		// !=
-		friend bool operator !=(const JsonVarBoolean & b1, bool b2)  {
+		friend bool operator !=(const BooleanJsonVar & b1, bool b2)  {
 			return b1.__zj_value__ != b2;
 		}
 
-		friend bool operator !=(bool b1, const JsonVarBoolean & b2)  {
+		friend bool operator !=(bool b1, const BooleanJsonVar & b2)  {
 			return b1 != b2.__zj_value__;
 		}
 
-		friend bool operator !=(const JsonVarBoolean & b1, const JsonVarBoolean & b2)  {
+		friend bool operator !=(const BooleanJsonVar & b1, const BooleanJsonVar & b2)  {
 			return b1.__zj_value__ != b2.__zj_value__;
 		}
 
 
 
-		virtual ~JsonVarBoolean(){}
+		virtual ~BooleanJsonVar(){}
 
 	private:
 
@@ -101,7 +101,7 @@ namespace zetjsoncpp{
 		void init() {
 			__zj_value__=false;
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_BOOLEAN;
-			this->__zj_size_data__ = sizeof(JsonVarBoolean<_T_NAME...>);
+			this->__zj_size_data__ = sizeof(BooleanJsonVar<_T_NAME...>);
 		}
 
 	};

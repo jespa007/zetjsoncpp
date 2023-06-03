@@ -40,13 +40,13 @@ int main(int argc, char *argv[]){
 	try{
 
 		std::cout << "1. Testing json primitives and basic operations..."<< std::endl;
-		auto n1=zetjsoncpp::deserialize<zetjsoncpp::JsonVarNumber<>>("1");
-		auto n2=zetjsoncpp::deserialize<zetjsoncpp::JsonVarNumber<>>("3.7e+2");
+		auto n1=zetjsoncpp::deserialize<zetjsoncpp::NumberJsonVar<>>("1");
+		auto n2=zetjsoncpp::deserialize<zetjsoncpp::NumberJsonVar<>>("3.7e+2");
 		auto n3=1.2+*n1+1+*n2+10; // test operations
 		std::cout << zetjsoncpp::zj_strutils::format("n1=%.2f n2=%.2f n3=%.2f",(float)*n1,(float)*n2,(float)n3)<< std::endl;
 
-		auto s1=zetjsoncpp::deserialize<zetjsoncpp::JsonVarString<>>("\"my_string\"");
-		auto s2=zetjsoncpp::deserialize<zetjsoncpp::JsonVarString<>>("\"_2\"");
+		auto s1=zetjsoncpp::deserialize<zetjsoncpp::StringJsonVar<>>("\"my_string\"");
+		auto s2=zetjsoncpp::deserialize<zetjsoncpp::StringJsonVar<>>("\"_2\"");
 		auto s3="s1_"+*s1+"_s2_"+*s2+"_end"; // concatenate
 
 		std::cout <<zetjsoncpp::zj_strutils::format("s1=%s s2=%s s3=%s"
@@ -54,8 +54,8 @@ int main(int argc, char *argv[]){
 				,zetjsoncpp::serialize(s2).c_str()
 				,zetjsoncpp::serialize(&s3).c_str())<< std::endl;
 
-		auto b1=zetjsoncpp::deserialize<zetjsoncpp::JsonVarBoolean<>>("true");
-		auto b2=zetjsoncpp::deserialize<zetjsoncpp::JsonVarBoolean<>>("false");
+		auto b1=zetjsoncpp::deserialize<zetjsoncpp::BooleanJsonVar<>>("true");
+		auto b2=zetjsoncpp::deserialize<zetjsoncpp::BooleanJsonVar<>>("false");
 		bool b3=true || *b1 || false || *b2 || true;
 		std::cout <<zetjsoncpp::zj_strutils::format("b1=%s b2=%s b3=%s\n"
 				,zetjsoncpp::serialize(b1).c_str()
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
 
 
 		std::cout << std::endl << "2. Testing object..."<< std::endl<< std::endl;
-		auto o1=zetjsoncpp::deserialize<zetjsoncpp::JsonVarObject<TestJson>>("{"
+		auto o1=zetjsoncpp::deserialize<zetjsoncpp::ObjectJsonVar<TestJson>>("{"
 			"\"length\":1000"
 			",\"use_space\":false"
 		"}");
@@ -72,16 +72,16 @@ int main(int argc, char *argv[]){
 
 		std::cout << std::endl << "3. Testing json vector primitives..."<< std::endl<< std::endl;
 
-		auto v1=zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorNumber<>>("[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]");
+		auto v1=zetjsoncpp::deserialize<zetjsoncpp::ArrayJsonVarNumber<>>("[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]");
 		std::cout <<"v1="<< zetjsoncpp::serialize(v1)<< std::endl;
 
-		auto v2=zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorString<>>("[\"string_1\",\"string_2\",\"string_3\",\"string_5\"]");
+		auto v2=zetjsoncpp::deserialize<zetjsoncpp::ArrayStringJsonVar<>>("[\"string_1\",\"string_2\",\"string_3\",\"string_5\"]");
 		std::cout <<"v2="<<zetjsoncpp::serialize(v2)<< std::endl;
 
-		auto v3=zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorBoolean<>>("[true,false,true]");
+		auto v3=zetjsoncpp::deserialize<zetjsoncpp::ArrayBooleanJsonVar<>>("[true,false,true]");
 		std::cout <<"v3="<<zetjsoncpp::serialize(v3)<< std::endl;
 
-		auto v4=zetjsoncpp::deserialize<zetjsoncpp::JsonVarVectorObject<TestJson>>("[{"
+		auto v4=zetjsoncpp::deserialize<zetjsoncpp::ArrayObjectJsonVar<TestJson>>("[{"
 			"\"length\":1000"
 			",\"use_space\":false"
 		"},{"
@@ -92,16 +92,16 @@ int main(int argc, char *argv[]){
 
 		std::cout << std::endl << "4. Testing json map primitives..."<< std::endl<< std::endl;
 
-		auto m1=zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapNumber<>>("{\"id1\":1,\"id2\":2,\"id3\":3,\"id4\":4}");
+		auto m1=zetjsoncpp::deserialize<zetjsoncpp::MapNumberJsonVar<>>("{\"id1\":1,\"id2\":2,\"id3\":3,\"id4\":4}");
 		std::cout <<"m1="<<zetjsoncpp::serialize(m1)<< std::endl;
 
-		auto m2=zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapString<>>("{\"id1\":\"string_1\",\"id2\":\"string_2\",\"id3\":\"string_3\",\"id4\":\"string_5\"}");
+		auto m2=zetjsoncpp::deserialize<zetjsoncpp::MapStringJsonVar<>>("{\"id1\":\"string_1\",\"id2\":\"string_2\",\"id3\":\"string_3\",\"id4\":\"string_5\"}");
 		std::cout <<"m2="<<zetjsoncpp::serialize(m2)<< std::endl;
 
-		auto m3=zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapBoolean<>>("{\"id1\":true,\"id2\":false,\"id3\":true}");
+		auto m3=zetjsoncpp::deserialize<zetjsoncpp::MapBooleanJsonVar<>>("{\"id1\":true,\"id2\":false,\"id3\":true}");
 		std::cout <<"m3="<<zetjsoncpp::serialize(m3)<< std::endl;
 
-		auto m4=zetjsoncpp::deserialize<zetjsoncpp::JsonVarMapObject<TestJson>>("{"
+		auto m4=zetjsoncpp::deserialize<zetjsoncpp::MapObjectJsonVar<TestJson>>("{"
 			"\"id1\":{"
 				"\"length\":1000"
 				",\"use_space\":false"

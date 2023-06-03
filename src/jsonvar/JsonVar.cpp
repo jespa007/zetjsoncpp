@@ -15,22 +15,22 @@ namespace zetjsoncpp {
 		default:
 		case JSON_VAR_TYPE_UNKNOWN:
 			break;
-		case JSON_VAR_TYPE_BOOLEAN: return "JsonVarBoolean";
+		case JSON_VAR_TYPE_BOOLEAN: return "BooleanJsonVar";
 			//case INT32_TYPE: return "INT32_TYPE";
-		case JSON_VAR_TYPE_NUMBER: return "JsonVarNumber";
-		case JSON_VAR_TYPE_STRING: return "JsonVarString";
-		case JSON_VAR_TYPE_OBJECT: return "JsonVarObject";
+		case JSON_VAR_TYPE_NUMBER: return "NumberJsonVar";
+		case JSON_VAR_TYPE_STRING: return "StringJsonVar";
+		case JSON_VAR_TYPE_OBJECT: return "ObjectJsonVar";
 
-		case JSON_VAR_TYPE_VECTOR_OF_BOOLEANS: return "JsonVarVectorBoolean";
+		case JSON_VAR_TYPE_VECTOR_OF_BOOLEANS: return "ArrayBooleanJsonVar";
 			//case ARRAY_INT32_TYPE: return "ARRAY INT32 TYPE";
-		case JSON_VAR_TYPE_VECTOR_OF_NUMBERS: return "JsonVarVectorNumber";
-		case JSON_VAR_TYPE_VECTOR_OF_STRINGS: return "JsonVarVectorString";
-		case JSON_VAR_TYPE_VECTOR_OF_OBJECTS: return "JsonVarVectorObject";
+		case JSON_VAR_TYPE_VECTOR_OF_NUMBERS: return "ArrayJsonVarNumber";
+		case JSON_VAR_TYPE_VECTOR_OF_STRINGS: return "ArrayStringJsonVar";
+		case JSON_VAR_TYPE_VECTOR_OF_OBJECTS: return "ArrayObjectJsonVar";
 
-		case JSON_VAR_TYPE_MAP_OF_BOOLEANS: return "JsonVarMapBoolean";
-		case JSON_VAR_TYPE_MAP_OF_NUMBERS: return "JsonVarMapNumber";
-		case JSON_VAR_TYPE_MAP_OF_STRINGS: return "JsonVarMapString";
-		case JSON_VAR_TYPE_MAP_OF_OBJECTS: return "JsonVarMapObject";
+		case JSON_VAR_TYPE_MAP_OF_BOOLEANS: return "MapBooleanJsonVar";
+		case JSON_VAR_TYPE_MAP_OF_NUMBERS: return "MapNumberJsonVar";
+		case JSON_VAR_TYPE_MAP_OF_STRINGS: return "MapStringJsonVar";
+		case JSON_VAR_TYPE_MAP_OF_OBJECTS: return "MapObjectJsonVar";
 		}
 
 		return "UNKNOWN";

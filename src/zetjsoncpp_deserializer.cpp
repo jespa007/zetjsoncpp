@@ -356,7 +356,7 @@ namespace zetjsoncpp{
 		str_current = ignore_blanks(str_current, line);
 
 		if(*str_current != '['){
-			json_deserialize_error(deserialize_data,str_start,line,"A '[' was expected to parse JsonVarVector type");
+			json_deserialize_error(deserialize_data,str_start,line,"A '[' was expected to parse ArrayJsonVar type");
 			return 0;
 		}
 

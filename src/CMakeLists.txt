@@ -142,9 +142,9 @@ else()
 	ENDIF()
 	
 	#Redefine output dir ...
-	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE})
-	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE})
-	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE})
+	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../bin/gcc/${CMAKE_BUILD_TYPE})
+	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../bin/gcc/${CMAKE_BUILD_TYPE})
+	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../bin/gcc/${CMAKE_BUILD_TYPE})
 	LINK_DIRECTORIES(${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
 	
 
@@ -173,7 +173,7 @@ set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 	
 	util/zj_util.cpp
 	jsonvar/JsonVar.cpp
-	jsonvar/JsonVarObject.cpp	
+	jsonvar/ObjectJsonVar.cpp	
 	zetjsoncpp_deserializer.cpp
 	zetjsoncpp_serializer.cpp
 )
@@ -209,24 +209,24 @@ SET(
 	util/zj_path.h
 	util/zj_util.h
 	jsonvar/JsonVar.h
-	jsonvar/JsonVarNamed.h
+	jsonvar/NamedJsonVar.h
 	
-	jsonvar/JsonVarBoolean.h
-	jsonvar/JsonVarNumber.h
-	jsonvar/JsonVarObject.h
-	jsonvar/JsonVarString.h
+	jsonvar/BooleanJsonVar.h
+	jsonvar/NumberJsonVar.h
+	jsonvar/ObjectJsonVar.h
+	jsonvar/StringJsonVar.h
 	
-	jsonvar/JsonVarVector.h
-	jsonvar/JsonVarVectorBoolean.h
-	jsonvar/JsonVarVectorNumber.h
-	jsonvar/JsonVarVectorObject.h
-	jsonvar/JsonVarVectorString.h
+	jsonvar/ArrayJsonVar.h
+	jsonvar/ArrayBooleanJsonVar.h
+	jsonvar/ArrayNumberJsonVar.h
+	jsonvar/ArrayObjectJsonVar.h
+	jsonvar/ArrayStringJsonVar.h
 	
-	jsonvar/JsonVarMap.h	
-	jsonvar/JsonVarMapBoolean.h
-	jsonvar/JsonVarMapNumber.h
-	jsonvar/JsonVarMapObject.h
-	jsonvar/JsonVarMapString.h
+	jsonvar/MapJsonVar.h	
+	jsonvar/MapBooleanJsonVar.h
+	jsonvar/MapNumberJsonVar.h
+	jsonvar/MapObjectJsonVar.h
+	jsonvar/MapStringJsonVar.h
 		
 	zetjsoncpp.h
 	zetjsoncpp.tcc

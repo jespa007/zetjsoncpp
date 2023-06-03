@@ -17,9 +17,9 @@ void test_json_var_boolean(){
 			,{"id_3",false}
 	};
 
-	zetjsoncpp::JsonVarVectorBoolean<> jvn1=v1;
-	zetjsoncpp::JsonVarVectorBoolean<> jvn2=v2;
-	zetjsoncpp::JsonVarMapBoolean<>	  jmn1=m1;
+	zetjsoncpp::ArrayBooleanJsonVar<> jvn1=v1;
+	zetjsoncpp::ArrayBooleanJsonVar<> jvn2=v2;
+	zetjsoncpp::MapBooleanJsonVar<>	  jmn1=m1;
 	size_t len=v1.size();
 
 	//assert(1.00<-1.00 == 1.00<-1.00 == 1.00<-1.00);

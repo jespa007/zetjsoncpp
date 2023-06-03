@@ -2,63 +2,63 @@
 
 typedef struct{
 	// Number length
-	zetjsoncpp::JsonVarNumber<ZJ_CONST_CHAR("length")>
+	zetjsoncpp::NumberJsonVar<ZJ_CONST_CHAR("length")>
 	length;
 
 	// Boolean use_space
-	zetjsoncpp::JsonVarBoolean<ZJ_CONST_CHAR("use_space")>
+	zetjsoncpp::BooleanJsonVar<ZJ_CONST_CHAR("use_space")>
 	use_space;
 }Ident;
 
 typedef struct{
 	// String code
-	zetjsoncpp::JsonVarString<ZJ_CONST_CHAR("code")>
+	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("code")>
 	code;
 
 	// Map of strings general_texts
-	zetjsoncpp::JsonVarMapString<ZJ_CONST_CHAR("general_texts")>
+	zetjsoncpp::MapStringJsonVar<ZJ_CONST_CHAR("general_texts")>
 	general_texts;
 }Language;
 
 
 typedef struct{
 	// String type
-	zetjsoncpp::JsonVarString<ZJ_CONST_CHAR("type")>
+	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("type")>
 	type;
 
 	// String channels
-	zetjsoncpp::JsonVarString<ZJ_CONST_CHAR("channels")>
+	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("channels")>
 	channels;
 
 	// Vector of numbers data
-	zetjsoncpp::JsonVarVectorNumber<ZJ_CONST_CHAR("data")>
+	zetjsoncpp::ArrayJsonVarNumber<ZJ_CONST_CHAR("data")>
 	data;
 }Interpolation;
 
 typedef struct
 {
     // String encoding
-	zetjsoncpp::JsonVarString<ZJ_CONST_CHAR("encoding")>
+	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("encoding")>
 	encoding;
 
     // Number number
-	zetjsoncpp::JsonVarNumber<ZJ_CONST_CHAR("number")>
+	zetjsoncpp::NumberJsonVar<ZJ_CONST_CHAR("number")>
 	number;
 
     // Vector of strings plug-ins
-	zetjsoncpp::JsonVarVectorString<ZJ_CONST_CHAR("plug-ins")>
+	zetjsoncpp::ArrayStringJsonVar<ZJ_CONST_CHAR("plug-ins")>
 	plugins;
 
     // Object indent
-    zetjsoncpp::JsonVarObject<Ident,ZJ_CONST_CHAR("indent")>
+    zetjsoncpp::ObjectJsonVar<Ident,ZJ_CONST_CHAR("indent")>
     indent;
 
     // Object languages
-    zetjsoncpp::JsonVarVectorObject<Language,ZJ_CONST_CHAR("languages")>
+    zetjsoncpp::ArrayObjectJsonVar<Language,ZJ_CONST_CHAR("languages")>
     languages;
 
     // Map of objects interpolations
-    zetjsoncpp::JsonVarMapObject<Interpolation,ZJ_CONST_CHAR("interpolations")>
+    zetjsoncpp::MapObjectJsonVar<Interpolation,ZJ_CONST_CHAR("interpolations")>
     interpolations;
 
 
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]){
 	}
 
 	try{
-		auto json_object=zetjsoncpp::deserialize_file<zetjsoncpp::JsonVarObject<SampleJson>>(argv[1]);
+		auto json_object=zetjsoncpp::deserialize_file<zetjsoncpp::ObjectJsonVar<SampleJson>>(argv[1]);
 
 		// the values before modifications.
 		std::cout << "------------------------------------------------------------------------------" << std::endl;

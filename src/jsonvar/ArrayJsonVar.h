@@ -13,14 +13,14 @@
 namespace zetjsoncpp{
 
 	template<typename _T_DATA>
-	class JsonVarVector {
+	class ArrayJsonVar {
 	protected:
 		std::vector<_T_DATA> __zj_vector_data__;
 	public:
 
 		typedef typename std::vector<_T_DATA>::iterator JsonVarIteratorVector;
 
-		JsonVarVector() {}
+		ArrayJsonVar() {}
 
 		JsonVarIteratorVector begin(){
 			return __zj_vector_data__.begin();
@@ -71,7 +71,7 @@ namespace zetjsoncpp{
 			return (JsonVar *)&__zj_vector_data__.at(index);
 		}
 
-		virtual ~JsonVarVector() {
+		virtual ~ArrayJsonVar() {
 
 		}
 
