@@ -26,7 +26,7 @@
 #include <math.h>
 
 #define ZETJSONCPP_VERSION_MAJOR 2
-#define ZETJSONCPP_VERSION_MINOR 2
+#define ZETJSONCPP_VERSION_MINOR 3
 #define ZETJSONCPP_VERSION_PATCH 0
 
 #ifdef __MEMMANAGER__
@@ -42,10 +42,7 @@
 #include "deserialize_exception.h"
 #include "jsonvar/JsonVar.h"
 
-
-
 // static zetjsoncpp
-
 namespace zetjsoncpp {
 
 
