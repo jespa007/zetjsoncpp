@@ -1,7 +1,13 @@
 
 
 ----------------------------
-Date: 13/05/2022
+Date: 8/06/2023
+Version: 2.3.0
+
+- [x] Refactory utils
+
+----------------------------
+Date: 13/05/2023
 Version: 2.2.0
 
 - [x] Change name JsonVarXXXX -> XXXXJsonVar

@@ -11,7 +11,7 @@ typedef struct{
 }Ident;
 
 typedef struct{
-	// String code
+	// string_utils code
 	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("code")>
 	code;
 
@@ -22,11 +22,11 @@ typedef struct{
 
 
 typedef struct{
-	// String type
+	// string_utils type
 	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("type")>
 	type;
 
-	// String channels
+	// string_utils channels
 	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("channels")>
 	channels;
 
@@ -37,7 +37,7 @@ typedef struct{
 
 typedef struct
 {
-    // String encoding
+    // string_utils encoding
 	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("encoding")>
 	encoding;
 
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]){
 
 		// iterate of all plugins and replace with random strings...
 		for(unsigned i = 0; i < json_object->plugins.size(); i++) {
-			json_object->plugins[i] = "my_randomstring"+zetjsoncpp::zj_strutils::int_to_str(i+1);
+			json_object->plugins[i] = "my_randomstring"+zetjsoncpp::string_utils::integerToString(i+1);
 		}
 
 		// iterate of all interpolations and replace its data values...

@@ -65,7 +65,7 @@ void test_json_var_string(){
 	}
 
 	for(unsigned i=0; i < string_extra.size(); i++){
-		std::string key=zetjsoncpp::zj_strutils::format("id_%i",i+4);
+		std::string key=zetjsoncpp::string_utils::format("id_%i",i+4);
 		m1[key]=string_extra[i];
 		jmn1.insert(key,string_extra[i]);
 	}

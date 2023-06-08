@@ -131,7 +131,7 @@ namespace zetjsoncpp{
 
 		if(_json_var->getType() != JsonVarType::JSON_VAR_TYPE_OBJECT){
 			throw std::runtime_error(
-				zj_strutils::format(
+				string_utils::format(
 						"Expected json object but it was %s"
 						,_json_var->getTypeStr()
 				)
@@ -245,7 +245,7 @@ namespace zetjsoncpp{
 			_str_result+=(*((BooleanJsonVar<> *)_json_var)==true)?"true":"false";
 			break;
 		case JSON_VAR_TYPE_NUMBER:
-			_str_result+=zj_strutils::float_to_str(*((NumberJsonVar<> *)_json_var));
+			_str_result+=string_utils::floatToString(*((NumberJsonVar<> *)_json_var));
 			break;
 		case JSON_VAR_TYPE_STRING:
 			_str_result+=std::string("\"") + *((StringJsonVar<> *)_json_var) + "\"";

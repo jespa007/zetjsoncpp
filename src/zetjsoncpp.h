@@ -33,8 +33,8 @@
 #include "memmgr.h"
 #endif
 
-#include "util/zj_util.h"
-#include "exception.h"
+#include "utils/zj_utils.h"
+#include "deserialize_exception.h"
 #include "jsonvar/JsonVar.h"
 
 

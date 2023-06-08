@@ -466,7 +466,7 @@ try{
 
     // iterate of all plugins and replace with random strings...
     for(unsigned i = 0; i < json_object->plugins.size(); i++) {
-      json_object->plugins[i] = "my_randomstring"+zetjsoncpp::zj_strutils::int_to_str(i+1);
+      json_object->plugins[i] = "my_randomstring"+zetjsoncpp::String::integerToString(i+1);
     }
 
     // iterate of all interpolations and replace its data values...
@@ -506,7 +506,7 @@ int main(int argc, char *argv[]){
 
         // iterate of all plugins and replace with random strings...
         for(unsigned i = 0; i < json_object->plugins.size(); i++) {
-            json_object->plugins[i] = "my_randomstring"+zetjsoncpp::zj_strutils::int_to_str(i+1);
+            json_object->plugins[i] = "my_randomstring"+zetjsoncpp::String::integerToString(i+1);
         }
 
         // iterate of all interpolations and replace its data values...
