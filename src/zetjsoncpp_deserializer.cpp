@@ -5,6 +5,15 @@
 
 #include "zetjsoncpp.h"
 
+// Util to capture args by ...
+#define ZJ_CAPTURE_VARIABLE_ARGS(text_out, text_in)\
+	{va_list  ap;\
+	va_start(ap,  text_in);\
+	vsprintf(text_out,  text_in,  ap);\
+	va_end(ap);}
+
+
+
 namespace zetjsoncpp{
 
 	char * deserialize_json_var_object(DeserializeData *deserialize_data, const char *str_current, int & line, JsonVar *json_var);

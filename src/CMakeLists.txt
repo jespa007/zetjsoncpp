@@ -171,7 +171,9 @@ endif()
 set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
 	
-	utils/zj_utils.cpp
+	utils/string_utils.cpp
+	utils/file_utils.cpp
+	utils/path_utils.cpp
 	jsonvar/JsonVar.cpp
 	jsonvar/ObjectJsonVar.cpp	
 	zetjsoncpp_deserializer.cpp
@@ -207,7 +209,6 @@ SET(
 	utils/string_utils.h
 	utils/file_utils.h
 	utils/path_utils.h
-	util/zj_util.h
 	jsonvar/JsonVar.h
 	jsonvar/NamedJsonVar.h
 	
