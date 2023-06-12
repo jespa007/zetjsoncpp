@@ -69,7 +69,7 @@ void test_json_var_boolean(){
 	}
 
 	for(unsigned i=0; i < bool_extra.size(); i++){
-		std::string key=zetjsoncpp::zj_strutils::format("id_%i",i+4);
+		std::string key=zetjsoncpp::string_utils::format("id_%i",i+4);
 		m1[key]=bool_extra[i];
 		jmn1.insert(key,(bool)bool_extra[i]);
 	}

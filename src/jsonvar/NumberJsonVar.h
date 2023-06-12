@@ -6,7 +6,7 @@ namespace zetjsoncpp{
 
 			static float parse(const std::string & str ){
 				float f=0;
-				if(zj_strutils::str_to_float(&f,str)!=zj_strutils::STR_2_NUMBER_SUCCESS){
+				if(string_utils::stringToFloat(&f,str)!=string_utils::STR_2_NUMBER_SUCCESS){
 					throw std::runtime_error(std::string("cannot convert ") + str + std::string(" as float"));
 				}
 

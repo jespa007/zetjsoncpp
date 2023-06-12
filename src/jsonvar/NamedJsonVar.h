@@ -17,7 +17,7 @@ namespace zetjsoncpp{
 			std::string s_aux(vec.begin(), vec.end());
 			/*if(s_aux.size()>=ZJ_MAX_CONST_CHAR){
 				throw new std::runtime_error(
-						"zetjsoncpp::NamedJsonVar: '"+s_aux+"' exceeds character size (max "+zj_strutils::int_to_str(ZJ_MAX_CONST_CHAR)+")"
+						"zetjsoncpp::NamedJsonVar: '"+s_aux+"' exceeds character size (max "+string_utils::integerToString(ZJ_MAX_CONST_CHAR)+")"
 				);
 			}*/
 			strcpy(this->__zj_variable_name__,s_aux.c_str());

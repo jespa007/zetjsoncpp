@@ -5,19 +5,14 @@
 
 #include "zetjsoncpp.h"
 
-#ifdef CAPTURE_VARIABLE_ARGS
-#undef CAPTURE_VARIABLE_ARGS
-#endif
-
-
 // Util to capture args by ...
-#define CAPTURE_VARIABLE_ARGS(text_out, text_in)\
+#define ZJ_CAPTURE_VARIABLE_ARGS(text_out, text_in)\
 	{va_list  ap;\
 	va_start(ap,  text_in);\
 	vsprintf(text_out,  text_in,  ap);\
 	va_end(ap);}
 
-#define PREVIEW_SSTRING(start, current,n) (((current)-(n))<((start))?(start):((current)-(n)))
+
 
 namespace zetjsoncpp{
 
@@ -27,15 +22,15 @@ namespace zetjsoncpp{
 
 
 		char  where[1024]={0};
-		char  text[MAX_C_STRING]={0};
+		char  text[ZJ_MAX_C_STRING]={0};
 		char temp_buff[1024]={0};
-		CAPTURE_VARIABLE_ARGS(text, string_text);
+		ZJ_CAPTURE_VARIABLE_ARGS(text, string_text);
 		char *aux=(char *)str_current-1;
 		char captured[100]={0};
 		std::string filename="";
 		int n=0;
 		if(deserialize_data->filename!=NULL){
-			filename=zj_path::get_filename(deserialize_data->filename);
+			filename=path_utils::getFilename(deserialize_data->filename);
 		}
 
 		throw deserialize_exception(filename.c_str(),line,text);
@@ -293,7 +288,7 @@ namespace zetjsoncpp{
 
 
 				float number_value = 0;
-				if(zetjsoncpp::zj_strutils::str_to_float(&number_value,str_value) == zetjsoncpp::zj_strutils::STR_2_NUMBER_SUCCESS){
+				if(zetjsoncpp::string_utils::stringToFloat(&number_value,str_value) == zetjsoncpp::string_utils::STR_2_NUMBER_SUCCESS){
 					if(type_data ==  JsonVarType::JSON_VAR_TYPE_NUMBER){
 						if(ptr_data!=NULL){
 							*((float *) ptr_data) = number_value;
@@ -318,11 +313,11 @@ namespace zetjsoncpp{
 			if(json_var != NULL){
 				std::string filename="";
 				if(deserialize_data->filename!=NULL){
-					filename=zj_path::get_filename(deserialize_data->filename);
+					filename=path_utils::getFilename(deserialize_data->filename);
 				}
 				throw deserialize_exception(
 						filename.c_str()
-						,line,zetjsoncpp::zj_strutils::format(
+						,line,zetjsoncpp::string_utils::format(
 								"Cannot parse value \"%s\" as %s"
 								,str_value.c_str()
 								,json_var->getTypeStr()

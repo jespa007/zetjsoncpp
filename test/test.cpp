@@ -43,13 +43,13 @@ int main(int argc, char *argv[]){
 		auto n1=zetjsoncpp::deserialize<zetjsoncpp::NumberJsonVar<>>("1");
 		auto n2=zetjsoncpp::deserialize<zetjsoncpp::NumberJsonVar<>>("3.7e+2");
 		auto n3=1.2+*n1+1+*n2+10; // test operations
-		std::cout << zetjsoncpp::zj_strutils::format("n1=%.2f n2=%.2f n3=%.2f",(float)*n1,(float)*n2,(float)n3)<< std::endl;
+		std::cout << zetjsoncpp::string_utils::format("n1=%.2f n2=%.2f n3=%.2f",(float)*n1,(float)*n2,(float)n3)<< std::endl;
 
 		auto s1=zetjsoncpp::deserialize<zetjsoncpp::StringJsonVar<>>("\"my_string\"");
 		auto s2=zetjsoncpp::deserialize<zetjsoncpp::StringJsonVar<>>("\"_2\"");
 		auto s3="s1_"+*s1+"_s2_"+*s2+"_end"; // concatenate
 
-		std::cout <<zetjsoncpp::zj_strutils::format("s1=%s s2=%s s3=%s"
+		std::cout <<zetjsoncpp::string_utils::format("s1=%s s2=%s s3=%s"
 				,zetjsoncpp::serialize(s1).c_str()
 				,zetjsoncpp::serialize(s2).c_str()
 				,zetjsoncpp::serialize(&s3).c_str())<< std::endl;
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
 		auto b1=zetjsoncpp::deserialize<zetjsoncpp::BooleanJsonVar<>>("true");
 		auto b2=zetjsoncpp::deserialize<zetjsoncpp::BooleanJsonVar<>>("false");
 		bool b3=true || *b1 || false || *b2 || true;
-		std::cout <<zetjsoncpp::zj_strutils::format("b1=%s b2=%s b3=%s\n"
+		std::cout <<zetjsoncpp::string_utils::format("b1=%s b2=%s b3=%s\n"
 				,zetjsoncpp::serialize(b1).c_str()
 				,zetjsoncpp::serialize(b2).c_str(),b3?"true":"false")<< std::endl;
 
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]){
 			",\"use_space\":false"
 		"}");
 
-		std::cout <<zetjsoncpp::zj_strutils::format("o1.length=%.02f o1.use_space=%s\n",(float)o1->length,o1->use_space==true?"true":"false")<< std::endl;
+		std::cout <<zetjsoncpp::string_utils::format("o1.length=%.02f o1.use_space=%s\n",(float)o1->length,o1->use_space==true?"true":"false")<< std::endl;
 
 		std::cout << std::endl << "3. Testing json vector primitives..."<< std::endl<< std::endl;
 

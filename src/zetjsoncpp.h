@@ -26,20 +26,23 @@
 #include <math.h>
 
 #define ZETJSONCPP_VERSION_MAJOR 2
-#define ZETJSONCPP_VERSION_MINOR 2
+#define ZETJSONCPP_VERSION_MINOR 3
 #define ZETJSONCPP_VERSION_PATCH 0
 
 #ifdef __MEMMANAGER__
 #include "memmgr.h"
 #endif
 
-#include "util/zj_util.h"
-#include "exception.h"
+#define ZJ_UNUSUED_PARAM(x)			((void)(x))
+#define ZJ_UNUSUED_2PARAMS(x1,x2)	((void)(x1),(void)(x2))
+
+#include "utils\file_utils.h"
+#include "utils\path_utils.h"
+#include "utils\string_utils.h"
+#include "deserialize_exception.h"
 #include "jsonvar/JsonVar.h"
 
-
 // static zetjsoncpp
-
 namespace zetjsoncpp {
 
 

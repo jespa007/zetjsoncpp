@@ -4,13 +4,13 @@
  */
 
 
-#define MAX_NAME_PROPERTY 128
-#define MAX_C_STRING 4096
+#define ZJ_MAX_NAME_PROPERTY 128
+#define ZJ_MAX_C_STRING 4096
 
 
-#define INI_GROUP	'{'
-#define END_GROUP	'}'
-#define IS_EMPTY(str) (str==NULL || *str==0)
+#define ZJ_INI_GROUP	'{'
+#define ZJ_END_GROUP	'}'
+#define ZJ_IS_EMPTY(str) (str==NULL || *str==0)
 
 
 #ifdef __DEBUG__
@@ -81,7 +81,7 @@ namespace zetjsoncpp{
 		_T *json_var=NULL;
 		int line=1;
 
-		char *buf = zj_file::read(filename);
+		char *buf = file_utils::read(filename);
 		if (buf != NULL) {
 			try{
 				json_var=new _T;

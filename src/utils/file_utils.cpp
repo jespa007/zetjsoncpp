@@ -2,11 +2,12 @@
 
 namespace zetjsoncpp
 {
-	namespace zj_file{
+
+	namespace file_utils{
 
 		bool exists(const std::string & m_file) {
 
-			if (zj_strutils::ends_with(m_file, "/"))
+			if (string_utils::endsWith(m_file, "/"))
 				return false;
 
 			if (m_file == "")
@@ -83,5 +84,6 @@ namespace zetjsoncpp
 
 			return    -1;
 		}
+
 	}
 }

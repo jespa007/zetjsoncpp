@@ -171,7 +171,9 @@ endif()
 set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
 	
-	util/zj_util.cpp
+	utils/string_utils.cpp
+	utils/file_utils.cpp
+	utils/path_utils.cpp
 	jsonvar/JsonVar.cpp
 	jsonvar/ObjectJsonVar.cpp	
 	zetjsoncpp_deserializer.cpp
@@ -204,10 +206,9 @@ endif()
 	
 SET(
 	HS
-	util/zj_strutils.h
-	util/zj_file.h
-	util/zj_path.h
-	util/zj_util.h
+	utils/string_utils.h
+	utils/file_utils.h
+	utils/path_utils.h
 	jsonvar/JsonVar.h
 	jsonvar/NamedJsonVar.h
 	
@@ -230,7 +231,7 @@ SET(
 		
 	zetjsoncpp.h
 	zetjsoncpp.tcc
-	exception.h
+	deserialize_exception.h
 )
 
 
@@ -247,7 +248,7 @@ add_executable(test${POST_NAME}
 target_link_libraries(test${POST_NAME} ${ZETJSONCPP_LIB_NAME}${POST_NAME})
 
 
-# Test File
+# Test file_utils
 add_executable(test_file${POST_NAME}
 	${JSON_TEST_FILE_SRCS}
 )

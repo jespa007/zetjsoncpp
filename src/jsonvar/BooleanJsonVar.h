@@ -6,8 +6,8 @@ namespace zetjsoncpp{
 	public:
 
 		static bool parse(const std::string & s){
-			if(zj_strutils::to_lower(s) == "true") return true;
-			if(zj_strutils::to_lower(s) == "false") return false;
+			if(string_utils::toLower(s) == "true") return true;
+			if(string_utils::toLower(s) == "false") return false;
 
 			throw ("Cannot parse string to boolean.");
 		}

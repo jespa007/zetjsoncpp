@@ -10,7 +10,7 @@
 
 namespace zetjsoncpp{
 
-	namespace zj_strutils{
+	namespace string_utils{
 
 		std::string  format(const  char  *input_text, ...){
 			char  _sformat_buffer[ZJ_MAX_STR_BUFFER] = { 0 };
@@ -22,7 +22,7 @@ namespace zetjsoncpp{
 			return std::string(_sformat_buffer);
 		}
 
-		STR_2_NUMBER str_to_int(int * i, const std::string & s, int base){
+		STR_2_NUMBER stringToInteger(int * i, const std::string & s, int base){
 			 char *end;
 			long  l;
 			errno = 0;
@@ -40,7 +40,7 @@ namespace zetjsoncpp{
 			return STR_2_NUMBER_SUCCESS;
 		}
 
-		STR_2_NUMBER str_to_float(float * f, const std::string & s){
+		STR_2_NUMBER stringToFloat(float * f, const std::string & s){
 			 char *end;
 			 char *data=(char *)s.c_str();
 			float  l;
@@ -62,14 +62,14 @@ namespace zetjsoncpp{
 		}
 
 
-		std::string int_to_str(int number){
+		std::string integerToString(int number){
 
 		   std::stringstream ss;//create a stringstream
 		   ss << number;//add number to the stream
 		   return ss.str();//return a string with the contents of the stream
 		}
 
-		std::string float_to_str(float number){
+		std::string floatToString(float number){
 
 			char buff[100];
 			sprintf(buff, "%f",number);
@@ -77,7 +77,7 @@ namespace zetjsoncpp{
 		   return ss;//return a string with the contents of the stream
 		}
 
-		std::string to_lower(const std::string & str){
+		std::string toLower(const std::string & str){
 
 			std::string ret = str;
 			for(unsigned short l = 0; l < ret.size();l++)
@@ -85,7 +85,7 @@ namespace zetjsoncpp{
 			return ret;
 		}
 
-		bool ends_with(const std::string & fullString, const std::string & ending){
+		bool endsWith(const std::string & fullString, const std::string & ending){
 			if (fullString.length() >= ending.length()) {
 				return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
 			}
@@ -94,7 +94,7 @@ namespace zetjsoncpp{
 		}
 
 
-		std::wstring to_wstring_utf8(const std::string & str){
+		std::wstring toWStringUtf8(const std::string & str){
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> str_utf8_to_wstring_conv;
 			return str_utf8_to_wstring_conv.from_bytes(str);
 		}
