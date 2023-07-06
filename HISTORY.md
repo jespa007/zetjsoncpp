@@ -1,6 +1,12 @@
 
 
 ----------------------------
+Date: 6/07/2023
+Version: 2.3.1
+
+- [x] Fix include directory for linux
+
+----------------------------
 Date: 8/06/2023
 Version: 2.3.0
 
