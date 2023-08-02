@@ -17,8 +17,8 @@ void test_json_var_number(){
 			,{"id_3",2.5}
 	};
 
-	zetjsoncpp::ArrayJsonVarNumber<> jvn1=v1;
-	zetjsoncpp::ArrayJsonVarNumber<> jvn2=v2;
+	zetjsoncpp::ArrayNumberJsonVar<> jvn1=v1;
+	zetjsoncpp::ArrayNumberJsonVar<> jvn2=v2;
 	zetjsoncpp::MapNumberJsonVar<> 	  jmn1=m1;
 	size_t len=v1.size();
 

@@ -31,7 +31,7 @@ typedef struct{
 	channels;
 
 	// Vector of numbers data
-	zetjsoncpp::ArrayJsonVarNumber<ZJ_CONST_CHAR("data")>
+	zetjsoncpp::ArrayNumberJsonVar<ZJ_CONST_CHAR("data")>
 	data;
 }Interpolation;
 

@@ -269,9 +269,9 @@ namespace zetjsoncpp{
 			);
 			break;
 		case JSON_VAR_TYPE_VECTOR_OF_NUMBERS:
-			serialize_json_var_vector<ArrayJsonVarNumber<>>(
+			serialize_json_var_vector<ArrayNumberJsonVar<>>(
 				_str_result
-				,(ArrayJsonVarNumber<> *)_json_var
+				,(ArrayNumberJsonVar<> *)_json_var
 				,_ident
 				,_minimized
 				,_discard_non_serialized

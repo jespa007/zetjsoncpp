@@ -1,6 +1,12 @@
 
 
 ----------------------------
+Date: 02/08/2023
+Version: 2.3.1
+
+- [x] Change ArrayJsonVarNumber to ArrayNumberJsonVar
+
+----------------------------
 Date: 6/07/2023
 Version: 2.3.1
 
