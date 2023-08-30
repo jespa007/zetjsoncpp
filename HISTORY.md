@@ -2,6 +2,12 @@
 
 ----------------------------
 Date: 02/08/2023
+Version: 2.3.3
+
+- [x] deserialize_exception : Save line and description
+
+----------------------------
+Date: 02/08/2023
 Version: 2.3.2
 
 - [x] Change ArrayJsonVarNumber to ArrayNumberJsonVar
