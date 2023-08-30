@@ -72,7 +72,7 @@ int main(int argc, char *argv[]){
 
 		std::cout << std::endl << "3. Testing json vector primitives..."<< std::endl<< std::endl;
 
-		auto v1=zetjsoncpp::deserialize<zetjsoncpp::ArrayJsonVarNumber<>>("[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]");
+		auto v1=zetjsoncpp::deserialize<zetjsoncpp::ArrayNumberJsonVar<>>("[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]");
 		std::cout <<"v1="<< zetjsoncpp::serialize(v1)<< std::endl;
 
 		auto v2=zetjsoncpp::deserialize<zetjsoncpp::ArrayStringJsonVar<>>("[\"string_1\",\"string_2\",\"string_3\",\"string_5\"]");

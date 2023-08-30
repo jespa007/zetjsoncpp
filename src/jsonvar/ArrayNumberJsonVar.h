@@ -2,21 +2,21 @@ namespace zetjsoncpp{
 
 	// ARRAY FLOAT
 	template<char... _T_NAME>
-	class ArrayJsonVarNumber : public NamedJsonVar<_T_NAME...>, public ArrayJsonVar<NumberJsonVar<>> {
+	class ArrayNumberJsonVar : public NamedJsonVar<_T_NAME...>, public ArrayJsonVar<NumberJsonVar<>> {
 
 	public:
 		//_T_NAME name;
-		ArrayJsonVarNumber() {
+		ArrayNumberJsonVar() {
 			init();
 		}
 
-		ArrayJsonVarNumber(const std::vector<float> & _vec_numbers) {
+		ArrayNumberJsonVar(const std::vector<float> & _vec_numbers) {
 			init();
 			copy(_vec_numbers);
 		}
 
 
-		ArrayJsonVarNumber<> & operator=(const std::vector<float> & _vec_numbers){
+		ArrayNumberJsonVar<> & operator=(const std::vector<float> & _vec_numbers){
 			copy(_vec_numbers);
 			return *this;
 		}
@@ -50,7 +50,7 @@ namespace zetjsoncpp{
 			return shortBuf;
 		}
 
-		virtual ~ArrayJsonVarNumber() {
+		virtual ~ArrayNumberJsonVar() {
 		}
 
 	private:
@@ -63,7 +63,7 @@ namespace zetjsoncpp{
 
 		void init(){
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_NUMBERS;
-			this->__zj_size_data__ = sizeof(ArrayJsonVarNumber<_T_NAME...>);
+			this->__zj_size_data__ = sizeof(ArrayNumberJsonVar<_T_NAME...>);
 		}
 	};
 }

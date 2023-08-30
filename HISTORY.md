@@ -1,6 +1,24 @@
 
 
 ----------------------------
+Date: 02/08/2023
+Version: 2.3.3
+
+- [x] deserialize_exception : Save line and description
+
+----------------------------
+Date: 02/08/2023
+Version: 2.3.2
+
+- [x] Change ArrayJsonVarNumber to ArrayNumberJsonVar
+
+----------------------------
+Date: 6/07/2023
+Version: 2.3.1
+
+- [x] Fix include directory for linux
+
+----------------------------
 Date: 8/06/2023
 Version: 2.3.0
 

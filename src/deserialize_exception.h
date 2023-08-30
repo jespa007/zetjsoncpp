@@ -8,20 +8,23 @@ namespace zetjsoncpp {
 
 	class deserialize_exception: public std::exception
 	{
-		std::string	error_description;
-
+		std::string	description;
+		int line;
+		std::string file;
 		char what_msg[4096];
 	public:
 
-		deserialize_exception(const char *  _file, int _line, const std::string & _error_description){
+		deserialize_exception(const char *  _file, int _line, const std::string & _description){
 
 			memset(what_msg,0,sizeof(what_msg));
-			error_description=_error_description;
+			description=_description;
+			line = _line;
 
 			if(_file != NULL  && *_file != 0){
-				sprintf(what_msg,"[file:%s line:%i] %s",_file, _line, (char *)error_description.c_str());
+				file=_file;
+				sprintf(what_msg,"[file:%s line:%i] %s",_file, _line, (char *)description.c_str());
 			}else{
-				sprintf(what_msg,"[line:%i] %s",_line,(char *)error_description.c_str());
+				sprintf(what_msg,"[line:%i] %s",_line,(char *)description.c_str());
 			}
 		}
 
@@ -29,6 +32,14 @@ namespace zetjsoncpp {
 		{
 	    	return (const char *)what_msg;
 		}
+
+	    int getLine(){
+	    	return line;
+	    }
+
+	    const std::string & getDescription(){
+	    	return description;
+	    }
 	};
 }
 

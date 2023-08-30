@@ -15,7 +15,7 @@ namespace zetjsoncpp{
 		}
 
 
-		ArrayJsonVarNumber<> & operator=(const  std::map<std::string,float> & _map_numbers){
+		ArrayNumberJsonVar<> & operator=(const  std::map<std::string,float> & _map_numbers){
 			copy(_map_numbers);
 			return *this;
 		}

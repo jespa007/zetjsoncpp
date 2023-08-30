@@ -132,7 +132,7 @@ else()
 					message("-- Memmanager: -fsanitize NOT supported")
 				endif()
 			else()
-				message("-- Memmanager: OFF ($ENV{EIPM_DEVELOP_LIBS_CPP}/memmgr not exist)")
+				message("-- Memmanager: OFF (${PROJECT_SOURCE_DIR}/../../memmgr not exist)")
 			endif()
 	   	endif()
 		
