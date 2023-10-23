@@ -228,6 +228,7 @@ SET(
 	jsonvar/MapNumberJsonVar.h
 	jsonvar/MapObjectJsonVar.h
 	jsonvar/MapStringJsonVar.h
+	jsonvar/MapArrayStringJsonVar.h
 		
 	zetjsoncpp.h
 	zetjsoncpp.tcc
