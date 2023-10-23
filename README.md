@@ -169,6 +169,28 @@ MapStringJsonVar<> *m3=zetjsoncpp::deserialize<zetjsoncpp::MapStringJsonVar<>>(
 "}");
 ```
 
+### Map of Array of Strings
+A json map of strings it could be the following,
+
+```javscript
+{ 
+   "id1":["string_1","string_2","string_3"]
+   ,"id2":["string_4","string_5","string_6"]
+   ,"id3":["string_7","string_8","string_9"]
+}
+```
+
+To deserialize a map of array of strings, it is done through `MapArrayStringJsonVar` as it shows below,
+
+```cpp
+MapArrayStringJsonVar<> *m3=zetjsoncpp::deserialize<zetjsoncpp::MapArrayStringJsonVar<>>(
+"{"
+   "\"id1\":[\"string_1\",\"string_2\",\"string_3\"]"
+   ",\"id2\":[\"string_4\",\"string_5\",\"string_6\"]"
+   ",\"id3\":[\"string_7\",\"string_8\",\"string_9\"]"
+"}");
+```
+
 ### Object
 Until now it has seen a way to serialize primitive and structured types easy to understant. Now we presents the method to deserialize json object that it requires a little bit of setup. A json object is like a json map with different content on its values.
 
