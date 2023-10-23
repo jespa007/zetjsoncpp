@@ -7,16 +7,17 @@ A library that deserializes/serializes from/to Json string or files
 To serialize json variable it done using zetjsoncpp::deserialize. ZetJsonCpp supports deserialization of the following types,
 
 * Boolean
-* Vector of booleans
+* Array of booleans
 * Map of booleans
 * Number
-* Vector of numbers
+* Array of numbers
 * Map of numbers
 * String
-* Vector of strings
+* Array of strings
 * Map of strings
+* Map of array of strings
 * Object
-* Vector of objects
+* Array of objects
 * Map of objects
  
  
@@ -28,15 +29,15 @@ To deserialize a json boolean, it is done through `BooleanJsonVar` as it shows b
 zetjsoncpp::deserialize<zetjsoncpp::BooleanJsonVar<>>("true");
 ```
 
-### Vector of Booleans
+### Array of Booleans
 
-A json vector of booleans it could be the following,
+A json array of booleans it could be the following,
 
 ```javscript
 [true,false,true]
 ```
 
-To deserialize a json vector of booleans, it is done through `ArrayBooleanJsonVar` as it shows below,
+To deserialize a json array of booleans, it is done through `ArrayBooleanJsonVar` as it shows below,
 
 ```cpp
 zetjsoncpp::deserialize<zetjsoncpp::ArrayBooleanJsonVar<>>(
@@ -84,14 +85,14 @@ To deserialize a json number, it is done through `NumberJsonVar` as it shows bel
 zetjsoncpp::deserialize<zetjsoncpp::NumberJsonVar<>>("1");
 ```
 
-### Vector of Numbers
-A json vector of numbers it could be the following,
+### Array of Numbers
+A json array of numbers it could be the following,
 
 ```javscript
 [1,3.7e+2,-3]
 ```
 
-To deserialize a json vector of numbers, it is done through `ArrayNumberJsonVar` as it shows below,
+To deserialize a json array of numbers, it is done through `ArrayNumberJsonVar` as it shows below,
 
 ```cpp
 zetjsoncpp::deserialize<zetjsoncpp::ArrayNumberJsonVar<>>(
@@ -131,12 +132,12 @@ To deserialize a json string, it is done through `StringJsonVar` as it shows bel
 zetjsoncpp::deserialize<zetjsoncpp::StringJsonVar<>>("\"my_string\"")
 ```
 
-### Vector of Strings
-A json vector of strings it could be the following,
+### Array of Strings
+A json array of strings it could be the following,
 ```javscript
 ["string_1","string_2","string_3"]
 ```
-To deserialize a vector of strings, it is done through `ArrayStringJsonVar` as it shows below,
+To deserialize a array of strings, it is done through `ArrayStringJsonVar` as it shows below,
 
 ```cpp
 zetjsoncpp::deserialize<ArrayStringJsonVar<>>(
@@ -247,8 +248,8 @@ if(json_object->encoding.isDeserialized()){
 List 3.4
 By default, any no deserialized variable the strings are set empty, numbers and booleans will set as 0 and false respectively.
 
-### Vector of Objects
-A json vector of objects it could be the following,
+### Array of Objects
+A json array of objects it could be the following,
 
 ```javscript
 [{ 
@@ -262,7 +263,7 @@ A json vector of objects it could be the following,
 }]
 ```
 
-To deserialize a vector of objects, it is done through `ArrayObjectJsonVar` passing the type of structure to deserialize it has seen in list 2.2,
+To deserialize a array of objects, it is done through `ArrayObjectJsonVar` passing the type of structure to deserialize it has seen in list 2.2,
 
 ```cpp
 zetjsoncpp::deserialize<zetjsoncpp::ArrayObjectJsonVar<JsonSample>>(
@@ -441,7 +442,7 @@ typedef struct{
   // String channels
   StringJsonVar<ZJ_CONST_CHAR("channels")>  channels;
 
-  // Vector of numbers data
+  // Array of numbers data
   ArrayNumberJsonVar<ZJ_CONST_CHAR("data")>  data;
 }Interpolation;
 
@@ -453,7 +454,7 @@ typedef struct
   // Number number
   NumberJsonVar<ZJ_CONST_CHAR("number")>  number;
 
-  // Vector of strings plug-ins
+  // Array of strings plug-ins
   ArrayStringJsonVar<ZJ_CONST_CHAR("plug-ins")>  plugins;
 
   // Object indent
