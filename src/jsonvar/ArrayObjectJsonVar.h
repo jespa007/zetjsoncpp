@@ -56,7 +56,7 @@ namespace zetjsoncpp{
 	private:
 
 		void init(){
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS;
+			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_ARRAY_OF_OBJECTS;
 			this->__zj_size_data__ = sizeof(ArrayObjectJsonVar<_T_DATA, _T_NAME...>);
 		}
 	};

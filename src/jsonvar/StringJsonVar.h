@@ -31,7 +31,6 @@ namespace zetjsoncpp{
 			return (*this);
 		}
 
-
 		friend bool operator ==(const std::string & s1,const StringJsonVar & s2)  {
 			return s1==s2.__zj_value__;
 		}
@@ -68,7 +67,6 @@ namespace zetjsoncpp{
 		friend StringJsonVar operator +(const StringJsonVar & s1,const StringJsonVar & s2)  {
 			return StringJsonVar(s1.__zj_value__+s2.__zj_value__);
 		}
-
 
 		virtual ~StringJsonVar(){}
 	protected:

@@ -76,9 +76,9 @@ namespace zetjsoncpp{
 	}
 
 	template<typename _T>
-	void serialize_json_var_vector(
+	void serialize_json_var_array(
 		std::string & _str_result
-		, _T * _json_var_vector
+		, _T * _json_var_array
 		,int _ident
 		,bool _minimized
 		,bool _discard_non_serialized
@@ -86,14 +86,14 @@ namespace zetjsoncpp{
 
 		_str_result+="[";
 
-		if (_minimized==false && _json_var_vector->getType() !=JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS){
+		if (_minimized==false && _json_var_array->getType() !=JsonVarType::JSON_VAR_TYPE_ARRAY_OF_OBJECTS){
 			ZJ_FORMAT_OUTPUT_NEW_LINE(_str_result,_ident+1);
 		}
 
 		unsigned j=0;
-		for (unsigned i = 0; i < _json_var_vector->size(); i++) {
+		for (unsigned i = 0; i < _json_var_array->size(); i++) {
 
-			auto element=_json_var_vector->getJsonVarPtr(i);
+			auto element=_json_var_array->getJsonVarPtr(i);
 
 			// discard element
 			if(_discard_non_serialized==true && element->isDeserialized() == false){
@@ -114,7 +114,7 @@ namespace zetjsoncpp{
 
 			j++;
 		}
-		if (_minimized==false && _json_var_vector->getType() !=JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS){
+		if (_minimized==false && _json_var_array->getType() !=JsonVarType::JSON_VAR_TYPE_ARRAY_OF_OBJECTS){
 			ZJ_FORMAT_OUTPUT_NEW_LINE(_str_result,_ident);
 		}
 		_str_result+="]";
@@ -185,10 +185,10 @@ namespace zetjsoncpp{
 					break;
 
 				case JsonVarType::JSON_VAR_TYPE_OBJECT:
-				case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_BOOLEANS:
-				case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_STRINGS:
-				case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_NUMBERS:
-				case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS:
+				case JsonVarType::JSON_VAR_TYPE_ARRAY_OF_BOOLEANS:
+				case JsonVarType::JSON_VAR_TYPE_ARRAY_OF_STRINGS:
+				case JsonVarType::JSON_VAR_TYPE_ARRAY_OF_NUMBERS:
+				case JsonVarType::JSON_VAR_TYPE_ARRAY_OF_OBJECTS:
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS:
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS:
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS:
@@ -259,8 +259,8 @@ namespace zetjsoncpp{
 				,_discard_non_serialized
 			);
 			break;
-		case JSON_VAR_TYPE_VECTOR_OF_BOOLEANS:
-			serialize_json_var_vector<ArrayBooleanJsonVar<>>(
+		case JSON_VAR_TYPE_ARRAY_OF_BOOLEANS:
+			serialize_json_var_array<ArrayBooleanJsonVar<>>(
 				_str_result
 				, (ArrayBooleanJsonVar<> *)_json_var
 				,_ident
@@ -268,8 +268,8 @@ namespace zetjsoncpp{
 				,_discard_non_serialized
 			);
 			break;
-		case JSON_VAR_TYPE_VECTOR_OF_NUMBERS:
-			serialize_json_var_vector<ArrayNumberJsonVar<>>(
+		case JSON_VAR_TYPE_ARRAY_OF_NUMBERS:
+			serialize_json_var_array<ArrayNumberJsonVar<>>(
 				_str_result
 				,(ArrayNumberJsonVar<> *)_json_var
 				,_ident
@@ -277,16 +277,16 @@ namespace zetjsoncpp{
 				,_discard_non_serialized
 			);
 			break;
-		case JSON_VAR_TYPE_VECTOR_OF_STRINGS:
-			serialize_json_var_vector<ArrayStringJsonVar<>>(
+		case JSON_VAR_TYPE_ARRAY_OF_STRINGS:
+			serialize_json_var_array<ArrayStringJsonVar<>>(
 				_str_result
 				,(ArrayStringJsonVar<> *)(_json_var)
 				,_ident,_minimized
 				,_discard_non_serialized
 			);
 			break;
-		case JSON_VAR_TYPE_VECTOR_OF_OBJECTS:
-			serialize_json_var_vector<ArrayObjectJsonVar<TestVoid>>(
+		case JSON_VAR_TYPE_ARRAY_OF_OBJECTS:
+			serialize_json_var_array<ArrayObjectJsonVar<TestVoid>>(
 				_str_result
 				,(ArrayObjectJsonVar<TestVoid> *)_json_var
 				,_ident

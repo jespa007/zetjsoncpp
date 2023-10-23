@@ -330,7 +330,7 @@ namespace zetjsoncpp{
 		return NULL;
 	}
 
-	char * deserialize_json_var_vector(
+	char * deserialize_json_var_array(
 			DeserializeData *deserialize_data
 			,const char *str_start
 			, int & line
@@ -342,7 +342,7 @@ namespace zetjsoncpp{
 
 		if(json_var !=NULL){
 			type_data=json_var->getType();
-			if((type_data & JsonVarType::JSON_VAR_TYPE_VECTOR) != JsonVarType::JSON_VAR_TYPE_VECTOR){
+			if((type_data & JsonVarType::JSON_VAR_TYPE_ARRAY) != JsonVarType::JSON_VAR_TYPE_ARRAY){
 				throw std::runtime_error("Internal error JsonVar expected as Type vector");
 				return NULL;
 			}
@@ -475,7 +475,7 @@ namespace zetjsoncpp{
 		if(json_var == NULL){ // continue parse file/string
 			//try to deduce ...
 			if(*str_current == '['){ // try parse vector
-				str_current=deserialize_json_var_vector(deserialize_data, str_current, line,json_var);
+				str_current=deserialize_json_var_array(deserialize_data, str_current, line,json_var);
 			}else if(*str_current == '{') {// can be a map or object but we try as a object
 				str_current=deserialize_json_var_object(deserialize_data, str_current, line,json_var);
 			}else{
@@ -490,16 +490,17 @@ namespace zetjsoncpp{
 			case JsonVarType::JSON_VAR_TYPE_STRING:
 				str_current=deserialize_json_var_value(deserialize_data,str_current,line,json_var);
 				break;
-			case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_BOOLEANS:
-			case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_NUMBERS:
-			case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_STRINGS:
-			case JsonVarType::JSON_VAR_TYPE_VECTOR_OF_OBJECTS:
-				str_current=deserialize_json_var_vector(deserialize_data, str_current, line, json_var);
+			case JsonVarType::JSON_VAR_TYPE_ARRAY_OF_BOOLEANS:
+			case JsonVarType::JSON_VAR_TYPE_ARRAY_OF_NUMBERS:
+			case JsonVarType::JSON_VAR_TYPE_ARRAY_OF_STRINGS:
+			case JsonVarType::JSON_VAR_TYPE_ARRAY_OF_OBJECTS:
+				str_current=deserialize_json_var_array(deserialize_data, str_current, line, json_var);
 				break;
 			default: // tries to parse a map of values or object
 			case JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS:
 			case JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS:
 			case JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS:
+			case JsonVarType::JSON_VAR_TYPE_MAP_OF_ARRAY_OF_STRINGS:
 			case JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS:
 			case JsonVarType::JSON_VAR_TYPE_OBJECT:
 				str_current=deserialize_json_var_object(deserialize_data, str_current, line, json_var);

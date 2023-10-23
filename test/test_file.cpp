@@ -61,6 +61,10 @@ typedef struct
     zetjsoncpp::MapObjectJsonVar<Interpolation,ZJ_CONST_CHAR("interpolations")>
     interpolations;
 
+    // Map of array of strings
+    zetjsoncpp::MapArrayStringJsonVar<ZJ_CONST_CHAR("map_array_strings")>
+    map_array_strings;
+
 
 }SampleJson;
 
@@ -90,11 +94,29 @@ int main(int argc, char *argv[]){
 		}
 
 		// iterate of all interpolations and replace its data values...
-		for(auto it_map = json_object->interpolations.begin(); it_map != json_object->interpolations.end(); it_map++) {
-			for(auto it = it_map->second->data.begin(); it != it_map->second->data.end(); it++) {
+		for(auto it_map : json_object->interpolations) {
+			for(auto it = it_map.second->data.begin(); it != it_map.second->data.end(); it++) {
 				*it = rand();
 			}
 		}
+
+		// iterate of all map array string...
+		std::cout  << std::endl;
+		for(auto it_map_array_strings : json_object->map_array_strings) {
+			int j=0;
+			std::cout << "\"" << it_map_array_strings.first << "\": [ ";
+
+			for(auto it_array_strings : it_map_array_strings.second) {
+				if(j > 0){
+					std::cout << ",";
+				}
+				std::cout << (std::string)it_array_strings;
+				j++;
+			}
+
+			std::cout  << "]" << std::endl;
+		}
+		std::cout  << std::endl;
 
 		std::cout << "------------------------------------------------------------------------------" << std::endl;
 		std::cout << " After modifications:"<< std::endl;

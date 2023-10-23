@@ -14,7 +14,6 @@ namespace zetjsoncpp{
 			copy(_map_string);
 		}
 
-
 		MapStringJsonVar<> & operator=(const  std::map<std::string,std::string> & _map_string){
 			copy(_map_string);
 			return *this;
@@ -28,9 +27,6 @@ namespace zetjsoncpp{
 
 			return &this->__zj_map_data__[key_id];
 		}
-
-
-
 
 		virtual ~MapStringJsonVar() {
 
