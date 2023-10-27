@@ -30,7 +30,7 @@ typedef struct{
 	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("channels")>
 	channels;
 
-	// Vector of numbers data
+	// Array of numbers data
 	zetjsoncpp::ArrayNumberJsonVar<ZJ_CONST_CHAR("data")>
 	data;
 }Interpolation;
@@ -45,7 +45,7 @@ typedef struct
 	zetjsoncpp::NumberJsonVar<ZJ_CONST_CHAR("number")>
 	number;
 
-    // Vector of strings plug-ins
+    // Array of strings plug-ins
 	zetjsoncpp::ArrayStringJsonVar<ZJ_CONST_CHAR("plug-ins")>
 	plugins;
 
@@ -60,6 +60,10 @@ typedef struct
     // Map of objects interpolations
     zetjsoncpp::MapObjectJsonVar<Interpolation,ZJ_CONST_CHAR("interpolations")>
     interpolations;
+
+    // Map of array of strings
+    zetjsoncpp::MapArrayStringJsonVar<ZJ_CONST_CHAR("map_array_strings")>
+    map_array_strings;
 
 
 }SampleJson;
@@ -90,12 +94,25 @@ int main(int argc, char *argv[]){
 		}
 
 		// iterate of all interpolations and replace its data values...
-		for(auto it_map = json_object->interpolations.begin(); it_map != json_object->interpolations.end(); it_map++) {
-			for(auto it = it_map->second->data.begin(); it != it_map->second->data.end(); it++) {
+		for(auto it_map : json_object->interpolations) {
+			for(auto it = it_map.second->data.begin(); it != it_map.second->data.end(); it++) {
 				*it = rand();
 			}
 		}
 
+		// Modification of a map of array of strings...
+		int k=0;
+		for(auto it_map_array_strings : json_object->map_array_strings) {
+			int j=0;
+
+			for(size_t i=0; i < json_object->map_array_strings[it_map_array_strings.first].size(); i++) {
+				json_object->map_array_strings[it_map_array_strings.first][i]="modified_string_"+std::to_string(k)+"_"+std::to_string(j);
+				j++;
+			}
+			k++;
+		}
+
+		std::cout << std::endl;
 		std::cout << "------------------------------------------------------------------------------" << std::endl;
 		std::cout << " After modifications:"<< std::endl;
 		std::cout << zetjsoncpp::serialize(json_object);

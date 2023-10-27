@@ -15,7 +15,7 @@ namespace zetjsoncpp{
 		}
 
 
-		ArrayStringJsonVar<> & operator=(const std::vector<std::string> & _vec_string){
+		ArrayStringJsonVar & operator=(const std::vector<std::string> & _vec_string){
 			copy(_vec_string);
 			return *this;
 		}
@@ -38,7 +38,7 @@ namespace zetjsoncpp{
 		}
 
 		void init() {
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_STRINGS;
+			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_ARRAY_OF_STRINGS;
 			this->__zj_size_data__ = sizeof(ArrayStringJsonVar< _T_NAME...>);
 		}
 

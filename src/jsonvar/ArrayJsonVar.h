@@ -1,8 +1,8 @@
 
 
-#define ZJ_FORMAT_OUTPUT_VECTOR_N_ELEMENTS			10
-#define ZJ_FORMAT_OUTPUT_NEW_LINE_VECTOR_ELEMENTS(str_out,ident,n_element) \
-	if (n_element != 0 && ((n_element%ZJ_FORMAT_OUTPUT_VECTOR_N_ELEMENTS) == 0)){\
+#define ZJ_FORMAT_OUTPUT_ARRAY_N_ELEMENTS			10
+#define ZJ_FORMAT_OUTPUT_NEW_LINE_ARRAY_ELEMENTS(str_out,ident,n_element) \
+	if (n_element != 0 && ((n_element%ZJ_FORMAT_OUTPUT_ARRAY_N_ELEMENTS) == 0)){\
 		str_out += "\n";\
 		for (int k = 0; k < (ident); k++){\
 			str_out += "\t";\
@@ -18,15 +18,15 @@ namespace zetjsoncpp{
 		std::vector<_T_DATA> __zj_vector_data__;
 	public:
 
-		typedef typename std::vector<_T_DATA>::iterator JsonVarIteratorVector;
+		typedef typename std::vector<_T_DATA>::iterator ArrayIteratorJsonVar;
 
 		ArrayJsonVar() {}
 
-		JsonVarIteratorVector begin(){
+		ArrayIteratorJsonVar begin(){
 			return __zj_vector_data__.begin();
 		}
 
-		JsonVarIteratorVector end(){
+		ArrayIteratorJsonVar end(){
 			return __zj_vector_data__.end();
 		}
 
@@ -65,6 +65,10 @@ namespace zetjsoncpp{
 
 		const std::vector<_T_DATA> & getStdVector() {
 			return __zj_vector_data__;
+		}
+
+		const std::vector<_T_DATA> * getStdVectorPtr() {
+			return &__zj_vector_data__;
 		}
 
 		virtual JsonVar * getJsonVarPtr(int index) {

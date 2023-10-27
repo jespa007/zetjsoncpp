@@ -62,7 +62,7 @@ namespace zetjsoncpp{
 		}
 
 		void init(){
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_VECTOR_OF_NUMBERS;
+			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_ARRAY_OF_NUMBERS;
 			this->__zj_size_data__ = sizeof(ArrayNumberJsonVar<_T_NAME...>);
 		}
 	};

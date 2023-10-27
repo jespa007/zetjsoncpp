@@ -1,6 +1,18 @@
 
 
 ----------------------------
+Date: 23/10/2023
+Version: 2.4.1
+
+- [x] Fix warning MapArrayStrings and put working example
+
+----------------------------
+Date: 23/10/2023
+Version: 2.4.0
+
+- [x] Implement MapArrayStrings
+
+----------------------------
 Date: 02/08/2023
 Version: 2.3.3
 

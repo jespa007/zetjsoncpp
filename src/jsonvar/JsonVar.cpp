@@ -21,11 +21,11 @@ namespace zetjsoncpp {
 		case JSON_VAR_TYPE_STRING: return "StringJsonVar";
 		case JSON_VAR_TYPE_OBJECT: return "ObjectJsonVar";
 
-		case JSON_VAR_TYPE_VECTOR_OF_BOOLEANS: return "ArrayBooleanJsonVar";
+		case JSON_VAR_TYPE_ARRAY_OF_BOOLEANS: return "ArrayBooleanJsonVar";
 			//case ARRAY_INT32_TYPE: return "ARRAY INT32 TYPE";
-		case JSON_VAR_TYPE_VECTOR_OF_NUMBERS: return "ArrayNumberJsonVar";
-		case JSON_VAR_TYPE_VECTOR_OF_STRINGS: return "ArrayStringJsonVar";
-		case JSON_VAR_TYPE_VECTOR_OF_OBJECTS: return "ArrayObjectJsonVar";
+		case JSON_VAR_TYPE_ARRAY_OF_NUMBERS: return "ArrayNumberJsonVar";
+		case JSON_VAR_TYPE_ARRAY_OF_STRINGS: return "ArrayStringJsonVar";
+		case JSON_VAR_TYPE_ARRAY_OF_OBJECTS: return "ArrayObjectJsonVar";
 
 		case JSON_VAR_TYPE_MAP_OF_BOOLEANS: return "MapBooleanJsonVar";
 		case JSON_VAR_TYPE_MAP_OF_NUMBERS: return "MapNumberJsonVar";
