@@ -15,7 +15,7 @@ namespace zetjsoncpp{
 		}
 
 
-		ArrayStringJsonVar<> & operator=(const std::vector<std::string> & _vec_string){
+		ArrayStringJsonVar & operator=(const std::vector<std::string> & _vec_string){
 			copy(_vec_string);
 			return *this;
 		}

@@ -205,9 +205,9 @@ A json object it could be the following
 }
 ```
 
-**List 2.1**
+**List 1.1 **
 
-Taking the example of list 2.1, in zetjsoncpp it defines json object using a structure in C as it shows below,
+Taking the example of list 1.1, in zetjsoncpp it defines json object using a structure in C as it shows below,
 
 ```cpp
 typedef struct{
@@ -217,12 +217,12 @@ typedef struct{
 }JsonSample;
 ```
 
-**List 2.2**
+**List 1.2**
 Note:
 
 You may noticed that of ZJ_CONST_CHAR(s). This is a trick to pass literal string through variadic templates char by char, due that templates doesn't accept pass literal strings (i.e const char *) as a parameter.
 
-An finally, to deserialize a json object, it is done through `ObjectJsonVar` passing the type of structure to deserialize it has seen in list 2.2,
+An finally, to deserialize a json object, it is done through `ObjectJsonVar` passing the type of structure to deserialize it has seen in list 1.2,
 
 ```cpp
 auto json_object=zetjsoncpp::deserialize<zetjsoncpp::ObjectJsonVar<JsonSample>>(
@@ -245,7 +245,8 @@ if(json_object->encoding.isDeserialized()){
 }
 ```
 
-List 3.4
+**List 1.3**
+
 By default, any no deserialized variable the strings are set empty, numbers and booleans will set as 0 and false respectively.
 
 ### Array of Objects
@@ -263,7 +264,7 @@ A json array of objects it could be the following,
 }]
 ```
 
-To deserialize a array of objects, it is done through `ArrayObjectJsonVar` passing the type of structure to deserialize it has seen in list 2.2,
+To deserialize a array of objects, it is done through `ArrayObjectJsonVar` passing the type of structure to deserialize it has seen in list 1.3,
 
 ```cpp
 zetjsoncpp::deserialize<zetjsoncpp::ArrayObjectJsonVar<JsonSample>>(
@@ -333,7 +334,7 @@ std::cout << zetjsoncpp::serialize(json_var); << std::enl;
 
 ## A big example
 
-Let's suppose it has a file called sample.json with the following content,
+Let's suppose it has a file called `sample.json` with the following content,
 
 ```javscript
 // Configuration options
@@ -401,9 +402,9 @@ Let's suppose it has a file called sample.json with the following content,
 }
 ```
 
-**List 3.1**
+**List 1.4**
 
-To load the code saw on list 1.1 we have to declare the following C estructure,
+To load the code saw on list 1.4 we have to declare the following C estructure,
 
 ```cpp
 #include "zetjsoncpp.h"
@@ -467,50 +468,16 @@ typedef struct
   MapObjectJsonVar<Interpolation,ZJ_CONST_CHAR("interpolations")>  interpolations;
 
 
+   // Map of array of strings
+   zetjsoncpp::MapArrayStringJsonVar<ZJ_CONST_CHAR("map_array_strings")>
+   map_array_strings;
+
 }SampleJson;
 ```
 
-**List 3.2**
+**List 1.5**
 
-And then we have to write the following code to load the data seen on list 1.1 into the estructure on list 1.2,
-
-```cpp
-try{
-    auto json_object=zetjsoncpp::deserialize_file<ObjectJsonVar<SampleJson>>("sample.json");
-
-    // the values before modifications.
-    std::cout << "---------------------------------------------------" << std::endl;
-    std::cout << " Before modifications:"<< std::endl;
-    std::cout << zetjsoncpp::serialize(json_object);
-
-    // From here we can operate with loaded data in our program using c++ operators
-    // put m_use_space to false...
-    json_object->indent.use_space = false;
-
-    // iterate of all plugins and replace with random strings...
-    for(unsigned i = 0; i < json_object->plugins.size(); i++) {
-      json_object->plugins[i] = "my_randomstring"+zetjsoncpp::String::integerToString(i+1);
-    }
-
-    // iterate of all interpolations and replace its data values...
-    for(auto it_map = json_object->interpolations.begin(); it_map != json_object->interpolations.end(); it_map++) {
-      for(auto it = it_map->second->data.begin(); it != it_map->second->data.end(); it++) {
-        *it = rand();
-      }
-    }
-
-    std::cout << "--------------------------------------------------" << std::endl;
-    std::cout << " After modifications:"<< std::endl;
-    std::cout << zetjsoncpp::serialize(json_object);
-
-    // destroy json_object
-    delete json_object;
-  }catch(std::exception & ex){
-   std::cerr << "Error:" << ex.what() << std::endl;
- }
-```
-
-As an example, we present a way to operate loaded json data into C++ code,
+The following code it shows and example of loading and operating the data that has seen on list 1.4 into the structure of the list 1.5,
 
 ```cpp
 int main(int argc, char *argv[]){
@@ -538,6 +505,18 @@ int main(int argc, char *argv[]){
                 *it = rand();
             }
         }
+        
+			// Modification of a map of array of strings...
+			int k=0;
+			for(auto it_map_array_strings : json_object->map_array_strings) {
+				int j=0;
+	
+				for(size_t i=0; i < json_object->map_array_strings[it_map_array_strings.first].size(); i++) {
+					json_object->map_array_strings[it_map_array_strings.first][i]="modified_string_"+std::to_string(k)+"_"+std::to_string(j);
+					j++;
+				}
+				k++;
+			}        
 
         std::cout << "--------------------------------------------------" << std::endl;
         std::cout << " After modifications:"<< std::endl;
@@ -557,121 +536,140 @@ After its execution the output shows the serialized json before and after the ch
 ---------------------------------------------------
  Before modifications:
 {
-    "encoding":"UTF-8",
-    "number":0.000033,
-    "plug-ins":
-    [
-        "python","c++","ruby"
-    ],
-    "indent":
-    {
-        "length":3.000000,
-        "use_space":true
-    },
-    "languages":
-    [{
-        "code":"en",
-        "general_texts":
-        {
-            "general.hello_word":"Hello world!"
-            ,"general.no":"No"
-            ,"general.yes":"Yes"
-        }
-    },{
-        "code":"es",
-        "general_texts":
-        {
-            "general.hello_word":"Hola mundo!"
-            ,"general.no":"No"
-            ,"general.yes":"Si"
-        }
-    },{
-        "code":"zh-CN",
-        "general_texts":
-        {
- 			"general.hello_word":"你好词"
-            ,"general.no":"没有"
-            ,"general.yes":"是"
-        }
-    }],
-    "interpolations":
-    {
-        "id_1":{
-            "type":"material",
-            "channels":"rgb",
-            "data":
-            [
-                0.000000,1.000000,0.000000,1000.000000,0.000000,0.000000,0.000000,0.000000
-            ]
-        }
-        ,"id_2":{
-            "type":"transform",
-            "channels":"xyz",
-            "data":
-            [
-                0.000000,1.000000,0.000000,1000.000000,0.000000,0.000000,0.000000,0.000000
-            ]
-        }
-    }
-}--------------------------------------------------
+	"encoding":"UTF-8"
+	,"number":0.000033
+	,"plug-ins":
+	[
+		"python","c++","ruby"
+	]
+	,"indent":
+	{
+		"length":3.000000
+		,"use_space":true
+	}
+	,"languages":
+	[{
+		"code":"en"
+		,"general_texts":
+		{
+			"general.hello_word":"Hello world!"
+			,"general.no":"No"
+			,"general.yes":"Yes"
+		}
+	},{
+		"code":"es"
+		,"general_texts":
+		{
+			"general.hello_word":"Hola mundo!"
+			,"general.no":"No"
+			,"general.yes":"Si"
+		}
+	},{
+		"code":"zh-CN"
+		,"general_texts":
+		{
+			"general.hello_word":"你好�?"
+			,"general.no":"没有"
+			,"general.yes":"是"
+		}
+	}]
+	,"interpolations":
+	{
+		"id_1":{
+			"type":"material"
+			,"channels":"rgb"
+			,"data":
+			[
+				0.000000,1.000000,0.000000,1000.000000,0.000000,0.000000,0.000000,0.000000
+			]
+		}
+		,"id_2":{
+			"type":"transform"
+			,"channels":"xyz"
+			,"data":
+			[
+				0.000000,1.000000,0.000000,1000.000000,0.000000,0.000000,0.000000,0.000000
+			]
+		}
+	}
+	,"map_array_strings":
+	{
+		"map_array_strings_1":[
+			"hello1","world1","!!"
+		]
+		,"map_array_strings_2":[
+			"hello2","world2","!!"
+		]
+	}
+}
+------------------------------------------------------------------------------
  After modifications:
 {
-    "encoding":"UTF-8",
-    "number":0.000033,
-    "plug-ins":
-    [
-        "my_randomstring1","my_randomstring2","my_randomstring3"
-    ],
-    "indent":
-    {
-        "length":3.000000,
-        "use_space":false
-    },
-    "languages":
-    [{
-        "code":"en",
-        "general_texts":
-        {
-            "general.hello_word":"Hello world!"
-            ,"general.no":"No"
-            ,"general.yes":"Yes"
-        }
-    },{
-        "code":"es",
-        "general_texts":
-        {
-            "general.hello_word":"Hola mundo!"
-            ,"general.no":"No"
-            ,"general.yes":"Si"
-        }
-    },{
-        "code":"zh-CN",
-        "general_texts":
-        {
- 			"general.hello_word":"你好词"
-            ,"general.no":"没有"
-            ,"general.yes":"是"
-        }
-    }],
-    "interpolations":
-    {
-        "id_1":{
-            "type":"material",
-            "channels":"rgb",
-            "data":
-            [
-                41.000000,18467.000000,6334.000000,26500.000000,19169.000000,15724.000000,11478.000000,29358.000000
-            ]
-        }
-        ,"id_2":{
-            "type":"transform",
-            "channels":"xyz",
-            "data":
-            [
-                26962.000000,24464.000000,5705.000000,28145.000000,23281.000000,16827.000000,9961.000000,491.000000
-            ]
-        }
-    }
+	"encoding":"UTF-8"
+	,"number":0.000033
+	,"plug-ins":
+	[
+		"my_randomstring1","my_randomstring2","my_randomstring3"
+	]
+	,"indent":
+	{
+		"length":3.000000
+		,"use_space":false
+	}
+	,"languages":
+	[{
+		"code":"en"
+		,"general_texts":
+		{
+			"general.hello_word":"Hello world!"
+			,"general.no":"No"
+			,"general.yes":"Yes"
+		}
+	},{
+		"code":"es"
+		,"general_texts":
+		{
+			"general.hello_word":"Hola mundo!"
+			,"general.no":"No"
+			,"general.yes":"Si"
+		}
+	},{
+		"code":"zh-CN"
+		,"general_texts":
+		{
+			"general.hello_word":"你好�?"
+			,"general.no":"没有"
+			,"general.yes":"是"
+		}
+	}]
+	,"interpolations":
+	{
+		"id_1":{
+			"type":"material"
+			,"channels":"rgb"
+			,"data":
+			[
+				18538.000000,12292.000000,6038.000000,24179.000000,18190.000000,29657.000000,7958.000000,6191.000000
+			]
+		}
+		,"id_2":{
+			"type":"transform"
+			,"channels":"xyz"
+			,"data":
+			[
+				19815.000000,22888.000000,19156.000000,11511.000000,16202.000000,2634.000000,24272.000000,20055.000000
+			]
+		}
+	}
+	,"map_array_strings":
+	{
+		"map_array_strings_1":[
+			"modified_string_0_0","modified_string_0_1","modified_string_0_2"
+		]
+		,"map_array_strings_2":[
+			"modified_string_1_0","modified_string_1_1","modified_string_1_2"
+		]
+	}
 }
 
 ```

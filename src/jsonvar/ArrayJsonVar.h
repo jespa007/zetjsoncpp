@@ -18,15 +18,15 @@ namespace zetjsoncpp{
 		std::vector<_T_DATA> __zj_vector_data__;
 	public:
 
-		typedef typename std::vector<_T_DATA>::iterator JsonVarIteratorVector;
+		typedef typename std::vector<_T_DATA>::iterator ArrayIteratorJsonVar;
 
 		ArrayJsonVar() {}
 
-		JsonVarIteratorVector begin(){
+		ArrayIteratorJsonVar begin(){
 			return __zj_vector_data__.begin();
 		}
 
-		JsonVarIteratorVector end(){
+		ArrayIteratorJsonVar end(){
 			return __zj_vector_data__.end();
 		}
 
@@ -65,6 +65,10 @@ namespace zetjsoncpp{
 
 		const std::vector<_T_DATA> & getStdVector() {
 			return __zj_vector_data__;
+		}
+
+		const std::vector<_T_DATA> * getStdVectorPtr() {
+			return &__zj_vector_data__;
 		}
 
 		virtual JsonVar * getJsonVarPtr(int index) {

@@ -30,7 +30,7 @@ typedef struct{
 	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("channels")>
 	channels;
 
-	// Vector of numbers data
+	// Array of numbers data
 	zetjsoncpp::ArrayNumberJsonVar<ZJ_CONST_CHAR("data")>
 	data;
 }Interpolation;
@@ -45,7 +45,7 @@ typedef struct
 	zetjsoncpp::NumberJsonVar<ZJ_CONST_CHAR("number")>
 	number;
 
-    // Vector of strings plug-ins
+    // Array of strings plug-ins
 	zetjsoncpp::ArrayStringJsonVar<ZJ_CONST_CHAR("plug-ins")>
 	plugins;
 
@@ -100,24 +100,19 @@ int main(int argc, char *argv[]){
 			}
 		}
 
-		// iterate of all map array string...
-		std::cout  << std::endl;
+		// Modification of a map of array of strings...
+		int k=0;
 		for(auto it_map_array_strings : json_object->map_array_strings) {
 			int j=0;
-			std::cout << "\"" << it_map_array_strings.first << "\": [ ";
 
-			for(auto it_array_strings : it_map_array_strings.second) {
-				if(j > 0){
-					std::cout << ",";
-				}
-				std::cout << (std::string)it_array_strings;
+			for(size_t i=0; i < json_object->map_array_strings[it_map_array_strings.first].size(); i++) {
+				json_object->map_array_strings[it_map_array_strings.first][i]="modified_string_"+std::to_string(k)+"_"+std::to_string(j);
 				j++;
 			}
-
-			std::cout  << "]" << std::endl;
+			k++;
 		}
-		std::cout  << std::endl;
 
+		std::cout << std::endl;
 		std::cout << "------------------------------------------------------------------------------" << std::endl;
 		std::cout << " After modifications:"<< std::endl;
 		std::cout << zetjsoncpp::serialize(json_object);

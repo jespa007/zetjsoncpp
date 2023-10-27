@@ -193,6 +193,7 @@ namespace zetjsoncpp{
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS:
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS:
 				case JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS:
+				case JsonVarType::JSON_VAR_TYPE_MAP_OF_ARRAY_OF_STRINGS:
 					if (_minimized==false){
 						_str_result += "\n";
 						for (int i = 0; i <= _ident; i++){
@@ -328,7 +329,16 @@ namespace zetjsoncpp{
 				,_discard_non_serialized
 			);
 			break;
+		case JSON_VAR_TYPE_MAP_OF_ARRAY_OF_STRINGS:
+			serialize_json_var_map<MapArrayStringJsonVar<>>(
+				_str_result
+				, (MapArrayStringJsonVar<> *)_json_var
+				,_ident,_minimized
+				,_discard_non_serialized
+			);
+			break;
 		}
+
 	}
 
 	std::string serialize(
