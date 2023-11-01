@@ -2,6 +2,12 @@
 
 ----------------------------
 Date: 1/11/2023
+Version: 2.4.3
+
+- [x] Fix compile on MAC
+
+----------------------------
+Date: 1/11/2023
 Version: 2.4.2
 
 - [x] Fix issue cmake on MAC

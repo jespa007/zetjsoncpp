@@ -20,6 +20,10 @@ cmake_minimum_required(VERSION 3.15)
  
 project(zetjsoncpp)
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(MACOSX TRUE)
+endif()
+
 IF( NOT CMAKE_BUILD_TYPE )
    SET( CMAKE_BUILD_TYPE Release )
 ENDIF()
@@ -96,8 +100,12 @@ if(MSVC)
 
 else()
 
-	SET( CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -D__STDC_CONSTANT_MACROS -std=gnu++0x -I -Wall -Wextra -pedantic -static-libstdc++ ")
+	SET( CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -D__STDC_CONSTANT_MACROS -std=gnu++0x -I -Wall -Wextra -pedantic ")
    
+	if(NOT MACOSX)
+		SET( CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -static-libstdc++ ")
+	endif()
+
 	if (MINGW)
 		MESSAGE("-- Plataform: MINGW" )
 	else()
