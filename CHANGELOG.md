@@ -1,68 +1,68 @@
 
 
 ----------------------------
-Date: 1/11/2023
+Date: 2023-11-03
 Version: 2.4.3
 
 - [x] Fix compile on MAC
 
 ----------------------------
-Date: 1/11/2023
+Date: 2023-11-01
 Version: 2.4.2
 
 - [x] Fix issue cmake on MAC
 
 ----------------------------
-Date: 23/10/2023
+Date: 2023-10-23
 Version: 2.4.1
 
 - [x] Fix warning MapArrayStrings and put working example
 
 ----------------------------
-Date: 23/10/2023
+Date: 2023-10-23
 Version: 2.4.0
 
 - [x] Implement MapArrayStrings
 
 ----------------------------
-Date: 02/08/2023
+Date: 2023-08-02
 Version: 2.3.3
 
 - [x] deserialize_exception : Save line and description
 
 ----------------------------
-Date: 02/08/2023
+Date: 2023-08-02
 Version: 2.3.2
 
 - [x] Change ArrayJsonVarNumber to ArrayNumberJsonVar
 
 ----------------------------
-Date: 6/07/2023
+Date: 2023-07-06
 Version: 2.3.1
 
 - [x] Fix include directory for linux
 
 ----------------------------
-Date: 8/06/2023
+Date: 2023-06-08
 Version: 2.3.0
 
 - [x] Refactory utils
 
 ----------------------------
-Date: 13/05/2023
+Date: 2023-05-13
 Version: 2.2.0
 
 - [x] Change name JsonVarXXXX -> XXXXJsonVar
 
 ----------------------------
-Date: 21/12/2022
+Date: 2022-12-21
 Version: 2.1.0
 
 - [x] Do not serialize unserialized fields in objects
 - [x] use -WSanitizer=Address in linux if memmgr directory not found
 
 ----------------------------
-Date: 01/07/2022
+Date: 2022-07-01
 Version: 2.0.4
 
 - [x] Compile with pedantic
@@ -71,27 +71,27 @@ Version: 2.0.4
 - [x] reorder dirs
 
 ----------------------------
-Date: 10/07/2021
+Date: 2021-07-10
 Version: 2.0.3
 
 - [x] Organize files
 - [x] Move src dir
 
 ----------------------------
-Date: 15/04/2021
+Date: 2021-04-15
 Version: 2.0.2
 
 - [x] Fix bug write exception message when filename is null (whn loads in mmeory)
 - [x] Improve error exception
 
 ----------------------------
-Date: 7/04/2021
+Date: 2021-04-07
 Version: 2.0.1
 
 - [x] Fix bug crash when cannot parse json value
 
 ----------------------------
-Date: 14/02/2021
+Date: 2021-02-14
 Version: 2.0.0
 
 Main features
@@ -121,7 +121,7 @@ Detail
 #18 Pre/Post name all variables associated with JsonVar 
 
 ----------------------------
-Date: 15/05/2018
+Date: 2018-05-15
 Version: 1.3.0
 
 - [x] Review version history to new format (MAJOR.MINOR.PATCH)
@@ -131,7 +131,7 @@ Version: 1.3.0
 - [x] improve cmake message prints 
 
 ----------------------------
-Date: 10/05/2018
+Date: 2018-05-10
 Version: 1.2.0
 
 - [x] MSVC Support (v141 Tools or MSVC++ 2015)
@@ -142,7 +142,7 @@ Version: 1.2.0
 - [x] Changed GPL3 license to MIT
 
 ----------------------------
-Date: 29/08/2015
+Date: 2015-08-29
 Version: 1.1.0
 
 - [x] Added feature support numbor as cientific notation (i.e 2.1E-10).
@@ -150,7 +150,7 @@ Version: 1.1.0
 - [x] Fixed carry return line feeds compatible for Windows
 
 ----------------------------
-Date: 08/08/2014
+Date: 2014-08-08
 Version: 1.0.0
 
 - [x] First version
