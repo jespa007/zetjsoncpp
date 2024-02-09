@@ -1,6 +1,6 @@
 #define TEST_STRING_OP(op)\
 printf("Testing ((%s"#op"%s) == (%s"#op"%s)) == ((%s"#op"%s)"#op"(%s"#op"%s))\n",\
-jvn1[i].c_str(),v2[i].c_str(),v1[i].c_str(),jvn2[i].c_str(),v1[i].c_str(),v2[i].c_str(),jvn1[i].c_str(),jvn2[i].c_str()\
+jvn1[i].toConstChar(),v2[i].c_str(),v1[i].c_str(),jvn2[i].toConstChar(),v1[i].c_str(),v2[i].c_str(),jvn1[i].toConstChar(),jvn2[i].toConstChar()\
 );\
 assert(\
 		(((jvn1[i]) op (v2[i])) == ((v1[i]) op (jvn2[i]))) == ((v1[i] op v2[i]) == ((jvn1[i]) op (jvn2[i])))\

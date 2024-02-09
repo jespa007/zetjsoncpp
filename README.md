@@ -482,51 +482,51 @@ The following code it shows and example of loading and operating the data that h
 ```cpp
 int main(int argc, char *argv[]){
 
-    try{
-        auto json_object=zetjsoncpp::deserialize_file<ObjectJsonVar<SampleJson>>("sample.json");
+	try{
+		auto json_object=zetjsoncpp::deserialize_file<ObjectJsonVar<SampleJson>>("sample.json");
+		
+		// the values before modifications.
+		std::cout << "---------------------------------------------------" << std::endl;
+		std::cout << " Before modifications:"<< std::endl;
+		std::cout << zetjsoncpp::serialize(json_object);
+		
+		// From here we can operate with loaded data in our program using c++ operators
+		// put m_use_space to false...
+		json_object->indent.use_space = false;
+		
+		// iterate of all plugins and replace with random strings...
+		for(unsigned i = 0; i < json_object->plugins.size(); i++) {
+			json_object->plugins[i] = "my_randomstring"+zetjsoncpp::String::integerToString(i+1);
+		}
 
-        // the values before modifications.
-        std::cout << "---------------------------------------------------" << std::endl;
-        std::cout << " Before modifications:"<< std::endl;
-        std::cout << zetjsoncpp::serialize(json_object);
-
-        // From here we can operate with loaded data in our program using c++ operators
-        // put m_use_space to false...
-        json_object->indent.use_space = false;
-
-        // iterate of all plugins and replace with random strings...
-        for(unsigned i = 0; i < json_object->plugins.size(); i++) {
-            json_object->plugins[i] = "my_randomstring"+zetjsoncpp::String::integerToString(i+1);
-        }
-
-        // iterate of all interpolations and replace its data values...
-        for(auto it_map = json_object->interpolations.begin(); it_map != json_object->interpolations.end(); it_map++) {
-            for(auto it = it_map->second->data.begin(); it != it_map->second->data.end(); it++) {
-                *it = rand();
-            }
-        }
+		// iterate of all interpolations and replace its data values...
+		for(auto it_map = json_object->interpolations.begin(); it_map != json_object->interpolations.end(); it_map++) {
+			for(auto it = it_map->second->data.begin(); it != it_map->second->data.end(); it++) {
+			    *it = rand();
+			}
+		}
         
-			// Modification of a map of array of strings...
-			int k=0;
-			for(auto it_map_array_strings : json_object->map_array_strings) {
-				int j=0;
+		// Modification of a map of array of strings...
+		int k=0;
+		for(auto it_map_array_strings : json_object->map_array_strings) {
+			int j=0;
+			
+			for(size_t i=0; i < json_object->map_array_strings[it_map_array_strings.first].size(); i++) {
+				json_object->map_array_strings[it_map_array_strings.first][i]="modified_string_"+std::to_string(k)+"_"+std::to_string(j);
+				j++;
+			}
+			k++;
+		}        
+
+		std::cout << "--------------------------------------------------" << std::endl;
+		std::cout << " After modifications:"<< std::endl;
+		std::cout << zetjsoncpp::serialize(json_object);
 	
-				for(size_t i=0; i < json_object->map_array_strings[it_map_array_strings.first].size(); i++) {
-					json_object->map_array_strings[it_map_array_strings.first][i]="modified_string_"+std::to_string(k)+"_"+std::to_string(j);
-					j++;
-				}
-				k++;
-			}        
-
-        std::cout << "--------------------------------------------------" << std::endl;
-        std::cout << " After modifications:"<< std::endl;
-        std::cout << zetjsoncpp::serialize(json_object);
-
-        // destroy json_object
-        delete json_object;
-  }catch(std::exception & ex){
-    std::cerr << "Error:" << ex.what() << std::endl;
-  }
+	    // destroy json_object
+	    delete json_object;
+	}catch(std::exception & ex){
+    	std::cerr << "Error:" << ex.what() << std::endl;
+	}
 }
 ```
 
@@ -568,7 +568,7 @@ After its execution the output shows the serialized json before and after the ch
 		"code":"zh-CN"
 		,"general_texts":
 		{
-			"general.hello_word":"你好�?"
+			"general.hello_word":"你好�?"
 			,"general.no":"没有"
 			,"general.yes":"是"
 		}
@@ -637,7 +637,7 @@ After its execution the output shows the serialized json before and after the ch
 		"code":"zh-CN"
 		,"general_texts":
 		{
-			"general.hello_word":"你好�?"
+			"general.hello_word":"你好�?"
 			,"general.no":"没有"
 			,"general.yes":"是"
 		}

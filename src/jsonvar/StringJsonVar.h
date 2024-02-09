@@ -22,7 +22,7 @@ namespace zetjsoncpp{
 
 		operator std::string(){return __zj_value__;}
 
-		const char *c_str(){
+		const char *toConstChar(){
 			return __zj_value__.c_str();
 		}
 

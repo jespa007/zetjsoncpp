@@ -1,6 +1,12 @@
 
 
 ----------------------------
+Date: 2024-02-08
+Version: 2.4.4
+
+- [x] Change StringJsonVar::c_str -> StringJsonVar::toConstChar
+
+----------------------------
 Date: 2023-11-03
 Version: 2.4.3
 
