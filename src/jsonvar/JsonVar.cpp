@@ -51,6 +51,7 @@ namespace zetjsoncpp {
 	}
 
 	JsonVar *JsonVar::newJsonVar(const std::string & key){
+		ZJ_UNUSUED_PARAM(key);
 		throw std::runtime_error("internal error: newJsonVar not implemented");
 	}
 

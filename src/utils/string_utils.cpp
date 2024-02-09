@@ -16,7 +16,7 @@ namespace zetjsoncpp{
 			char  _sformat_buffer[ZJ_MAX_STR_BUFFER] = { 0 };
 			va_list  ap;
 			va_start(ap,  input_text);
-			vsprintf(_sformat_buffer,  input_text,  ap);
+			vsnprintf(_sformat_buffer, ZJ_MAX_STR_BUFFER, input_text,  ap);
 			va_end(ap);
 
 			return std::string(_sformat_buffer);
@@ -72,7 +72,7 @@ namespace zetjsoncpp{
 		std::string floatToString(float number){
 
 			char buff[100];
-			sprintf(buff, "%f",number);
+			snprintf(buff,100, "%f",number);
 			std::string ss = buff;
 		   return ss;//return a string with the contents of the stream
 		}

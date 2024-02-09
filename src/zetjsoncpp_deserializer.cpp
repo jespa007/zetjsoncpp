@@ -6,10 +6,10 @@
 #include "zetjsoncpp.h"
 
 // Util to capture args by ...
-#define ZJ_CAPTURE_VARIABLE_ARGS(text_out, text_in)\
+#define ZJ_CAPTURE_VARIABLE_ARGS(text_out,text_out_length, text_in)\
 	{va_list  ap;\
 	va_start(ap,  text_in);\
-	vsprintf(text_out,  text_in,  ap);\
+	vsnprintf(text_out, text_out_length, text_in,  ap);\
 	va_end(ap);}
 
 
@@ -24,7 +24,7 @@ namespace zetjsoncpp{
 		char  where[1024]={0};
 		char  text[ZJ_MAX_C_STRING]={0};
 		char temp_buff[1024]={0};
-		ZJ_CAPTURE_VARIABLE_ARGS(text, string_text);
+		ZJ_CAPTURE_VARIABLE_ARGS(text,ZJ_MAX_C_STRING,string_text);
 		char *aux=(char *)str_current-1;
 		char captured[100]={0};
 		std::string filename="";

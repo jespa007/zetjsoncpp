@@ -4,6 +4,8 @@
  */
 #pragma once
 
+#define ZJ_EXCEPTION_MAX_ERROR_MESSAGE	4096
+
 namespace zetjsoncpp {
 
 	class deserialize_exception: public std::exception
@@ -11,7 +13,7 @@ namespace zetjsoncpp {
 		std::string	description;
 		int line;
 		std::string file;
-		char what_msg[4096];
+		char what_msg[ZJ_EXCEPTION_MAX_ERROR_MESSAGE];
 	public:
 
 		deserialize_exception(const char *  _file, int _line, const std::string & _description){
@@ -22,9 +24,9 @@ namespace zetjsoncpp {
 
 			if(_file != NULL  && *_file != 0){
 				file=_file;
-				sprintf(what_msg,"[file:%s line:%i] %s",_file, _line, (char *)description.c_str());
+				snprintf(what_msg,ZJ_EXCEPTION_MAX_ERROR_MESSAGE,"[file:%s line:%i] %s",_file, _line, (char *)description.c_str());
 			}else{
-				sprintf(what_msg,"[line:%i] %s",_line,(char *)description.c_str());
+				snprintf(what_msg,ZJ_EXCEPTION_MAX_ERROR_MESSAGE,"[line:%i] %s",_line,(char *)description.c_str());
 			}
 		}
 

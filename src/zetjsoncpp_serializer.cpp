@@ -208,6 +208,8 @@ namespace zetjsoncpp{
 						,_discard_non_serialized
 					);
 					break;
+				default:
+					break;
 				}
 
 				if (_minimized == false){
@@ -228,7 +230,7 @@ namespace zetjsoncpp{
 		_str_result += "}";
 
 		if (_minimized == false){
-			"\n";
+			_str_result += "\n";
 		}
 	}
 

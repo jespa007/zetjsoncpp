@@ -31,8 +31,9 @@ namespace zetjsoncpp{
 	private:
 		void copy(const std::vector<bool> & v){
 			this->__zj_vector_data__.clear();
-			for(auto it=v.begin(); it != v.end();it++){
-				this->__zj_vector_data__.push_back(*it);
+			for(size_t i=0;i<v.size();i++){
+				bool b=v[i];
+				this->__zj_vector_data__.push_back(b);
 			}
 		}
 
