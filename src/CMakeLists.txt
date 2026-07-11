@@ -55,7 +55,6 @@ MESSAGE("-- zetjsoncpp version ${ZETJSONCPP_VERSION_MAJOR}.${ZETJSONCPP_VERSION_
 set(ZETJSONCPP_LIB_NAME "zetjsoncpp-${ZETJSONCPP_VERSION_MAJOR}-${ZETJSONCPP_VERSION_MINOR}-${ZETJSONCPP_VERSION_PATCH}")
 
 
-
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #
 # MACRO UTILS
@@ -128,11 +127,44 @@ else()
 		
 		IF( EXISTS ${PROJECT_SOURCE_DIR}/../../memmgr )
 			message("-- Memmanager: ON")
-			SET( CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -D__MEMMANAGER__")
+			SET( CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -DUSE_MEMMGR")
 			include_directories (
-				${PROJECT_SOURCE_DIR}/../../memmgr
+				${PROJECT_SOURCE_DIR}/../../memmgr/src
 			)
-	   		set(ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS} ${PROJECT_SOURCE_DIR}/../../memmgr/memmgr.cpp)
+	   			   		
+	   		file(READ "${PROJECT_SOURCE_DIR}/../../memmgr/src/memmgr.h" memmgr_h)
+
+			string(REGEX MATCH "MEMMGR_VERSION_MAJOR([\t-\ ][0-9])*" _ ${memmgr_h})
+			string(STRIP "${CMAKE_MATCH_1}" MEMMGR_VERSION_MAJOR)
+			
+			string(REGEX MATCH "MEMMGR_VERSION_MINOR([\t-\ ][0-9])*" _ ${memmgr_h})
+			string(STRIP "${CMAKE_MATCH_1}" MEMMGR_VERSION_MINOR)
+			
+			string(REGEX MATCH "MEMMGR_VERSION_PATCH([\t-\ ][0-9])*" _ ${memmgr_h})
+			string(STRIP "${CMAKE_MATCH_1}" MEMMGR_VERSION_PATCH)
+			
+			set(MEMMGR_LIB_VERSION "${MEMMGR_VERSION_MAJOR}-${MEMMGR_VERSION_MINOR}-${MEMMGR_VERSION_PATCH}")
+			
+			MESSAGE("-- Memmgr version : ${MEMMGR_LIB_VERSION}" )
+						
+			find_library(
+			    MEMMGR_CPP_LIBRARY
+			    NAMES
+			        "memmgr-cpp-${MEMMGR_LIB_VERSION}${POST_NAME}"
+			    PATHS
+			        "${PROJECT_SOURCE_DIR}/../../memmgr/bin/gcc/${CMAKE_BUILD_TYPE}"
+			    REQUIRED
+			)
+			
+			#target_link_libraries(
+			#    your_application
+			#    PRIVATE
+			#    "${MEMMGR_CPP_LIBRARY}"
+			#)			
+	   		
+	   		SET(LIB_DEPS ${LIB_DEPS}
+	   			${MEMMGR_CPP_LIBRARY}
+	   		)
 	   	else()
 			if(UNIX)
 				if( NOT "${DIST}" STREQUAL "Alpine")
@@ -180,7 +212,6 @@ endif()
 # Library
 set( ZETJSONCPP_LIB_SRCS ${ZETJSONCPP_LIB_SRCS}
 
-	
 	utils/string_utils.cpp
 	utils/file_utils.cpp
 	utils/path_utils.cpp
@@ -198,10 +229,30 @@ if(BUILD_SHARED_LIBS)
 	set( LIBRARY_TYPE_CREATION "SHARED" )
 endif()
 
-message("-- Library type: " ${LIBRARY_TYPE_CREATION})
+#message("-- Library type: " ${LIBRARY_TYPE_CREATION})
+
+if(BUILD_SHARED_LIBS)
+	# Shared
+	add_library( ${ZETJSONCPP_LIB_NAME}${POST_NAME} SHARED ${ZETJSONCPP_LIB_SRCS} )
+	target_compile_definitions(${ZETJSONCPP_LIB_NAME}${POST_NAME} PRIVATE BUILD_SHARED_LIBS)
+	
+else()
+
+	# Static	
+	add_library( ${ZETJSONCPP_LIB_NAME}${POST_NAME} STATIC ${ZETJSONCPP_LIB_SRCS} )
+	target_compile_definitions(${ZETJSONCPP_LIB_NAME}${POST_NAME} PUBLIC BUILD_STATIC_LIBS)
+endif()
+
+target_link_libraries(
+	${ZETJSONCPP_LIB_NAME}${POST_NAME}
+	${LIB_DEPS}
+)	
+
+
 
 # json2cpplib
-add_library( ${ZETJSONCPP_LIB_NAME}${POST_NAME}  ${LIBRARY_TYPE_CREATION}  ${ZETJSONCPP_LIB_SRCS} )
+#add_library( ${ZETJSONCPP_LIB_NAME}${POST_NAME}  ${LIBRARY_TYPE_CREATION}  ${ZETJSONCPP_LIB_SRCS})
+#target_link_libraries(${ZETJSONCPP_LIB_NAME}${POST_NAME} ${LIB_DEPS})
 
 #JSON TEST executable
 set(JSON_TEST_SRCS ${PROJECT_SOURCE_DIR}/../test/test.cpp)

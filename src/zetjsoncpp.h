@@ -29,7 +29,7 @@
 #define ZETJSONCPP_VERSION_MINOR 4
 #define ZETJSONCPP_VERSION_PATCH 4
 
-#ifdef __MEMMANAGER__
+#ifdef USE_MEMMGR
 #include "memmgr.h"
 #endif
 
