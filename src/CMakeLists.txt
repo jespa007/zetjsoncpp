@@ -156,12 +156,7 @@ else()
 			    REQUIRED
 			)
 			
-			#target_link_libraries(
-			#    your_application
-			#    PRIVATE
-			#    "${MEMMGR_CPP_LIBRARY}"
-			#)			
-	   		
+   		
 	   		SET(LIB_DEPS ${LIB_DEPS}
 	   			${MEMMGR_CPP_LIBRARY}
 	   		)
