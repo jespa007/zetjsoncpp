@@ -150,7 +150,7 @@ else()
 			find_library(
 			    MEMMGR_CPP_LIBRARY
 			    NAMES
-			        "memmgr-cpp-${MEMMGR_LIB_VERSION}${POST_NAME}"
+			        "memmgr-${MEMMGR_LIB_VERSION}${POST_NAME}"
 			    PATHS
 			        "${PROJECT_SOURCE_DIR}/../../memmgr/bin/gcc/${CMAKE_BUILD_TYPE}"
 			    REQUIRED

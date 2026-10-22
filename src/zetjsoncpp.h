@@ -24,10 +24,12 @@
 #include <float.h>
 #include <limits.h>
 #include <math.h>
+#include <memory>
+#include <fstream>
 
 #define ZETJSONCPP_VERSION_MAJOR 2
-#define ZETJSONCPP_VERSION_MINOR 4
-#define ZETJSONCPP_VERSION_PATCH 4
+#define ZETJSONCPP_VERSION_MINOR 5
+#define ZETJSONCPP_VERSION_PATCH 0
 
 #ifdef USE_MEMMGR
 #include "memmgr.h"
@@ -47,16 +49,30 @@ namespace zetjsoncpp {
 
 
 		template <typename _T>
-		_T * deserialize(const std::string & expression);
+		std::unique_ptr<_T> deserialize(const std::string & expression);
 
 		template <typename _T>
-		_T * deserialize_file(const std::string & _filename);
+		std::unique_ptr<_T> deserialize_file(const std::string & _filename);
 
 		std::string serialize(
 			JsonVar *_json_var
-			, bool _minimized=false
-			, bool _discard_non_serialized=true
+			, bool _minimized = false
+			, bool _discard_non_serialized = true
 		);
+
+		std::string serialize(
+			JsonVar & _json_var
+			, bool _minimized = false
+			, bool _discard_non_serialized = true
+		);
+
+		// overload for unique_ptr
+	    template<typename _T>
+	    std::string serialize(
+	        const std::unique_ptr<_T> &_json_var
+	        ,bool _minimized = false
+	        ,bool _discard_non_serialized = false
+	    );
 
 }
 

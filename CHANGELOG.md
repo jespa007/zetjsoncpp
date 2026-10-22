@@ -1,6 +1,12 @@
 
 
 ----------------------------
+Date: XXXX-XX-XX
+Version: 2.5.0
+
+- [x] Automatic delete through unique_ptr from deserialize object
+
+----------------------------
 Date: 2024-02-08
 Version: 2.4.4
 

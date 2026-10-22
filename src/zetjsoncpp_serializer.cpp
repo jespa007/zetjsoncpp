@@ -344,7 +344,7 @@ namespace zetjsoncpp{
 	}
 
 	std::string serialize(
-			JsonVar *_json_var
+			JsonVar *  _json_var
 			,bool _minimized
 			,bool _discard_non_serialized
 	){
@@ -359,6 +359,18 @@ namespace zetjsoncpp{
 		);
 
 		return serialized_var;
+	}
+
+	std::string serialize(
+		JsonVar & _json_var
+		, bool _minimized
+		, bool _discard_non_serialized
+	){
+	    return serialize(
+	        &_json_var
+	        ,_minimized
+	        ,_discard_non_serialized
+	    );
 	}
 
 

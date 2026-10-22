@@ -56,55 +56,66 @@ namespace zetjsoncpp{
 	char * deserialize_json_var(DeserializeData *deserialize_data, const char * str_current, int & line,JsonVar *json_var);
 
 	template <typename _T>
-	_T * deserialize(const std::string & expression) {
+	std::unique_ptr<_T>  deserialize(const std::string & expression) {
 
 		int line=-1;
-		_T *json_var=new _T;
+		auto json_var = std::unique_ptr<_T>(new _T);
 
-		try{
-			DeserializeData deserialize_data;
-			deserialize_data.filename=NULL;
-			deserialize_data.str_start=expression.c_str();
-			deserialize_json_var(&deserialize_data,expression.c_str(),line, json_var);
-		}catch(deserialize_exception & err){
-			delete json_var;
-			json_var=NULL;
-			throw err;
-		}
+		DeserializeData deserialize_data;
+		deserialize_data.filename=NULL;
+		deserialize_data.str_start = expression.c_str();
+		deserialize_json_var(&deserialize_data,expression.c_str(),line, json_var.get());
 		return json_var;
 	}
 
 	template <typename _T>
-	_T * deserialize_file(const std::string & _filename) {
-		//_T * json_element;
-		std::string filename = _filename.c_str();
-		_T *json_var=NULL;
-		int line=1;
+	std::unique_ptr<_T> deserialize_file(
+		const std::string &_filename
+	) {
 
-		char *buf = file_utils::read(filename);
-		if (buf != NULL) {
-			try{
-				json_var=new _T;
-				char *aux_p=buf;
-				uint8_t bom_signature[]={0xef,0xbb,0xbf};
-				DeserializeData deserialize_data;
-				if(memcmp(aux_p,bom_signature,sizeof(bom_signature))==0){ // ignore BOM signature
-					aux_p+=sizeof(bom_signature);
-				}
+	    std::string expression = file_utils::read_text(_filename);
 
-				deserialize_data.filename=_filename.c_str();
-				deserialize_data.str_start=aux_p;
+	    int line = 1;
 
-				deserialize_json_var(&deserialize_data,aux_p,line,json_var);
-			}
-			catch(deserialize_exception & err){
-				delete json_var;
-				free(buf);
-				throw err;
-			}
-			free(buf);
-		}
-		return json_var;
+	    const char *aux_p = expression.c_str();
+
+	    // Ignore UTF-8 BOM
+	    const unsigned char bom_signature[] = {0xef, 0xbb, 0xbf};
+
+	    if( expression.size() >= sizeof(bom_signature)
+	        && memcmp(aux_p, bom_signature, sizeof(bom_signature)) == 0
+		) {
+	        aux_p += sizeof(bom_signature);
+	    }
+
+	    DeserializeData deserialize_data;
+	    deserialize_data.filename = _filename.c_str();
+	    deserialize_data.str_start = aux_p;
+
+	    auto json_var = std::unique_ptr<_T>(new _T);
+
+	    deserialize_json_var(
+	        &deserialize_data
+	        ,aux_p
+	        ,line
+	        ,json_var.get()
+	    );
+
+	    return json_var;
 	}
+
+    // overload for unique_ptr
+    template<typename _T>
+    std::string serialize(
+        const std::unique_ptr<_T> &_json_var
+		, bool _minimized
+		, bool _discard_non_serialized
+    ) {
+        return serialize(
+            _json_var.get()
+            ,_minimized
+            ,_discard_non_serialized
+        );
+    }
 }
 

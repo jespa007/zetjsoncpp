@@ -52,7 +52,7 @@ int main(int argc, char *argv[]){
 		std::cout <<zetjsoncpp::string_utils::format("s1=%s s2=%s s3=%s"
 				,zetjsoncpp::serialize(s1).c_str()
 				,zetjsoncpp::serialize(s2).c_str()
-				,zetjsoncpp::serialize(&s3).c_str())<< std::endl;
+				,zetjsoncpp::serialize(s3).c_str())<< std::endl;
 
 		auto b1=zetjsoncpp::deserialize<zetjsoncpp::BooleanJsonVar<>>("true");
 		auto b2=zetjsoncpp::deserialize<zetjsoncpp::BooleanJsonVar<>>("false");
@@ -113,28 +113,6 @@ int main(int argc, char *argv[]){
 		"}");
 		std::cout <<"m4="<<zetjsoncpp::serialize(m4)<< std::endl;
 
-		// destroy json_object
-		delete n1;
-		delete n2;
-
-		delete s1;
-		delete s2;
-
-		delete b1;
-		delete b2;
-
-		delete o1;
-
-		delete v1;
-		delete v2;
-		delete v3;
-		delete v4;
-
-		delete m1;
-		delete m2;
-		delete m3;
-		delete m4;
-
 		test_json_var_number();
 		test_json_var_boolean();
 		test_json_var_string();
@@ -145,6 +123,4 @@ int main(int argc, char *argv[]){
 
     // that's all :)
     return 0;
-
-
 }

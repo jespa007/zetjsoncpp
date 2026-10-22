@@ -117,9 +117,6 @@ int main(int argc, char *argv[]){
 		std::cout << " After modifications:"<< std::endl;
 		std::cout << zetjsoncpp::serialize(json_object);
 
-		// destroy json_object
-		delete json_object;
-
 	}catch(std::exception & ex){
     	fprintf(stderr, "%s\n",ex.what());
     }

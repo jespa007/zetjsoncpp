@@ -18,48 +18,33 @@ namespace zetjsoncpp
 
 		}
 
-		char * read(const std::string & filename, bool end_string_char){
+		std::string read_text(const std::string &_filename) {
 
-			int  file_length, readed_elements;
-				FILE  *fp;
-				int with_end_char=0;
+		    std::ifstream file(_filename, std::ios::binary | std::ios::ate);
 
-				if(end_string_char){
-					with_end_char=1;
-				}
+		    if(!file.is_open()) {
+		        throw std::runtime_error("Cannot open file \"" + _filename + "\"");
+		    }
 
-				if((fp  =  fopen(filename.c_str(),"rb"))  !=  NULL)
-				{
-					if((file_length = length(filename)) != -1) {
+		    std::streampos file_length = file.tellg();
 
+		    if(file_length < 0) {
+		        throw std::runtime_error("Cannot get file size \"" + _filename + "\"");
+		    }
 
-						char *buffer = (char *)malloc (file_length+with_end_char);
-						memset(buffer,0,file_length+with_end_char );
-						readed_elements = fread(buffer, 1, file_length, fp);
+		    std::string result(static_cast<size_t>(file_length), '\0');
 
-						if(readed_elements != file_length) {
-							//fprintf(stderr,"number elements doesn't match with length file (%s)\n",filename.c_str());
-							free(buffer);
+		    file.seekg(0, std::ios::beg);
 
-							throw std::runtime_error("number elements doesn't match with length file ("+filename+")");
+		    if(!result.empty()) {
+		        file.read(&result[0], static_cast<std::streamsize>(result.size()));
 
-						}
+		        if(!file) {
+		            throw std::runtime_error("Cannot read file \"" + _filename + "\"");
+		        }
+		    }
 
-						//ByteBuffer *ch = new ByteBuffer(buffer, file_length+with_end_char);
-
-						//delete [] buffer;
-
-						fclose(fp);
-
-						return buffer;
-					}
-					else  throw std::runtime_error("I can't read file \""+filename+"\"");
-				}
-				else  throw std::runtime_error("I can't open file \""+filename+"\"");
-
-
-
-				return NULL;
+		    return result;
 		}
 
 
