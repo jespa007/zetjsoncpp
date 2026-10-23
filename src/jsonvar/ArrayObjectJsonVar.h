@@ -1,11 +1,12 @@
 namespace zetjsoncpp{
 
-	template<typename _T_DATA, char... _T_NAME>
-	class ArrayObjectJsonVar : public NamedJsonVar<_T_NAME...>, public ArrayJsonVar<ObjectJsonVar<_T_DATA> * > {
+	template<typename _T_DATA>
+	class ArrayObjectJsonVar : public NamedJsonVar, public ArrayJsonVar<ObjectJsonVar<_T_DATA> * > {
 
 	public:
 
-		ArrayObjectJsonVar() {
+		ArrayObjectJsonVar(const char * _name = "")
+		:NamedJsonVar(_name){
 			init();
 		}
 
@@ -57,7 +58,7 @@ namespace zetjsoncpp{
 
 		void init(){
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_ARRAY_OF_OBJECTS;
-			this->__zj_size_data__ = sizeof(ArrayObjectJsonVar<_T_DATA, _T_NAME...>);
+			this->__zj_size_data__ = sizeof(ArrayObjectJsonVar<_T_DATA>);
 		}
 	};
 }

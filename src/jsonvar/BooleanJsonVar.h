@@ -1,7 +1,6 @@
 namespace zetjsoncpp{
 
-	template<char... _T_NAME>
-	class BooleanJsonVar : public NamedJsonVar<_T_NAME ...>{
+	class BooleanJsonVar : public NamedJsonVar{
 
 	public:
 
@@ -12,7 +11,8 @@ namespace zetjsoncpp{
 			throw ("Cannot parse string to boolean.");
 		}
 
-		BooleanJsonVar() {
+		BooleanJsonVar(const char * _name ="")
+		:NamedJsonVar(_name){
 			init();
 		}
 
@@ -91,7 +91,6 @@ namespace zetjsoncpp{
 		}
 
 
-
 		virtual ~BooleanJsonVar(){}
 
 	private:
@@ -101,7 +100,7 @@ namespace zetjsoncpp{
 		void init() {
 			__zj_value__=false;
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_BOOLEAN;
-			this->__zj_size_data__ = sizeof(BooleanJsonVar<_T_NAME...>);
+			this->__zj_size_data__ = sizeof(BooleanJsonVar);
 		}
 
 	};

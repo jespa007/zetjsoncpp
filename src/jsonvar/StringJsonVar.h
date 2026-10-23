@@ -1,19 +1,20 @@
 namespace zetjsoncpp{
 
-	template<char... _T_NAME>
-	class StringJsonVar : public NamedJsonVar<_T_NAME... >{
+	class StringJsonVar : public NamedJsonVar{
 	public:
 
-		StringJsonVar() {
+		StringJsonVar(const char * _name = "") {
 			init();
+			this->setVariableName(_name);
 		}
 
-		StringJsonVar(const std::string & s) {
+		StringJsonVar(const std::string & _value){
 			init();
-			__zj_value__ = s;
+			__zj_value__ = _value;
 		}
 
-		StringJsonVar(const StringJsonVar & _value) {
+		StringJsonVar(const StringJsonVar & _value)
+		:NamedJsonVar(_value.getVariableNameCStr()){
 			init();
 			copy(_value);
 		}
@@ -24,6 +25,14 @@ namespace zetjsoncpp{
 
 		const char *toConstChar(){
 			return __zj_value__.c_str();
+		}
+
+		const std::string& getValue() const{
+			return __zj_value__;
+		}
+
+		void setValue(const std::string& _value){
+			this->__zj_value__ = _value;
 		}
 
 		StringJsonVar & operator =(const std::string & _value){
@@ -77,7 +86,7 @@ namespace zetjsoncpp{
 
 		virtual void init() {
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_STRING;
-			this->__zj_size_data__ = sizeof(StringJsonVar<_T_NAME...>);
+			this->__zj_size_data__ = sizeof(StringJsonVar);
 		}
 
 		void copy(const StringJsonVar & _value){

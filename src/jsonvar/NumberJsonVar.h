@@ -1,7 +1,7 @@
 namespace zetjsoncpp{
 
-	template<char... _T_NAME>
-	class NumberJsonVar : public NamedJsonVar<_T_NAME ...>{
+
+	class NumberJsonVar : public NamedJsonVar{
 	public:
 
 			static float parse(const std::string & str ){
@@ -13,7 +13,8 @@ namespace zetjsoncpp{
 				return f;
 			}
 
-			NumberJsonVar() {
+			NumberJsonVar(const char *_name = "")
+			:NamedJsonVar(_name){
 				init();
 			}
 
@@ -119,7 +120,7 @@ namespace zetjsoncpp{
 			// %
 			NumberJsonVar   operator %  (const NumberJsonVar & n) {
 
-				if(n.m_numVar ==0)
+				if(n.__zj_value__ ==0)
 					throw ("Error divide by 0");
 
 				return NumberJsonVar(fmod(__zj_value__ , n.__zj_value__));
@@ -248,7 +249,7 @@ namespace zetjsoncpp{
 			}
 			//--- -=
 			NumberJsonVar & operator -= (const NumberJsonVar & n){
-				__zj_value__ -= n.m_numVar;
+				__zj_value__ -= n.__zj_value__;
 				return (*this);
 			}
 
@@ -275,7 +276,7 @@ namespace zetjsoncpp{
 		void init() {
 			__zj_value__ = 0;
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_NUMBER;
-			this->__zj_size_data__ = sizeof(NumberJsonVar<_T_NAME...>);
+			this->__zj_size_data__ = sizeof(NumberJsonVar);
 		}
 
 

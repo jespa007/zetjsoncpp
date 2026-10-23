@@ -81,8 +81,8 @@
 #define ZJ_CAST_JSON_VAR_MAP_OF_OBJECTS 		(zetjsoncpp::MapObjectJsonVar<> *)
 #define ZJ_CAST_JSON_VAR_MAP_ARRAY_OF_STRING	(zetjsoncpp::MapArrayStringJsonVar<> *)
 
-#define ZJ_VAR_BOOLEAN(name) zetjsoncpp::BooleanJsonVar<ZJ_CONST_CHAR(#name)>								name
-#define ZJ_VAR_NUMBER(name) zetjsoncpp::NumberJsonVar<ZJ_CONST_CHAR(#name)>									name
+#define ZJ_VAR_BOOLEAN(name) zetjsoncpp::BooleanJsonVar														name{#name}
+#define ZJ_VAR_NUMBER(name) zetjsoncpp::NumberJsonVar														name{#name}
 #define ZJ_VAR_STRING(name) zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR(#name)>									name
 #define ZJ_VAR_OBJECT(type,name) zetjsoncpp::ObjectJsonVar<type,ZJ_CONST_CHAR(#name)>						name
 
@@ -146,7 +146,9 @@ namespace zetjsoncpp {
 		void * getPtrDataEnd(){return __zj_ptr_data_end__;}
 		size_t  getSizeData(){return __zj_size_data__;}
 		JsonVarType getType(){return __zj_type__;}
-		std::string getVariableName(){return __zj_variable_name__;}
+		std::string getVariableName() const {return __zj_variable_name__;}
+		const char * getVariableNameCStr() const {return __zj_variable_name__;}
+		void setVariableName(const char * _name){ __zj_variable_name__ = _name;}
 
 		void setParsed(bool parsed);
 		void setFileLineDebug(const char *__file__, int __line__);
@@ -157,7 +159,7 @@ namespace zetjsoncpp {
 		bool __zj_is_parsed__;
 		JsonVarType __zj_type__;
 		size_t __zj_size_data__;
-		char  __zj_variable_name__[ZJ_MAX_CONST_CHAR+1];
+		const char *__zj_variable_name__;
 		void 	     *__zj_ptr_data_start__; // can be int, bool, vector, prop_grp, etc ...
 		JsonVar *__zj_ptr_data_end__;
 	};

@@ -1,11 +1,11 @@
 namespace zetjsoncpp{
 
-	template<char... _T_NAME>
-	class MapBooleanJsonVar: public NamedJsonVar<_T_NAME...>, public MapJsonVar<BooleanJsonVar<>> {
+	class MapBooleanJsonVar: public NamedJsonVar, public MapJsonVar<BooleanJsonVar> {
 
 	public:
 
-		MapBooleanJsonVar() {
+		MapBooleanJsonVar(const char * _name ="")
+		:NamedJsonVar(_name){
 			init();
 		}
 
@@ -18,7 +18,7 @@ namespace zetjsoncpp{
 			if(this->__zj_map_data__.count(key_id) != 0){
 				throw std::runtime_error(string_utils::format("property name \"%s\" already exists",key_id.c_str()));
 			}
-			this->__zj_map_data__[key_id]=BooleanJsonVar<>();
+			this->__zj_map_data__[key_id] = BooleanJsonVar();
 
 			return &this->__zj_map_data__[key_id];
 		}
@@ -36,7 +36,7 @@ namespace zetjsoncpp{
 
 		void init(){
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS;
-			this->__zj_size_data__ = sizeof(MapBooleanJsonVar< _T_NAME...>);
+			this->__zj_size_data__ = sizeof(MapBooleanJsonVar);
 		}
 	};
 }

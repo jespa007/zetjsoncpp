@@ -1,11 +1,11 @@
 namespace zetjsoncpp{
 
 	// ARRAY STRING
-	template<char... _T_NAME>
-	class ArrayStringJsonVar : public NamedJsonVar<_T_NAME...>, public ArrayJsonVar<StringJsonVar<>> {
+	class ArrayStringJsonVar : public NamedJsonVar, public ArrayJsonVar<StringJsonVar> {
 	public:
 		//_T_NAME name;
-		ArrayStringJsonVar() {
+		ArrayStringJsonVar(const char * _name = "")
+		:NamedJsonVar(_name){
 			init();
 		}
 
@@ -21,7 +21,7 @@ namespace zetjsoncpp{
 		}
 
 		virtual JsonVar *newJsonVar(){
-			this->__zj_vector_data__.push_back(StringJsonVar<>());
+			this->__zj_vector_data__.push_back(StringJsonVar());
 
 			return &this->__zj_vector_data__[this->__zj_vector_data__.size()-1];
 		}
@@ -39,7 +39,7 @@ namespace zetjsoncpp{
 
 		void init() {
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_ARRAY_OF_STRINGS;
-			this->__zj_size_data__ = sizeof(ArrayStringJsonVar< _T_NAME...>);
+			this->__zj_size_data__ = sizeof(ArrayStringJsonVar);
 		}
 
 

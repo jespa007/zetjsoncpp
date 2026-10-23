@@ -2,8 +2,8 @@ namespace zetjsoncpp{
 
 	//----------------------------------------------------------------
 	// DON'T DEFINE ANY VARIABLE ON ObjectJsonVar CLASS !!!!
-	template<typename _T_DATA, char... _T_NAME>
-	class ObjectJsonVar : public NamedJsonVar< _T_NAME...>, public _T_DATA {
+	template<typename _T_DATA>
+	class ObjectJsonVar : public NamedJsonVar, public _T_DATA {
 	protected:
 		//----------------------------------------------------------------
 		// DON'T DEFINE ANY VARIABLE UP __zj_var_end__ !!!!
@@ -12,13 +12,15 @@ namespace zetjsoncpp{
 		//----------------------------------------------------------------
 	public:
 		//----------------------------------------------------------------
-		ObjectJsonVar(...) {
-			init();
-		}
+	    ObjectJsonVar(const char *_name = "")
+	        : NamedJsonVar(_name) {
+	        init();
+	    }
 
-		ObjectJsonVar(uint32_t numParam,...) {
-			init(numParam);
-		}
+	    ObjectJsonVar(uint32_t _num_param, ...)
+	        : NamedJsonVar() {
+	        init(_num_param);
+	    }
 
 
 		virtual ~ObjectJsonVar(){};
@@ -28,7 +30,7 @@ namespace zetjsoncpp{
 			// PRE: All arguments must be std::string. The program can parse the appropiate type variable
 			// with its emmbedded type.
 			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_OBJECT;
-			this->__zj_size_data__ = sizeof(ObjectJsonVar<_T_DATA,_T_NAME...>);
+			this->__zj_size_data__ = sizeof(ObjectJsonVar<_T_DATA>);
 
 			JsonVar *ptr = ((JsonVar *)&this->__zj_var_ini__ + 1);
 			this->__zj_ptr_data_start__ = ptr;
