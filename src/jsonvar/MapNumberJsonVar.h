@@ -1,16 +1,15 @@
 namespace zetjsoncpp{
 
-	class MapNumberJsonVar: public NamedJsonVar, public MapJsonVar<NumberJsonVar> {
+	class MapNumberJsonVar: public JsonVar, public MapJsonVar<NumberJsonVar> {
 
 	public:
 
-		MapNumberJsonVar(const char * _name = "")
-		:NamedJsonVar(_name){
-			init();
+		explicit MapNumberJsonVar(const char * _name = "")
+		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS
+		) {
 		}
 
 		MapNumberJsonVar(const std::map<std::string,float> & _map_numbers) {
-			init();
 			copy(_map_numbers);
 		}
 
@@ -39,11 +38,6 @@ namespace zetjsoncpp{
 			for(auto it=m.begin(); it != m.end();it++){
 				this->__zj_map_data__[it->first]=it->second;
 			}
-		}
-
-		void init(){
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS;
-			this->__zj_size_data__ = sizeof(MapNumberJsonVar);
 		}
 
 	};

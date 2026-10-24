@@ -1,9 +1,6 @@
 namespace zetjsoncpp{
-
-
-	class NumberJsonVar : public NamedJsonVar{
+	class NumberJsonVar : public JsonVar{
 	public:
-
 			static float parse(const std::string & str ){
 				float f=0;
 				if(string_utils::stringToFloat(&f,str)!=string_utils::STR_2_NUMBER_SUCCESS){
@@ -13,272 +10,45 @@ namespace zetjsoncpp{
 				return f;
 			}
 
-			NumberJsonVar(const char *_name = "")
-			:NamedJsonVar(_name){
-				init();
+			explicit NumberJsonVar(const char *_name = "")
+			:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_NUMBER) {
 			}
 
 			 NumberJsonVar(float f) {
-				init();
-				this->__zj_value__ = f;
+				this->_value = f;
 			}
 
 			 NumberJsonVar(const std::string & s) {
-				init();
-				this->__zj_value__ = parse(s);
-			}
-
-			//-----
-			// pre neg
-			NumberJsonVar   operator -  (){
-				return NumberJsonVar(-__zj_value__);
+				this->_value = parse(s);
 			}
 
 
-			 virtual void * getPtrValue(){ return &__zj_value__;}
-
-
-
-			// operators
+			// assign
 			NumberJsonVar & operator=(float _value){
-				__zj_value__=_value;
+				this->_value = _value;
 				return *this;
 			}
 
 			NumberJsonVar & operator=(const NumberJsonVar & _n){
-				__zj_value__=_n.__zj_value__;
+				_value=_n._value;
 				return *this;
 			}
 
-			operator float(){
-				return this->__zj_value__;
+			float getValue() const{
+				return this->_value;
 			}
 
-			//-----
-			// +
-			NumberJsonVar   operator +  (const NumberJsonVar & n) {
-				return (__zj_value__ + n.__zj_value__);
+			void setValue(float _value){
+				this->_value = _value;
 			}
 
-			NumberJsonVar   operator +  (float n)  {
-				return NumberJsonVar(__zj_value__ + n);
-			}
+			virtual void * getPtrValue(){ return &this->_value;}
 
-			NumberJsonVar   operator +  (int n)  {
-				return NumberJsonVar(__zj_value__ + n);
-			}
-			//-----
-			// -
-			NumberJsonVar   operator -  (const NumberJsonVar & n) {
-				return (__zj_value__ - n.__zj_value__);
-			}
-
-			NumberJsonVar   operator -  (float n)  {
-				return NumberJsonVar(__zj_value__ - n);
-			}
-
-			NumberJsonVar   operator -  (int n)  {
-				return NumberJsonVar(__zj_value__ - n);
-			}
-			//-----
-			// *
-			NumberJsonVar   operator *  (const NumberJsonVar & n) {
-				return NumberJsonVar(__zj_value__ * n.__zj_value__);
-			}
-			NumberJsonVar   operator *  (float  n) {
-				return NumberJsonVar(__zj_value__ * n);
-			}
-			NumberJsonVar   operator *  (int  n) {
-				return NumberJsonVar(__zj_value__ * n);
-			}
-			//-----
-			// /
-			NumberJsonVar   operator /  (const NumberJsonVar & n) {
-
-				if(n.__zj_value__ ==0)
-					throw ("Error divide by 0");
-
-				return NumberJsonVar(__zj_value__ / n.__zj_value__);
-			}
-
-			NumberJsonVar   operator /  (float  n) {
-
-				if(n ==0)
-					throw ("Error divide by 0");
-
-				return NumberJsonVar(__zj_value__ / n);
-			}
-
-			NumberJsonVar   operator /  (int  n) {
-
-				if(n ==0)
-					throw ("Error divide by 0");
-
-				return NumberJsonVar(__zj_value__ / n);
-			}
-			//-----
-			// %
-			NumberJsonVar   operator %  (const NumberJsonVar & n) {
-
-				if(n.__zj_value__ ==0)
-					throw ("Error divide by 0");
-
-				return NumberJsonVar(fmod(__zj_value__ , n.__zj_value__));
-			}
-
-			NumberJsonVar   operator %  (float  n) {
-
-				if(n ==0)
-					throw ("Error divide by 0");
-
-				return NumberJsonVar(fmod(__zj_value__, n));
-			}
-
-			NumberJsonVar   operator %  (int  n) {
-
-				if(n ==0)
-					throw ("Error divide by 0");
-
-				return NumberJsonVar(fmod(__zj_value__ , n));
-			}
-			//-----
-			// !=
-			bool 	  operator == (const NumberJsonVar & n){
-				return __zj_value__ == n.__zj_value__;
-			}
-			bool 	  operator == (float n){
-				return __zj_value__ == n;
-			}
-			bool 	  operator == (int n){
-				return __zj_value__ == n;
-			}
-			//-----
-			// !=
-			bool 	  operator != (const NumberJsonVar & n){
-				return __zj_value__ != n.__zj_value__;
-			}
-			bool 	  operator != (float n){
-				return __zj_value__ != n;
-			}
-			bool 	  operator != (int n){
-				return __zj_value__ != n;
-			}
-			//-----
-			// !=
-			bool 	  operator <  (const NumberJsonVar & n){
-				return __zj_value__ < n.__zj_value__;
-			}
-			bool 	  operator <  (float n){
-				return __zj_value__ < n;
-			}
-			bool 	  operator <  (int n){
-				return __zj_value__ < n;
-			}
-			//-----
-			// <=
-			bool 	  operator <= (const NumberJsonVar & n){
-				return __zj_value__ <= n.__zj_value__;
-			}
-			bool 	  operator <= (float n){
-				return __zj_value__ <= n;
-			}
-			bool 	  operator <= (int n){
-				return __zj_value__ <= n;
-			}
-
-			//-----
-			// >
-			bool 	  operator >  (const NumberJsonVar & n){
-				return __zj_value__ > n.__zj_value__;
-			}
-			bool 	  operator >  (float n){
-				return __zj_value__ > n;
-			}
-			bool 	  operator >  (int n){
-				return __zj_value__ > n;
-			}
-			//-----
-			// >=
-			bool	operator >= (const NumberJsonVar & n){
-				return __zj_value__ >= n.__zj_value__;
-			}
-			bool 	  operator >= (float n){
-				return __zj_value__ >= n;
-			}
-			bool 	  operator >= (int n){
-				return __zj_value__ >= n;
-			}
-			//-----
-			// +=
-			NumberJsonVar & operator += (const NumberJsonVar & n){
-				__zj_value__ += n.__zj_value__;
-				return (*this);
-			}
-
-			NumberJsonVar & operator += (float n1){
-				__zj_value__ += n1;
-				return (*this);
-			}
-
-			NumberJsonVar & operator *= (const NumberJsonVar & n){
-				__zj_value__ *= n.__zj_value__;
-				return (*this);
-			}
-
-			NumberJsonVar & operator *= (float n1){
-				__zj_value__ *= n1;
-				return (*this);
-			}
-
-			NumberJsonVar & operator /= (const NumberJsonVar & n){
-				if(n.__zj_value__ == 0)
-					throw("Divide by 0!");
-
-				__zj_value__ /= n.__zj_value__;
-				return (*this);
-			}
-
-			NumberJsonVar & operator /= (float n1){
-
-				if(n1 == 0){
-					throw("Divide by 0!");
-				}
-
-				__zj_value__ /= n1;
-				return (*this);
-			}
-			//--- -=
-			NumberJsonVar & operator -= (const NumberJsonVar & n){
-				__zj_value__ -= n.__zj_value__;
-				return (*this);
-			}
-
-			NumberJsonVar & operator -= (float n1){
-				__zj_value__ -= n1;
-				return (*this);
-			}
-
-			NumberJsonVar & operator ++(){
-				__zj_value__++;
-				return (*this);
-			}
-			float  operator ++(int){
-				NumberJsonVar n(__zj_value__);
-				operator++();
-				return n;
-			}
 
 			virtual ~NumberJsonVar(){}
 	private:
 
-		float __zj_value__;
-
-		void init() {
-			__zj_value__ = 0;
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_NUMBER;
-			this->__zj_size_data__ = sizeof(NumberJsonVar);
-		}
-
+		float _value = 0;
 
 	};
 }

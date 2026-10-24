@@ -1,16 +1,15 @@
 namespace zetjsoncpp{
 
-	class MapBooleanJsonVar: public NamedJsonVar, public MapJsonVar<BooleanJsonVar> {
+	class MapBooleanJsonVar: public JsonVar, public MapJsonVar<BooleanJsonVar> {
 
 	public:
 
-		MapBooleanJsonVar(const char * _name ="")
-		:NamedJsonVar(_name){
-			init();
+		explicit MapBooleanJsonVar(const char * _name ="")
+		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS
+		) {
 		}
 
 		MapBooleanJsonVar(const std::map<std::string,bool> & _map_bools) {
-			init();
 			copy(_map_bools);
 		}
 
@@ -34,9 +33,5 @@ namespace zetjsoncpp{
 			}
 		}
 
-		void init(){
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS;
-			this->__zj_size_data__ = sizeof(MapBooleanJsonVar);
-		}
 	};
 }

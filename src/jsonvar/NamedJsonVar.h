@@ -14,8 +14,8 @@ namespace zetjsoncpp{
 
 		NamedJsonVar(const char *_name = "")
 		    : JsonVar() {
-		    this->__zj_variable_name__ = _name;
-		    this->__zj_size_data__ = sizeof(NamedJsonVar);
+		    this->variable_name = _name;
+		    this->size_bytes = sizeof(NamedJsonVar);
 		}
 
 		virtual ~NamedJsonVar() {}

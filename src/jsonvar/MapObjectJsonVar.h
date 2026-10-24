@@ -1,14 +1,13 @@
 namespace zetjsoncpp{
 
 	template<typename _T_DATA>
-	class MapObjectJsonVar : public NamedJsonVar, public MapJsonVar<ObjectJsonVar<_T_DATA> * > {
+	class MapObjectJsonVar : public JsonVar, public MapJsonVar<ObjectJsonVar<_T_DATA> * > {
 
 
 	public:
 
-		MapObjectJsonVar(const char * _name = "")
-		:NamedJsonVar(_name){
-			init();
+		explicit MapObjectJsonVar(const char * _name = "")
+		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS) {
 		}
 
 		virtual JsonVar *newJsonVar(const std::string & key_id) {
@@ -42,9 +41,5 @@ namespace zetjsoncpp{
 			destroy();
 		}
 	private:
-		void init(){
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS;
-			this->__zj_size_data__ = sizeof(MapObjectJsonVar<_T_DATA>);
-		}
 	};
 }

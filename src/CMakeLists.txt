@@ -305,14 +305,6 @@ add_executable(test${POST_NAME}
 target_link_libraries(test${POST_NAME} ${ZETJSONCPP_LIB_NAME}${POST_NAME})
 
 
-# Test file_utils
-add_executable(test_file${POST_NAME}
-	${JSON_TEST_FILE_SRCS}
-)
-
-target_link_libraries(test_file${POST_NAME} ${ZETJSONCPP_LIB_NAME}${POST_NAME})
-
-
 INSTALL(TARGETS ${ZETJSONCPP_LIB_NAME}${POST_NAME}
 		ARCHIVE DESTINATION  		${CMAKE_INSTALL_PREFIX}/lib
 		RUNTIME DESTINATION  		${CMAKE_INSTALL_PREFIX}/bin

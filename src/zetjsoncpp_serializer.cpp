@@ -16,6 +16,16 @@ namespace zetjsoncpp{
 
 	}TestVoid;
 
+	struct SerializeObjectContext {
+	    std::string *result;
+	    int indent;
+	    bool minimized;
+	    bool discard_non_serialized;
+	    int serialized_count;
+	};
+
+
+
 	void serialize_json_var(
 		std::string & _str_result
 		,JsonVar *_json_var
@@ -120,118 +130,83 @@ namespace zetjsoncpp{
 		_str_result+="]";
 	}
 
+	static void serializeObjectFieldCallback(
+	    const JsonVar *_field
+	    ,void *_context
+	) {
+	    auto *ctx = static_cast<SerializeObjectContext *>(_context);
+
+	    if(ctx->discard_non_serialized
+	        && !_field->isDeserialized()) {
+	        return;
+	    }
+
+	    std::string &result = *ctx->result;
+
+	    if(ctx->serialized_count > 0) {
+	        result += ",";
+	    }
+
+	    if(!ctx->minimized) {
+	        result += "\n";
+
+	        for(int i = 0; i <= ctx->indent; i++) {
+	            result += "\t";
+	        }
+	    }
+
+	    result += "\"";
+	    result += _field->getVariableName();
+	    result += "\":";
+
+	    // Serialize the actual field value
+	    serialize_json_var(
+	        result
+	        ,const_cast<JsonVar *>(_field)
+	        ,ctx->indent + 1
+	        ,ctx->minimized
+	        ,ctx->discard_non_serialized
+	    );
+
+	    ctx->serialized_count++;
+	}
+
 	void serialize_json_var_object(
-		std::string & _str_result
-		, JsonVar *_json_var
-		, int _ident
-		, bool _minimized
-		, bool _discard_non_serialized
-	){
-		int k=0;
+	    std::string &_str_result
+	    ,JsonVar *_json_var
+	    ,int _indent
+	    ,bool _minimized
+	    ,bool _discard_non_serialized
+	) {
+	    if(_json_var->getType() != JsonVarType::JSON_VAR_TYPE_OBJECT) {
+	        throw std::runtime_error("Expected JSON object");
+	    }
 
-		if(_json_var->getType() != JsonVarType::JSON_VAR_TYPE_OBJECT){
-			throw std::runtime_error(
-				string_utils::format(
-						"Expected json object but it was %s"
-						,_json_var->getTypeStr()
-				)
-			);
-		}
+	    _str_result += "{";
 
-		_str_result += "{";
+	    SerializeObjectContext ctx = {
+	        &_str_result
+	        ,_indent
+	        ,_minimized
+	        ,_discard_non_serialized
+	        ,0
+	    };
 
-		if (_minimized == false){
-			_str_result += "\n";
-		}
+	    // Invoke the const visitation interface
+	    static_cast<const JsonVar *>(_json_var)->forEachField(
+	        serializeObjectFieldCallback
+	        ,&ctx
+	    );
 
-		char *aux_p = (char *)_json_var->getPtrDataStart();
-		char *end_p = (char *)_json_var->getPtrDataEnd();
-		int i=0;
-		for (; aux_p < end_p; k++) {
-			JsonVar * p_sv = (JsonVar *)aux_p;
-			bool serialize=p_sv != NULL && p_sv->isDeserialized();
+	    if(!_minimized && ctx.serialized_count > 0) {
+	        _str_result += "\n";
 
-			// show non serialized
-			if(p_sv != NULL && serialize==false && _discard_non_serialized==false){
-				serialize=true;
-			}
+	        for(int i = 0; i < _indent; i++) {
+	            _str_result += "\t";
+	        }
+	    }
 
-			if (serialize == true) {
-
-				if (_minimized==false){
-					for (int i = 0; i <= (_ident); i++){
-						_str_result += "\t";
-					}
-				}
-
-				if (i > 0){
-					_str_result += ",";
-				}
-
-				_str_result += "\"" + p_sv->getVariableName()+ "\":";
-
-				switch (p_sv->getType())// == )
-				{
-				case JsonVarType::JSON_VAR_TYPE_BOOLEAN:
-				case JsonVarType::JSON_VAR_TYPE_NUMBER:
-				case JsonVarType::JSON_VAR_TYPE_STRING:
-					serialize_json_var(
-						_str_result
-						,p_sv
-						,0
-						,_minimized
-						,_discard_non_serialized
-					);
-					break;
-
-				case JsonVarType::JSON_VAR_TYPE_OBJECT:
-				case JsonVarType::JSON_VAR_TYPE_ARRAY_OF_BOOLEANS:
-				case JsonVarType::JSON_VAR_TYPE_ARRAY_OF_STRINGS:
-				case JsonVarType::JSON_VAR_TYPE_ARRAY_OF_NUMBERS:
-				case JsonVarType::JSON_VAR_TYPE_ARRAY_OF_OBJECTS:
-				case JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS:
-				case JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS:
-				case JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS:
-				case JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS:
-				case JsonVarType::JSON_VAR_TYPE_MAP_OF_ARRAY_OF_STRINGS:
-					if (_minimized==false){
-						_str_result += "\n";
-						for (int i = 0; i <= _ident; i++){
-							_str_result += "\t";
-						}
-					}
-					serialize_json_var(
-						_str_result
-						,p_sv
-						,_ident+1
-						, _minimized
-						,_discard_non_serialized
-					);
-					break;
-				default:
-					break;
-				}
-
-				if (_minimized == false){
-					_str_result += "\n";
-				}
-
-				i++;
-			}
-			aux_p += p_sv->getSizeData();
-		}
-
-		if (_minimized == false){
-			for (int i = 0; i < _ident; i++){
-				_str_result += "\t";
-			}
-		}
-
-		_str_result += "}";
-
-		if (_minimized == false){
-			_str_result += "\n";
-		}
+	    _str_result += "}";
 	}
 
 	void serialize_json_var(
@@ -245,10 +220,10 @@ namespace zetjsoncpp{
 		default:
 			break;
 		case JSON_VAR_TYPE_BOOLEAN:
-			_str_result+=(*((BooleanJsonVar *)_json_var)==true)?"true":"false";
+			_str_result+=((BooleanJsonVar *)_json_var)->getValue() ?"true":"false";
 			break;
 		case JSON_VAR_TYPE_NUMBER:
-			_str_result+=string_utils::floatToString(*((NumberJsonVar *)_json_var));
+			_str_result+=string_utils::floatToString(((NumberJsonVar *)_json_var)->getValue());
 			break;
 		case JSON_VAR_TYPE_STRING:
 			_str_result+=std::string("\"") + ((StringJsonVar *)_json_var)->getValue() + "\"";
@@ -340,7 +315,6 @@ namespace zetjsoncpp{
 			);
 			break;
 		}
-
 	}
 
 	std::string serialize(

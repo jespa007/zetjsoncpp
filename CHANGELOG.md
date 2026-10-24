@@ -2,9 +2,13 @@
 
 ----------------------------
 Date: XXXX-XX-XX
-Version: 2.5.0
+Version: 3.0.0
 
-- [x] Automatic delete through unique_ptr from deserialize object
+- [x] Return std::unique_ptr from deserializers
+- [x] Eliminate ZJ_CONST_CHAR
+- [x] Remove unnecessary primitive operators
+- [x] Set / Get values for string / boolean and number json vars
+- [x] Removed NameJsonVar
 
 ----------------------------
 Date: 2024-02-08

@@ -1,16 +1,14 @@
 namespace zetjsoncpp{
 
-	class MapStringJsonVar: public NamedJsonVar, public MapJsonVar<StringJsonVar> {
+	class MapStringJsonVar: public JsonVar, public MapJsonVar<StringJsonVar> {
 
 	public:
 
-		MapStringJsonVar(const char * _name = "")
-		:NamedJsonVar(_name){
-			init();
+		explicit MapStringJsonVar(const char * _name = "")
+		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS) {
 		}
 
 		MapStringJsonVar(const std::map<std::string,std::string> & _map_string){
-			init();
 			copy(_map_string);
 		}
 
@@ -24,7 +22,7 @@ namespace zetjsoncpp{
 			if(this->__zj_map_data__.count(key_id) != 0){
 				throw std::runtime_error(string_utils::format("property name \"%s\" already exists",key_id.c_str()));
 			}
-			this->__zj_map_data__[key_id]=StringJsonVar();
+			this->__zj_map_data__[key_id] = StringJsonVar();
 
 			return &this->__zj_map_data__[key_id];
 		}
@@ -38,11 +36,6 @@ namespace zetjsoncpp{
 			for(auto it=m.begin(); it != m.end();it++){
 				this->__zj_map_data__[it->first]=it->second;
 			}
-		}
-
-		void init(){
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS;
-			this->__zj_size_data__ = sizeof(MapStringJsonVar);
 		}
 
 	};

@@ -1,16 +1,15 @@
 namespace zetjsoncpp{
 
 	// ARRAY STRING
-	class ArrayStringJsonVar : public NamedJsonVar, public ArrayJsonVar<StringJsonVar> {
+	class ArrayStringJsonVar : public JsonVar, public ArrayJsonVar<StringJsonVar> {
 	public:
 		//_T_NAME name;
-		ArrayStringJsonVar(const char * _name = "")
-		:NamedJsonVar(_name){
-			init();
+		explicit ArrayStringJsonVar(const char * _name = "")
+		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_ARRAY_OF_STRINGS
+		) {
 		}
 
 		ArrayStringJsonVar(const std::vector<std::string> & _vec_string) {
-			init();
 			copy(_vec_string);
 		}
 
@@ -36,12 +35,6 @@ namespace zetjsoncpp{
 				this->__zj_vector_data__.push_back(*it);
 			}
 		}
-
-		void init() {
-			this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_ARRAY_OF_STRINGS;
-			this->__zj_size_data__ = sizeof(ArrayStringJsonVar);
-		}
-
 
 	};
 }

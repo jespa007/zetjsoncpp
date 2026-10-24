@@ -10,76 +10,6 @@
 #define  ZJ_MIN(a,  b)              ((a)  <  (b)  ?  (a)  :  (b))
 #endif
 
-#define ZJ_MAX_CONST_CHAR 50
-
-#define ZJ_CONST_CHAR(s)\
-	getChr(s,0),\
-	getChr(s,1),\
-	getChr(s,2),\
-	getChr(s,3),\
-	getChr(s,4),\
-	getChr(s,5),\
-	getChr(s,6),\
-	getChr(s,7),\
-	getChr(s,8),\
-	getChr(s,9),\
-	getChr(s,10),\
-	getChr(s,11),\
-	getChr(s,12),\
-	getChr(s,13),\
-	getChr(s,14),\
-	getChr(s,15),\
-	getChr(s,16),\
-	getChr(s,17),\
-	getChr(s,18),\
-	getChr(s,19),\
-	getChr(s,20),\
-	getChr(s,21),\
-	getChr(s,22),\
-	getChr(s,23),\
-	getChr(s,24),\
-	getChr(s,25),\
-	getChr(s,26),\
-	getChr(s,27),\
-	getChr(s,28),\
-	getChr(s,29),\
-	getChr(s,30),\
-	getChr(s,31),\
-	getChr(s,32),\
-	getChr(s,33),\
-	getChr(s,34),\
-	getChr(s,35),\
-	getChr(s,36),\
-	getChr(s,37),\
-	getChr(s,38),\
-	getChr(s,39),\
-	getChr(s,40),\
-	getChr(s,41),\
-	getChr(s,42),\
-	getChr(s,43),\
-	getChr(s,44),\
-	getChr(s,45),\
-	getChr(s,46),\
-	getChr(s,47),\
-	getChr(s,48),\
-	getChr(s,49),\
-	getChr(s,50)
-
-#define getChr(name, ii) ((ZJ_MIN(ii,ZJ_MAX_CONST_CHAR))<sizeof(name)/sizeof(*name)?name[ii]:0)
-
-#define ZJ_CAST_JSON_VAR_STRING 				(zetjsoncpp::StringJsonVar<> *)
-#define ZJ_CAST_JSON_VAR_BOOLEAN 				(zetjsoncpp::BooleanJsonVar<> *)
-#define ZJ_CAST_JSON_VAR_NUMBER 				(zetjsoncpp::NumberJsonVar<> *)
-#define ZJ_CAST_JSON_VAR_OBJECT 				(zetjsoncpp::ObjectJsonVar<> *)
-#define ZJ_CAST_JSON_VAR_ARRAY_OF_BOOLEANS 		(zetjsoncpp::ArrayBooleanJsonVar<> *)
-#define ZJ_CAST_JSON_VAR_ARRAY_OF_NUMBERS 		(zetjsoncpp::ArrayNumberJsonVar<> *)
-#define ZJ_CAST_JSON_VAR_ARRAY_OF_STRINGS 		(zetjsoncpp::ArrayStringJsonVar<> *)
-#define ZJ_CAST_JSON_VAR_ARRAY_OF_OBJECTS 		(zetjsoncpp::ArrayObjectJsonVar<> *)
-#define ZJ_CAST_JSON_VAR_MAP_OF_BOOLEANS 		(zetjsoncpp::MapBooleanJsonVar<> *)
-#define ZJ_CAST_JSON_VAR_MAP_OF_NUMBERS 		(zetjsoncpp::MapNumberJsonVar<> *)
-#define ZJ_CAST_JSON_VAR_MAP_OF_STRINGS 		(zetjsoncpp::MapStringJsonVar<> *)
-#define ZJ_CAST_JSON_VAR_MAP_OF_OBJECTS 		(zetjsoncpp::MapObjectJsonVar<> *)
-#define ZJ_CAST_JSON_VAR_MAP_ARRAY_OF_STRING	(zetjsoncpp::MapArrayStringJsonVar<> *)
 
 #define ZJ_VAR_BOOLEAN(name) zetjsoncpp::BooleanJsonVar														name{#name}
 #define ZJ_VAR_NUMBER(name) zetjsoncpp::NumberJsonVar														name{#name}
@@ -120,6 +50,18 @@ namespace zetjsoncpp {
 
 	}JsonVarType;
 
+	class JsonVar;
+
+    typedef void (*FieldCallback)(
+        JsonVar *
+        ,void *
+    );
+
+    typedef void (*ConstFieldCallback)(
+        const JsonVar *
+        ,void *
+    );
+
 	class JsonVar {//: public CVariable {
 	public:
 
@@ -127,7 +69,13 @@ namespace zetjsoncpp {
 
 		static char const STR_EMPTY[];
 
-		JsonVar();
+		explicit JsonVar(
+			const char *_name = ""
+			,JsonVarType _type = JsonVarType::JSON_VAR_TYPE_UNKNOWN
+		);
+
+		JsonVar(const JsonVar &_other) = default;
+		JsonVar &operator=(const JsonVar &_other) = default;
 
 		// It create a new json var slot for vector container.
 		virtual JsonVar *newJsonVar();
@@ -137,38 +85,45 @@ namespace zetjsoncpp {
 
 		const char *getTypeStr();
 
-		virtual ~JsonVar();
-
-		void * getPtrDataStart(){ return __zj_ptr_data_start__;}
 		virtual void * getPtrValue(){ return NULL;}
-
-
-		void * getPtrDataEnd(){return __zj_ptr_data_end__;}
-		size_t  getSizeData(){return __zj_size_data__;}
-		JsonVarType getType(){return __zj_type__;}
-		std::string getVariableName() const {return __zj_variable_name__;}
-		const char * getVariableNameCStr() const {return __zj_variable_name__;}
-		void setVariableName(const char * _name){ __zj_variable_name__ = _name;}
+		JsonVarType getType(){return this->_type;}
+		std::string getVariableName() const {return this->_name;}
+		const char * getVariableNameCStr() const {return this->_name;}
+		void setVariableName(const char * _name){ this->_name = _name;}
 
 		void setParsed(bool parsed);
 		void setFileLineDebug(const char *__file__, int __line__);
 
 		bool isDeserialized() const;
 
+	    // Mutable field visitation
+	    virtual void forEachField(
+	        FieldCallback _callback
+	        ,void *_context
+	    );
+
+	    // Read-only field visitation
+	    virtual void forEachField(
+	        ConstFieldCallback _callback
+	        ,void *_context
+	    ) const;
+
+		virtual ~JsonVar();
+
 	protected:
-		bool __zj_is_parsed__;
-		JsonVarType __zj_type__;
-		size_t __zj_size_data__;
-		const char *__zj_variable_name__;
-		void 	     *__zj_ptr_data_start__; // can be int, bool, vector, prop_grp, etc ...
-		JsonVar *__zj_ptr_data_end__;
+		bool _is_deserialized;
+		JsonVarType _type;
+		const char *_name;
+
+
+
 	};
 
 
 
 }
 
-#include "NamedJsonVar.h"
+#include "JsonSchema.h"
 #include "BooleanJsonVar.h"
 #include "NumberJsonVar.h"
 #include "StringJsonVar.h"

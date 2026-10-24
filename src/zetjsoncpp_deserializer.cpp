@@ -150,9 +150,45 @@ namespace zetjsoncpp{
 		return aux_p;
 	}
 
-	JsonVar *find_property(JsonVar * c_data, const std::string & variable_name) {
+	struct FindPropertyContext {
+	    const std::string *name;
+	    JsonVar *result;
+	};
+
+	static void findPropertyCallback(
+	    JsonVar *_field
+	    ,void *_context
+	) {
+	    auto *ctx = static_cast<FindPropertyContext *>(_context);
+
+	    if(ctx->result == nullptr
+	        && _field->getVariableName() == *ctx->name) {
+	        ctx->result = _field;
+	    }
+	}
+
+	JsonVar *find_property(
+		JsonVar *_json_var
+		,const std::string &_variable_name
+	) {
+
+	    if(_json_var == nullptr) {
+	        return nullptr;
+	    }
+
+	    FindPropertyContext ctx = {
+	        &_variable_name
+	        ,nullptr
+	    };
+
+	    _json_var->forEachField(
+	        findPropertyCallback
+	        ,&ctx
+	    );
+
+	    return ctx.result;
 		// no data no search...
-		if (c_data == NULL) return NULL;
+		/*if (c_data == NULL) return NULL;
 
 		char *aux_p = (char *)c_data->getPtrDataStart();
 		char *end_p = (char *)c_data->getPtrDataEnd();
@@ -165,12 +201,32 @@ namespace zetjsoncpp{
 				return p_sv;
 
 			aux_p += p_sv->getSizeData();
-		}
+		}*/
 
 		return NULL;
 	}
 
-	void set_parsed_to_false_all_properies(JsonVar * c_data) {
+	static void resetParsedCallback(
+	    JsonVar *_field
+	    ,void *_context
+	) {
+	    _field->setParsed(false);
+	}
+
+	void set_parsed_to_false_all_properies(
+	    JsonVar *_json_var
+	) {
+	    if(_json_var == nullptr) {
+	        return;
+	    }
+
+	    _json_var->forEachField(
+	        resetParsedCallback
+	        ,nullptr
+	    );
+	}
+
+	/*void set_parsed_to_false_all_properies(JsonVar * c_data) {
 		// no data no search...
 		if (c_data == NULL){
 			return;
@@ -187,7 +243,7 @@ namespace zetjsoncpp{
 
 			aux_p += p_sv->getSizeData();
 		}
-	}
+	}*/
 
 	char * read_string_between_quotes(DeserializeData *deserialize_data, const char *str_start,int & line, std::string * str_out){
 		char *str_current = (char *) str_start;
