@@ -7,19 +7,21 @@ namespace zetjsoncpp{
 		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_STRING) {
 		}
 
-		StringJsonVar(const std::string & _value){
+		StringJsonVar(const std::string & _value)
+		:JsonVar("", JsonVarType::JSON_VAR_TYPE_STRING){
 			this->_value = _value;
 		}
 
-		StringJsonVar(const StringJsonVar & _value)
-		:JsonVar(_value.getVariableNameCStr(), JsonVarType::JSON_VAR_TYPE_STRING){
-			copy(_value);
+		StringJsonVar(const StringJsonVar & _other)
+		:JsonVar(_other){
+			this->_value = _other._value;
 		}
 
-		StringJsonVar &operator=(const StringJsonVar &_value) {
-		    if(this != &_value) {
-		        copy(_value);
+		StringJsonVar &operator=(const StringJsonVar & _other) {
+		    if(this != &_other) {
+		        _value = _other._value;
 		    }
+
 		    return *this;
 		}
 
@@ -45,14 +47,8 @@ namespace zetjsoncpp{
 		virtual void * getPtrValue(){ return &this->_value;}
 
 		virtual ~StringJsonVar(){}
+
 	protected:
-
-		void copy(const StringJsonVar & _string_json_var){
-			this->_value = _string_json_var._value;
-			this->_is_deserialized = _string_json_var._is_deserialized;
-		}
-
-	private:
 
 		std::string _value;
 

@@ -20,9 +20,9 @@ namespace zetjsoncpp{
 		}
 
 		virtual JsonVar *newJsonVar(){
-			this->__zj_vector_data__.push_back(StringJsonVar());
+			this->_vector_data.push_back(StringJsonVar());
 
-			return &this->__zj_vector_data__[this->__zj_vector_data__.size()-1];
+			return &this->_vector_data[this->_vector_data.size()-1];
 		}
 
 		virtual ~ArrayStringJsonVar(){}
@@ -30,9 +30,9 @@ namespace zetjsoncpp{
 	private:
 
 		void copy(const std::vector<std::string> & v){
-			this->__zj_vector_data__.clear();
+			this->_vector_data.clear();
 			for(auto it=v.begin(); it != v.end();it++){
-				this->__zj_vector_data__.push_back(*it);
+				this->_vector_data.push_back(*it);
 			}
 		}
 

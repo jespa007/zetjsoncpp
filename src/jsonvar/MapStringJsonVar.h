@@ -19,12 +19,12 @@ namespace zetjsoncpp{
 		}
 
 		virtual JsonVar *newJsonVar(const std::string & key_id){
-			if(this->__zj_map_data__.count(key_id) != 0){
+			if(this->_map_data.count(key_id) != 0){
 				throw std::runtime_error(string_utils::format("property name \"%s\" already exists",key_id.c_str()));
 			}
-			this->__zj_map_data__[key_id] = StringJsonVar();
+			this->_map_data[key_id] = StringJsonVar();
 
-			return &this->__zj_map_data__[key_id];
+			return &this->_map_data[key_id];
 		}
 
 		virtual ~MapStringJsonVar() {
@@ -32,9 +32,9 @@ namespace zetjsoncpp{
 		}
 	private:
 		void copy(const std::map<std::string,std::string> & m){
-			this->__zj_map_data__.clear();
+			this->_map_data.clear();
 			for(auto it=m.begin(); it != m.end();it++){
-				this->__zj_map_data__[it->first]=it->second;
+				this->_map_data[it->first]=it->second;
 			}
 		}
 

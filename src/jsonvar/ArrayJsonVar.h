@@ -15,7 +15,7 @@ namespace zetjsoncpp{
 	template<typename _T_DATA>
 	class ArrayJsonVar {
 	protected:
-		std::vector<_T_DATA> __zj_vector_data__;
+		std::vector<_T_DATA> _vector_data;
 	public:
 
 		typedef typename std::vector<_T_DATA>::iterator ArrayIteratorJsonVar;
@@ -23,56 +23,56 @@ namespace zetjsoncpp{
 		ArrayJsonVar() {}
 
 		ArrayIteratorJsonVar begin(){
-			return __zj_vector_data__.begin();
+			return _vector_data.begin();
 		}
 
 		ArrayIteratorJsonVar end(){
-			return __zj_vector_data__.end();
+			return _vector_data.end();
 		}
 
 		_T_DATA & 	operator[](int i) {
-			return __zj_vector_data__.at(i);
+			return _vector_data.at(i);
 		}
 
 		_T_DATA const& 	operator[](int i) const {
-			return __zj_vector_data__.at(i);
+			return _vector_data.at(i);
 		}
 
 		_T_DATA const& 	at(unsigned int i) const {
 
-			return __zj_vector_data__.at(i);
+			return _vector_data.at(i);
 		}
 
 		virtual void			 	push_back(const _T_DATA & tt) {
-			__zj_vector_data__.push_back(tt);
+			_vector_data.push_back(tt);
 		}
 
 		virtual  void 	erase(int idx_position) {
-			__zj_vector_data__.erase(__zj_vector_data__.begin()+idx_position);
+			_vector_data.erase(_vector_data.begin()+idx_position);
 		}
 
 		virtual  void 	insert(int idx_position, const _T_DATA & tt) {
-			__zj_vector_data__.insert(__zj_vector_data__.begin()+idx_position,tt);
+			_vector_data.insert(_vector_data.begin()+idx_position,tt);
 		}
 
 		virtual void		clear() {
-			__zj_vector_data__.clear();
+			_vector_data.clear();
 		}
 
 		size_t			size() const {
-			return __zj_vector_data__.size();
+			return _vector_data.size();
 		}
 
 		const std::vector<_T_DATA> & getStdVector() {
-			return __zj_vector_data__;
+			return _vector_data;
 		}
 
 		const std::vector<_T_DATA> * getStdVectorPtr() {
-			return &__zj_vector_data__;
+			return &_vector_data;
 		}
 
 		virtual JsonVar * getJsonVarPtr(int index) {
-			return (JsonVar *)&__zj_vector_data__.at(index);
+			return (JsonVar *)&_vector_data.at(index);
 		}
 
 		virtual ~ArrayJsonVar() {

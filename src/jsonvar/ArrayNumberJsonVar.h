@@ -11,30 +11,30 @@ namespace zetjsoncpp{
 		}
 
 
-		ArrayNumberJsonVar(const std::vector<float> & _vec_numbers) {
+		ArrayNumberJsonVar(const std::vector<double> & _vec_numbers) {
 			copy(_vec_numbers);
 		}
 
 
-		ArrayNumberJsonVar & operator=(const std::vector<float> & _vec_numbers){
+		ArrayNumberJsonVar & operator=(const std::vector<double> & _vec_numbers){
 			copy(_vec_numbers);
 			return *this;
 		}
 
 		virtual JsonVar *newJsonVar(){
-			this->__zj_vector_data__.push_back(NumberJsonVar(10));
+			this->_vector_data.push_back(NumberJsonVar(10));
 
-			return &this->__zj_vector_data__[this->__zj_vector_data__.size()-1];
+			return &this->_vector_data[this->_vector_data.size()-1];
 		}
 
 		virtual ~ArrayNumberJsonVar() {
 		}
 
 	private:
-		void copy(const std::vector<float> & v){
-			this->__zj_vector_data__.clear();
+		void copy(const std::vector<double> & v){
+			this->_vector_data.clear();
 			for(auto it=v.begin(); it != v.end();it++){
-				this->__zj_vector_data__.push_back(*it);
+				this->_vector_data.push_back(*it);
 			}
 		}
 

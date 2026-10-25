@@ -179,7 +179,7 @@ static void testIteratorsAndMutations() {
         CHECK(it->second->data.size() == 8);
         std::size_t n = 0;
         for(auto n_it = it->second->data.begin(); n_it != it->second->data.end(); ++n_it) {
-            n_it->setValue(static_cast<float>(n++));
+            n_it->setValue(static_cast<double>(n++));
         }
         ++interpolation_count;
     }

@@ -22,6 +22,8 @@
 #include <exception>
 #include <stdexcept>
 #include <float.h>
+#include <iomanip>
+#include <limits>
 #include <limits.h>
 #include <math.h>
 #include <memory>

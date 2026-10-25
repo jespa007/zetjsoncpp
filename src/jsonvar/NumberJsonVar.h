@@ -1,10 +1,10 @@
 namespace zetjsoncpp{
 	class NumberJsonVar : public JsonVar{
 	public:
-			static float parse(const std::string & str ){
-				float f=0;
-				if(string_utils::stringToFloat(&f,str)!=string_utils::STR_2_NUMBER_SUCCESS){
-					throw std::runtime_error(std::string("cannot convert ") + str + std::string(" as float"));
+			static double parse(const std::string & str ){
+				double f=0;
+				if(string_utils::stringToDouble(&f,str)!=string_utils::STR_2_NUMBER_SUCCESS){
+					throw std::runtime_error(std::string("cannot convert ") + str + std::string(" as double"));
 				}
 
 				return f;
@@ -14,31 +14,36 @@ namespace zetjsoncpp{
 			:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_NUMBER) {
 			}
 
-			 NumberJsonVar(float f) {
-				this->_value = f;
+		    NumberJsonVar(double _value)
+		        : JsonVar("", JsonVarType::JSON_VAR_TYPE_NUMBER) {
+		    	this->_value = _value;
 			}
 
-			 NumberJsonVar(const std::string & s) {
-				this->_value = parse(s);
+			 NumberJsonVar(const std::string & s)
+		     : JsonVar("", JsonVarType::JSON_VAR_TYPE_NUMBER){
+				 this->_value = parse(s);
 			}
 
+			 NumberJsonVar(const NumberJsonVar &_other)
+			     : JsonVar(_other)
+			     ,_value(_other._value) {
+			 }
 
 			// assign
-			NumberJsonVar & operator=(float _value){
-				this->_value = _value;
-				return *this;
-			}
+			 NumberJsonVar &operator=(const NumberJsonVar &_other) {
+			     if(this != &_other) {
+			         _value = _other._value;
+			     }
 
-			NumberJsonVar & operator=(const NumberJsonVar & _n){
-				_value=_n._value;
-				return *this;
-			}
+			     return *this;
+			 }
 
-			float getValue() const{
+
+			double getValue() const{
 				return this->_value;
 			}
 
-			void setValue(float _value){
+			void setValue(double _value){
 				this->_value = _value;
 			}
 
@@ -48,7 +53,7 @@ namespace zetjsoncpp{
 			virtual ~NumberJsonVar(){}
 	private:
 
-		float _value = 0;
+		double _value = 0;
 
 	};
 }

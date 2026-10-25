@@ -1,14 +1,117 @@
 
+# Changelog
 
 ----------------------------
-Date: XXXX-XX-XX
-Version: 3.0.0
+## [3.0.0] - 2026-10-25
 
-- [x] Return std::unique_ptr from deserializers
-- [x] Eliminate ZJ_CONST_CHAR
-- [x] Remove unnecessary primitive operators
-- [x] Set / Get values for string / boolean and number json vars
-- [x] Removed NameJsonVar
+
+Major release introducing a redesigned JSON schema system, safer memory management, and a simplified C++11 API.
+
+### Added
+- Introduced `JsonSchema.h` with the `ZJ_DEFINE_OBJECT` macro for defining JSON object schemas.
+- Added schema field macros for primitive values, nested objects, arrays, and maps (`ZJ_STRING`, `ZJ_NUMBER`, `ZJ_BOOLEAN`, `ZJ_OBJECT`, etc.).
+- Added support for custom JSON property names through `ZJ_ARRAY_STRING_NAMED`.
+- Added `visitFields()` for automatic schema field enumeration.
+- Added virtual `forEachField()` methods to `JsonVar`, supporting mutable and const field traversal.
+
+### Changed
+- **Breaking:** `deserialize<T>()` and `deserialize_file<T>()` now return `std::unique_ptr<T>` instead of raw pointers.
+- Updated `serialize()` to accept `std::unique_ptr<T>` directly while retaining support for raw `JsonVar` pointers.
+- Replaced the old object-property discovery mechanism with explicit schema-based field visitation.
+- Simplified the `JsonVar` inheritance hierarchy by removing `NamedJsonVar`.
+- Replaced the compile-time property-name generation mechanism (`ZJ_CONST_CHAR`) with string-literal property names.
+- Removed the previous fixed-length JSON property-name limitation.
+- Simplified string value access and assignment through `getValue()` and `setValue()`.
+- Improved const-correctness in object field traversal.
+- Modernized file reading using `std::string` instead of manually managed character buffers.
+
+### Fixed
+- Removed unsafe pointer arithmetic used to discover object properties.
+- Eliminated reliance on object memory layout, padding, and alignment when enumerating JSON fields.
+- Reduced the risk of memory leaks by introducing automatic ownership of deserialized objects.
+- Improved compatibility with modern C++ compilers by removing deprecated implicit-copy behavior in `StringJsonVar`.
+
+### Removed
+- **Breaking:** Removed the `ZJ_CONST_CHAR` macro and compile-time character-pack property names.
+- **Breaking:** Removed the `NamedJsonVar` class.
+- **Breaking:** Removed sentinel-based object field traversal (`_zj_var_start`, `_zj_var_end`).
+- Removed obsolete object-layout metadata used for property enumeration.
+- Removed selected implicit primitive conversion and comparison operators in favor of explicit value access.
+
+### Migration Guide (2.4.4 → 3.0.0)
+
+**1. Replace manually declared JSON structures with `ZJ_DEFINE_OBJECT`.**
+
+Example,
+
+Previous:
+
+```cpp
+typedef struct {
+    zetjsoncpp::StringJsonVar name{"name"};
+    zetjsoncpp::NumberJsonVar length{"length"};
+} Config;
+```
+
+New:
+
+```cpp
+ZJ_DEFINE_OBJECT(Config,
+    ZJ_STRING(name),
+    ZJ_NUMBER(length)
+);
+```
+
+**2. Update deserialization to use automatic memory management.**
+
+Previous:
+
+```cpp
+auto *config = zetjsoncpp::deserialize<
+    zetjsoncpp::ObjectJsonVar<Config>
+>(json_text);
+
+// Use config...
+
+delete config;
+```
+
+New:
+
+```cpp
+auto config = zetjsoncpp::deserialize<
+    zetjsoncpp::ObjectJsonVar<Config>
+>(json_text);
+
+// No manual delete required
+```
+
+**3. Use explicit value access where implicit operators were removed.**
+
+Previous:
+
+```cpp
+config->name = "example";
+
+if(config->name == "example") {
+    // ...
+}
+```
+
+New:
+
+```cpp
+config->name.setValue("example");
+
+if(config->name.getValue() == "example") {
+    // ...
+}
+```
+
+**4. Existing array and map container types remain available.**
+
+The existing typed containers, including `ArrayStringJsonVar`, `ArrayNumberJsonVar`, `ArrayObjectJsonVar<T>`, `MapStringJsonVar`, and `MapObjectJsonVar<T>`, can be declared through the new schema macros.
+
 
 ----------------------------
 Date: 2024-02-08

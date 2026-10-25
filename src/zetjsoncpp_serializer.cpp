@@ -223,7 +223,7 @@ namespace zetjsoncpp{
 			_str_result+=((BooleanJsonVar *)_json_var)->getValue() ?"true":"false";
 			break;
 		case JSON_VAR_TYPE_NUMBER:
-			_str_result+=string_utils::floatToString(((NumberJsonVar *)_json_var)->getValue());
+			_str_result+=string_utils::doubleToString(((NumberJsonVar *)_json_var)->getValue());
 			break;
 		case JSON_VAR_TYPE_STRING:
 			_str_result+=std::string("\"") + ((StringJsonVar *)_json_var)->getValue() + "\"";

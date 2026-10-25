@@ -9,23 +9,23 @@ namespace zetjsoncpp{
 		) {
 		}
 
-		MapNumberJsonVar(const std::map<std::string,float> & _map_numbers) {
+		MapNumberJsonVar(const std::map<std::string,double> & _map_numbers) {
 			copy(_map_numbers);
 		}
 
 
-		MapNumberJsonVar & operator=(const  std::map<std::string,float> & _map_numbers){
+		MapNumberJsonVar & operator=(const  std::map<std::string,double> & _map_numbers){
 			copy(_map_numbers);
 			return *this;
 		}
 
 		virtual JsonVar *newJsonVar(const std::string & key_id){
-			if(this->__zj_map_data__.count(key_id) != 0){
+			if(this->_map_data.count(key_id) != 0){
 				throw std::runtime_error(string_utils::format("property name \"%s\" already exists",key_id.c_str()));
 			}
-			this->__zj_map_data__[key_id]=NumberJsonVar();
+			this->_map_data[key_id]=NumberJsonVar();
 
-			return &this->__zj_map_data__[key_id];
+			return &this->_map_data[key_id];
 		}
 
 		virtual ~MapNumberJsonVar() {
@@ -33,10 +33,10 @@ namespace zetjsoncpp{
 		}
 
 	private:
-		void copy(const std::map<std::string,float> & m){
-			this->__zj_map_data__.clear();
+		void copy(const std::map<std::string,double> & m){
+			this->_map_data.clear();
 			for(auto it=m.begin(); it != m.end();it++){
-				this->__zj_map_data__[it->first]=it->second;
+				this->_map_data[it->first]=it->second;
 			}
 		}
 

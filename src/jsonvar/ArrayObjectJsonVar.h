@@ -10,11 +10,14 @@ namespace zetjsoncpp{
 		) {
 		}
 
+		ArrayObjectJsonVar(const ArrayObjectJsonVar &) = delete;
+		ArrayObjectJsonVar &operator=(const ArrayObjectJsonVar &) = delete;
+
 
 		virtual JsonVar *newJsonVar() {
 
 			ObjectJsonVar< _T_DATA> *tt = new ObjectJsonVar<_T_DATA>;
-			this->__zj_vector_data__.push_back(tt);
+			this->_vector_data.push_back(tt);
 			return (JsonVar *)tt;
 		}
 
@@ -24,8 +27,8 @@ namespace zetjsoncpp{
 		}
 
 		virtual  void 	erase(int idx_position) {
-			JsonVar *json_object = this->__zj_vector_data__.at(idx_position);
-			this->__zj_vector_data__.erase(this->__zj_vector_data__.begin()+idx_position);
+			JsonVar *json_object = this->_vector_data.at(idx_position);
+			this->_vector_data.erase(this->_vector_data.begin()+idx_position);
 			delete json_object;
 		}
 
@@ -39,17 +42,17 @@ namespace zetjsoncpp{
 		}
 
 		virtual JsonVar * getJsonVarPtr(int index) {
-			return (JsonVar *)this->__zj_vector_data__.at(index);
+			return (JsonVar *)this->_vector_data.at(index);
 		}
 
 		void destroy() {
 
-			for (unsigned i = 0; i < this->__zj_vector_data__.size(); i++) {
-				delete this->__zj_vector_data__[i];
-				this->__zj_vector_data__[i] = NULL;
+			for (unsigned i = 0; i < this->_vector_data.size(); i++) {
+				delete this->_vector_data[i];
+				this->_vector_data[i] = NULL;
 			}
 
-			this->__zj_vector_data__.clear();
+			this->_vector_data.clear();
 		}
 
 		virtual ~ArrayObjectJsonVar() {

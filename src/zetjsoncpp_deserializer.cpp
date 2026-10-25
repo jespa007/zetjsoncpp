@@ -343,11 +343,11 @@ namespace zetjsoncpp{
 				str_current+=bytes_readed;
 
 
-				float number_value = 0;
-				if(zetjsoncpp::string_utils::stringToFloat(&number_value,str_value) == zetjsoncpp::string_utils::STR_2_NUMBER_SUCCESS){
+				double number_value = 0;
+				if(zetjsoncpp::string_utils::stringToDouble(&number_value,str_value) == zetjsoncpp::string_utils::STR_2_NUMBER_SUCCESS){
 					if(type_data ==  JsonVarType::JSON_VAR_TYPE_NUMBER){
 						if(ptr_data!=NULL){
-							*((float *) ptr_data) = number_value;
+							*((double *) ptr_data) = number_value;
 						}
 
 						ok=true;

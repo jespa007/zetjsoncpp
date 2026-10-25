@@ -21,19 +21,19 @@ namespace zetjsoncpp{
 		}
 
 		virtual JsonVar *newJsonVar(){
-			this->__zj_vector_data__.push_back(BooleanJsonVar());
+			this->_vector_data.push_back(BooleanJsonVar());
 
-			return &this->__zj_vector_data__[this->__zj_vector_data__.size()-1];
+			return &this->_vector_data[this->_vector_data.size()-1];
 		}
 
 		virtual ~ArrayBooleanJsonVar(){}
 
 	private:
 		void copy(const std::vector<bool> & v){
-			this->__zj_vector_data__.clear();
+			this->_vector_data.clear();
 			for(size_t i=0;i<v.size();i++){
 				bool b=v[i];
-				this->__zj_vector_data__.push_back(b);
+				this->_vector_data.push_back(b);
 			}
 		}
 
