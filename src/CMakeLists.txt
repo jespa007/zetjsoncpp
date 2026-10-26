@@ -243,18 +243,6 @@ target_link_libraries(
 	${LIB_DEPS}
 )	
 
-
-
-# json2cpplib
-#add_library( ${ZETJSONCPP_LIB_NAME}${POST_NAME}  ${LIBRARY_TYPE_CREATION}  ${ZETJSONCPP_LIB_SRCS})
-#target_link_libraries(${ZETJSONCPP_LIB_NAME}${POST_NAME} ${LIB_DEPS})
-
-#JSON TEST executable
-set(JSON_TEST_SRCS ${PROJECT_SOURCE_DIR}/../test/test.cpp)
-
-#JSON TEST_FILE executable
-set(JSON_TEST_FILE_SRCS ${PROJECT_SOURCE_DIR}/../test/test_file.cpp)
-
 if(MSVC)
 	#only for msvc...
 	set_target_properties(${ZETJSONCPP_LIB_NAME}${POST_NAME} PROPERTIES COMPILE_DEFINITIONS ZETJSONCPP_EXPORTS)
@@ -299,10 +287,17 @@ INSTALL_HEADERS_WITH_DIRECTORY(HS)
 
 # Test 
 add_executable(test${POST_NAME}
-	${JSON_TEST_SRCS}
+	${PROJECT_SOURCE_DIR}/../test/test.cpp
 )
 
 target_link_libraries(test${POST_NAME} ${ZETJSONCPP_LIB_NAME}${POST_NAME})
+
+# Test file
+add_executable(test_file${POST_NAME}
+	${PROJECT_SOURCE_DIR}/../test/test_file.cpp
+)
+
+target_link_libraries(test_file${POST_NAME} ${ZETJSONCPP_LIB_NAME}${POST_NAME})
 
 
 INSTALL(TARGETS ${ZETJSONCPP_LIB_NAME}${POST_NAME}
