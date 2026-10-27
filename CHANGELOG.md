@@ -24,7 +24,8 @@ Major release introducing a redesigned JSON schema system, safer memory manageme
 - Simplified string value access and assignment through `getValue()` and `setValue()`.
 - Improved const-correctness in object field traversal.
 - Modernized file reading using `std::string` instead of manually managed character buffers.
-- Changed float to double value in NumberJsonVar to improve number arithmetic precision 
+- Changed float to double value in NumberJsonVar to improve number arithmetic precision
+- Moved header files to 'include' dir 
 
 ### Fixed
 - Removed unsafe pointer arithmetic used to discover object properties.
