@@ -24,6 +24,7 @@ Major release introducing a redesigned JSON schema system, safer memory manageme
 - Simplified string value access and assignment through `getValue()` and `setValue()`.
 - Improved const-correctness in object field traversal.
 - Modernized file reading using `std::string` instead of manually managed character buffers.
+- Changed float to double value in NumberJsonVar to improve number arithmetic precision 
 
 ### Fixed
 - Removed unsafe pointer arithmetic used to discover object properties.
@@ -42,29 +43,32 @@ Major release introducing a redesigned JSON schema system, safer memory manageme
 
 **1. Replace manually declared JSON structures with `ZJ_DEFINE_OBJECT`.**
 
-Example,
-
-Previous:
+Before:
 
 ```cpp
 typedef struct {
-    zetjsoncpp::StringJsonVar name{"name"};
-    zetjsoncpp::NumberJsonVar length{"length"};
+    zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("encoding")>		encoding;
+    zetjsoncpp::NumberJsonVar<ZJ_CONST_CHAR("length")>      	length;
+    zetjsoncpp::ArrayStringJsonVar<ZJ_CONST_CHAR("plug-ins")>  	plugins;
 } Config;
 ```
 
-New:
+Now:
 
 ```cpp
-ZJ_DEFINE_OBJECT(Config,
-    ZJ_STRING(name),
-    ZJ_NUMBER(length)
+ZJ_DEFINE_OBJECT(
+	Config
+    	,ZJ_STRING(encoding) // both cpp/json field are named "encoding"
+    	,ZJ_NUMBER(length)	// both cpp/json field are named "length"
+    	,ZJ_ARRAY_STRING_NAMED(plugins,"plug-ins") // cpp field is called "plugins" meanwhile json field is named ""plug-ins" 
 );
+
+
 ```
 
 **2. Update deserialization to use automatic memory management.**
 
-Previous:
+Before:
 
 ```cpp
 auto *config = zetjsoncpp::deserialize<
@@ -76,19 +80,19 @@ auto *config = zetjsoncpp::deserialize<
 delete config;
 ```
 
-New:
+Now:
 
 ```cpp
 auto config = zetjsoncpp::deserialize<
     zetjsoncpp::ObjectJsonVar<Config>
 >(json_text);
 
-// No manual delete required
+// No manual delete required (in case of use of delete by mistake from deserialized object it will throw an error at compile time)
 ```
 
-**3. Use explicit value access where implicit operators were removed.**
+**3. Arithmetic operators has been removed. It has to use operations from its primitive values **
 
-Previous:
+Before:
 
 ```cpp
 config->name = "example";
@@ -98,7 +102,7 @@ if(config->name == "example") {
 }
 ```
 
-New:
+Now:
 
 ```cpp
 config->name.setValue("example");

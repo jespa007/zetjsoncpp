@@ -29,8 +29,8 @@
 #include <memory>
 #include <fstream>
 
-#define ZETJSONCPP_VERSION_MAJOR 2
-#define ZETJSONCPP_VERSION_MINOR 5
+#define ZETJSONCPP_VERSION_MAJOR 3
+#define ZETJSONCPP_VERSION_MINOR 0
 #define ZETJSONCPP_VERSION_PATCH 0
 
 #ifdef USE_MEMMGR

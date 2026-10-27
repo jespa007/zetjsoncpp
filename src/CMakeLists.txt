@@ -38,7 +38,7 @@ endif()
 
 MESSAGE ("-- Target: " ${CMAKE_BUILD_TYPE})
 
-file(READ "zetjsoncpp.h" zetjsoncpp_h)
+file(READ "../include/zetjsoncpp.h" zetjsoncpp_h)
 
 string(REGEX MATCH "ZETJSONCPP_VERSION_MAJOR ([0-9]*)" _ ${zetjsoncpp_h})
 set(ZETJSONCPP_VERSION_MAJOR ${CMAKE_MATCH_1})
@@ -55,30 +55,12 @@ MESSAGE("-- zetjsoncpp version ${ZETJSONCPP_VERSION_MAJOR}.${ZETJSONCPP_VERSION_
 set(ZETJSONCPP_LIB_NAME "zetjsoncpp-${ZETJSONCPP_VERSION_MAJOR}-${ZETJSONCPP_VERSION_MINOR}-${ZETJSONCPP_VERSION_PATCH}")
 
 
-#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#
-# MACRO UTILS
-#
-
-MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
-
-    FOREACH(HEADER ${${HEADER_LIST}})
-        get_filename_component(DIR ${HEADER} DIRECTORY)
-        INSTALL(FILES ${HEADER} DESTINATION include/zetjsoncpp/${DIR})
-    ENDFOREACH(HEADER)
-
-ENDMACRO(INSTALL_HEADERS_WITH_DIRECTORY)
-
 #--------------
 #
-# COMMON PARAMS
+# COMPILE PARAMS
 #
 
-include_directories (
-	${PROJECT_SOURCE_DIR}
-)
-
-message("-- Install drectory: " ${CMAKE_INSTALL_PREFIX})
+message("-- Install directory: " ${CMAKE_INSTALL_PREFIX})
 
 set(ZETJSONCPP_LIB_SRCS "")
 
@@ -187,6 +169,11 @@ else()
 
 endif()
 
+include_directories (
+	${PROJECT_SOURCE_DIR}/../include
+)
+
+
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 	# 64 bits
 	MESSAGE ("-- Architecture: 64bit")
@@ -197,11 +184,11 @@ endif()
 
 
 #
-# COMMON PARAMS
+# COMPILER PARAMS
 #
 #---------------
 #
-# COMPILE PARAMS
+# LIBRARY
 #
 
 # Library
@@ -247,41 +234,17 @@ if(MSVC)
 	#only for msvc...
 	set_target_properties(${ZETJSONCPP_LIB_NAME}${POST_NAME} PROPERTIES COMPILE_DEFINITIONS ZETJSONCPP_EXPORTS)
 endif()
-	
-SET(
-	HS
-	utils/string_utils.h
-	utils/file_utils.h
-	utils/path_utils.h
-	jsonvar/JsonVar.h
-	jsonvar/NamedJsonVar.h
-	
-	jsonvar/BooleanJsonVar.h
-	jsonvar/NumberJsonVar.h
-	jsonvar/ObjectJsonVar.h
-	jsonvar/StringJsonVar.h
-	
-	jsonvar/ArrayJsonVar.h
-	jsonvar/ArrayBooleanJsonVar.h
-	jsonvar/ArrayNumberJsonVar.h
-	jsonvar/ArrayObjectJsonVar.h
-	jsonvar/ArrayStringJsonVar.h
-	
-	jsonvar/MapJsonVar.h	
-	jsonvar/MapBooleanJsonVar.h
-	jsonvar/MapNumberJsonVar.h
-	jsonvar/MapObjectJsonVar.h
-	jsonvar/MapStringJsonVar.h
-	jsonvar/MapArrayStringJsonVar.h
-		
-	zetjsoncpp.h
-	zetjsoncpp.tcc
-	deserialize_exception.h
+
+#----------------------------------------
+# INSTALL
+
+install(
+  DIRECTORY
+    "${PROJECT_SOURCE_DIR}/../include/" # Source headers location in the project
+  DESTINATION
+    include/zetjsoncpp # Destination "include" location
 )
-
-
-INSTALL_HEADERS_WITH_DIRECTORY(HS)
-
+	
 #-----------------------------------------
 # EXECUTABLES
 

@@ -11,23 +11,6 @@
 #endif
 
 
-#define ZJ_VAR_BOOLEAN(name) zetjsoncpp::BooleanJsonVar														name{#name}
-#define ZJ_VAR_NUMBER(name) zetjsoncpp::NumberJsonVar														name{#name}
-#define ZJ_VAR_STRING(name) zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR(#name)>									name
-#define ZJ_VAR_OBJECT(type,name) zetjsoncpp::ObjectJsonVar<type,ZJ_CONST_CHAR(#name)>						name
-
-#define ZJ_VAR_ARRAY_BOOLEAN(name) zetjsoncpp::ArrayBooleanJsonVar<ZJ_CONST_CHAR(#name)>					name
-#define ZJ_VAR_ARRAY_NUMBER(name) zetjsoncpp::ArrayNumberJsonVar<ZJ_CONST_CHAR(#name)>						name
-#define ZJ_VAR_ARRAY_STRING(name) zetjsoncpp::ArrayStringJsonVar<ZJ_CONST_CHAR(#name)>						name
-#define ZJ_VAR_ARRAY_OBJECT(type,name) zetjsoncpp::ArrayObjectJsonVar<type,ZJ_CONST_CHAR(#name)>			name
-
-#define ZJ_VAR_MAP_BOOLEAN(name) zetjsoncpp::MapBooleanJsonVar<ZJ_CONST_CHAR(#name)>						name
-#define ZJ_VAR_MAP_NUMBER(name) zetjsoncpp::MapNumberJsonVar<ZJ_CONST_CHAR(#name)>							name
-#define ZJ_VAR_MAP_STRING(name) zetjsoncpp::MapStringJsonVar<ZJ_CONST_CHAR(#name)>							name
-#define ZJ_VAR_MAP_OBJECT(type,name) zetjsoncpp::MapObjectJsonVar<type,ZJ_CONST_CHAR(#name)>				name
-#define ZJ_VAR_MAP_ARRAY_STRING(type,name) zetjsoncpp::MapArrayStringJsonVar<type,ZJ_CONST_CHAR(#name)>		name
-
-
 namespace zetjsoncpp {
 
 	typedef enum:uint16_t{

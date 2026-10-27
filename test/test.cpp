@@ -296,6 +296,144 @@ static void testErrors() {
     CHECK(invalid_threw);
 }
 
+// ---------------------------------------------------------------------------
+// Standalone/root JSON values: no enclosing ZJ_DEFINE_OBJECT schema.
+// These tests intentionally exercise deserialize<T>() for each concrete type.
+// If a root type is currently unsupported, its test identifies the gap.
+// ---------------------------------------------------------------------------
+static void testRootPrimitives() {
+    std::cout << "[7] root primitive values\n";
+
+    auto text = zetjsoncpp::deserialize<zetjsoncpp::StringJsonVar>(
+        "\"Hello \\u4e16\\u754c\"");
+    CHECK(text->getValue() == u8"Hello 世界");
+
+    auto number = zetjsoncpp::deserialize<zetjsoncpp::NumberJsonVar>("3.34E-5");
+    CHECK(closeEnough(number->getValue(), 3.34e-5, 1e-14));
+
+    auto negative = zetjsoncpp::deserialize<zetjsoncpp::NumberJsonVar>("-125.75");
+    CHECK(closeEnough(negative->getValue(), -125.75));
+
+    auto boolean_true = zetjsoncpp::deserialize<zetjsoncpp::BooleanJsonVar>("true");
+    auto boolean_false = zetjsoncpp::deserialize<zetjsoncpp::BooleanJsonVar>("false");
+    CHECK(boolean_true->getValue());
+    CHECK(!boolean_false->getValue());
+
+    auto text_again = zetjsoncpp::deserialize<zetjsoncpp::StringJsonVar>(
+        zetjsoncpp::serialize(text, true, false));
+    CHECK(text_again->getValue() == text->getValue());
+
+    auto number_again = zetjsoncpp::deserialize<zetjsoncpp::NumberJsonVar>(
+        zetjsoncpp::serialize(number, true, false));
+    CHECK(closeEnough(number_again->getValue(), number->getValue(), 1e-14));
+}
+
+static void testRootArrays() {
+    std::cout << "[8] root arrays\n";
+
+    auto strings = zetjsoncpp::deserialize<zetjsoncpp::ArrayStringJsonVar>(
+        "[\"alpha\",\"beta\",\"gamma\"]");
+    CHECK(strings->size() == 3);
+    CHECK((*strings)[1].getValue() == "beta");
+    std::size_t n = 0;
+    for(auto it = strings->begin(); it != strings->end(); ++it) {
+        CHECK(!it->getValue().empty());
+        ++n;
+    }
+    CHECK(n == 3);
+
+    auto numbers = zetjsoncpp::deserialize<zetjsoncpp::ArrayNumberJsonVar>(
+        "[0,-2.5,3.34E-5,1000]");
+    CHECK(numbers->size() == 4);
+    CHECK(closeEnough((*numbers)[1].getValue(), -2.5));
+    CHECK(closeEnough((*numbers)[2].getValue(), 3.34e-5, 1e-14));
+
+    auto booleans = zetjsoncpp::deserialize<zetjsoncpp::ArrayBooleanJsonVar>(
+        "[true,false,true]");
+    CHECK(booleans->size() == 3);
+    CHECK((*booleans)[0].getValue());
+    CHECK(!(*booleans)[1].getValue());
+
+    auto empty = zetjsoncpp::deserialize<zetjsoncpp::ArrayStringJsonVar>("[]");
+    CHECK(empty->size() == 0);
+
+    auto strings_again = zetjsoncpp::deserialize<zetjsoncpp::ArrayStringJsonVar>(
+        zetjsoncpp::serialize(strings, true, false));
+    CHECK(strings_again->size() == 3);
+    CHECK((*strings_again)[2].getValue() == "gamma");
+}
+
+static void testRootMaps() {
+    std::cout << "[9] root maps\n";
+
+    auto strings = zetjsoncpp::deserialize<zetjsoncpp::MapStringJsonVar>(
+        "{\"hello\":\"world\",\"lang\":\"en\"}");
+    CHECK(strings->size() == 2);
+    CHECK((*strings)["hello"].getValue() == "world");
+
+    auto numbers = zetjsoncpp::deserialize<zetjsoncpp::MapNumberJsonVar>(
+        "{\"min\":-3.5,\"max\":9.25}");
+    CHECK(numbers->size() == 2);
+    CHECK(closeEnough((*numbers)["max"].getValue(), 9.25));
+
+    auto booleans = zetjsoncpp::deserialize<zetjsoncpp::MapBooleanJsonVar>(
+        "{\"enabled\":true,\"hidden\":false}");
+    CHECK(booleans->size() == 2);
+    CHECK((*booleans)["enabled"].getValue());
+    CHECK(!(*booleans)["hidden"].getValue());
+
+    auto empty = zetjsoncpp::deserialize<zetjsoncpp::MapStringJsonVar>("{}");
+    CHECK(empty->size() == 0);
+
+    auto strings_again = zetjsoncpp::deserialize<zetjsoncpp::MapStringJsonVar>(
+        zetjsoncpp::serialize(strings, true, false));
+    CHECK(strings_again->size() == 2);
+    CHECK((*strings_again)["lang"].getValue() == "en");
+}
+
+static void testRootObjectContainers() {
+    std::cout << "[10] root object containers\n";
+
+    auto object = zetjsoncpp::deserialize<zetjsoncpp::ObjectJsonVar<Indent>>(
+        "{\"length\":3,\"use_space\":true}");
+    CHECK(closeEnough(object->length.getValue(), 3.0));
+    CHECK(object->use_space.getValue());
+
+    auto objects = zetjsoncpp::deserialize<zetjsoncpp::ArrayObjectJsonVar<Language>>(
+        "[{\"code\":\"en\",\"general_texts\":{\"yes\":\"Yes\"}},"
+        "{\"code\":\"es\",\"general_texts\":{\"yes\":\"Si\"}}]");
+    CHECK(objects->size() == 2);
+    CHECK((*objects)[0]->code.getValue() == "en");
+    CHECK((*objects)[1]->general_texts["yes"].getValue() == "Si");
+
+    auto object_map = zetjsoncpp::deserialize<zetjsoncpp::MapObjectJsonVar<Indent>>(
+        "{\"first\":{\"length\":1,\"use_space\":true},"
+        "\"second\":{\"length\":2,\"use_space\":false}}");
+    CHECK(object_map->size() == 2);
+    CHECK(closeEnough((*object_map)["first"]->length.getValue(), 1.0));
+    CHECK(!(*object_map)["second"]->use_space.getValue());
+
+    auto arrays_map = zetjsoncpp::deserialize<zetjsoncpp::MapArrayStringJsonVar>(
+        "{\"one\":[\"a\",\"b\"],\"two\":[\"c\"]}");
+    CHECK(arrays_map->size() == 2);
+    CHECK((*arrays_map)["one"].size() == 2);
+    CHECK((*arrays_map)["two"][0].getValue() == "c");
+
+    auto objects_again = zetjsoncpp::deserialize<zetjsoncpp::ArrayObjectJsonVar<Language>>(
+        zetjsoncpp::serialize(objects, true, false));
+    CHECK(objects_again->size() == 2);
+    CHECK((*objects_again)[1]->code.getValue() == "es");
+
+    auto object_map_again = zetjsoncpp::deserialize<zetjsoncpp::MapObjectJsonVar<Indent>>(
+        zetjsoncpp::serialize(object_map, true, false));
+    CHECK(object_map_again->size() == 2);
+    CHECK(!(*object_map_again)["second"]->use_space.getValue());
+
+    auto arrays_map_again = zetjsoncpp::deserialize<zetjsoncpp::MapArrayStringJsonVar>(
+        zetjsoncpp::serialize(arrays_map, true, false));
+    CHECK((*arrays_map_again)["one"][1].getValue() == "b");
+}
+
 int main(int argc, char **argv) {
     try {
         std::cout << "zetjsoncpp 3.0 regression suite\n";
@@ -304,8 +442,12 @@ int main(int argc, char **argv) {
         testContainerOperations();
         testOtherPrimitiveContainers();
         testErrors();
+        testRootPrimitives();
+        testRootArrays();
+        testRootMaps();
+        testRootObjectContainers();
         if(argc > 1) {
-            std::cout << "[6] external JSON file\n";
+            std::cout << "[11] external JSON file\n";
             auto doc = zetjsoncpp::deserialize_file<zetjsoncpp::ObjectJsonVar<SampleJson>>(argv[1]);
             checkInitialData(*doc);
         }
