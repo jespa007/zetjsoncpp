@@ -20,8 +20,10 @@ namespace zetjsoncpp {
 		 std::string  	format(const  char  *input_text, ...);
 		 STR_2_NUMBER 	stringToInteger(int * i, const std::string & s, int base = 0);
 		 STR_2_NUMBER 	stringToFloat(float * f, const std::string & s);
+		 STR_2_NUMBER 	stringToDouble(double * d, const std::string & s);
 		 std::string 	integerToString(int number);
 		 std::string 	floatToString(float number);
+		 std::string 	doubleToString(double number);
 
 		 std::string 	toLower(const std::string & str);
 		 bool 			endsWith(const std::string & fullString, const std::string & ending);

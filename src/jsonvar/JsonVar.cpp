@@ -7,8 +7,7 @@
 
 namespace zetjsoncpp {
 
-	char const
-		JsonVar::STR_EMPTY[] = "empty";
+	char const	JsonVar::STR_EMPTY[] = "empty";
 
 	const char *JsonVar::idTypeToString(int index) {
 		switch (index) {
@@ -36,14 +35,16 @@ namespace zetjsoncpp {
 		return "UNKNOWN";
 	}
 
-	JsonVar::JsonVar() {
-		memset(this->__zj_variable_name__,0,sizeof(this->__zj_variable_name__));// = "";
-		this->__zj_ptr_data_end__ = NULL;
-		this->__zj_ptr_data_start__ = NULL;
-		this->__zj_size_data__ = 0;
-		this->__zj_type__ = JsonVarType::JSON_VAR_TYPE_UNKNOWN;
-		this->__zj_is_parsed__ = false;
+	JsonVar::JsonVar(
+	   const char *_name
+	   ,JsonVarType _type
+	){
+
+		this->_name = _name;
+		this->_type = _type;
+		this->_is_deserialized = false;
 	}
+
 
 	JsonVar *JsonVar::newJsonVar(){
 		throw std::runtime_error("internal error: newJsonVar not implemented");
@@ -56,19 +57,34 @@ namespace zetjsoncpp {
 	}
 
 	const char *JsonVar::getTypeStr(){
-		return idTypeToString(this->__zj_type__);
+		return idTypeToString(this->_type);
 	}
 
 	void JsonVar::setParsed(bool parsed) {
-		__zj_is_parsed__ = parsed;
+		this->_is_deserialized = parsed;
 	}
 
 	bool JsonVar::isDeserialized() const {
-		return __zj_is_parsed__;
+		return this->_is_deserialized;
 	}
 
-	JsonVar::~JsonVar() {
+	void JsonVar::forEachField(
+	    FieldCallback _callback
+	    ,void *_context
+	) {
+	    // Primitive types have no fields
+	}
+
+	void JsonVar::forEachField(
+	    ConstFieldCallback _callback
+	    ,void *_context
+	) const {
+	    // Primitive types have no fields
+	}
+
+	JsonVar::~JsonVar(){
 
 	}
+
 }
 

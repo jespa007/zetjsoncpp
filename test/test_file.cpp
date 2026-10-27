@@ -1,72 +1,49 @@
 #include "zetjsoncpp.h"
 
-typedef struct{
-	// Number length
-	zetjsoncpp::NumberJsonVar<ZJ_CONST_CHAR("length")>
-	length;
+ZJ_DEFINE_OBJECT(
+	Ident
+		// Number length
+		,ZJ_NUMBER(length)
+		// Boolean use_space
+		,ZJ_BOOLEAN(use_space)
+);
 
-	// Boolean use_space
-	zetjsoncpp::BooleanJsonVar<ZJ_CONST_CHAR("use_space")>
-	use_space;
-}Ident;
-
-typedef struct{
-	// string_utils code
-	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("code")>
-	code;
-
-	// Map of strings general_texts
-	zetjsoncpp::MapStringJsonVar<ZJ_CONST_CHAR("general_texts")>
-	general_texts;
-}Language;
+ZJ_DEFINE_OBJECT(
+	Language
+		// string_utils code
+		, ZJ_STRING(code)
+		// Map of strings general_texts
+		, ZJ_MAP_STRING(general_texts)
+);
 
 
-typedef struct{
-	// string_utils type
-	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("type")>
-	type;
+ZJ_DEFINE_OBJECT(
+	Interpolation
+		// string_utils type
+		,ZJ_STRING(type)
+		// string_utils channels
+		,ZJ_STRING(channels)
+		// Array of numbers data
+		,ZJ_ARRAY_NUMBER(data)
+);
 
-	// string_utils channels
-	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("channels")>
-	channels;
-
-	// Array of numbers data
-	zetjsoncpp::ArrayNumberJsonVar<ZJ_CONST_CHAR("data")>
-	data;
-}Interpolation;
-
-typedef struct
-{
-    // string_utils encoding
-	zetjsoncpp::StringJsonVar<ZJ_CONST_CHAR("encoding")>
-	encoding;
-
-    // Number number
-	zetjsoncpp::NumberJsonVar<ZJ_CONST_CHAR("number")>
-	number;
-
-    // Array of strings plug-ins
-	zetjsoncpp::ArrayStringJsonVar<ZJ_CONST_CHAR("plug-ins")>
-	plugins;
-
-    // Object indent
-    zetjsoncpp::ObjectJsonVar<Ident,ZJ_CONST_CHAR("indent")>
-    indent;
-
-    // Object languages
-    zetjsoncpp::ArrayObjectJsonVar<Language,ZJ_CONST_CHAR("languages")>
-    languages;
-
-    // Map of objects interpolations
-    zetjsoncpp::MapObjectJsonVar<Interpolation,ZJ_CONST_CHAR("interpolations")>
-    interpolations;
-
-    // Map of array of strings
-    zetjsoncpp::MapArrayStringJsonVar<ZJ_CONST_CHAR("map_array_strings")>
-    map_array_strings;
-
-
-}SampleJson;
+ZJ_DEFINE_OBJECT(
+	SampleJson
+    	// string_utils encoding
+		,ZJ_STRING(encoding)
+		// Number number
+		,ZJ_NUMBER(number)
+		// Array of strings plug-ins
+		,ZJ_ARRAY_STRING(plugins)
+		// Object indent
+		,ZJ_OBJECT(Ident,indent)
+		// Object languages
+		,ZJ_ARRAY_OBJECT(Language,languages)
+		// Map of objects interpolations
+		,ZJ_MAP_OBJECT(Interpolation,interpolations)
+		// Map of array of strings
+		,ZJ_MAP_ARRAY_STRING(map_array_strings)
+);
 
 int main(int argc, char *argv[]){
 
@@ -117,8 +94,6 @@ int main(int argc, char *argv[]){
 		std::cout << " After modifications:"<< std::endl;
 		std::cout << zetjsoncpp::serialize(json_object);
 
-		// destroy json_object
-		delete json_object;
 
 	}catch(std::exception & ex){
     	fprintf(stderr, "%s\n",ex.what());

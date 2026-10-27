@@ -4,7 +4,7 @@ namespace zetjsoncpp{
 	template<typename _T_DATA>
 	class MapJsonVar {
 	protected:
-		std::map<std::string,_T_DATA> __zj_map_data__;
+		std::map<std::string,_T_DATA> _map_data;
 	public:
 
 		typedef typename std::map<std::string,_T_DATA>::iterator JsonVarIteratorMap;
@@ -14,55 +14,55 @@ namespace zetjsoncpp{
 		MapJsonVar() {}
 
 		JsonVarIteratorMap begin(){
-			return __zj_map_data__.begin();
+			return _map_data.begin();
 		}
 
 		JsonVarIteratorMap end(){
-			return __zj_map_data__.end();
+			return _map_data.end();
 		}
 
 
 		_T_DATA const& 	operator[](const std::string & key) const {
-			return __zj_map_data__.at(key);
+			return _map_data.at(key);
 		}
 
 		_T_DATA & 	operator[](const std::string & key) {
-			return __zj_map_data__.at(key);
+			return _map_data.at(key);
 		}
 
 
 		_T_DATA const& 	at(const std::string & key) const {
-			return __zj_map_data__.at(key);
+			return _map_data.at(key);
 		}
 
 		MapJsonVar::size_type count(const std::string & key) const {
-			return __zj_map_data__.count(key);
+			return _map_data.count(key);
 		}
 
 		virtual void insert(const std::string & key, const _T_DATA & tt) {
-			__zj_map_data__.insert ( std::pair<std::string,_T_DATA>(key,tt) );
+			_map_data.insert ( std::pair<std::string,_T_DATA>(key,tt) );
 		}
 
 		virtual void 	erase(const std::string & key) {
-			if (__zj_map_data__.count(key)>0) {
-				__zj_map_data__.erase(key);
+			if (_map_data.count(key)>0) {
+				_map_data.erase(key);
 			}
 		}
 
 		virtual void 	clear() {
-			__zj_map_data__.clear();
+			_map_data.clear();
 		}
 
 		size_t 			size() const {
-			return __zj_map_data__.size();
+			return _map_data.size();
 		}
 
 		std::map<std::string,_T_DATA> * getStdMap() {
-			return &__zj_map_data__;
+			return &_map_data;
 		}
 
 		virtual JsonVar * getJsonVarPtr(const std::string & key_id) {
-			return (JsonVar *)&__zj_map_data__.at(key_id);
+			return (JsonVar *)&_map_data.at(key_id);
 		}
 
 		virtual ~MapJsonVar() {

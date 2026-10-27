@@ -61,6 +61,38 @@ namespace zetjsoncpp{
 			return STR_2_NUMBER_SUCCESS;
 		}
 
+		STR_2_NUMBER stringToDouble(
+		    double *_f
+		    ,const std::string &_s
+		) {
+		    char *end = nullptr;
+
+		    errno = 0;
+
+		    const char *data = _s.c_str();
+		    double value = std::strtod(data, &end);
+
+		    if(end == data || *end != '\0') {
+		        return STR_2_NUMBER_INCONVERTIBLE;
+		    }
+
+		    if(errno == ERANGE) {
+		        if(value == HUGE_VAL || value == -HUGE_VAL) {
+		            return STR_2_NUMBER_OVERFLOW;
+		        }
+
+		        return STR_2_NUMBER_UNDERFLOW;
+		    }
+
+		    if(!std::isfinite(value)) {
+		        return STR_2_NUMBER_INCONVERTIBLE;
+		    }
+
+		    *_f = value;
+
+		    return STR_2_NUMBER_SUCCESS;
+		}
+
 
 		std::string integerToString(int number){
 
@@ -75,6 +107,16 @@ namespace zetjsoncpp{
 			snprintf(buff,100, "%f",number);
 			std::string ss = buff;
 		   return ss;//return a string with the contents of the stream
+		}
+
+		std::string doubleToString(double number){
+
+			std::ostringstream stream;
+			stream << std::setprecision(
+			    std::numeric_limits<double>::max_digits10
+			) << number;
+
+			return stream.str();
 		}
 
 		std::string toLower(const std::string & str){
