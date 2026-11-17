@@ -30,6 +30,7 @@ namespace zetjsoncpp {
 		case JSON_VAR_TYPE_MAP_OF_NUMBERS: return "MapNumberJsonVar";
 		case JSON_VAR_TYPE_MAP_OF_STRINGS: return "MapStringJsonVar";
 		case JSON_VAR_TYPE_MAP_OF_OBJECTS: return "MapObjectJsonVar";
+		case JSON_VAR_TYPE_MAP_OF_ARRAY_OF_STRINGS: return "MapArrayStringJsonVar";
 		}
 
 		return "UNKNOWN";

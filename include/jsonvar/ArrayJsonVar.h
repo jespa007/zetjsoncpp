@@ -33,7 +33,7 @@ namespace zetjsoncpp{
 			return _vector_data.at(i);
 		}
 
-		virtual void			 	push_back(const _T_DATA & tt) {
+		void			 	push_back(const _T_DATA & tt) {
 			_vector_data.push_back(tt);
 		}
 
@@ -41,7 +41,7 @@ namespace zetjsoncpp{
 			_vector_data.erase(_vector_data.begin()+idx_position);
 		}
 
-		virtual  void 	insert(int idx_position, const _T_DATA & tt) {
+		void 	insert(int idx_position, const _T_DATA & tt) {
 			_vector_data.insert(_vector_data.begin()+idx_position,tt);
 		}
 

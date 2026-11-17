@@ -109,14 +109,21 @@ namespace zetjsoncpp{
 		   return ss;//return a string with the contents of the stream
 		}
 
-		std::string doubleToString(double number){
+		std::string doubleToString(double number) {
 
-			std::ostringstream stream;
-			stream << std::setprecision(
-			    std::numeric_limits<double>::max_digits10
-			) << number;
+		    if(!std::isfinite(number)) {
+		        throw std::runtime_error("Invalid JSON number");
+		    }
 
-			return stream.str();
+		    std::ostringstream stream;
+
+		    stream.imbue(std::locale::classic());
+
+		    stream << std::setprecision(
+		        std::numeric_limits<double>::max_digits10
+		    ) << number;
+
+		    return stream.str();
 		}
 
 		std::string toLower(const std::string & str){

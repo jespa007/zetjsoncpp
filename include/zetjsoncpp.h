@@ -31,7 +31,7 @@
 
 #define ZETJSONCPP_VERSION_MAJOR 3
 #define ZETJSONCPP_VERSION_MINOR 0
-#define ZETJSONCPP_VERSION_PATCH 1
+#define ZETJSONCPP_VERSION_PATCH 4
 
 #ifdef USE_MEMMGR
 #include "memmgr.h"
@@ -59,13 +59,13 @@ namespace zetjsoncpp {
 		std::string serialize(
 			JsonVar *_json_var
 			, bool _minimized = false
-			, bool _discard_non_serialized = true
+			, bool _discard_non_serialized = false
 		);
 
 		std::string serialize(
 			JsonVar & _json_var
 			, bool _minimized = false
-			, bool _discard_non_serialized = true
+			, bool _discard_non_serialized = false
 		);
 
 		// overload for unique_ptr

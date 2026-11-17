@@ -3,8 +3,9 @@ namespace zetjsoncpp{
 	template<typename _T_DATA>
 	class MapObjectJsonVar : public JsonVar, public MapJsonVar<ObjectJsonVar<_T_DATA> * > {
 
-
 	public:
+
+		using JsonVar::newJsonVar;
 
 		explicit MapObjectJsonVar(const char * _name = "")
 		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_OBJECTS) {
@@ -13,19 +14,24 @@ namespace zetjsoncpp{
 		MapObjectJsonVar(const MapObjectJsonVar &) = delete;
 		MapObjectJsonVar &operator=(const MapObjectJsonVar &) = delete;
 
-		virtual JsonVar *newJsonVar(const std::string & key_id) override{
-
-			if(this->_map_data.count(key_id) != 0){
-				throw std::runtime_error(string_utils::format("property name \"%s\" already exists",key_id.c_str()));
-			}
+		virtual JsonVar *newJsonVar(
+		    const std::string &key_id
+		) override {
 
 		    std::unique_ptr<ObjectJsonVar<_T_DATA>> tt(
 		        new ObjectJsonVar<_T_DATA>
 		    );
 
-		    this->_map_data[key_id] = tt.get();
+		    auto result = this->_map_data.emplace(
+		        key_id
+		        ,tt.get()
+		    );
 
-			return tt.release();
+		    if(!result.second) {
+		        throw std::runtime_error( string_utils::format("property name \"%s\" already exists" ,key_id.c_str()));
+		    }
+
+		    return tt.release();
 		}
 
 		virtual void 	clear() {

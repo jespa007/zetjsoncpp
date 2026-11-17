@@ -4,6 +4,8 @@ namespace zetjsoncpp{
 
 	public:
 
+		using JsonVar::newJsonVar;
+
 		explicit MapStringJsonVar(const char * _name = "")
 		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS) {
 		}
@@ -26,6 +28,13 @@ namespace zetjsoncpp{
 			this->_map_data[key_id] = StringJsonVar();
 
 			return &this->_map_data[key_id];
+		}
+
+		void forEachMapEntry(ConstMapEntryCallback _callback  ,void *_context) const override {
+		    this->visitMapEntries(
+		        _callback
+		        ,_context
+		    );
 		}
 
 		virtual ~MapStringJsonVar() {

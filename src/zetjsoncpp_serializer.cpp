@@ -34,10 +34,6 @@ namespace zetjsoncpp{
 	) {
 	    auto *ctx = static_cast<SerializeContext *>(_context);
 
-	    if(ctx->discard_non_serialized
-	        && !_element->isDeserialized()) {
-	        return;
-	    }
 
 	    if(ctx->serialized_count > 0) {
 	        *ctx->result += ",";
@@ -60,11 +56,6 @@ namespace zetjsoncpp{
 	    ,void *_context
 	) {
 	    auto *ctx = static_cast<SerializeContext *>(_context);
-
-	    if(ctx->discard_non_serialized
-	        && !_element->isDeserialized()) {
-	        return;
-	    }
 
 	    std::string &result = *ctx->result;
 
@@ -192,7 +183,7 @@ namespace zetjsoncpp{
 	    // Serialize the actual field value
 	    serialize_json_var(
 	        result
-	        ,const_cast<JsonVar *>(_field)
+	        ,_field
 	        ,ctx->indent + 1
 	        ,ctx->minimized
 	        ,ctx->discard_non_serialized

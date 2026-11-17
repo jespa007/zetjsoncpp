@@ -1,8 +1,9 @@
 namespace zetjsoncpp{
 
 	class MapNumberJsonVar: public JsonVar, public MapJsonVar<NumberJsonVar> {
-
 	public:
+
+		using JsonVar::newJsonVar;
 
 		explicit MapNumberJsonVar(const char * _name = "")
 		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS
@@ -27,6 +28,14 @@ namespace zetjsoncpp{
 			this->_map_data[key_id]=NumberJsonVar();
 
 			return &this->_map_data[key_id];
+		}
+
+		void forEachMapEntry(ConstMapEntryCallback _callback,void *_context) const override {
+
+		    this->visitMapEntries(
+		        _callback
+		        ,_context
+		    );
 		}
 
 		virtual ~MapNumberJsonVar() {

@@ -5,6 +5,8 @@ namespace zetjsoncpp{
 
 	public:
 
+		using JsonVar::newJsonVar;
+
 		explicit ArrayObjectJsonVar(const char * _name = "")
 		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_ARRAY_OF_OBJECTS
 		) {
@@ -23,15 +25,15 @@ namespace zetjsoncpp{
 		    return tt.release();
 		}
 
-		virtual void			 	push_back(const _T_DATA & tt) = delete;
+		void			 	push_back(const _T_DATA & tt) = delete;
 
-		virtual  void 	erase(int idx_position) {
+		virtual  void 	erase(int idx_position) override {
 			JsonVar *json_object = this->_vector_data.at(idx_position);
 			this->_vector_data.erase(this->_vector_data.begin()+idx_position);
 			delete json_object;
 		}
 
-		virtual  void 	insert(int idx_position, const _T_DATA & tt) = delete;
+		void 	insert(int idx_position, const _T_DATA & tt) = delete;
 
 		virtual void		clear() {
 			destroy();
@@ -62,11 +64,6 @@ namespace zetjsoncpp{
 		virtual ~ArrayObjectJsonVar() {
 			destroy();
 		}
-	private:
 
-		void init(){
-			this->type = JsonVarType::JSON_VAR_TYPE_ARRAY_OF_OBJECTS;
-			this->size_bytes = sizeof(ArrayObjectJsonVar<_T_DATA>);
-		}
 	};
 }
