@@ -10,7 +10,6 @@
 #define  ZJ_MIN(a,  b)              ((a)  <  (b)  ?  (a)  :  (b))
 #endif
 
-
 namespace zetjsoncpp {
 
 	typedef enum:uint16_t{
@@ -34,7 +33,6 @@ namespace zetjsoncpp {
 	}JsonVarType;
 
 	class JsonVar;
-
     typedef void (*FieldCallback)(
         JsonVar *
         ,void *
@@ -45,7 +43,14 @@ namespace zetjsoncpp {
         ,void *
     );
 
+    typedef void (*ConstMapEntryCallback)(
+        const std::string &
+        ,const JsonVar *
+        ,void *
+    );
+
 	class JsonVar {//: public CVariable {
+
 	public:
 
 		static const char *idTypeToString(int index);
@@ -69,7 +74,7 @@ namespace zetjsoncpp {
 		const char *getTypeStr();
 
 		virtual void * getPtrValue(){ return NULL;}
-		JsonVarType getType(){return this->_type;}
+		JsonVarType getType() const {return this->_type;}
 		std::string getVariableName() const {return this->_name;}
 		const char * getVariableNameCStr() const {return this->_name;}
 		void setVariableName(const char * _name){ this->_name = _name;}
@@ -91,6 +96,16 @@ namespace zetjsoncpp {
 	        ,void *_context
 	    ) const;
 
+	    virtual void forEachArrayElement(
+	        ConstFieldCallback _callback
+	        ,void *_context
+	    ) const;
+
+	    virtual void forEachMapEntry(
+	        ConstMapEntryCallback _callback
+	        ,void *_context
+	    ) const;
+
 		virtual ~JsonVar();
 
 	protected:
@@ -101,6 +116,18 @@ namespace zetjsoncpp {
 
 
 	};
+
+	namespace detail {
+
+	    inline const JsonVar *asJsonVar(const JsonVar &_value) {
+	        return &_value;
+	    }
+
+	    inline const JsonVar *asJsonVar(const JsonVar *_value) {
+	        return _value;
+	    }
+
+	}
 
 
 

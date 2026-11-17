@@ -1,15 +1,5 @@
 
 
-#define ZJ_FORMAT_OUTPUT_ARRAY_N_ELEMENTS			10
-#define ZJ_FORMAT_OUTPUT_NEW_LINE_ARRAY_ELEMENTS(str_out,ident,n_element) \
-	if (n_element != 0 && ((n_element%ZJ_FORMAT_OUTPUT_ARRAY_N_ELEMENTS) == 0)){\
-		str_out += "\n";\
-		for (int k = 0; k < (ident); k++){\
-			str_out += "\t";\
-		}\
-	}\
-
-
 namespace zetjsoncpp{
 
 	template<typename _T_DATA>
@@ -73,6 +63,15 @@ namespace zetjsoncpp{
 
 		virtual JsonVar * getJsonVarPtr(int index) {
 			return (JsonVar *)&_vector_data.at(index);
+		}
+
+		void visitArrayElements( ConstFieldCallback _callback  ,void *_context ) const {
+		    for(const auto &element : this->_vector_data) {
+		        _callback(
+		            detail::asJsonVar(element)
+		            ,_context
+		        );
+		    }
 		}
 
 		virtual ~ArrayJsonVar() {

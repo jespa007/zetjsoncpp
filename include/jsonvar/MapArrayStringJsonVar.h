@@ -4,12 +4,13 @@ namespace zetjsoncpp{
 	public:
 
 		explicit MapArrayStringJsonVar(const char * _name = "")
-		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS
+		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_ARRAY_OF_STRINGS
 		) {
 		}
 
-		MapArrayStringJsonVar(const std::map<std::string,std::vector<std::string>> & _map_string) {
-				copy(_map_string);
+		MapArrayStringJsonVar(const std::map<std::string,std::vector<std::string>> & _map_string)
+		:JsonVar("", JsonVarType::JSON_VAR_TYPE_MAP_OF_ARRAY_OF_STRINGS){
+			copy(_map_string);
 		}
 
 

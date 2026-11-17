@@ -82,9 +82,26 @@ namespace zetjsoncpp {
 	    // Primitive types have no fields
 	}
 
+	void JsonVar::forEachArrayElement(
+	    ConstFieldCallback _callback
+	    ,void *_context
+	) const {
+	    ZJ_UNUSUED_2PARAMS(_callback,_context);
+	}
+
+	void JsonVar::forEachMapEntry(
+	    ConstMapEntryCallback _callback
+	    ,void *_context
+	) const {
+	    ZJ_UNUSUED_2PARAMS(_callback,_context);
+	}
+
 	JsonVar::~JsonVar(){
 
 	}
 
 }
+
+
+
 

@@ -11,8 +11,9 @@ namespace zetjsoncpp{
 		}
 
 
-		ArrayNumberJsonVar(const std::vector<double> & _vec_numbers) {
-			copy(_vec_numbers);
+		ArrayNumberJsonVar(const std::vector<double> &_vec_numbers)
+		    : JsonVar("", JsonVarType::JSON_VAR_TYPE_ARRAY_OF_NUMBERS) {
+		    copy(_vec_numbers);
 		}
 
 

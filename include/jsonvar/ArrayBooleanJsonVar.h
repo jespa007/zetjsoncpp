@@ -10,7 +10,8 @@ namespace zetjsoncpp{
 		}
 
 
-		ArrayBooleanJsonVar(const std::vector<bool> & _vec_booleans) {
+		ArrayBooleanJsonVar(const std::vector<bool> & _vec_booleans)
+	    : JsonVar("", JsonVarType::JSON_VAR_TYPE_ARRAY_OF_BOOLEANS) {
 			copy(_vec_booleans);
 		}
 

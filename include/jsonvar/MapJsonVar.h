@@ -39,7 +39,7 @@ namespace zetjsoncpp{
 			return _map_data.count(key);
 		}
 
-		virtual void insert(const std::string & key, const _T_DATA & tt) {
+		void insert(const std::string & key, const _T_DATA & tt) {
 			_map_data.insert ( std::pair<std::string,_T_DATA>(key,tt) );
 		}
 
@@ -63,6 +63,16 @@ namespace zetjsoncpp{
 
 		virtual JsonVar * getJsonVarPtr(const std::string & key_id) {
 			return (JsonVar *)&_map_data.at(key_id);
+		}
+
+		void visitMapEntries( ConstMapEntryCallback _callback  ,void *_context) const {
+		    for(const auto &entry : this->_map_data) {
+		        _callback(
+		            entry.first
+		            ,detail::asJsonVar(entry.second)
+		            ,_context
+		        );
+		    }
 		}
 
 		virtual ~MapJsonVar() {

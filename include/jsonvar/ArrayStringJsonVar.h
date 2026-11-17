@@ -1,15 +1,19 @@
 namespace zetjsoncpp{
 
+
 	// ARRAY STRING
 	class ArrayStringJsonVar : public JsonVar, public ArrayJsonVar<StringJsonVar> {
 	public:
+		using JsonVar::newJsonVar;
+
 		//_T_NAME name;
 		explicit ArrayStringJsonVar(const char * _name = "")
 		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_ARRAY_OF_STRINGS
 		) {
 		}
 
-		ArrayStringJsonVar(const std::vector<std::string> & _vec_string) {
+		ArrayStringJsonVar(const std::vector<std::string> & _vec_string)
+			:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_ARRAY_OF_STRINGS){
 			copy(_vec_string);
 		}
 

@@ -8,7 +8,8 @@ namespace zetjsoncpp{
 		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS) {
 		}
 
-		MapStringJsonVar(const std::map<std::string,std::string> & _map_string){
+		MapStringJsonVar(const std::map<std::string,std::string> & _map_string)
+		:JsonVar("", JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS){
 			copy(_map_string);
 		}
 

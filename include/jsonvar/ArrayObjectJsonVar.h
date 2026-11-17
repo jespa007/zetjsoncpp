@@ -14,17 +14,16 @@ namespace zetjsoncpp{
 		ArrayObjectJsonVar &operator=(const ArrayObjectJsonVar &) = delete;
 
 
-		virtual JsonVar *newJsonVar() {
+		JsonVar *newJsonVar() override {
+		    std::unique_ptr<ObjectJsonVar<_T_DATA>> tt(
+		        new ObjectJsonVar<_T_DATA>
+		    );
 
-			ObjectJsonVar< _T_DATA> *tt = new ObjectJsonVar<_T_DATA>;
-			this->_vector_data.push_back(tt);
-			return (JsonVar *)tt;
+		    this->_vector_data.push_back(tt.get());
+		    return tt.release();
 		}
 
-		virtual void			 	push_back(const _T_DATA & tt) {
-			ZJ_UNUSUED_PARAM(tt);
-			throw std::runtime_error("push_back not available, please use newJsonVar in order to add ObjectJsonVar");
-		}
+		virtual void			 	push_back(const _T_DATA & tt) = delete;
 
 		virtual  void 	erase(int idx_position) {
 			JsonVar *json_object = this->_vector_data.at(idx_position);
@@ -32,10 +31,7 @@ namespace zetjsoncpp{
 			delete json_object;
 		}
 
-		virtual  void 	insert(int idx_position, const _T_DATA & tt) {
-			ZJ_UNUSUED_2PARAMS(idx_position,tt);
-			throw std::runtime_error("insert not available, please use newJsonVar in order to add ObjectJsonVar");
-		}
+		virtual  void 	insert(int idx_position, const _T_DATA & tt) = delete;
 
 		virtual void		clear() {
 			destroy();
@@ -43,6 +39,14 @@ namespace zetjsoncpp{
 
 		virtual JsonVar * getJsonVarPtr(int index) {
 			return (JsonVar *)this->_vector_data.at(index);
+		}
+
+		void forEachArrayElement( ConstFieldCallback _callback  ,void *_context ) const override {
+
+		    this->visitArrayElements(
+		        _callback
+		        ,_context
+		    );
 		}
 
 		void destroy() {

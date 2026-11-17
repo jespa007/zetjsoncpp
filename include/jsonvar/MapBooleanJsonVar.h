@@ -5,11 +5,11 @@ namespace zetjsoncpp{
 	public:
 
 		explicit MapBooleanJsonVar(const char * _name ="")
-		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS
-		) {
+		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS) {
 		}
 
-		MapBooleanJsonVar(const std::map<std::string,bool> & _map_bools) {
+		MapBooleanJsonVar(const std::map<std::string,bool> & _map_bools)
+		:JsonVar("", JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS){
 			copy(_map_bools);
 		}
 

@@ -9,7 +9,8 @@ namespace zetjsoncpp{
 		) {
 		}
 
-		MapNumberJsonVar(const std::map<std::string,double> & _map_numbers) {
+		MapNumberJsonVar(const std::map<std::string,double> & _map_numbers)
+		:JsonVar("", JsonVarType::JSON_VAR_TYPE_MAP_OF_NUMBERS){
 			copy(_map_numbers);
 		}
 
