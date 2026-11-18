@@ -4,22 +4,33 @@ namespace zetjsoncpp{
 
 	public:
 
+		using JsonVar::newJsonVar;
+
 		explicit MapBooleanJsonVar(const char * _name ="")
-		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS
-		) {
+		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS) {
 		}
 
-		MapBooleanJsonVar(const std::map<std::string,bool> & _map_bools) {
+		MapBooleanJsonVar(const std::map<std::string,bool> & _map_bools)
+		:JsonVar("", JsonVarType::JSON_VAR_TYPE_MAP_OF_BOOLEANS){
 			copy(_map_bools);
 		}
 
 		virtual JsonVar *newJsonVar(const std::string & key_id){
+
 			if(this->_map_data.count(key_id) != 0){
 				throw std::runtime_error(string_utils::format("property name \"%s\" already exists",key_id.c_str()));
 			}
 			this->_map_data[key_id] = BooleanJsonVar();
 
 			return &this->_map_data[key_id];
+		}
+
+		void forEachMapEntry(ConstMapEntryCallback _callback,void *_context) const override {
+
+		    this->visitMapEntries(
+		        _callback
+		        ,_context
+		    );
 		}
 
 		virtual ~MapBooleanJsonVar() {

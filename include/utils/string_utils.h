@@ -27,7 +27,10 @@ namespace zetjsoncpp {
 
 		 std::string 	toLower(const std::string & str);
 		 bool 			endsWith(const std::string & fullString, const std::string & ending);
-		 std::wstring 	toWStringUtf8(const std::string & s);
+         // Append a complete JSON string, including its quotes.
+         void 			appendJsonString(std::string &_out, const std::string &_value);
+         // Read a complete quoted string; return the next input position.
+         const char *	readJsonString(const char *_input, std::string *_out);
 	}
 
 }

@@ -3,13 +3,16 @@ namespace zetjsoncpp{
 	class MapArrayStringJsonVar : public JsonVar, public MapJsonVar<ArrayStringJsonVar> {
 	public:
 
+		using JsonVar::newJsonVar;
+
 		explicit MapArrayStringJsonVar(const char * _name = "")
-		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_STRINGS
+		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_MAP_OF_ARRAY_OF_STRINGS
 		) {
 		}
 
-		MapArrayStringJsonVar(const std::map<std::string,std::vector<std::string>> & _map_string) {
-				copy(_map_string);
+		MapArrayStringJsonVar(const std::map<std::string,std::vector<std::string>> & _map_string)
+		:JsonVar("", JsonVarType::JSON_VAR_TYPE_MAP_OF_ARRAY_OF_STRINGS){
+			copy(_map_string);
 		}
 
 
@@ -25,6 +28,14 @@ namespace zetjsoncpp{
 			this->_map_data[key_id]=ArrayStringJsonVar();
 
 			return &this->_map_data[key_id];
+		}
+
+		void forEachMapEntry(ConstMapEntryCallback _callback,void *_context) const override {
+
+		    this->visitMapEntries(
+		        _callback
+		        ,_context
+		    );
 		}
 
 		virtual ~MapArrayStringJsonVar() {

@@ -30,6 +30,7 @@ namespace zetjsoncpp {
 		case JSON_VAR_TYPE_MAP_OF_NUMBERS: return "MapNumberJsonVar";
 		case JSON_VAR_TYPE_MAP_OF_STRINGS: return "MapStringJsonVar";
 		case JSON_VAR_TYPE_MAP_OF_OBJECTS: return "MapObjectJsonVar";
+		case JSON_VAR_TYPE_MAP_OF_ARRAY_OF_STRINGS: return "MapArrayStringJsonVar";
 		}
 
 		return "UNKNOWN";
@@ -82,9 +83,26 @@ namespace zetjsoncpp {
 	    // Primitive types have no fields
 	}
 
+	void JsonVar::forEachArrayElement(
+	    ConstFieldCallback _callback
+	    ,void *_context
+	) const {
+	    ZJ_UNUSUED_2PARAMS(_callback,_context);
+	}
+
+	void JsonVar::forEachMapEntry(
+	    ConstMapEntryCallback _callback
+	    ,void *_context
+	) const {
+	    ZJ_UNUSUED_2PARAMS(_callback,_context);
+	}
+
 	JsonVar::~JsonVar(){
 
 	}
 
 }
+
+
+
 

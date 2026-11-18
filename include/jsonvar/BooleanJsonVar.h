@@ -16,8 +16,9 @@ namespace zetjsoncpp{
 		}
 
 		//_T_NAME name;
-		BooleanJsonVar(bool b) {
-			this->_value = b;
+		BooleanJsonVar(bool _value)
+		    : JsonVar("", JsonVarType::JSON_VAR_TYPE_BOOLEAN)
+		    ,_value(_value) {
 		}
 
 		// operators

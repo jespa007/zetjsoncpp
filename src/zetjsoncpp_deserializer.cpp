@@ -73,22 +73,30 @@ namespace zetjsoncpp{
 		return aux_p;
 	}
 
-	char *advance_to_end_comment(char *aux_p, int &line){
+	char *advance_to_end_comment(
+	    char *aux_p
+	    ,int &line
+	) {
+	    if(!is_start_comment(aux_p)) {
+	        return aux_p;
+	    }
 
-		if(is_start_comment(aux_p)){
-			aux_p+=2; //advance first
-			while(!is_end_comment(aux_p) && *aux_p != 0){
-				aux_p = advance_to_char(aux_p,'*');
-				if(*aux_p == '\n') {
-					aux_p++; // make compatible windows format...
-					line++;
-				}
-				if(*aux_p == '\r') aux_p++;
-				if(*(aux_p+1) != '/') aux_p++; // not end comment ... advance ...
-			}
-		}
+	    aux_p += 2;
 
-		return aux_p;
+	    while(*aux_p != '\0') {
+
+	        if(is_end_comment(aux_p)) {
+	            return aux_p;
+	        }
+
+	        if(*aux_p == '\n') {
+	            line++;
+	        }
+
+	        aux_p++;
+	    }
+
+	    throw std::runtime_error("Unterminated block comment");
 	}
 
 	char *ignore_blanks(char *str, int &line) {
@@ -245,32 +253,21 @@ namespace zetjsoncpp{
 		}
 	}*/
 
-	char * read_string_between_quotes(DeserializeData *deserialize_data, const char *str_start,int & line, std::string * str_out){
-		char *str_current = (char *) str_start;
-		size_t str_size;
-
-		if(str_out != NULL){
-			*str_out="";
-		}
-
-		if (*str_current == '\"'){ // try to single quote...
-			str_current++;
-			while(*str_current!='\n' && *str_current!='\r' && *str_current!=0 &&  (*str_current=='\"' && *(str_current-1)!='\\')==false){
-				if(str_out != NULL){
-					(*str_out)+=*str_current;
-				}
-				str_current++;
-			}
-		}else{
-			json_deserialize_error(deserialize_data,str_start,line,"expected string value");
-		}
-
-		if(*str_current != '\"'){
-			json_deserialize_error(deserialize_data,str_start,line,"string value not closed");
-		}
-
-		return ignore_blanks(str_current+1, line);
-	}
+    char *read_string_between_quotes(
+        DeserializeData *deserialize_data
+        ,const char *str_start
+        ,int &line
+        ,std::string *str_out
+    ) {
+        const char *end = nullptr;
+        try {
+            end = string_utils::readJsonString(str_start, str_out);
+        } catch(const std::runtime_error &ex) {
+            json_deserialize_error(deserialize_data,str_start,line,"%s",ex.what());
+            return nullptr;
+        }
+        return ignore_blanks(const_cast<char *>(end), line);
+    }
 
 	char * deserialize_json_var_value(
 		DeserializeData *deserialize_data
@@ -328,22 +325,23 @@ namespace zetjsoncpp{
 		}
 		else{ // must a number
 			// try read until next comma
-			char str_char_value[1024]={0};
-
 			str_end = advance_to_one_of_collection_of_char(str_current, (char *)end_char_standard_value, line);
 			bytes_readed = str_end - str_current;
 			if (*str_end != 0) {
 				str_end--;
 			}
 
-			if (bytes_readed > 0) {
-				// copy string...
-				strncpy(str_char_value,str_current,bytes_readed);
-				str_value=str_char_value;
-				str_current+=bytes_readed;
+			if(bytes_readed > 0) {
 
+			    str_value.assign(
+			        str_current
+			        ,static_cast<size_t>(bytes_readed)
+			    );
 
-				double number_value = 0;
+			    str_current += bytes_readed;
+
+			    // Continue parsing the numeric value...
+							double number_value = 0;
 				if(zetjsoncpp::string_utils::stringToDouble(&number_value,str_value) == zetjsoncpp::string_utils::STR_2_NUMBER_SUCCESS){
 					if(type_data ==  JsonVarType::JSON_VAR_TYPE_NUMBER){
 						if(ptr_data!=NULL){
@@ -493,7 +491,15 @@ namespace zetjsoncpp{
 						try{
 							json_var_property = json_var->newJsonVar(key_id);
 						}catch(std::exception &ex){
-							json_deserialize_error(deserialize_data, str_current, line,ex.what());
+							json_deserialize_error(
+								deserialize_data
+								,str_current
+								,line
+								,"%s"
+								,ex.what()
+							);
+
+
 							return NULL;
 						}
 					}

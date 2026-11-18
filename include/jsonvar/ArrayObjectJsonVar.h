@@ -5,6 +5,8 @@ namespace zetjsoncpp{
 
 	public:
 
+		using JsonVar::newJsonVar;
+
 		explicit ArrayObjectJsonVar(const char * _name = "")
 		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_ARRAY_OF_OBJECTS
 		) {
@@ -14,28 +16,24 @@ namespace zetjsoncpp{
 		ArrayObjectJsonVar &operator=(const ArrayObjectJsonVar &) = delete;
 
 
-		virtual JsonVar *newJsonVar() {
+		JsonVar *newJsonVar() override {
+		    std::unique_ptr<ObjectJsonVar<_T_DATA>> tt(
+		        new ObjectJsonVar<_T_DATA>
+		    );
 
-			ObjectJsonVar< _T_DATA> *tt = new ObjectJsonVar<_T_DATA>;
-			this->_vector_data.push_back(tt);
-			return (JsonVar *)tt;
+		    this->_vector_data.push_back(tt.get());
+		    return tt.release();
 		}
 
-		virtual void			 	push_back(const _T_DATA & tt) {
-			ZJ_UNUSUED_PARAM(tt);
-			throw std::runtime_error("push_back not available, please use newJsonVar in order to add ObjectJsonVar");
-		}
+		void			 	push_back(const _T_DATA & tt) = delete;
 
-		virtual  void 	erase(int idx_position) {
+		virtual  void 	erase(int idx_position) override {
 			JsonVar *json_object = this->_vector_data.at(idx_position);
 			this->_vector_data.erase(this->_vector_data.begin()+idx_position);
 			delete json_object;
 		}
 
-		virtual  void 	insert(int idx_position, const _T_DATA & tt) {
-			ZJ_UNUSUED_2PARAMS(idx_position,tt);
-			throw std::runtime_error("insert not available, please use newJsonVar in order to add ObjectJsonVar");
-		}
+		void 	insert(int idx_position, const _T_DATA & tt) = delete;
 
 		virtual void		clear() {
 			destroy();
@@ -43,6 +41,14 @@ namespace zetjsoncpp{
 
 		virtual JsonVar * getJsonVarPtr(int index) {
 			return (JsonVar *)this->_vector_data.at(index);
+		}
+
+		void forEachArrayElement( ConstFieldCallback _callback  ,void *_context ) const override {
+
+		    this->visitArrayElements(
+		        _callback
+		        ,_context
+		    );
 		}
 
 		void destroy() {
@@ -58,11 +64,6 @@ namespace zetjsoncpp{
 		virtual ~ArrayObjectJsonVar() {
 			destroy();
 		}
-	private:
 
-		void init(){
-			this->type = JsonVarType::JSON_VAR_TYPE_ARRAY_OF_OBJECTS;
-			this->size_bytes = sizeof(ArrayObjectJsonVar<_T_DATA>);
-		}
 	};
 }

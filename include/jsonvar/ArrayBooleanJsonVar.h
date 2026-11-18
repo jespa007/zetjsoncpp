@@ -3,6 +3,7 @@ namespace zetjsoncpp{
 	// ARRAY BOOL
 	class ArrayBooleanJsonVar : public JsonVar, public ArrayJsonVar<BooleanJsonVar> {
 	public:
+		using JsonVar::newJsonVar;
 		//_T_NAME name;
 		explicit ArrayBooleanJsonVar(const char * _name = "")
 		:JsonVar(_name, JsonVarType::JSON_VAR_TYPE_ARRAY_OF_BOOLEANS
@@ -10,7 +11,8 @@ namespace zetjsoncpp{
 		}
 
 
-		ArrayBooleanJsonVar(const std::vector<bool> & _vec_booleans) {
+		ArrayBooleanJsonVar(const std::vector<bool> & _vec_booleans)
+	    : JsonVar("", JsonVarType::JSON_VAR_TYPE_ARRAY_OF_BOOLEANS) {
 			copy(_vec_booleans);
 		}
 
@@ -21,9 +23,15 @@ namespace zetjsoncpp{
 		}
 
 		virtual JsonVar *newJsonVar(){
-			this->_vector_data.push_back(BooleanJsonVar());
-
+						this->_vector_data.push_back(BooleanJsonVar());
 			return &this->_vector_data[this->_vector_data.size()-1];
+		}
+
+		void forEachArrayElement(ConstFieldCallback _callback ,void *_context) const override {
+		    this->visitArrayElements(
+		        _callback
+		        ,_context
+		    );
 		}
 
 		virtual ~ArrayBooleanJsonVar(){}
