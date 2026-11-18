@@ -253,32 +253,21 @@ namespace zetjsoncpp{
 		}
 	}*/
 
-	char * read_string_between_quotes(DeserializeData *deserialize_data, const char *str_start,int & line, std::string * str_out){
-		char *str_current = (char *) str_start;
-		size_t str_size;
-
-		if(str_out != NULL){
-			*str_out="";
-		}
-
-		if (*str_current == '\"'){ // try to single quote...
-			str_current++;
-			while(*str_current!='\n' && *str_current!='\r' && *str_current!=0 &&  (*str_current=='\"' && *(str_current-1)!='\\')==false){
-				if(str_out != NULL){
-					(*str_out)+=*str_current;
-				}
-				str_current++;
-			}
-		}else{
-			json_deserialize_error(deserialize_data,str_start,line,"expected string value");
-		}
-
-		if(*str_current != '\"'){
-			json_deserialize_error(deserialize_data,str_start,line,"string value not closed");
-		}
-
-		return ignore_blanks(str_current+1, line);
-	}
+    char *read_string_between_quotes(
+        DeserializeData *deserialize_data
+        ,const char *str_start
+        ,int &line
+        ,std::string *str_out
+    ) {
+        const char *end = nullptr;
+        try {
+            end = string_utils::readJsonString(str_start, str_out);
+        } catch(const std::runtime_error &ex) {
+            json_deserialize_error(deserialize_data,str_start,line,"%s",ex.what());
+            return nullptr;
+        }
+        return ignore_blanks(const_cast<char *>(end), line);
+    }
 
 	char * deserialize_json_var_value(
 		DeserializeData *deserialize_data

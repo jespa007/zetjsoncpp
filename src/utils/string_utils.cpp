@@ -142,11 +142,134 @@ namespace zetjsoncpp{
 			return false;
 		}
 
+        static uint32_t readHex4(const char *&_cursor) {
+            uint32_t value = 0;
+            for(int i = 0; i < 4; ++i) {
+                unsigned char c = static_cast<unsigned char>(*_cursor);
+                unsigned digit;
+                if(c >= '0' && c <= '9') digit = c - '0';
+                else if(c >= 'a' && c <= 'f') digit = c - 'a' + 10;
+                else if(c >= 'A' && c <= 'F') digit = c - 'A' + 10;
+                else throw std::runtime_error("Invalid Unicode escape");
+                value = (value << 4) | digit;
+                ++_cursor;
+            }
+            return value;
+        }
 
-		std::wstring toWStringUtf8(const std::string & str){
-			std::wstring_convert<std::codecvt_utf8<wchar_t>> str_utf8_to_wstring_conv;
-			return str_utf8_to_wstring_conv.from_bytes(str);
-		}
+        static void appendUtf8(std::string &_out, uint32_t _cp) {
+            if(_cp > 0x10FFFF || (_cp >= 0xD800 && _cp <= 0xDFFF)) {
+                throw std::runtime_error("Invalid Unicode code point");
+            }
+            if(_cp <= 0x7F) {
+                _out += static_cast<char>(_cp);
+            } else if(_cp <= 0x7FF) {
+                _out += static_cast<char>(0xC0 | (_cp >> 6));
+                _out += static_cast<char>(0x80 | (_cp & 0x3F));
+            } else if(_cp <= 0xFFFF) {
+                _out += static_cast<char>(0xE0 | (_cp >> 12));
+                _out += static_cast<char>(0x80 | ((_cp >> 6) & 0x3F));
+                _out += static_cast<char>(0x80 | (_cp & 0x3F));
+            } else {
+                _out += static_cast<char>(0xF0 | (_cp >> 18));
+                _out += static_cast<char>(0x80 | ((_cp >> 12) & 0x3F));
+                _out += static_cast<char>(0x80 | ((_cp >> 6) & 0x3F));
+                _out += static_cast<char>(0x80 | (_cp & 0x3F));
+            }
+        }
+
+        const char *readJsonString(const char *_input,std::string *_out) {
+
+            const char *p = _input;
+
+            if(*p != '"') {
+            	throw std::runtime_error("Expected JSON string");
+            }
+
+            ++p;
+
+            if(_out) _out->clear();
+
+            while(*p != '\0') {
+
+                unsigned char c = static_cast<unsigned char>(*p++);
+                if(c == '"') return p;
+                if(c < 0x20) throw std::runtime_error("Unescaped control character");
+                if(c != '\\') {
+                    if(_out) *_out += static_cast<char>(c);
+                    continue;
+                }
+
+                if(*p == '\0') throw std::runtime_error("Incomplete JSON escape");
+                switch(*p++) {
+					case '"': c = '"'; break;
+					case '\\': c = '\\'; break;
+					case '/': c = '/'; break;
+					case 'b': c = '\b'; break;
+					case 'f': c = '\f'; break;
+					case 'n': c = '\n'; break;
+					case 'r': c = '\r'; break;
+					case 't': c = '\t'; break;
+					case 'u': {
+						uint32_t cp = readHex4(p);
+						if(cp >= 0xD800 && cp <= 0xDBFF) {
+							if(*p != '\\' || p[1] != 'u') {
+								throw std::runtime_error("Missing low surrogate");
+							}
+							p += 2;
+							uint32_t low = readHex4(p);
+							if(low < 0xDC00 || low > 0xDFFF) {
+								throw std::runtime_error("Invalid low surrogate");
+							}
+							cp = 0x10000 + ((cp - 0xD800) << 10) + (low - 0xDC00);
+						} else if(cp >= 0xDC00 && cp <= 0xDFFF) {
+							throw std::runtime_error("Unexpected low surrogate");
+						}
+
+						if(_out) {
+							appendUtf8(*_out, cp);
+						}
+						continue;
+					}
+					default:
+						throw std::runtime_error("Invalid JSON escape");
+                }
+
+                if(_out) {
+                	*_out += static_cast<char>(c);
+                }
+            }
+
+            throw std::runtime_error("Unterminated JSON string");
+        }
+
+        void appendJsonString( std::string &_out,const std::string &_value) {
+
+            static const char hex[] = "0123456789abcdef";
+            _out += '"';
+
+            for(unsigned char c : _value) {
+                switch(c) {
+                case '"': _out += "\\\""; break;
+                case '\\': _out += "\\\\"; break;
+                case '\b': _out += "\\b"; break;
+                case '\f': _out += "\\f"; break;
+                case '\n': _out += "\\n"; break;
+                case '\r': _out += "\\r"; break;
+                case '\t': _out += "\\t"; break;
+                default:
+                    if(c < 0x20) {
+                        _out += "\\u00";
+                        _out += hex[c >> 4];
+                        _out += hex[c & 0x0F];
+                    } else {
+                        _out += static_cast<char>(c);
+                    }
+                }
+            }
+            _out += '"';
+        }
+
 	}
 
 }

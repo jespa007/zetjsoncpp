@@ -2,6 +2,46 @@
 # Changelog
 
 ----------------------------
+## [3.0.1] - 2026-11-18
+
+### Added
+- Full support for standard JSON string escape sequences.
+- Unicode escape (`\uXXXX`) decoding into UTF-8.
+- UTF-16 surrogate pair decoding for Unicode characters outside the Basic Multilingual Plane (BMP).
+- JSON escaping and decoding for both string values and property names.
+- Type-safe array and map traversal through `forEachArrayElement()` and `forEachMapEntry()`.
+- Extended regression tests covering root-level values, container operations, Unicode decoding, string escaping and invalid input.
+
+### Changed
+- Refactored the serializer to use a common polymorphic container traversal interface.
+- Improved const-correctness throughout the serializer.
+- Improved exception safety when allocating objects in arrays and maps.
+- Improved numeric serialization using maximum double-precision accuracy and locale-independent formatting.
+- Unified default serialization parameters across all `serialize()` overloads.
+- Disabled copying of object containers that own dynamically allocated objects.
+
+### Fixed
+- Undefined behavior caused by unsafe template casts during object array and map serialization.
+- Potential memory leaks during object container insertion and removal.
+- Potential buffer overflow when deserializing long numeric values.
+- Potential out-of-bounds memory access when parsing unterminated block comments.
+- Unsafe format string handling in deserialization error reporting.
+- Incorrect JSON type initialization in several constructors.
+- Incorrect type identifier in `MapArrayStringJsonVar`.
+- Incorrect serialization of programmatically inserted array and map elements.
+- Incorrect handling of escaped quotes and backslashes.
+- Incorrect handling of Unicode escape sequences.
+- Serialization of non-finite numeric values (NaN and infinity).
+- Compiler warnings related to hidden overloaded virtual methods.
+
+### Removed
+- Unsafe template-based array and map serialization functions.
+- The internal `TestVoid` placeholder type.
+- Unnecessary virtual function declarations.
+- Obsolete `NamedJsonVar.h` header.
+- Obsolete container initialization methods.
+
+----------------------------
 ## [3.0.0] - 2026-10-25
 
 

@@ -68,7 +68,8 @@ namespace zetjsoncpp{
 	        result += ",";
 	    }
 
-	    result += "\"" + _key + "\":";
+	    string_utils::appendJsonString(result, _key);
+	    result += ':';
 
 	    serialize_json_var(
 	        result
@@ -176,9 +177,8 @@ namespace zetjsoncpp{
 	        }
 	    }
 
-	    result += "\"";
-	    result += _field->getVariableName();
-	    result += "\":";
+	    string_utils::appendJsonString(result, _field->getVariableName());
+        result += ':';
 
 	    // Serialize the actual field value
 	    serialize_json_var(
@@ -214,7 +214,7 @@ namespace zetjsoncpp{
 	    };
 
 	    // Invoke the const visitation interface
-	    static_cast<const JsonVar *>(_json_var)->forEachField(
+	    _json_var->forEachField(
 	        serializeObjectFieldCallback
 	        ,&ctx
 	    );
@@ -253,10 +253,10 @@ namespace zetjsoncpp{
 	        break;
 
 	    case JSON_VAR_TYPE_STRING:
-	        _str_result += std::string("\"")
-	            + static_cast<const StringJsonVar *>(_json_var)
-	                ->getValue()
-	            + "\"";
+	        string_utils::appendJsonString(
+                _str_result
+                ,static_cast<const StringJsonVar *>(_json_var)->getValue()
+            );
 	        break;
 
 	    case JSON_VAR_TYPE_OBJECT:
